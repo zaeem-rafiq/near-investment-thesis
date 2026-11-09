@@ -50,6 +50,22 @@
     "signer_top10": {
       "path": "data/public/signer-top10.json",
       "sha256": "41ebe00f1bdb5fa173338fc650c8c0fe89c26499511be09a2ad5b0a73ec49096"
+    },
+    "position_inputs": {
+      "path": "data/public/position-inputs.json",
+      "sha256": "31dd633e9fcb8a06e939e53fc1b80663dff3780cc5afa768a7afb9812d0059dd"
+    },
+    "staking": {
+      "path": "data/public/staking.json",
+      "sha256": "b731e12fdb387e492fabf9a49379c011ecb3070b97716cee5408fa6f5400028b"
+    },
+    "protocol_share": {
+      "path": "data/public/protocol-share.json",
+      "sha256": "1dfca99ff429ac09d2d87147b96e1d1e5fbec54ad55ef81852222ea4140d2985"
+    },
+    "position_section": {
+      "path": "data/public/position-section.json",
+      "sha256": "5ab7a56785da42bf71c9ec7b11d2f822471c45379ca96d6c05da635930ff2616"
     }
   },
   "unavailable": {}

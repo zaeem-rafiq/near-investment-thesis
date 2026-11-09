@@ -1,0 +1,4942 @@
+{
+  "wallets": [
+    {
+      "name": "fefundsadmin.sputnik-dao.near",
+      "weeks": [
+        {
+          "week": "2026-02-23",
+          "receivedNear": 116687.88779,
+          "sentNear": 0.09999999999999999
+        },
+        {
+          "week": "2026-03-02",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-09",
+          "receivedNear": 27815.52906,
+          "sentNear": 0.19999999999999998
+        },
+        {
+          "week": "2026-03-16",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-23",
+          "receivedNear": 201573.82306000002,
+          "sentNear": 0.19999999999999998
+        },
+        {
+          "week": "2026-03-30",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-06",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-13",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-20",
+          "receivedNear": 1524.8786564589825,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-27",
+          "receivedNear": 9435.23004878592,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-04",
+          "receivedNear": 15843.871922872127,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-11",
+          "receivedNear": 15497.407904990185,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-18",
+          "receivedNear": 26549.27327355008,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-25",
+          "receivedNear": 35165.44995188643,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-01",
+          "receivedNear": 33386.42227866772,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-08",
+          "receivedNear": 11122.281489039027,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-15",
+          "receivedNear": 13900.376848786917,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-22",
+          "receivedNear": 8094.46699725532,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-29",
+          "receivedNear": 12540.741073398662,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-06",
+          "receivedNear": 16160.324406536009,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-13",
+          "receivedNear": 17897.23030389708,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-20",
+          "receivedNear": 21038.998713943267,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-27",
+          "receivedNear": 17317.74455636556,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-03",
+          "receivedNear": 18956.338767485733,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-10",
+          "receivedNear": 15956.775175650142,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-17",
+          "receivedNear": 49518.66717931376,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-24",
+          "receivedNear": 35589.55849204541,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-31",
+          "receivedNear": 45727.24188058149,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-07",
+          "receivedNear": 23259.921561429273,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-14",
+          "receivedNear": 37032.19776550349,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-21",
+          "receivedNear": 44207.10270396733,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-28",
+          "receivedNear": 48306.46104675509,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-05",
+          "receivedNear": 35190.26928956743,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-12",
+          "receivedNear": 33881.38148111908,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-19",
+          "receivedNear": 23975.21772136731,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-26",
+          "receivedNear": 27918.014710031784,
+          "sentNear": 0
+        }
+      ]
+    },
+    {
+      "name": "1csfundsadmin.sputnik-dao.near",
+      "weeks": [
+        {
+          "week": "2026-02-23",
+          "receivedNear": 63168.85904683379,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-02",
+          "receivedNear": 47205.63923086334,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-09",
+          "receivedNear": 51640.81107628089,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-16",
+          "receivedNear": 51794.964085904474,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-23",
+          "receivedNear": 48916.63272154902,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-30",
+          "receivedNear": 49339.194087566626,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-06",
+          "receivedNear": 45202.33674526367,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-13",
+          "receivedNear": 47399.28389162864,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-20",
+          "receivedNear": 27394.100761081463,
+          "sentNear": 45010.3
+        },
+        {
+          "week": "2026-04-27",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-04",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-11",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-18",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-25",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-01",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-08",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-15",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-22",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-29",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-06",
+          "receivedNear": 0.0338,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-13",
+          "receivedNear": 0,
+          "sentNear": 0.19999999999999998
+        },
+        {
+          "week": "2026-07-20",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-27",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-03",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-10",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-17",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-24",
+          "receivedNear": 1.0116,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-31",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-07",
+          "receivedNear": 1.1186200000000002,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-14",
+          "receivedNear": 263.1070043211138,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-21",
+          "receivedNear": 0.09905615998997115,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-28",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-05",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-12",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-19",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-26",
+          "receivedNear": 0,
+          "sentNear": 0
+        }
+      ]
+    },
+    {
+      "name": "buybacks.multisignature.near",
+      "weeks": [
+        {
+          "week": "2026-02-23",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-02",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-09",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-16",
+          "receivedNear": 65,
+          "sentNear": 25
+        },
+        {
+          "week": "2026-03-23",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-03-30",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-06",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-13",
+          "receivedNear": 0,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-20",
+          "receivedNear": 11761.592559893803,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-04-27",
+          "receivedNear": 41204.02794709558,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-04",
+          "receivedNear": 49719.96768452924,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-11",
+          "receivedNear": 43435.464384638035,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-18",
+          "receivedNear": 56244.82066431315,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-05-25",
+          "receivedNear": 60185.23455075609,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-01",
+          "receivedNear": 111259.89787964868,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-08",
+          "receivedNear": 40147.75172549872,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-15",
+          "receivedNear": 32824.35015333057,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-22",
+          "receivedNear": 29744.455103916585,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-06-29",
+          "receivedNear": 33413.73696709479,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-06",
+          "receivedNear": 39945.5694525306,
+          "sentNear": 12000
+        },
+        {
+          "week": "2026-07-13",
+          "receivedNear": 43077.57597232306,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-20",
+          "receivedNear": 44160.27470408544,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-07-27",
+          "receivedNear": 38202.88967410618,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-03",
+          "receivedNear": 43000.94489504677,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-10",
+          "receivedNear": 38280.28454312885,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-17",
+          "receivedNear": 106324.60710341373,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-24",
+          "receivedNear": 74057.32958383759,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-08-31",
+          "receivedNear": 119802.04897574066,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-07",
+          "receivedNear": 68402.7278944009,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-14",
+          "receivedNear": 101115.73640638423,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-21",
+          "receivedNear": 88564.15751431417,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-09-28",
+          "receivedNear": 61489.06248633378,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-05",
+          "receivedNear": 77433.72814638945,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-12",
+          "receivedNear": 62620.245069257304,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-19",
+          "receivedNear": 59130.14161131741,
+          "sentNear": 0
+        },
+        {
+          "week": "2026-10-26",
+          "receivedNear": 76540.86726459628,
+          "sentNear": 0
+        }
+      ]
+    }
+  ],
+  "signerDays": [
+    {
+      "grain": "day",
+      "period_start": "2024-11-01",
+      "top10": "919925",
+      "everyone_else": "10579"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-02",
+      "top10": "928317",
+      "everyone_else": "7704"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-03",
+      "top10": "935805",
+      "everyone_else": "8256"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-04",
+      "top10": "942867",
+      "everyone_else": "12633"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-05",
+      "top10": "935243",
+      "everyone_else": "43545"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-06",
+      "top10": "940124",
+      "everyone_else": "7385"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-07",
+      "top10": "941327",
+      "everyone_else": "5888"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-08",
+      "top10": "927111",
+      "everyone_else": "13653"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-09",
+      "top10": "876444",
+      "everyone_else": "46370"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-10",
+      "top10": "943289",
+      "everyone_else": "52566"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-11",
+      "top10": "951097",
+      "everyone_else": "11257"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-12",
+      "top10": "955375",
+      "everyone_else": "27000"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-13",
+      "top10": "955766",
+      "everyone_else": "13150"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-14",
+      "top10": "949922",
+      "everyone_else": "48956"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-15",
+      "top10": "911473",
+      "everyone_else": "10630"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-16",
+      "top10": "931772",
+      "everyone_else": "49021"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-17",
+      "top10": "916702",
+      "everyone_else": "11793"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-18",
+      "top10": "921975",
+      "everyone_else": "10021"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-19",
+      "top10": "922497",
+      "everyone_else": "10519"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-20",
+      "top10": "877512",
+      "everyone_else": "10761"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-21",
+      "top10": "919835",
+      "everyone_else": "41813"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-22",
+      "top10": "770425",
+      "everyone_else": "16693"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-23",
+      "top10": "620834",
+      "everyone_else": "13509"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-24",
+      "top10": "602387",
+      "everyone_else": "16108"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-25",
+      "top10": "776512",
+      "everyone_else": "13385"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-26",
+      "top10": "918402",
+      "everyone_else": "20099"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-27",
+      "top10": "899430",
+      "everyone_else": "16846"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-28",
+      "top10": "912114",
+      "everyone_else": "34247"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-29",
+      "top10": "911413",
+      "everyone_else": "37657"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-30",
+      "top10": "717643",
+      "everyone_else": "17501"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-01",
+      "top10": "847660",
+      "everyone_else": "109758"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-02",
+      "top10": "859310",
+      "everyone_else": "16790"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-03",
+      "top10": "912544",
+      "everyone_else": "26413"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-04",
+      "top10": "886442",
+      "everyone_else": "30317"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-05",
+      "top10": "886072",
+      "everyone_else": "25599"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-06",
+      "top10": "876716",
+      "everyone_else": "22490"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-07",
+      "top10": "738600",
+      "everyone_else": "21812"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-08",
+      "top10": "927001",
+      "everyone_else": "43512"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-09",
+      "top10": "932234",
+      "everyone_else": "17463"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-10",
+      "top10": "922916",
+      "everyone_else": "26227"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-11",
+      "top10": "920437",
+      "everyone_else": "17923"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-12",
+      "top10": "921841",
+      "everyone_else": "46675"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-13",
+      "top10": "926524",
+      "everyone_else": "35492"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-14",
+      "top10": "935877",
+      "everyone_else": "23282"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-15",
+      "top10": "925780",
+      "everyone_else": "19878"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-16",
+      "top10": "920455",
+      "everyone_else": "34310"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-17",
+      "top10": "905967",
+      "everyone_else": "23162"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-18",
+      "top10": "905648",
+      "everyone_else": "51516"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-19",
+      "top10": "912855",
+      "everyone_else": "18380"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-20",
+      "top10": "747451",
+      "everyone_else": "16781"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-21",
+      "top10": "896534",
+      "everyone_else": "48515"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-22",
+      "top10": "905692",
+      "everyone_else": "9311"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-23",
+      "top10": "904977",
+      "everyone_else": "10016"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-24",
+      "top10": "928977",
+      "everyone_else": "15531"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-25",
+      "top10": "907020",
+      "everyone_else": "50988"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-26",
+      "top10": "910027",
+      "everyone_else": "13095"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-27",
+      "top10": "904802",
+      "everyone_else": "10532"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-28",
+      "top10": "925276",
+      "everyone_else": "10632"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-29",
+      "top10": "904476",
+      "everyone_else": "48965"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-30",
+      "top10": "908051",
+      "everyone_else": "14523"
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-31",
+      "top10": "890640",
+      "everyone_else": "13366"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-01",
+      "top10": "876253",
+      "everyone_else": "49849"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-02",
+      "top10": "896079",
+      "everyone_else": "52648"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-03",
+      "top10": "892386",
+      "everyone_else": "11853"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-04",
+      "top10": "885270",
+      "everyone_else": "11377"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-05",
+      "top10": "890711",
+      "everyone_else": "8998"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-06",
+      "top10": "889104",
+      "everyone_else": "11396"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-07",
+      "top10": "889863",
+      "everyone_else": "13339"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-08",
+      "top10": "885265",
+      "everyone_else": "9133"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-09",
+      "top10": "889090",
+      "everyone_else": "9749"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-10",
+      "top10": "895917",
+      "everyone_else": "11671"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-11",
+      "top10": "871311",
+      "everyone_else": "10780"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-12",
+      "top10": "886805",
+      "everyone_else": "11726"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-13",
+      "top10": "888131",
+      "everyone_else": "12247"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-14",
+      "top10": "879683",
+      "everyone_else": "10640"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-15",
+      "top10": "876263",
+      "everyone_else": "8859"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-16",
+      "top10": "879218",
+      "everyone_else": "10964"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-17",
+      "top10": "873601",
+      "everyone_else": "10507"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-18",
+      "top10": "840120",
+      "everyone_else": "13171"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-19",
+      "top10": "863101",
+      "everyone_else": "13399"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-20",
+      "top10": "868358",
+      "everyone_else": "13052"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-21",
+      "top10": "881768",
+      "everyone_else": "18441"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-22",
+      "top10": "846186",
+      "everyone_else": "25605"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-23",
+      "top10": "841805",
+      "everyone_else": "22020"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-24",
+      "top10": "830911",
+      "everyone_else": "33356"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-25",
+      "top10": "836890",
+      "everyone_else": "13684"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-26",
+      "top10": "844820",
+      "everyone_else": "25508"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-27",
+      "top10": "860616",
+      "everyone_else": "9879"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-28",
+      "top10": "839266",
+      "everyone_else": "9451"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-29",
+      "top10": "819824",
+      "everyone_else": "10782"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-30",
+      "top10": "824896",
+      "everyone_else": "11322"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-31",
+      "top10": "819892",
+      "everyone_else": "9443"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-01",
+      "top10": "838004",
+      "everyone_else": "8340"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-02",
+      "top10": "829095",
+      "everyone_else": "7966"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-03",
+      "top10": "830118",
+      "everyone_else": "11841"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-04",
+      "top10": "839933",
+      "everyone_else": "9056"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-05",
+      "top10": "823055",
+      "everyone_else": "8630"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-06",
+      "top10": "835094",
+      "everyone_else": "10252"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-07",
+      "top10": "826160",
+      "everyone_else": "12547"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-08",
+      "top10": "822220",
+      "everyone_else": "7441"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-09",
+      "top10": "804767",
+      "everyone_else": "7264"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-10",
+      "top10": "810835",
+      "everyone_else": "6695"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-11",
+      "top10": "830557",
+      "everyone_else": "8548"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-12",
+      "top10": "821274",
+      "everyone_else": "6609"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-13",
+      "top10": "820536",
+      "everyone_else": "6917"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-14",
+      "top10": "819052",
+      "everyone_else": "7033"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-15",
+      "top10": "815176",
+      "everyone_else": "5151"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-16",
+      "top10": "811323",
+      "everyone_else": "5457"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-17",
+      "top10": "822394",
+      "everyone_else": "5211"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-18",
+      "top10": "829397",
+      "everyone_else": "8505"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-19",
+      "top10": "619964",
+      "everyone_else": "5273"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-20",
+      "top10": "523679",
+      "everyone_else": "6032"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-21",
+      "top10": "519994",
+      "everyone_else": "7186"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-22",
+      "top10": "490554",
+      "everyone_else": "5860"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-23",
+      "top10": "503611",
+      "everyone_else": "16257"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-24",
+      "top10": "519607",
+      "everyone_else": "6409"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-25",
+      "top10": "498573",
+      "everyone_else": "10276"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-26",
+      "top10": "515092",
+      "everyone_else": "6321"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-27",
+      "top10": "522253",
+      "everyone_else": "7848"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-28",
+      "top10": "518076",
+      "everyone_else": "9828"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-01",
+      "top10": "514181",
+      "everyone_else": "5956"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-02",
+      "top10": "505633",
+      "everyone_else": "6818"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-03",
+      "top10": "502429",
+      "everyone_else": "7073"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-04",
+      "top10": "513141",
+      "everyone_else": "12032"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-05",
+      "top10": "520905",
+      "everyone_else": "7798"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-06",
+      "top10": "521342",
+      "everyone_else": "7730"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-07",
+      "top10": "508513",
+      "everyone_else": "9793"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-08",
+      "top10": "511123",
+      "everyone_else": "5533"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-09",
+      "top10": "501430",
+      "everyone_else": "9944"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-10",
+      "top10": "503364",
+      "everyone_else": "12418"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-11",
+      "top10": "512790",
+      "everyone_else": "10085"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-12",
+      "top10": "483589",
+      "everyone_else": "6260"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-13",
+      "top10": "488645",
+      "everyone_else": "8616"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-14",
+      "top10": "482271",
+      "everyone_else": "6587"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-15",
+      "top10": "476413",
+      "everyone_else": "4678"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-16",
+      "top10": "496701",
+      "everyone_else": "5595"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-17",
+      "top10": "502765",
+      "everyone_else": "5241"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-18",
+      "top10": "502094",
+      "everyone_else": "6060"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-19",
+      "top10": "491754",
+      "everyone_else": "8628"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-20",
+      "top10": "490241",
+      "everyone_else": "6692"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-21",
+      "top10": "485341",
+      "everyone_else": "7830"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-22",
+      "top10": "477407",
+      "everyone_else": "5131"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-23",
+      "top10": "480507",
+      "everyone_else": "4828"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-24",
+      "top10": "474465",
+      "everyone_else": "6157"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-25",
+      "top10": "481101",
+      "everyone_else": "17142"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-26",
+      "top10": "471784",
+      "everyone_else": "58708"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-27",
+      "top10": "480211",
+      "everyone_else": "81586"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-28",
+      "top10": "479913",
+      "everyone_else": "77087"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-29",
+      "top10": "466975",
+      "everyone_else": "51308"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-30",
+      "top10": "467194",
+      "everyone_else": "71066"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-31",
+      "top10": "467288",
+      "everyone_else": "80591"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-01",
+      "top10": "463727",
+      "everyone_else": "81499"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-02",
+      "top10": "457617",
+      "everyone_else": "73659"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-03",
+      "top10": "461411",
+      "everyone_else": "27457"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-04",
+      "top10": "454146",
+      "everyone_else": "62242"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-05",
+      "top10": "440368",
+      "everyone_else": "71939"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-06",
+      "top10": "452844",
+      "everyone_else": "21031"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-07",
+      "top10": "453996",
+      "everyone_else": "6610"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-08",
+      "top10": "462558",
+      "everyone_else": "7674"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-09",
+      "top10": "452436",
+      "everyone_else": "6801"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-10",
+      "top10": "448286",
+      "everyone_else": "4954"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-11",
+      "top10": "443027",
+      "everyone_else": "5589"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-12",
+      "top10": "433654",
+      "everyone_else": "5770"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-13",
+      "top10": "446784",
+      "everyone_else": "6464"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-14",
+      "top10": "450971",
+      "everyone_else": "19141"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-15",
+      "top10": "453990",
+      "everyone_else": "36080"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-16",
+      "top10": "449064",
+      "everyone_else": "23805"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-17",
+      "top10": "448055",
+      "everyone_else": "34862"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-18",
+      "top10": "442314",
+      "everyone_else": "26257"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-19",
+      "top10": "442206",
+      "everyone_else": "20322"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-20",
+      "top10": "441731",
+      "everyone_else": "22286"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-21",
+      "top10": "444971",
+      "everyone_else": "29078"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-22",
+      "top10": "440328",
+      "everyone_else": "31422"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-23",
+      "top10": "446470",
+      "everyone_else": "24894"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-24",
+      "top10": "438959",
+      "everyone_else": "27734"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-25",
+      "top10": "444634",
+      "everyone_else": "20135"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-26",
+      "top10": "440591",
+      "everyone_else": "17289"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-27",
+      "top10": "439485",
+      "everyone_else": "18934"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-28",
+      "top10": "443813",
+      "everyone_else": "16396"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-29",
+      "top10": "439554",
+      "everyone_else": "18086"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-30",
+      "top10": "430648",
+      "everyone_else": "12921"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-01",
+      "top10": "416940",
+      "everyone_else": "12130"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-02",
+      "top10": "410304",
+      "everyone_else": "10492"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-03",
+      "top10": "409333",
+      "everyone_else": "9648"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-04",
+      "top10": "419341",
+      "everyone_else": "13510"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-05",
+      "top10": "419530",
+      "everyone_else": "9919"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-06",
+      "top10": "420387",
+      "everyone_else": "10559"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-07",
+      "top10": "411096",
+      "everyone_else": "9201"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-08",
+      "top10": "411946",
+      "everyone_else": "9021"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-09",
+      "top10": "408918",
+      "everyone_else": "11328"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-10",
+      "top10": "406027",
+      "everyone_else": "9060"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-11",
+      "top10": "396555",
+      "everyone_else": "8897"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-12",
+      "top10": "409498",
+      "everyone_else": "81813"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-13",
+      "top10": "407421",
+      "everyone_else": "10326"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-14",
+      "top10": "416986",
+      "everyone_else": "9703"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-15",
+      "top10": "409988",
+      "everyone_else": "9121"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-16",
+      "top10": "410339",
+      "everyone_else": "7701"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-17",
+      "top10": "405223",
+      "everyone_else": "6867"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-18",
+      "top10": "400636",
+      "everyone_else": "7697"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-19",
+      "top10": "417165",
+      "everyone_else": "51845"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-20",
+      "top10": "415194",
+      "everyone_else": "82949"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-21",
+      "top10": "408147",
+      "everyone_else": "52589"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-22",
+      "top10": "399767",
+      "everyone_else": "60659"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-23",
+      "top10": "401008",
+      "everyone_else": "57675"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-24",
+      "top10": "377587",
+      "everyone_else": "29147"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-25",
+      "top10": "307647",
+      "everyone_else": "13614"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-26",
+      "top10": "347611",
+      "everyone_else": "10337"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-27",
+      "top10": "369456",
+      "everyone_else": "10614"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-28",
+      "top10": "380685",
+      "everyone_else": "10248"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-29",
+      "top10": "374901",
+      "everyone_else": "11756"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-30",
+      "top10": "367718",
+      "everyone_else": "10010"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-31",
+      "top10": "366421",
+      "everyone_else": "8080"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-01",
+      "top10": "370197",
+      "everyone_else": "5081"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-02",
+      "top10": "377179",
+      "everyone_else": "6163"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-03",
+      "top10": "375918",
+      "everyone_else": "5953"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-04",
+      "top10": "375614",
+      "everyone_else": "5400"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-05",
+      "top10": "370387",
+      "everyone_else": "5774"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-06",
+      "top10": "362946",
+      "everyone_else": "4734"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-07",
+      "top10": "358938",
+      "everyone_else": "5243"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-08",
+      "top10": "357492",
+      "everyone_else": "4782"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-09",
+      "top10": "359663",
+      "everyone_else": "5551"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-10",
+      "top10": "358522",
+      "everyone_else": "6237"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-11",
+      "top10": "352571",
+      "everyone_else": "5747"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-12",
+      "top10": "354484",
+      "everyone_else": "5348"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-13",
+      "top10": "347687",
+      "everyone_else": "15181"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-14",
+      "top10": "345642",
+      "everyone_else": "25077"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-15",
+      "top10": "348892",
+      "everyone_else": "5397"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-16",
+      "top10": "353000",
+      "everyone_else": "6217"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-17",
+      "top10": "350715",
+      "everyone_else": "6285"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-18",
+      "top10": "351083",
+      "everyone_else": "4767"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-19",
+      "top10": "346149",
+      "everyone_else": "5827"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-20",
+      "top10": "334455",
+      "everyone_else": "6387"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-21",
+      "top10": "330425",
+      "everyone_else": "5891"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-22",
+      "top10": "327460",
+      "everyone_else": "5960"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-23",
+      "top10": "334053",
+      "everyone_else": "5354"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-24",
+      "top10": "332814",
+      "everyone_else": "5407"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-25",
+      "top10": "333032",
+      "everyone_else": "5126"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-26",
+      "top10": "332546",
+      "everyone_else": "5107"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-27",
+      "top10": "325014",
+      "everyone_else": "5286"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-28",
+      "top10": "326585",
+      "everyone_else": "5216"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-29",
+      "top10": "321971",
+      "everyone_else": "5147"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-30",
+      "top10": "325349",
+      "everyone_else": "6408"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-01",
+      "top10": "327322",
+      "everyone_else": "5446"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-02",
+      "top10": "331679",
+      "everyone_else": "5301"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-03",
+      "top10": "326778",
+      "everyone_else": "5472"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-04",
+      "top10": "321584",
+      "everyone_else": "4950"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-05",
+      "top10": "316626",
+      "everyone_else": "4362"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-06",
+      "top10": "316149",
+      "everyone_else": "4701"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-07",
+      "top10": "321951",
+      "everyone_else": "5237"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-08",
+      "top10": "309499",
+      "everyone_else": "5365"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-09",
+      "top10": "327950",
+      "everyone_else": "4470"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-10",
+      "top10": "328438",
+      "everyone_else": "5267"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-11",
+      "top10": "325192",
+      "everyone_else": "7096"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-12",
+      "top10": "325076",
+      "everyone_else": "5943"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-13",
+      "top10": "327069",
+      "everyone_else": "6973"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-14",
+      "top10": "334629",
+      "everyone_else": "8578"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-15",
+      "top10": "332856",
+      "everyone_else": "9687"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-16",
+      "top10": "347279",
+      "everyone_else": "9292"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-17",
+      "top10": "337249",
+      "everyone_else": "8834"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-18",
+      "top10": "334232",
+      "everyone_else": "11801"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-19",
+      "top10": "320038",
+      "everyone_else": "6810"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-20",
+      "top10": "335894",
+      "everyone_else": "7018"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-21",
+      "top10": "336068",
+      "everyone_else": "8057"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-22",
+      "top10": "339402",
+      "everyone_else": "8598"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-23",
+      "top10": "340129",
+      "everyone_else": "6315"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-24",
+      "top10": "336715",
+      "everyone_else": "8891"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-25",
+      "top10": "316286",
+      "everyone_else": "6511"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-26",
+      "top10": "334056",
+      "everyone_else": "5068"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-27",
+      "top10": "336188",
+      "everyone_else": "5635"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-28",
+      "top10": "340002",
+      "everyone_else": "8448"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-29",
+      "top10": "343238",
+      "everyone_else": "6495"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-30",
+      "top10": "339193",
+      "everyone_else": "8922"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-31",
+      "top10": "338637",
+      "everyone_else": "7874"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-01",
+      "top10": "329216",
+      "everyone_else": "6647"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-02",
+      "top10": "325507",
+      "everyone_else": "6211"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-03",
+      "top10": "327124",
+      "everyone_else": "5688"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-04",
+      "top10": "330473",
+      "everyone_else": "6082"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-05",
+      "top10": "330424",
+      "everyone_else": "6189"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-06",
+      "top10": "334331",
+      "everyone_else": "5894"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-07",
+      "top10": "333521",
+      "everyone_else": "6426"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-08",
+      "top10": "329084",
+      "everyone_else": "6324"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-09",
+      "top10": "315983",
+      "everyone_else": "6604"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-10",
+      "top10": "328583",
+      "everyone_else": "6136"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-11",
+      "top10": "331399",
+      "everyone_else": "7401"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-12",
+      "top10": "324011",
+      "everyone_else": "7943"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-13",
+      "top10": "324878",
+      "everyone_else": "9200"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-14",
+      "top10": "328267",
+      "everyone_else": "17648"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-15",
+      "top10": "321385",
+      "everyone_else": "22599"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-16",
+      "top10": "317200",
+      "everyone_else": "14418"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-17",
+      "top10": "323048",
+      "everyone_else": "19513"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-18",
+      "top10": "326514",
+      "everyone_else": "14625"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-19",
+      "top10": "329105",
+      "everyone_else": "11662"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-20",
+      "top10": "325135",
+      "everyone_else": "9444"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-21",
+      "top10": "320118",
+      "everyone_else": "6614"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-22",
+      "top10": "317904",
+      "everyone_else": "6774"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-23",
+      "top10": "318442",
+      "everyone_else": "5611"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-24",
+      "top10": "315652",
+      "everyone_else": "6608"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-25",
+      "top10": "318212",
+      "everyone_else": "7848"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-26",
+      "top10": "320257",
+      "everyone_else": "8280"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-27",
+      "top10": "320818",
+      "everyone_else": "7743"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-28",
+      "top10": "319257",
+      "everyone_else": "7275"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-29",
+      "top10": "313874",
+      "everyone_else": "7114"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-30",
+      "top10": "305429",
+      "everyone_else": "4826"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-31",
+      "top10": "308898",
+      "everyone_else": "5158"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-01",
+      "top10": "306332",
+      "everyone_else": "5536"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-02",
+      "top10": "312387",
+      "everyone_else": "5734"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-03",
+      "top10": "313855",
+      "everyone_else": "5405"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-04",
+      "top10": "284704",
+      "everyone_else": "6352"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-05",
+      "top10": "305007",
+      "everyone_else": "6061"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-06",
+      "top10": "297426",
+      "everyone_else": "4682"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-07",
+      "top10": "299475",
+      "everyone_else": "5014"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-08",
+      "top10": "305753",
+      "everyone_else": "6253"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-09",
+      "top10": "299707",
+      "everyone_else": "6298"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-10",
+      "top10": "300345",
+      "everyone_else": "5730"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-11",
+      "top10": "296230",
+      "everyone_else": "5496"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-12",
+      "top10": "297774",
+      "everyone_else": "5560"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-13",
+      "top10": "293240",
+      "everyone_else": "5976"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-14",
+      "top10": "291889",
+      "everyone_else": "5736"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-15",
+      "top10": "285675",
+      "everyone_else": "7586"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-16",
+      "top10": "290446",
+      "everyone_else": "7371"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-17",
+      "top10": "288251",
+      "everyone_else": "7736"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-18",
+      "top10": "282914",
+      "everyone_else": "8286"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-19",
+      "top10": "283937",
+      "everyone_else": "7470"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-20",
+      "top10": "277506",
+      "everyone_else": "6685"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-21",
+      "top10": "279359",
+      "everyone_else": "6061"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-22",
+      "top10": "291470",
+      "everyone_else": "5980"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-23",
+      "top10": "291233",
+      "everyone_else": "4860"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-24",
+      "top10": "288028",
+      "everyone_else": "5299"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-25",
+      "top10": "285180",
+      "everyone_else": "5605"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-26",
+      "top10": "286060",
+      "everyone_else": "6150"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-27",
+      "top10": "280327",
+      "everyone_else": "4926"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-28",
+      "top10": "281235",
+      "everyone_else": "5313"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-29",
+      "top10": "286021",
+      "everyone_else": "5127"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-30",
+      "top10": "284448",
+      "everyone_else": "5429"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-01",
+      "top10": "282672",
+      "everyone_else": "5479"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-02",
+      "top10": "285361",
+      "everyone_else": "5605"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-03",
+      "top10": "273505",
+      "everyone_else": "5543"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-04",
+      "top10": "273986",
+      "everyone_else": "5197"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-05",
+      "top10": "279773",
+      "everyone_else": "5559"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-06",
+      "top10": "280544",
+      "everyone_else": "5633"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-07",
+      "top10": "279128",
+      "everyone_else": "5654"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-08",
+      "top10": "274643",
+      "everyone_else": "5302"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-09",
+      "top10": "277035",
+      "everyone_else": "5276"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-10",
+      "top10": "263164",
+      "everyone_else": "6977"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-11",
+      "top10": "265100",
+      "everyone_else": "6497"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-12",
+      "top10": "268622",
+      "everyone_else": "7419"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-13",
+      "top10": "268130",
+      "everyone_else": "5973"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-14",
+      "top10": "271911",
+      "everyone_else": "5759"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-15",
+      "top10": "269746",
+      "everyone_else": "5824"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-16",
+      "top10": "272652",
+      "everyone_else": "5549"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-17",
+      "top10": "267764",
+      "everyone_else": "5523"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-18",
+      "top10": "259828",
+      "everyone_else": "6043"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-19",
+      "top10": "268112",
+      "everyone_else": "6512"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-20",
+      "top10": "267165",
+      "everyone_else": "5786"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-21",
+      "top10": "264923",
+      "everyone_else": "5085"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-22",
+      "top10": "264428",
+      "everyone_else": "4875"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-23",
+      "top10": "260663",
+      "everyone_else": "6106"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-24",
+      "top10": "255626",
+      "everyone_else": "4719"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-25",
+      "top10": "252911",
+      "everyone_else": "4832"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-26",
+      "top10": "261268",
+      "everyone_else": "4627"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-27",
+      "top10": "268920",
+      "everyone_else": "5502"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-28",
+      "top10": "261418",
+      "everyone_else": "4946"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-29",
+      "top10": "263293",
+      "everyone_else": "5949"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-30",
+      "top10": "259512",
+      "everyone_else": "6462"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-31",
+      "top10": "247170",
+      "everyone_else": "6719"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-01",
+      "top10": "245005",
+      "everyone_else": "5227"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-02",
+      "top10": "244845",
+      "everyone_else": "5037"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-03",
+      "top10": "250431",
+      "everyone_else": "5146"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-04",
+      "top10": "245188",
+      "everyone_else": "5208"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-05",
+      "top10": "245617",
+      "everyone_else": "4742"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-06",
+      "top10": "245990",
+      "everyone_else": "5013"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-07",
+      "top10": "239809",
+      "everyone_else": "7478"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-08",
+      "top10": "240310",
+      "everyone_else": "7266"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-09",
+      "top10": "220211",
+      "everyone_else": "6783"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-10",
+      "top10": "257150",
+      "everyone_else": "7090"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-11",
+      "top10": "254855",
+      "everyone_else": "5966"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-12",
+      "top10": "251415",
+      "everyone_else": "5658"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-13",
+      "top10": "250363",
+      "everyone_else": "5456"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-14",
+      "top10": "241404",
+      "everyone_else": "5317"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-15",
+      "top10": "240835",
+      "everyone_else": "4629"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-16",
+      "top10": "241470",
+      "everyone_else": "4622"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-17",
+      "top10": "245575",
+      "everyone_else": "5422"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-18",
+      "top10": "226314",
+      "everyone_else": "4410"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-19",
+      "top10": "243336",
+      "everyone_else": "4768"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-20",
+      "top10": "240462",
+      "everyone_else": "5202"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-21",
+      "top10": "227930",
+      "everyone_else": "6428"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-22",
+      "top10": "228791",
+      "everyone_else": "4312"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-23",
+      "top10": "229542",
+      "everyone_else": "4851"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-24",
+      "top10": "233621",
+      "everyone_else": "6535"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-25",
+      "top10": "237096",
+      "everyone_else": "5179"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-26",
+      "top10": "185914",
+      "everyone_else": "5530"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-27",
+      "top10": "231459",
+      "everyone_else": "5904"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-28",
+      "top10": "224810",
+      "everyone_else": "5665"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-29",
+      "top10": "221470",
+      "everyone_else": "5757"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-30",
+      "top10": "225480",
+      "everyone_else": "5663"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-01",
+      "top10": "226957",
+      "everyone_else": "7061"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-02",
+      "top10": "222872",
+      "everyone_else": "6625"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-03",
+      "top10": "222486",
+      "everyone_else": "6638"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-04",
+      "top10": "228825",
+      "everyone_else": "6612"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-05",
+      "top10": "217706",
+      "everyone_else": "6771"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-06",
+      "top10": "213235",
+      "everyone_else": "5930"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-07",
+      "top10": "222433",
+      "everyone_else": "4932"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-08",
+      "top10": "221209",
+      "everyone_else": "6027"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-09",
+      "top10": "221079",
+      "everyone_else": "5843"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-10",
+      "top10": "215411",
+      "everyone_else": "5879"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-11",
+      "top10": "211621",
+      "everyone_else": "5772"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-12",
+      "top10": "204871",
+      "everyone_else": "6076"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-13",
+      "top10": "202980",
+      "everyone_else": "5413"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-14",
+      "top10": "202239",
+      "everyone_else": "5830"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-15",
+      "top10": "207747",
+      "everyone_else": "11028"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-16",
+      "top10": "210984",
+      "everyone_else": "9903"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-17",
+      "top10": "209734",
+      "everyone_else": "56229"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-18",
+      "top10": "202819",
+      "everyone_else": "163834"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-19",
+      "top10": "201985",
+      "everyone_else": "27126"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-20",
+      "top10": "204014",
+      "everyone_else": "106390"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-21",
+      "top10": "201837",
+      "everyone_else": "6376"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-22",
+      "top10": "202494",
+      "everyone_else": "63036"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-23",
+      "top10": "199069",
+      "everyone_else": "5672"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-24",
+      "top10": "199623",
+      "everyone_else": "6533"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-25",
+      "top10": "197949",
+      "everyone_else": "5859"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-26",
+      "top10": "197039",
+      "everyone_else": "6061"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-27",
+      "top10": "190808",
+      "everyone_else": "5498"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-28",
+      "top10": "198153",
+      "everyone_else": "5409"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-29",
+      "top10": "190628",
+      "everyone_else": "5909"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-30",
+      "top10": "193868",
+      "everyone_else": "5668"
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-31",
+      "top10": "189244",
+      "everyone_else": "5340"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-01",
+      "top10": "181982",
+      "everyone_else": "4629"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-02",
+      "top10": "186598",
+      "everyone_else": "5409"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-03",
+      "top10": "184114",
+      "everyone_else": "6340"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-04",
+      "top10": "190221",
+      "everyone_else": "6072"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-05",
+      "top10": "197087",
+      "everyone_else": "6372"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-06",
+      "top10": "191301",
+      "everyone_else": "6309"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-07",
+      "top10": "187205",
+      "everyone_else": "7082"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-08",
+      "top10": "185788",
+      "everyone_else": "5440"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-09",
+      "top10": "176001",
+      "everyone_else": "5999"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-10",
+      "top10": "171467",
+      "everyone_else": "5539"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-11",
+      "top10": "165491",
+      "everyone_else": "4828"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-12",
+      "top10": "171972",
+      "everyone_else": "5966"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-13",
+      "top10": "171405",
+      "everyone_else": "7765"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-14",
+      "top10": "168136",
+      "everyone_else": "5789"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-15",
+      "top10": "163714",
+      "everyone_else": "4774"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-16",
+      "top10": "158776",
+      "everyone_else": "5151"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-17",
+      "top10": "161842",
+      "everyone_else": "4682"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-18",
+      "top10": "165559",
+      "everyone_else": "4796"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-19",
+      "top10": "172379",
+      "everyone_else": "5692"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-20",
+      "top10": "168812",
+      "everyone_else": "5905"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-21",
+      "top10": "165460",
+      "everyone_else": "5474"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-22",
+      "top10": "165514",
+      "everyone_else": "5066"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-23",
+      "top10": "165482",
+      "everyone_else": "4998"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-24",
+      "top10": "162398",
+      "everyone_else": "4800"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-25",
+      "top10": "159593",
+      "everyone_else": "5612"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-26",
+      "top10": "163200",
+      "everyone_else": "6750"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-27",
+      "top10": "165598",
+      "everyone_else": "8700"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-28",
+      "top10": "166213",
+      "everyone_else": "5724"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-29",
+      "top10": "168548",
+      "everyone_else": "6035"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-30",
+      "top10": "161545",
+      "everyone_else": "5476"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-31",
+      "top10": "165793",
+      "everyone_else": "6121"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-01",
+      "top10": "162792",
+      "everyone_else": "5189"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-02",
+      "top10": "166669",
+      "everyone_else": "5608"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-03",
+      "top10": "161631",
+      "everyone_else": "201717"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-04",
+      "top10": "163311",
+      "everyone_else": "138269"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-05",
+      "top10": "159793",
+      "everyone_else": "106395"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-06",
+      "top10": "155310",
+      "everyone_else": "103029"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-07",
+      "top10": "149944",
+      "everyone_else": "102675"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-08",
+      "top10": "148714",
+      "everyone_else": "102672"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-09",
+      "top10": "151217",
+      "everyone_else": "111146"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-10",
+      "top10": "149215",
+      "everyone_else": "230457"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-11",
+      "top10": "143058",
+      "everyone_else": "237511"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-12",
+      "top10": "147669",
+      "everyone_else": "229900"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-13",
+      "top10": "148435",
+      "everyone_else": "228098"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-14",
+      "top10": "149403",
+      "everyone_else": "183743"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-15",
+      "top10": "141054",
+      "everyone_else": "451196"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-16",
+      "top10": "141639",
+      "everyone_else": "284449"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-17",
+      "top10": "138089",
+      "everyone_else": "403894"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-18",
+      "top10": "139964",
+      "everyone_else": "364624"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-19",
+      "top10": "141679",
+      "everyone_else": "5292"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-20",
+      "top10": "139348",
+      "everyone_else": "4011"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-21",
+      "top10": "139195",
+      "everyone_else": "3868"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-22",
+      "top10": "140910",
+      "everyone_else": "4040"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-23",
+      "top10": "151096",
+      "everyone_else": "4382"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-24",
+      "top10": "154633",
+      "everyone_else": "4188"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-25",
+      "top10": "156321",
+      "everyone_else": "4885"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-26",
+      "top10": "152614",
+      "everyone_else": "4329"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-27",
+      "top10": "152792",
+      "everyone_else": "4226"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-28",
+      "top10": "146573",
+      "everyone_else": "4297"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-01",
+      "top10": "134457",
+      "everyone_else": "4052"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-02",
+      "top10": "137101",
+      "everyone_else": "5074"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-03",
+      "top10": "144250",
+      "everyone_else": "4925"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-04",
+      "top10": "146516",
+      "everyone_else": "5338"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-05",
+      "top10": "146535",
+      "everyone_else": "4493"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-06",
+      "top10": "144715",
+      "everyone_else": "4142"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-07",
+      "top10": "141571",
+      "everyone_else": "4668"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-08",
+      "top10": "140999",
+      "everyone_else": "3939"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-09",
+      "top10": "144131",
+      "everyone_else": "4363"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-10",
+      "top10": "146167",
+      "everyone_else": "4499"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-11",
+      "top10": "144584",
+      "everyone_else": "4359"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-12",
+      "top10": "151379",
+      "everyone_else": "4703"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-13",
+      "top10": "142236",
+      "everyone_else": "4498"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-14",
+      "top10": "140334",
+      "everyone_else": "3823"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-15",
+      "top10": "137389",
+      "everyone_else": "4055"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-16",
+      "top10": "141803",
+      "everyone_else": "4188"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-17",
+      "top10": "141821",
+      "everyone_else": "3978"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-18",
+      "top10": "138184",
+      "everyone_else": "4032"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-19",
+      "top10": "138895",
+      "everyone_else": "4834"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-20",
+      "top10": "132186",
+      "everyone_else": "5139"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-21",
+      "top10": "131764",
+      "everyone_else": "3857"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-22",
+      "top10": "133095",
+      "everyone_else": "4114"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-23",
+      "top10": "135900",
+      "everyone_else": "4010"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-24",
+      "top10": "136095",
+      "everyone_else": "4006"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-25",
+      "top10": "137168",
+      "everyone_else": "3797"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-26",
+      "top10": "133811",
+      "everyone_else": "4535"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-27",
+      "top10": "131521",
+      "everyone_else": "5370"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-28",
+      "top10": "129480",
+      "everyone_else": "4318"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-29",
+      "top10": "129493",
+      "everyone_else": "3922"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-30",
+      "top10": "134529",
+      "everyone_else": "4069"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-31",
+      "top10": "135011",
+      "everyone_else": "4214"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-01",
+      "top10": "134713",
+      "everyone_else": "4335"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-02",
+      "top10": "132949",
+      "everyone_else": "4234"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-03",
+      "top10": "127969",
+      "everyone_else": "3924"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-04",
+      "top10": "126746",
+      "everyone_else": "3833"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-05",
+      "top10": "125551",
+      "everyone_else": "3694"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-06",
+      "top10": "129963",
+      "everyone_else": "4055"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-07",
+      "top10": "128207",
+      "everyone_else": "4012"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-08",
+      "top10": "129409",
+      "everyone_else": "4584"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-09",
+      "top10": "128714",
+      "everyone_else": "4357"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-10",
+      "top10": "128263",
+      "everyone_else": "4410"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-11",
+      "top10": "127623",
+      "everyone_else": "4169"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-12",
+      "top10": "127246",
+      "everyone_else": "4036"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-13",
+      "top10": "129389",
+      "everyone_else": "9860"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-14",
+      "top10": "123123",
+      "everyone_else": "4278"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-15",
+      "top10": "129163",
+      "everyone_else": "4143"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-16",
+      "top10": "130108",
+      "everyone_else": "3544"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-17",
+      "top10": "127076",
+      "everyone_else": "3906"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-18",
+      "top10": "121510",
+      "everyone_else": "7511"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-19",
+      "top10": "123280",
+      "everyone_else": "4182"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-20",
+      "top10": "125976",
+      "everyone_else": "3982"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-21",
+      "top10": "125892",
+      "everyone_else": "3811"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-22",
+      "top10": "125906",
+      "everyone_else": "4078"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-23",
+      "top10": "122386",
+      "everyone_else": "3811"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-24",
+      "top10": "118604",
+      "everyone_else": "3351"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-25",
+      "top10": "119666",
+      "everyone_else": "2766"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-26",
+      "top10": "115812",
+      "everyone_else": "2804"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-27",
+      "top10": "121181",
+      "everyone_else": "3172"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-28",
+      "top10": "117896",
+      "everyone_else": "3010"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-29",
+      "top10": "120195",
+      "everyone_else": "3034"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-30",
+      "top10": "116020",
+      "everyone_else": "3479"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-01",
+      "top10": "115890",
+      "everyone_else": "3165"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-02",
+      "top10": "125630",
+      "everyone_else": "2794"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-03",
+      "top10": "123283",
+      "everyone_else": "3150"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-04",
+      "top10": "125379",
+      "everyone_else": "3736"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-05",
+      "top10": "128506",
+      "everyone_else": "4738"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-06",
+      "top10": "122213",
+      "everyone_else": "5881"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-07",
+      "top10": "121227",
+      "everyone_else": "3688"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-08",
+      "top10": "120280",
+      "everyone_else": "3757"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-09",
+      "top10": "116895",
+      "everyone_else": "3373"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-10",
+      "top10": "116742",
+      "everyone_else": "3243"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-11",
+      "top10": "121403",
+      "everyone_else": "3422"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-12",
+      "top10": "120504",
+      "everyone_else": "3365"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-13",
+      "top10": "118820",
+      "everyone_else": "3593"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-14",
+      "top10": "117191",
+      "everyone_else": "3310"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-15",
+      "top10": "103854",
+      "everyone_else": "3181"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-16",
+      "top10": "108713",
+      "everyone_else": "2788"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-17",
+      "top10": "112569",
+      "everyone_else": "3394"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-18",
+      "top10": "114486",
+      "everyone_else": "3605"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-19",
+      "top10": "115161",
+      "everyone_else": "3398"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-20",
+      "top10": "116535",
+      "everyone_else": "3457"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-21",
+      "top10": "111970",
+      "everyone_else": "4346"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-22",
+      "top10": "117555",
+      "everyone_else": "7641"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-23",
+      "top10": "117398",
+      "everyone_else": "5232"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-24",
+      "top10": "117464",
+      "everyone_else": "5296"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-25",
+      "top10": "118255",
+      "everyone_else": "7878"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-26",
+      "top10": "117872",
+      "everyone_else": "6514"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-27",
+      "top10": "113432",
+      "everyone_else": "4779"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-28",
+      "top10": "111436",
+      "everyone_else": "3738"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-29",
+      "top10": "110398",
+      "everyone_else": "5364"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-30",
+      "top10": "109016",
+      "everyone_else": "3639"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-31",
+      "top10": "109027",
+      "everyone_else": "4558"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-01",
+      "top10": "113797",
+      "everyone_else": "4160"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-02",
+      "top10": "113774",
+      "everyone_else": "4584"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-03",
+      "top10": "115232",
+      "everyone_else": "5837"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-04",
+      "top10": "114090",
+      "everyone_else": "4863"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-05",
+      "top10": "111737",
+      "everyone_else": "4064"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-06",
+      "top10": "108505",
+      "everyone_else": "2799"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-07",
+      "top10": "108722",
+      "everyone_else": "3148"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-08",
+      "top10": "110054",
+      "everyone_else": "13782"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-09",
+      "top10": "108601",
+      "everyone_else": "3693"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-10",
+      "top10": "111582",
+      "everyone_else": "3027"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-11",
+      "top10": "108733",
+      "everyone_else": "3467"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-12",
+      "top10": "108763",
+      "everyone_else": "3152"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-13",
+      "top10": "107240",
+      "everyone_else": "2894"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-14",
+      "top10": "106255",
+      "everyone_else": "3777"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-15",
+      "top10": "112752",
+      "everyone_else": "5146"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-16",
+      "top10": "110830",
+      "everyone_else": "3288"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-17",
+      "top10": "110711",
+      "everyone_else": "5113"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-18",
+      "top10": "107211",
+      "everyone_else": "4261"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-19",
+      "top10": "107395",
+      "everyone_else": "2868"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-20",
+      "top10": "103857",
+      "everyone_else": "2539"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-21",
+      "top10": "106208",
+      "everyone_else": "2927"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-22",
+      "top10": "108993",
+      "everyone_else": "3039"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-23",
+      "top10": "109960",
+      "everyone_else": "3026"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-24",
+      "top10": "107201",
+      "everyone_else": "3059"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-25",
+      "top10": "106030",
+      "everyone_else": "3698"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-26",
+      "top10": "103075",
+      "everyone_else": "3314"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-27",
+      "top10": "102949",
+      "everyone_else": "3107"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-28",
+      "top10": "102509",
+      "everyone_else": "3425"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-29",
+      "top10": "104861",
+      "everyone_else": "3950"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-30",
+      "top10": "103326",
+      "everyone_else": "4404"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-01",
+      "top10": "101034",
+      "everyone_else": "3067"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-02",
+      "top10": "102028",
+      "everyone_else": "3816"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-03",
+      "top10": "101547",
+      "everyone_else": "2918"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-04",
+      "top10": "101191",
+      "everyone_else": "2634"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-05",
+      "top10": "103571",
+      "everyone_else": "2613"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-06",
+      "top10": "103963",
+      "everyone_else": "2808"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-07",
+      "top10": "102192",
+      "everyone_else": "2961"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-08",
+      "top10": "102235",
+      "everyone_else": "2917"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-09",
+      "top10": "99840",
+      "everyone_else": "2731"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-10",
+      "top10": "99813",
+      "everyone_else": "2587"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-11",
+      "top10": "88041",
+      "everyone_else": "2142"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-12",
+      "top10": "87590",
+      "everyone_else": "2281"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-13",
+      "top10": "89354",
+      "everyone_else": "2529"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-14",
+      "top10": "89703",
+      "everyone_else": "2702"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-15",
+      "top10": "88259",
+      "everyone_else": "2680"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-16",
+      "top10": "86414",
+      "everyone_else": "2603"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-17",
+      "top10": "85277",
+      "everyone_else": "3339"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-18",
+      "top10": "84583",
+      "everyone_else": "2436"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-19",
+      "top10": "83703",
+      "everyone_else": "2206"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-20",
+      "top10": "86322",
+      "everyone_else": "2352"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-21",
+      "top10": "87323",
+      "everyone_else": "2605"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-22",
+      "top10": "87131",
+      "everyone_else": "2552"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-23",
+      "top10": "86265",
+      "everyone_else": "2536"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-24",
+      "top10": "82759",
+      "everyone_else": "2532"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-25",
+      "top10": "82391",
+      "everyone_else": "3712"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-26",
+      "top10": "82786",
+      "everyone_else": "2932"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-27",
+      "top10": "84394",
+      "everyone_else": "2734"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-28",
+      "top10": "83583",
+      "everyone_else": "2822"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-29",
+      "top10": "83612",
+      "everyone_else": "2763"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-30",
+      "top10": "82654",
+      "everyone_else": "2815"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-31",
+      "top10": "79187",
+      "everyone_else": "2885"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-01",
+      "top10": "79739",
+      "everyone_else": "2453"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-02",
+      "top10": "79405",
+      "everyone_else": "2324"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-03",
+      "top10": "82624",
+      "everyone_else": "2571"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-04",
+      "top10": "82838",
+      "everyone_else": "2713"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-05",
+      "top10": "81582",
+      "everyone_else": "2479"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-06",
+      "top10": "81422",
+      "everyone_else": "2762"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-07",
+      "top10": "78826",
+      "everyone_else": "3443"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-08",
+      "top10": "76405",
+      "everyone_else": "2109"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-09",
+      "top10": "78147",
+      "everyone_else": "2271"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-10",
+      "top10": "80108",
+      "everyone_else": "2502"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-11",
+      "top10": "80218",
+      "everyone_else": "2581"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-12",
+      "top10": "79716",
+      "everyone_else": "2450"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-13",
+      "top10": "80170",
+      "everyone_else": "2402"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-14",
+      "top10": "77285",
+      "everyone_else": "2515"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-15",
+      "top10": "77397",
+      "everyone_else": "2415"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-16",
+      "top10": "77747",
+      "everyone_else": "2416"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-17",
+      "top10": "78233",
+      "everyone_else": "2343"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-18",
+      "top10": "77698",
+      "everyone_else": "2357"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-19",
+      "top10": "77817",
+      "everyone_else": "3114"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-20",
+      "top10": "79165",
+      "everyone_else": "3051"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-21",
+      "top10": "78230",
+      "everyone_else": "3437"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-22",
+      "top10": "76417",
+      "everyone_else": "3219"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-23",
+      "top10": "76549",
+      "everyone_else": "2845"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-24",
+      "top10": "78020",
+      "everyone_else": "3353"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-25",
+      "top10": "76648",
+      "everyone_else": "2816"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-26",
+      "top10": "77880",
+      "everyone_else": "3626"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-27",
+      "top10": "77304",
+      "everyone_else": "4221"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-28",
+      "top10": "75565",
+      "everyone_else": "2810"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-29",
+      "top10": "74805",
+      "everyone_else": "2129"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-30",
+      "top10": "74187",
+      "everyone_else": "2768"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-31",
+      "top10": "75051",
+      "everyone_else": "2739"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-01",
+      "top10": "74102",
+      "everyone_else": "3028"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-02",
+      "top10": "74366",
+      "everyone_else": "2761"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-03",
+      "top10": "74732",
+      "everyone_else": "2875"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-04",
+      "top10": "73219",
+      "everyone_else": "2823"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-05",
+      "top10": "71123",
+      "everyone_else": "3165"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-06",
+      "top10": "70194",
+      "everyone_else": "4458"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-07",
+      "top10": "70803",
+      "everyone_else": "4908"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-08",
+      "top10": "68460",
+      "everyone_else": "3308"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-09",
+      "top10": "68119",
+      "everyone_else": "3845"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-10",
+      "top10": "67446",
+      "everyone_else": "3713"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-11",
+      "top10": "66369",
+      "everyone_else": "3645"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-12",
+      "top10": "63864",
+      "everyone_else": "3306"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-13",
+      "top10": "58492",
+      "everyone_else": "3009"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-14",
+      "top10": "46351",
+      "everyone_else": "3621"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-15",
+      "top10": "40834",
+      "everyone_else": "4413"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-16",
+      "top10": "38734",
+      "everyone_else": "3783"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-17",
+      "top10": "38500",
+      "everyone_else": "6249"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-18",
+      "top10": "48093",
+      "everyone_else": "14872"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-19",
+      "top10": "44744",
+      "everyone_else": "7647"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-20",
+      "top10": "47601",
+      "everyone_else": "9865"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-21",
+      "top10": "49216",
+      "everyone_else": "11082"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-22",
+      "top10": "48911",
+      "everyone_else": "8886"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-23",
+      "top10": "47575",
+      "everyone_else": "8530"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-24",
+      "top10": "45893",
+      "everyone_else": "8134"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-25",
+      "top10": "47411",
+      "everyone_else": "9889"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-26",
+      "top10": "46831",
+      "everyone_else": "7287"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-27",
+      "top10": "50453",
+      "everyone_else": "13136"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-28",
+      "top10": "49380",
+      "everyone_else": "12391"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-29",
+      "top10": "50498",
+      "everyone_else": "12492"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-30",
+      "top10": "49506",
+      "everyone_else": "9243"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-01",
+      "top10": "48383",
+      "everyone_else": "13722"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-02",
+      "top10": "47272",
+      "everyone_else": "70805"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-03",
+      "top10": "48089",
+      "everyone_else": "128630"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-04",
+      "top10": "49574",
+      "everyone_else": "127622"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-05",
+      "top10": "49705",
+      "everyone_else": "46287"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-06",
+      "top10": "49343",
+      "everyone_else": "75466"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-07",
+      "top10": "48042",
+      "everyone_else": "127732"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-08",
+      "top10": "50102",
+      "everyone_else": "32345"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-09",
+      "top10": "47298",
+      "everyone_else": "6652"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-10",
+      "top10": "46875",
+      "everyone_else": "10006"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-11",
+      "top10": "47849",
+      "everyone_else": "7016"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-12",
+      "top10": "51798",
+      "everyone_else": "7366"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-13",
+      "top10": "49784",
+      "everyone_else": "5901"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-14",
+      "top10": "52305",
+      "everyone_else": "6310"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-15",
+      "top10": "48390",
+      "everyone_else": "7113"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-16",
+      "top10": "49211",
+      "everyone_else": "5725"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-17",
+      "top10": "48761",
+      "everyone_else": "5561"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-18",
+      "top10": "47515",
+      "everyone_else": "4295"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-19",
+      "top10": "48089",
+      "everyone_else": "5018"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-20",
+      "top10": "46866",
+      "everyone_else": "5250"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-21",
+      "top10": "48084",
+      "everyone_else": "5835"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-22",
+      "top10": "46310",
+      "everyone_else": "5113"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-23",
+      "top10": "46686",
+      "everyone_else": "4528"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-24",
+      "top10": "45882",
+      "everyone_else": "4296"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-25",
+      "top10": "45266",
+      "everyone_else": "3979"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-26",
+      "top10": "45656",
+      "everyone_else": "3945"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-27",
+      "top10": "45513",
+      "everyone_else": "16342"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-28",
+      "top10": "45106",
+      "everyone_else": "4167"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-29",
+      "top10": "44327",
+      "everyone_else": "4965"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-30",
+      "top10": "43001",
+      "everyone_else": "4348"
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-31",
+      "top10": "42535",
+      "everyone_else": "3484"
+    }
+  ],
+  "note": "Successful external native TRANSFER outflows; internal moves and not_received excluded. No wNEAR transfers found. Frozen receiver means come only from signer-top10.json, not a new full receiver ranking."
+}
