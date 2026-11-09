@@ -4,6 +4,7 @@ import { ROOT, environment, sleep } from './sources.mjs';
 import { atomic } from './store.mjs';
 import { pullSwapsResumable, PACE_MS, readJSON } from './swaps.mjs';
 import { NEAR_ASSET_IDS, POSITION_WINDOW, RECIPIENT_DIR } from './position-config.mjs';
+import { participantPulls, reconcileParticipants } from './participants.mjs';
 
 // Private, resumable collection. Launch with a managed detached process.
 const dir = resolve(ROOT, RECIPIENT_DIR), lockPath = resolve(dir, 'pull.lock');
@@ -37,19 +38,27 @@ try {
     await atomic(resolve(dir, 'rate.json'), JSON.stringify({ at: previous }) + '\n');
     return fetch(url, init);
   };
-  for (const [side, name] of [['toTokenId', 'buys'], ['fromTokenId', 'sells']]) {
-    await log(`Starting ${name} token filter; private fields are never logged.`);
+  for (const pull of participantPulls()) {
+    const name = pull.directory;
+    await log(`Starting ${name} single-asset filter; private fields are never logged.`);
     const result = await pullSwapsResumable(POSITION_WINDOW, env.NEAR_INTENTS_JWT, {
-      dir: resolve(dir, name), tokenFilter: { side, ids: NEAR_ASSET_IDS }, retainParticipants: true,
+      dir: resolve(dir, name), tokenFilter: { side: pull.filter, ids: [pull.asset] }, retainParticipants: true,
       request, log: message => { log(`${name}: ${message}`).catch(() => {}); }
     });
     await log(`${name} complete: ${result.pages} pages, ${result.rows} rows.`);
   }
   await atomic(resolve(dir, 'complete.json'), JSON.stringify({ complete: true, completedAt: new Date().toISOString() }) + '\n');
-  await log('Both filtered pulls complete. Reconciliation is required before further source work.');
+  await log('All eight pulls complete; reconciling every asset and both totals against saved pages.');
+  const reconciliation = await reconcileParticipants();
+  await atomic(resolve(dir, 'reconciliation.json'), JSON.stringify(reconciliation, null, 2) + '\n');
+  for (const comparison of reconciliation.comparisons) await log(JSON.stringify(comparison));
+  if (!reconciliation.pass) {
+    await log('STOPPED: reconciliation failed; no further source work is permitted.');
+    process.exitCode = 2;
+  } else await log('Reconciliation PASS for every asset and both totals.');
 } catch (error) {
   // Do not print error objects, remote bodies, URLs, addresses, or credentials.
-  const safe = /^(Cannot acquire|A participant|Addendum 1|NEAR_INTENTS_JWT|Explorer |Invalid |Saved |Duplicate |Both )/.test(error.message || '')
+  const safe = /^(Cannot acquire|A participant|Addendum 1|NEAR_INTENTS_JWT|Explorer |Invalid |Saved |Duplicate |Participant |Conflicting duplicate)/.test(error.message || '')
     ? error.message : 'Participant pull failed; private details omitted.';
   await log(`STOPPED: ${safe}`).catch(() => {});
   process.exitCode = 1;

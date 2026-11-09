@@ -98,6 +98,9 @@ export async function pullSwapsResumable(window, jwt, options = {}) {
   if (!jwt) throw new Error('NEAR_INTENTS_JWT missing; add the partner JWT to .env.');
   const { dir = swapDir(window), request = fetch, pause = sleep, log = () => {}, maxPages = Infinity } = options;
   const { tokenFilter, retainParticipants = false } = options;
+  if (tokenFilter && Array.isArray(tokenFilter.ids) && tokenFilter.ids.length !== 1) {
+    throw new Error('Explorer token filters require exactly one token ID per pull.');
+  }
   if (tokenFilter && (!['toTokenId', 'fromTokenId'].includes(tokenFilter.side) ||
       !Array.isArray(tokenFilter.ids) || !tokenFilter.ids.length ||
       tokenFilter.ids.some(id => typeof id !== 'string' || !id))) throw new Error('Invalid Explorer token filter.');
