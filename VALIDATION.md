@@ -6,7 +6,7 @@ Checked on 2026-11-09 (UTC).
 
 - `npm run check`: syntax checks passed for every module.
 - `npm audit --offline`: zero vulnerabilities (no dependencies).
-- `npm test`: 43 tests passed, none failed or skipped. Rule tests use synthetic fixtures; public-data and CLI checks use the committed snapshot. They cover:
+- `npm test`: 45 tests passed, none failed or skipped. Rule tests use synthetic fixtures; public-data and CLI checks use the committed snapshot. They cover:
   - the literal `block_date` guard, run on every SQL file and on known bad patterns, including an unfiltered `MIN(block_date)`;
   - the approved query windows;
   - `us-east1` on every BigQuery call;
@@ -26,6 +26,7 @@ Checked on 2026-11-09 (UTC).
   - the T2 sensitivity check leaving the official verdict, start rule and every published official T2 value unchanged, and using the official change method from its fixed start;
   - `dashboard/thesis.html` generated from the real `THESIS.md` with no metric or evidence tags, escaped markup, no scripts and the dashboard's content security policy;
   - compact chart axis ticks that fit the left margin, and the excluded-weeks label placed above the plot area;
+  - first-screen numbers matching the published public-snapshot metrics, with no T1/T2/T3 or r-value labels before the first-screen boundary;
   - daily aggregation, full-week selection and rejection of incomplete daily windows;
   - separate pre-/post-protocol-87 bands and an unresolved activation week;
   - thesis table and tagged-claim mismatches failing without rewriting prose;
@@ -68,6 +69,16 @@ Run over all 7,513 saved pages after `complete.json` was written (2026-11-09T12:
   - T3 therefore uses falls as burn and rises as issuance: an offset of 1.56%, with 52 of 52 weeks at or below 5%, so **FAIL**. The field-based offset (1.90%) is reported for comparison only.
   - Net supply change from rises minus falls (31,623,405.56 NEAR) equals the last closing supply minus the first opening supply.
   - Exactly one block in the window has no parent inside it (the first block), as expected.
+
+## Presentation checks
+
+- The final rebuild retains T1 FAIL, T2 CAN'T TELL and T3 FAIL. Research inputs, SQL, rules, official metrics and `THESIS.md` are unchanged.
+- The desktop browser pane rejects viewport emulation because its size follows the pane. Exact-size checks therefore use `tests/layout.html`, embedding the actual generated page at 1280×720 and widths 320, 768, 1024 and 1440. No page-level horizontal overflow at any width; all chart images load. At 1280×720 the evidence button occupies y=435.16–475.16, detailed rules start at y=1051.19, and no technical test or r-value labels appear in the visible first screen.
+- Phone-width layout stacks the two numbers and wraps navigation and claims without clipping. All first-screen content remains reachable by normal scrolling.
+- Axe-core 4.12.1 (`wcag2a,wcag2aa`) reports zero violations on the responsive dashboard harness and thesis page. An initial wide-table keyboard-focus finding was fixed with focusable table wrappers. Offscreen table cells remain marked incomplete for automated contrast review; computed foreground/background checks give a minimum 4.63:1 for both dashboard result tables and thesis tables, above 4.5:1.
+- The real **See the evidence** link sets `#signers` and scrolls the first chart to y=47.75 after smooth scrolling settles.
+- Seven real screenshots in `docs/screens/` were captured from the final rebuilt pages at the browser pane's native size, not from the layout harness. They are 79,660–191,614 bytes each, below 400 KB, and have one-sentence captions in README.
+- During validation, the artifact-equality CLI test caught HTML generated before the table-focus change. Rebuilding the generated output resolved the mismatch; the final full suite passes all 45 tests.
 
 ## Clean-clone rebuild
 

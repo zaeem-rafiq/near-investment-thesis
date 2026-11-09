@@ -277,6 +277,30 @@ test('chart axis ticks fit the left margin and the excluded label sits above the
 
 // Official T2 values as published before the sensitivity check existed (dashboard/NUMBERS.md at 16587a8).
 const OFFICIAL_T2 = `t2.verdict=CAN'T TELL|t2.start=2025-04-14|t2.changes=78|t2.weeks=81|t2.startSwaps=8,568|t2.weeksBelowMinAfterStart=15|t2.nextWeekAtMin=2025-08-04|t2.volumeUnavailable.weeks=2026-02-02|t2.volumeUnavailable.missingUsd=2|t2.volumeUnavailable.swaps=182,281|t2.lag1.pairs=77|t2.lag1.rv=0|t2.lag1.rp=0.284|t2.lag1.advantage=-0.284|t2.lag1.half1.rv=-0.003|t2.lag1.half1.rp=0.193|t2.lag1.half2.rv=0.121|t2.lag1.half2.rp=0.317|t2.lag1.ci.low=-0.613|t2.lag1.ci.high=0.179|t2.lag1.favours=neither|t2.lag2.pairs=76|t2.lag2.rv=-0.065|t2.lag2.rp=0.039|t2.lag2.advantage=-0.104|t2.lag2.half1.rv=-0.186|t2.lag2.half1.rp=-0.082|t2.lag2.half2.rv=0.151|t2.lag2.half2.rp=0.038|t2.lag2.ci.low=-0.385|t2.lag2.ci.high=0.263|t2.lag2.favours=neither|t2.lag4.pairs=74|t2.lag4.rv=0.013|t2.lag4.rp=0.009|t2.lag4.advantage=0.004|t2.lag4.half1.rv=0.091|t2.lag4.half1.rp=-0.012|t2.lag4.half2.rv=-0.005|t2.lag4.half2.rp=0.002|t2.lag4.ci.low=-0.241|t2.lag4.ci.high=0.201|t2.lag4.favours=neither|t2.lag8.pairs=70|t2.lag8.rv=-0.004|t2.lag8.rp=-0.187|t2.lag8.advantage=0.183|t2.lag8.half1.rv=-0.056|t2.lag8.half1.rp=-0.174|t2.lag8.half2.rv=-0.177|t2.lag8.half2.rp=-0.165|t2.lag8.ci.low=0.02|t2.lag8.ci.high=0.304|t2.lag8.favours=neither`;
+test('first-screen numbers match the published public-snapshot metrics', async () => {
+  const { manifest, sources } = await loadSources();
+  const files = new Map(), a = analyse(sources), v = metricValues(a);
+  await render(manifest, sources, async (n, body) => files.set(n, body));
+  const first = files.get('index.html').split('<!-- first-screen:end -->')[0];
+  assert.match(first, /Does on-chain evidence support a long-term case for NEAR\?/);
+  assert.match(first, /Not on this evidence\. None of three claims passed\./);
+  assert.ok(first.includes(`data-metric="signers-change">${v['t1.signers.change']}</strong>`));
+  assert.ok(first.includes(`data-metric="burn-offset">${v['t3.offset']}</strong>`));
+  assert.ok(first.includes(`${(a.t3.totals.burnt / 1e6).toFixed(1)} million NEAR burned`));
+  assert.ok(first.includes(`${(a.t3.totals.issued / 1e6).toFixed(1)} million issued`));
+  assert.match(first, /href="#signers">See the evidence<\/a>/);
+});
+test('first screen uses plain labels and keeps technical results below it', async () => {
+  const { manifest, sources } = await loadSources(), files = new Map();
+  await render(manifest, sources, async (n, body) => files.set(n, body));
+  const [first, rest] = files.get('index.html').split('<!-- first-screen:end -->');
+  assert.doesNotMatch(first, /\bT[123]\b|r volume|r price|r-value|Snapshot|correlations by lag/);
+  assert.match(rest, /Sensitivity check, not official/);
+  assert.match(rest, /correlation with volume/);
+  assert.match(rest, /correlation with price/);
+  assert.doesNotMatch(rest, />r volume<|>r price</);
+  assert.ok(!rest.includes('<div class="table-wrap">'), 'wide result tables must be keyboard-focusable');
+});
 test('the sensitivity check leaves the official T2 verdict, start rule and every published number unchanged', async () => {
   const { sources } = await loadSources();
   const a = analyse(sources), v = metricValues(a);

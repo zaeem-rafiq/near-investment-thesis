@@ -1,27 +1,68 @@
 # NEAR / Evidence ledger
 
-A reproducible NEAR research pipeline for **NEAR Hackathon, Investment Thesis (`thesis`)**.
-It runs three tests whose investment pass/fail rules were fixed before metrics were computed. A later T3 reconciliation rule is disclosed in `THESIS.md`. The dashboard contains every chart, value table and query; the thesis is maintained by hand.
+We tested three reasons to own NEAR against public chain data and 7,509,299 real swaps, and none of them passed.
 
-| Test | Question | Data |
-|---|---|---|
-| T1 | Is NEAR usage broadening? | BigQuery: signers, monthly repeat accounts, contract receivers (one-day-a-week sample), top-10 signer share |
-| T2 | Does 1Click swap volume lead usage better than the NEAR price? | 1Click Explorer API, Coinbase NEAR-USD, BigQuery signers |
-| T3 | Does usage reach holders through burn? | BigQuery: `blocks.total_supply`, recorded burn fields |
+Mean daily signing accounts fell **73.1% year over year**. Fee burn offset **1.56% of new supply**, about **0.5 million NEAR burned versus 32.1 million issued**. Signers are accounts that signed a transaction, not people; burn is NEAR destroyed as fees.
 
-The results are in `THESIS.md` and `dashboard/index.html`. The swap data is **1Click only**, not all NEAR Intents activity.
+| Claim | Result |
+|---|---|
+| More accounts are using NEAR, across more apps (T1). | **FAIL** |
+| 1Click swap volume leads account activity better than NEAR’s price does (T2). | **CAN'T TELL** |
+| Fees destroy enough NEAR to meaningfully offset new supply (T3). | **FAIL** |
+
+The investment pass/fail rules were fixed before metrics were computed. A later T3 reconciliation rule is disclosed in `THESIS.md`; it was not pre-registered.
+
+## Problem and project
+
+Growing activity and swap volume do not automatically make a long-term case for owning a token. This project checks whether NEAR usage is broadening, whether swaps lead that usage better than price, and whether fees offset new supply.
+
+Built for **NEAR Hackathon, Investment Thesis (`thesis`)**, the project is an offline-reproducible research pipeline, static dashboard and hand-written thesis. BigQuery NEAR mainnet tables provide account activity and supply changes; 1Click, the NEAR Intents swap service, provides observed swaps; Coinbase provides the price comparison. The swap data is **1Click only**, not all NEAR Intents activity.
+
+The dashboard exposes every chart, value table and query. `THESIS.md` gives the rules, limits and what would change the conclusion. No price target or trading recommendation is implied.
 
 ## Try it (offline, no credentials)
 
 Requires Node.js 22 or newer. No npm dependencies, no install step.
 
-1. Run `npm test`. You should see 43 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
+1. Run `npm test`. You should see 45 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
 2. Run `npm run rebuild`. This rebuilds charts and number tables in `dashboard/` from `data/public/`, with no credentials or network access. It verifies, but never overwrites, `THESIS.md`. The last line prints the T1, T2 and T3 results.
-3. Open `dashboard/index.html`. You'll see the three results, then every chart with its query and an expandable values table. The thesis link opens `dashboard/thesis.html`, a readable page generated from `THESIS.md` during rebuild, with the metric tags removed.
+3. Run `open dashboard/index.html` on macOS, or open that file in any browser. You'll see the conclusion and two headline numbers; click **See the evidence** to reach the first chart, with its query and expandable values table. The thesis link opens `dashboard/thesis.html`, a readable page generated from `THESIS.md` during rebuild, with the metric tags removed.
 
 The committed BigQuery aggregates, price candles and daily 1Click totals reproduce all three results on a fresh clone: T1 FAIL, T2 CAN'T TELL, T3 FAIL. `data/raw/` and `.env` are not needed for rebuild.
 
 `dashboard/NUMBERS.md` is generated. `THESIS.md` is not. If the evidence table or a `<!-- metric:key -->value<!-- /metric -->` claim in the thesis differs from public data, rebuild exits nonzero. Review the generated table, update the thesis by hand, and rerun. Keep all computed claims in the evidence table or tagged spans; dates, source facts and rule thresholds are separate. This is structured metric verification, not natural-language fact checking.
+
+## Screenshots
+
+Real browser captures of the final rebuilt dashboard and thesis, in reading order; each file is below 400 KB.
+
+![Dashboard headline and computed metrics](docs/screens/01-headline.png)
+
+The dashboard leads with the conclusion, the signer decline and the fee-burn offset.
+
+![Three claims and their results](docs/screens/02-claims.png)
+
+Plain-language claims show two failures and one undecided result before the technical details.
+
+![Daily transaction signers](docs/screens/03-signers.png)
+
+The signer chart shows observed daily account activity, with the query and exact values available below.
+
+![Successful 1Click swaps](docs/screens/04-swaps.png)
+
+The weekly swap chart marks early weeks excluded by the fixed start rule.
+
+![Official correlations and labeled sensitivity check](docs/screens/05-correlations.png)
+
+The official correlations remain separate from the explicitly non-official sensitivity check.
+
+![Burn and new supply](docs/screens/06-burn.png)
+
+Weekly fee burn stays small beside new supply, explaining the failed holder-value claim.
+
+![Readable thesis with claims and evidence](docs/screens/07-thesis.png)
+
+The generated thesis page presents the hand-written argument and its unchanged results.
 
 ## Reproduce from live sources
 
@@ -34,6 +75,14 @@ The committed BigQuery aggregates, price candles and daily 1Click totals reprodu
 To export already saved data without network calls, run `npm run export-public`. This does not read swap pages. After the pull finishes, run `npm run export-public -- --swaps` to include exact daily 1Click totals. Do not refresh or export swaps while the pull is running.
 
 Refresh reuses a saved BigQuery result when its SQL text and literal date window match. `npm run refresh -- --rescan` forces new jobs. `MAX_BYTES_BILLED` (default 300 GB) caps one refresh. Separately, a ledger in `data/raw/bigquery/ledger.json` refuses any run that would push cumulative billed scans past 1 TB.
+
+## Source-tool features used
+
+- **BigQuery literal `block_date` filters:** partition-scoped queries plus dry runs and cached results kept cumulative billed scans to **242.87 GB**.
+- **BigQuery `transactions` and `blocks` tables:** signer counts test account activity, while linked block `total_supply` changes measure fee burn against new issuance.
+- **1Click Explorer API status and timestamp filters:** `statuses=SUCCESS` selects successful swaps and bounded timestamp paging retrieves the **7,509,299** observed swaps without losing reused deposit addresses.
+
+These are the concrete source-tool features used, not additional mandatory sponsor integrations (Q-011).
 
 ## Queries
 

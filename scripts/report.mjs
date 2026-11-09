@@ -598,7 +598,7 @@ export function thesisHTML(md) {
       flush();
       const head = cells(line), body = [];
       for (i++; lines[i + 1]?.startsWith('|'); ) body.push(cells(lines[++i]));
-      out.push(`<div class="table-wrap"><table><thead><tr>${head.map(c => `<th scope="col">${inlineMd(c)}</th>`).join('')}</tr></thead><tbody>${body.map(r => `<tr>${r.map(c => `<td>${inlineMd(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
+      out.push(`<div class="table-wrap" tabindex="0"><table><thead><tr>${head.map(c => `<th scope="col">${inlineMd(c)}</th>`).join('')}</tr></thead><tbody>${body.map(r => `<tr>${r.map(c => `<td>${inlineMd(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
     } else if (li) { if (para.length) { const l = list; list = []; flush(); list = l; } list.push(li[1]); }
     else if (!line.trim()) flush();
     else if (list.length && /^\s+/.test(line)) list[list.length - 1] += ' ' + line.trim();
@@ -638,25 +638,42 @@ export async function render(manifest, sources, write, root = ROOT) {
       <p>${escape(def.text)}</p>
       ${svg ? `<img src="charts/${def.id}.svg" alt="${escape(def.title)}; exact values in the table below" width="880" height="280">` : `<div class="empty"><strong>Data unavailable</strong><p>${escape(reason || 'No observed values.')}</p><span>No synthetic series or zero-filled history.</span></div>`}
       <details><summary>Query &amp; method</summary><pre><code>${escape(method)}</code></pre></details>
-      <details><summary>Values &amp; gaps</summary><div class="table-wrap"><table><caption>${escape(def.title)} (${escape(def.unit)})</caption><thead><tr><th scope="col">Period</th><th scope="col">Value</th>${def.second ? `<th scope="col">${escape(def.second)}</th>` : ''}${def.test === 'T2' ? '<th scope="col">T2 status</th>' : ''}</tr></thead><tbody>${rows}</tbody></table></div></details>
+      <details><summary>Values &amp; gaps</summary><div class="table-wrap" tabindex="0"><table><caption>${escape(def.title)} (${escape(def.unit)})</caption><thead><tr><th scope="col">Period</th><th scope="col">Value</th>${def.second ? `<th scope="col">${escape(def.second)}</th>` : ''}${def.test === 'T2' ? '<th scope="col">T2 status</th>' : ''}</tr></thead><tbody>${rows}</tbody></table></div></details>
       </section>`);
   }
   const report = '# Generated evidence tables\n\n' + numberTables(a);
   const verdictRow = (id, label, r) => `<dt>${escape(id)}. ${escape(label)}</dt><dd><strong class="${VERDICT_CLASS[r.verdict]}">${escape(r.verdict)}</strong>${r.reasons.length ? `<p>${escape(r.reasons.join(' '))}</p>` : ''}</dd>`;
-  const lagTable = a.t2.lags.length ? `<div class="table-wrap"><table><caption>T2 correlations by lag (weekly % changes, from ${escape(a.t2.start)})</caption><thead><tr><th>Lag</th><th>Pairs</th><th>r volume</th><th>r price</th><th>Advantage</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${a.t2.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td><td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
+  const values = metricValues(a);
+  const passed = [a.t1, a.t2, a.t3].filter(r => r.verdict === 'PASS').length;
+  const headline = passed ? `${passed} of three claims passed.` : 'Not on this evidence. None of three claims passed.';
+  const millions = n => n == null ? 'Unavailable' : fmt(n / 1e6, 1);
+  const lagTable = a.t2.lags.length ? `<div class="table-wrap" tabindex="0"><table><caption>T2 correlations by lag (weekly % changes, from ${escape(a.t2.start)})</caption><thead><tr><th>Lag</th><th>Pairs</th><th>correlation with volume</th><th>correlation with price</th><th>Advantage</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${a.t2.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td><td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
   const sens = a.t2sens;
-  const sensTable = sens?.lags.length ? `<div class="table-wrap"><table><caption>Sensitivity check, not official: T2 method from ${escape(sens.start)}, added after the official result was seen. It does not change the official T2 result, which stays ${escape(a.t2.verdict)}. Same lines on this window would give ${escape(sens.verdict)} (not official).</caption><thead><tr><th>Lag</th><th>Pairs</th><th>r volume</th><th>r price</th><th>Advantage</th><th>First half (r volume / r price)</th><th>Second half (r volume / r price)</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${sens.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td>${l.halves.map(h => `<td>${fmt(h.rv, 3)} / ${fmt(h.rp, 3)}</td>`).join('')}<td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
+  const sensTable = sens?.lags.length ? `<div class="table-wrap" tabindex="0"><table><caption>Sensitivity check, not official: T2 method from ${escape(sens.start)}, added after the official result was seen. It does not change the official T2 result, which stays ${escape(a.t2.verdict)}. Same lines on this window would give ${escape(sens.verdict)} (not official).</caption><thead><tr><th>Lag</th><th>Pairs</th><th>correlation with volume</th><th>correlation with price</th><th>Advantage</th><th>First half (correlation with volume / correlation with price)</th><th>Second half (correlation with volume / correlation with price)</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${sens.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td>${l.halves.map(h => `<td>${fmt(h.rv, 3)} / ${fmt(h.rp, 3)}</td>`).join('')}<td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
   const statusRows = Object.entries(sources).map(([name, s]) => `<tr><th scope="row">${escape(name)}</th><td>${escape(s.reason || (s.entry?.reused ? 'Cached result reused' : 'Fetched'))}</td></tr>`).join('');
   await write('NUMBERS.md', report);
   await write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="${CSP}">
     <title>NEAR / Evidence ledger</title><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to evidence</a>
-    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="#status">Source status</a><a href="#signers">T1</a><a href="#swaps">T2</a><a href="#burn">T3</a><a href="thesis.html">Read thesis</a></nav>
-    <main id="main"><header class="intro"><p>Investment Thesis / NEAR Hackathon</p><h1>Three tests, fixed before the results.</h1><p>Each test can pass, fail or end as “can’t tell”. Rules are in the thesis.</p>
-    <p class="window">Snapshot ${escape(manifest.id)}${manifest.fetchedAt ? ` · fetched ${escape(manifest.fetchedAt)}` : ' · no data fetched'}</p></header>
-    <section class="hypotheses"><h2>Results</h2><dl>${verdictRow('T1', 'Usage is broadening', a.t1)}${verdictRow('T2', '1Click volume leads usage better than NEAR price', a.t2)}${verdictRow('T3', 'Usage reaches holders through burn', a.t3)}</dl>${lagTable}${sensTable}</section>
-    <section id="status"><h2>Source status</h2><div class="table-wrap"><table><thead><tr><th>Source</th><th>Status</th></tr></thead><tbody>${statusRows}</tbody></table></div>${a.duplicates.length ? `<p>Duplicate block rows: ${escape(a.duplicates.map(d => `${d.date} (${d.duplicates})`).join(', '))}.</p>` : ''}</section>
+    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a><a href="thesis.html">Read thesis</a></nav>
+    <main id="main"><header class="first-screen">
+    <h1>Does on-chain evidence support a long-term case for NEAR?</h1>
+    <p class="answer">${escape(headline)}</p>
+    <div class="headline-metrics">
+      <div><strong data-metric="signers-change">${escape(values['t1.signers.change'])}</strong><p>Mean daily signing accounts, year over year.</p><p class="source">Signers = accounts that signed a transaction, not people.</p></div>
+      <div><strong data-metric="burn-offset">${escape(values['t3.offset'])}</strong><p>Fee burn offset of new supply.</p><p class="source">~${millions(a.t3.totals?.burnt)} million NEAR burned vs ${millions(a.t3.totals?.issued)} million issued.<br>Burn = NEAR destroyed as fees.</p></div>
+    </div>
+    <a class="evidence-button" href="#signers">See the evidence</a>
+    </header><!-- first-screen:end -->
+    <section class="plain-claims"><h2>Three claims, three results</h2><p>1Click is the NEAR Intents swap service; this sample is not all Intents activity.</p>
+    <ul><li><span>More accounts are using NEAR, across more apps.</span><strong>${escape(a.t1.verdict)}</strong></li>
+    <li><span>1Click swap volume leads account activity better than NEAR’s price does.</span><strong>${escape(a.t2.verdict)}</strong></li>
+    <li><span>Fees destroy enough NEAR to meaningfully offset new supply.</span><strong>${escape(a.t3.verdict)}</strong></li></ul></section>
+    <section class="hypotheses"><h2>Rules and detailed results</h2><p>Investment pass/fail rules were fixed before metrics were computed. A later fee-burn reconciliation rule is disclosed in the thesis. Each test can pass, fail or end as “can’t tell”.</p>
+    <p class="window">Snapshot ${escape(manifest.id)}${manifest.fetchedAt ? ` · fetched ${escape(manifest.fetchedAt)}` : ' · no data fetched'}</p>
+    <dl>${verdictRow('T1', 'Usage is broadening', a.t1)}${verdictRow('T2', '1Click volume leads usage better than NEAR price', a.t2)}${verdictRow('T3', 'Usage reaches holders through burn', a.t3)}</dl>${lagTable}${sensTable}</section>
+    <section id="status"><h2>Source status</h2><div class="table-wrap" tabindex="0"><table><thead><tr><th>Source</th><th>Status</th></tr></thead><tbody>${statusRows}</tbody></table></div>${a.duplicates.length ? `<p>Duplicate block rows: ${escape(a.duplicates.map(d => `${d.date} (${d.duplicates})`).join(', '))}.</p>` : ''}</section>
     ${sections.join('')}
     <section><h2>What this cannot tell you</h2><p>Accounts are not people. 1Click is not all of NEAR Intents. Correlation is not causation. None of this sets a fair NEAR price.</p><a href="thesis.html">Rules, limits and sources</a></section>
     <footer>Rebuild all charts offline: <code>npm run rebuild</code><br>Refresh sources and rebuild: <code>npm run refresh</code><br>No browser credentials. No external scripts. No fabricated data.</footer></main></body></html>`);
