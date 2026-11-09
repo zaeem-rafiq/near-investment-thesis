@@ -120,3 +120,21 @@ test('live schema type mismatch stops before dry runs', async () => {
     assert.equal(fake.requests.filter(r => r.body).length, 0);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+test('opt-in research queries respect the lower cumulative gate and cap actual job billing at remaining headroom', async () => {
+  const root = await project(), queries = { signer_split: ['transactions'] };
+  try {
+    const initial = { [LEDGER]: JSON.stringify({ preLedgerBilledBytes: 899_995_000_000, entries: [] }) };
+    const blocked = fakeBQ('10000000');
+    await assert.rejects(pullBigQuery(env, memoryStore(initial),
+      deps(blocked, root, { queries, cumulativeLimit: 900_000_000_000 })), /Cumulative scans/);
+    assert.equal(blocked.jobs.length, 0);
+    const allowed = fakeBQ('5000000', '5000000');
+    await pullBigQuery(env, memoryStore(initial), deps(allowed, root, { queries, cumulativeLimit: 900_000_000_000 }));
+    assert.equal(allowed.jobs.length, 1);
+    assert.equal(allowed.jobs[0].configuration.query.maximumBytesBilled, '5000000');
+    const invalid = fakeBQ();
+    await assert.rejects(pullBigQuery(env, memoryStore(),
+      deps(invalid, root, { queries, cumulativeLimit: 1_000_000_000_001 })), /cumulative limit/);
+    assert.equal(invalid.jobs.length, 0);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

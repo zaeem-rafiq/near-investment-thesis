@@ -150,7 +150,11 @@ export const LEDGER = 'data/raw/bigquery/ledger.json';
 // mode 'plan' dry-runs only; 'run' reuses cached results whose SQL and literal windows match unless force is set.
 export async function pullBigQuery(env, store, dependencies = {}) {
   const { mode = 'run', force = false } = dependencies;
-  const queries = mode === 'plan' ? { ...QUERIES, ...PLAN_ONLY_QUERIES } : QUERIES;
+  const queries = dependencies.queries || (mode === 'plan' ? { ...QUERIES, ...PLAN_ONLY_QUERIES } : QUERIES);
+  const cumulativeLimit = dependencies.cumulativeLimit ?? CUMULATIVE_SCAN_LIMIT;
+  if (!Number.isSafeInteger(cumulativeLimit) || cumulativeLimit <= 0 || cumulativeLimit > CUMULATIVE_SCAN_LIMIT) {
+    throw new Error('Invalid cumulative limit; it must not exceed 1 TB.');
+  }
   const plans = [];
   for (const [name, tables] of Object.entries(queries)) {
     const sql = await readFile(resolve(dependencies.root || ROOT, `sql/${name}.sql`), 'utf8');
@@ -187,7 +191,7 @@ export async function pullBigQuery(env, store, dependencies = {}) {
   for (const table of new Set(pending.flatMap(p => queries[p.name]))) {
     const meta = await api(`https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/datasets/crypto_near_mainnet_us/tables/${table}`);
     const types = Object.fromEntries((meta.schema?.fields || []).map(f => [f.name, f.type]));
-    for (const [column, type] of Object.entries(REQUIRED_COLUMNS[table])) {
+    for (const [column, type] of Object.entries({ ...REQUIRED_COLUMNS[table], ...dependencies.requiredColumns?.[table] })) {
       if (types[column] !== type) throw new Error(`Live schema mismatch: ${table}.${column} is ${types[column] || 'missing'}, expected ${type}.`);
     }
   }
@@ -205,10 +209,10 @@ export async function pullBigQuery(env, store, dependencies = {}) {
   const ledgerBody = await store.read(LEDGER);
   const ledger = ledgerBody ? JSON.parse(ledgerBody) : { preLedgerBilledBytes: PRE_LEDGER_BILLED_BYTES, entries: [] };
   const spent = () => ledger.preLedgerBilledBytes + ledger.entries.reduce((s, e) => s + e.billedBytes, 0);
-  if (spent() + estimate > CUMULATIVE_SCAN_LIMIT) {
-    throw new Error(`Cumulative scans would pass 1 TB (${spent()} billed so far + ${estimate} estimated). Ask the owner before running.`);
+  if (spent() + estimate > cumulativeLimit) {
+    throw new Error(`Cumulative scans would pass ${cumulativeLimit === CUMULATIVE_SCAN_LIMIT ? '1 TB' : `${cumulativeLimit / 1e9} GB`} (${spent()} billed so far + ${estimate} estimated). Stopping before jobs.`);
   }
-  let remaining = cap;
+  let remaining = Math.min(cap, cumulativeLimit - spent());
   for (const plan of pending) {
     if (remaining <= 0) throw new Error('Actual billed-byte budget exhausted; no further jobs submitted.');
     const jobId = `near_thesis_${randomUUID().replaceAll('-', '')}`;

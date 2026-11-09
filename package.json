@@ -11,6 +11,6 @@
     "pull-swaps": "node scripts/pull-swaps.mjs",
     "plan": "node scripts/run.mjs plan",
     "test": "node --test",
-    "check": "node --check scripts/sources.mjs && node --check scripts/report.mjs && node --check scripts/run.mjs && node --check scripts/swaps.mjs && node --check scripts/pull-swaps.mjs && node --check scripts/store.mjs && node --check scripts/public.mjs && node --check scripts/signer-split.mjs && node --check scripts/near-flows.mjs && node --check scripts/staking.mjs && node --check scripts/participants.mjs && node --check scripts/pull-near-participants.mjs"
+    "check": "node --check scripts/sources.mjs && node --check scripts/report.mjs && node --check scripts/run.mjs && node --check scripts/swaps.mjs && node --check scripts/pull-swaps.mjs && node --check scripts/store.mjs && node --check scripts/public.mjs && node --check scripts/signer-split.mjs && node --check scripts/near-flows.mjs && node --check scripts/staking.mjs && node --check scripts/participants.mjs && node --check scripts/pull-near-participants.mjs && node --check scripts/position-sources.mjs"
   }
 }
