@@ -2,7 +2,17 @@
 
 Track: Investment Thesis (`thesis`). All times UTC. This is not a valuation or investment advice.
 
-The pass/fail thresholds below were fixed before metrics were computed. The T3 burn-field reconciliation band was revised after inspecting the gap, as disclosed below. The interpretation is provisional until the full 1Click pull is available.
+The pass/fail thresholds below were fixed before metrics were computed. The T3 burn-field reconciliation band was revised after inspecting the gap, as disclosed below. No T2 rule was changed after the weekly 1Click series was seen.
+
+## Summary
+
+| Test | Claim | Result |
+|---|---|---|
+| T1 | NEAR usage is broadening | <!-- metric:t1.verdict -->FAIL<!-- /metric --> |
+| T2 | 1Click volume leads usage better than NEAR price | <!-- metric:t2.verdict -->CAN'T TELL<!-- /metric --> |
+| T3 | Usage reaches holders through burn | <!-- metric:t3.verdict -->FAIL<!-- /metric --> |
+
+None of the three claims passed. Two failed outright. The third could not be decided under its fixed rule because neither volume nor price showed a reliable lead. On this evidence, recent NEAR activity does not support a thesis of broadening usage that accrues to holders through burn. The tests cannot rule out other sources of value; they test only these three claims.
 
 ## T1. Usage is broadening
 
@@ -19,7 +29,19 @@ Top-10 share uses the largest signers across each full 12-month period, not an a
 
 Pass if, at two or more lags, volume correlation is at least 0.30, exceeds price correlation by at least 0.15, beats price in both chronological halves, and the 90% paired moving-block bootstrap interval for the advantage is above zero. Use 4-week blocks, 10,000 resamples and fixed seed 20261108 (plus the lag). Fail if price wins at two or more lags under the same conditions, without the 0.30 floor. Otherwise can't tell.
 
-**Result: <!-- metric:t2.verdict -->CAN'T TELL<!-- /metric -->, pending data.** The pull is still running. Partial pages are neither published nor used for inference. This is a missing-data state, not a completed test finding. The investment interpretation will be written after the full pull is aggregated.
+**Result: <!-- metric:t2.verdict -->CAN'T TELL<!-- /metric -->.** The full 1Click pull is complete and aggregated. The first complete week with at least 7,000 successful swaps is <!-- metric:t2.start -->2025-04-14<!-- /metric -->. From there the test has <!-- metric:t2.changes -->78<!-- /metric --> weekly changes, above the 52 minimum, so this is a decided rule outcome, not missing data.
+
+Volume never reached the 0.30 correlation floor. Its correlation with later usage changes was <!-- metric:t2.lag1.rv -->0<!-- /metric -->, <!-- metric:t2.lag2.rv -->-0.065<!-- /metric -->, <!-- metric:t2.lag4.rv -->0.013<!-- /metric --> and <!-- metric:t2.lag8.rv -->-0.004<!-- /metric --> at lags of 1, 2, 4 and 8 weeks. No lag therefore favours volume, so the test cannot pass.
+
+Price also did not win at two lags, so the test does not fail:
+
+- At lag 1, price correlation was <!-- metric:t2.lag1.rp -->0.284<!-- /metric --> and beat volume in both halves. The 90% interval for the volume advantage, <!-- metric:t2.lag1.ci.low -->-0.613<!-- /metric --> to <!-- metric:t2.lag1.ci.high -->0.179<!-- /metric -->, includes zero.
+- At lag 8, the advantage interval, <!-- metric:t2.lag8.ci.low -->0.02<!-- /metric --> to <!-- metric:t2.lag8.ci.high -->0.304<!-- /metric -->, sits above zero only because both correlations are near zero or negative (price <!-- metric:t2.lag8.rp -->-0.187<!-- /metric -->). Price beat volume in the second half (<!-- metric:t2.lag8.half2.rp -->-0.165<!-- /metric --> against <!-- metric:t2.lag8.half2.rv -->-0.177<!-- /metric -->).
+- Lags 2 and 4 favour neither, with advantages of <!-- metric:t2.lag2.advantage -->-0.104<!-- /metric --> and <!-- metric:t2.lag4.advantage -->0.004<!-- /metric -->.
+
+**Interpretation.** Weekly changes in 1Click volume carried almost no information about later changes in NEAR signers. The claim that 1Click activity is a leading indicator of chain usage is not supported. The rule's failure condition, price clearly leading instead, was not met either. For an investor, 1Click volume should be read as its own business metric, not as a proxy for NEAR usage or token demand.
+
+**Disclosed feature of the fixed start.** The start week is an isolated early spike. The following 15 weeks fall below 7,000 swaps, and the next week at or above 7,000 is 2025-08-04. As the rule specifies, those weeks stay in the test. No alternative start was tested, and any later sensitivity check would not be pre-registered.
 
 The feed covers **1Click only**, not all NEAR Intents. The first successful swap observed in the feed is dated 2025-03-27. Weekly input USD volume is not protocol revenue and does not establish demand for the NEAR token.
 
@@ -57,8 +79,52 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | t1.top10.previous | 80.47% |
 | t1.top10.latest | 79.35% |
 | t1.top10.changePp | -1.12 pp |
-| t2.start | none |
-| t2.changes | 0 |
+| t2.start | 2025-04-14 |
+| t2.changes | 78 |
+| t2.lag1.pairs | 77 |
+| t2.lag1.rv | 0 |
+| t2.lag1.rp | 0.284 |
+| t2.lag1.advantage | -0.284 |
+| t2.lag1.half1.rv | -0.003 |
+| t2.lag1.half1.rp | 0.193 |
+| t2.lag1.half2.rv | 0.121 |
+| t2.lag1.half2.rp | 0.317 |
+| t2.lag1.ci.low | -0.613 |
+| t2.lag1.ci.high | 0.179 |
+| t2.lag1.favours | neither |
+| t2.lag2.pairs | 76 |
+| t2.lag2.rv | -0.065 |
+| t2.lag2.rp | 0.039 |
+| t2.lag2.advantage | -0.104 |
+| t2.lag2.half1.rv | -0.186 |
+| t2.lag2.half1.rp | -0.082 |
+| t2.lag2.half2.rv | 0.151 |
+| t2.lag2.half2.rp | 0.038 |
+| t2.lag2.ci.low | -0.385 |
+| t2.lag2.ci.high | 0.263 |
+| t2.lag2.favours | neither |
+| t2.lag4.pairs | 74 |
+| t2.lag4.rv | 0.013 |
+| t2.lag4.rp | 0.009 |
+| t2.lag4.advantage | 0.004 |
+| t2.lag4.half1.rv | 0.091 |
+| t2.lag4.half1.rp | -0.012 |
+| t2.lag4.half2.rv | -0.005 |
+| t2.lag4.half2.rp | 0.002 |
+| t2.lag4.ci.low | -0.241 |
+| t2.lag4.ci.high | 0.201 |
+| t2.lag4.favours | neither |
+| t2.lag8.pairs | 70 |
+| t2.lag8.rv | -0.004 |
+| t2.lag8.rp | -0.187 |
+| t2.lag8.advantage | 0.183 |
+| t2.lag8.half1.rv | -0.056 |
+| t2.lag8.half1.rp | -0.174 |
+| t2.lag8.half2.rv | -0.177 |
+| t2.lag8.half2.rp | -0.165 |
+| t2.lag8.ci.low | 0.02 |
+| t2.lag8.ci.high | 0.304 |
+| t2.lag8.favours | neither |
 | t3.burnt | 500,289.94 |
 | t3.issued | 32,123,695.5 |
 | t3.delta | 31,623,405.56 |
@@ -72,7 +138,7 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | t3.atMost5 | 52 |
 <!-- evidence:end -->
 
-T1 account counts are period means; `change` is relative change, except `changePp`, which is percentage points. T3 quantities are NEAR; `fields` and `fieldOffset` are comparisons only, not the burn definition. `atLeast10` and `atMost5` count weeks meeting the corresponding percentage threshold. T2 correlation and interval rows will appear after the pull.
+T1 account counts are period means; `change` is relative change, except `changePp`, which is percentage points. T3 quantities are NEAR; `fields` and `fieldOffset` are comparisons only, not the burn definition. `atLeast10` and `atMost5` count weeks meeting the corresponding percentage threshold. T2 `rv` and `rp` are Pearson correlations of weekly percentage changes with usage changes `lag` weeks later; `advantage` is `rv − rp`; `ci` is its 90% paired moving-block bootstrap interval; `half1` and `half2` are the chronological halves of the pairs; `favours` applies every pass or fail condition at that lag.
 
 ## Definitions, quality and limits
 
@@ -90,4 +156,4 @@ T1 account counts are period means; `change` is relative change, except `changeP
 
 Run `npm run rebuild`, then open `dashboard/index.html` and `dashboard/NUMBERS.md`. Rebuild reads aggregate evidence only from `data/public/`, needs no credentials or network, and never writes this file. It copies this reviewed thesis into the dashboard after verification.
 
-`npm run export-public` exports saved BigQuery aggregates and prices without touching the running swap pull. After it finishes, `npm run export-public -- --swaps` adds daily swap totals with no deposit addresses. Raw pages and `.env` stay private. See `README.md` and `VALIDATION.md`.
+`npm run export-public -- --swaps` exported the saved BigQuery aggregates, prices and daily 1Click totals from the completed pull, with no deposit addresses, memos or transaction hashes. Raw pages and `.env` stay private. Pull audit results are in `VALIDATION.md`; see also `README.md`.

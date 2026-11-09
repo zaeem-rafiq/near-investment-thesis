@@ -19,7 +19,7 @@ Requires Node.js 22 or newer. No npm dependencies, no install step.
 2. Run `npm run rebuild`. This rebuilds charts and number tables in `dashboard/` from `data/public/`, with no credentials or network access. It verifies, but never overwrites, `THESIS.md`. The last line prints the T1, T2 and T3 results.
 3. Open `dashboard/index.html`. You'll see the three results, then every chart with its query and an expandable values table.
 
-The committed BigQuery aggregates and price candles reproduce the current T1 and T3 results on a fresh clone. T2 is pending the full 1Click pull; no partial pages are published or used. After completion, daily swap totals will be committed too. `data/raw/` and `.env` are not needed for rebuild.
+The committed BigQuery aggregates, price candles and daily 1Click totals reproduce all three results on a fresh clone: T1 FAIL, T2 CAN'T TELL, T3 FAIL. `data/raw/` and `.env` are not needed for rebuild.
 
 `dashboard/NUMBERS.md` is generated. `THESIS.md` is not. If the evidence table or a `<!-- metric:key -->value<!-- /metric -->` claim in the thesis differs from public data, rebuild exits nonzero. Review the generated table, update the thesis by hand, and rerun. Keep all computed claims in the evidence table or tagged spans; dates, source facts and rule thresholds are separate. This is structured metric verification, not natural-language fact checking.
 
@@ -28,7 +28,7 @@ The committed BigQuery aggregates and price candles reproduce the current T1 and
 1. Copy `.env.example` to `.env` and set `GOOGLE_CLOUD_PROJECT` (a project that can run BigQuery jobs) and `NEAR_INTENTS_JWT` (from the [partner dashboard](https://partners.near-intents.org/)). Never commit `.env`.
 2. Run `gcloud auth login`. The token is read locally with `gcloud auth print-access-token` and is never saved.
 3. Run `npm run plan`. This is a free dry run. You'll see the bytes each query would scan, about 234 GB in total.
-4. Run `npm run pull-swaps`. This pulls every successful 1Click swap from 2025-03-01 to 2026-11-02, at one request per 5.2 seconds. It took about 11 hours here. Each page is saved before the next request, so rerunning the command resumes from the last saved page. On macOS, `caffeinate -i npm run pull-swaps` keeps the machine awake.
+4. Run `npm run pull-swaps`. This pulls every successful 1Click swap from 2025-03-01 to 2026-11-02, at one request per 5.2 seconds. The completed pull here has 7,513 pages and 7,509,299 swaps, about 11 hours of requests. Each page is saved before the next request, so rerunning the command resumes from the last saved page. On macOS, `caffeinate -i npm run pull-swaps` keeps the machine awake.
 5. After the pull finishes, run `npm run refresh`. This runs BigQuery jobs (or reuses cached results), fetches prices, exports public aggregates and attempts a rebuild. It exits nonzero if a source is unavailable or the hand-written thesis is stale. Review `dashboard/NUMBERS.md`, update the thesis by hand and run `npm run rebuild`.
 
 To export already saved data without network calls, run `npm run export-public`. This does not read swap pages. After the pull finishes, run `npm run export-public -- --swaps` to include exact daily 1Click totals. Do not refresh or export swaps while the pull is running.
@@ -69,7 +69,7 @@ THESIS.md               Hand-written rules and interpretation with verified metr
 tests/                  Synthetic rules plus public-snapshot and offline CLI checks
 ```
 
-Raw swap pages contain deposit addresses for deduplication and stay in ignored `data/raw/`. Addresses can repeat: swap identity is `depositAddress` + `depositMemo` (null when absent) + `createdAt`. True duplicates and broken timestamp continuity stop the pull. Public evidence contains BigQuery aggregate rows, daily closes and, after the pull, daily swap counts and exact USD totals. No deposit addresses, memos, recipients or transaction hashes are exported.
+Raw swap pages contain deposit addresses for deduplication and stay in ignored `data/raw/`. Addresses can repeat: swap identity is `depositAddress` + `depositMemo` (null when absent) + `createdAt`. True duplicates and broken timestamp continuity stop the pull. Public evidence contains BigQuery aggregate rows, daily closes, and daily swap counts with exact USD totals. No deposit addresses, memos, recipients or transaction hashes are exported.
 
 ## Hackathon notes
 

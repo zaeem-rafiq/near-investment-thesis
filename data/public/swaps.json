@@ -1,0 +1,3678 @@
+{
+  "window": {
+    "start": "2025-03-01",
+    "end": "2026-11-02"
+  },
+  "days": [
+    {
+      "date": "2025-03-01",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-02",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-03",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-04",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-05",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-06",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-07",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-08",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-09",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-10",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-11",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-12",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-13",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-14",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-15",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-16",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-17",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-18",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-19",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-20",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-21",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-22",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-23",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-24",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-25",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-26",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-03-27",
+      "swaps": 9,
+      "missing_usd": 1,
+      "volume_usd_exact": null
+    },
+    {
+      "date": "2025-03-28",
+      "swaps": 11,
+      "missing_usd": 0,
+      "volume_usd_exact": "10.9893"
+    },
+    {
+      "date": "2025-03-29",
+      "swaps": 3,
+      "missing_usd": 0,
+      "volume_usd_exact": "2.03"
+    },
+    {
+      "date": "2025-03-30",
+      "swaps": 2,
+      "missing_usd": 0,
+      "volume_usd_exact": "14.9846"
+    },
+    {
+      "date": "2025-03-31",
+      "swaps": 1,
+      "missing_usd": 0,
+      "volume_usd_exact": "0.01"
+    },
+    {
+      "date": "2025-04-01",
+      "swaps": 6,
+      "missing_usd": 0,
+      "volume_usd_exact": "6.3095"
+    },
+    {
+      "date": "2025-04-02",
+      "swaps": 4,
+      "missing_usd": 0,
+      "volume_usd_exact": "5.0261"
+    },
+    {
+      "date": "2025-04-03",
+      "swaps": 4,
+      "missing_usd": 0,
+      "volume_usd_exact": "4.7406"
+    },
+    {
+      "date": "2025-04-04",
+      "swaps": 5,
+      "missing_usd": 0,
+      "volume_usd_exact": "8.9582"
+    },
+    {
+      "date": "2025-04-05",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-04-06",
+      "swaps": 0,
+      "missing_usd": 0,
+      "volume_usd_exact": "0"
+    },
+    {
+      "date": "2025-04-07",
+      "swaps": 3,
+      "missing_usd": 0,
+      "volume_usd_exact": "27.5395"
+    },
+    {
+      "date": "2025-04-08",
+      "swaps": 4,
+      "missing_usd": 0,
+      "volume_usd_exact": "9.0494"
+    },
+    {
+      "date": "2025-04-09",
+      "swaps": 3,
+      "missing_usd": 0,
+      "volume_usd_exact": "6.4639"
+    },
+    {
+      "date": "2025-04-10",
+      "swaps": 50,
+      "missing_usd": 0,
+      "volume_usd_exact": "2.5917"
+    },
+    {
+      "date": "2025-04-11",
+      "swaps": 163,
+      "missing_usd": 0,
+      "volume_usd_exact": "27.7684"
+    },
+    {
+      "date": "2025-04-12",
+      "swaps": 239,
+      "missing_usd": 0,
+      "volume_usd_exact": "1727.1339"
+    },
+    {
+      "date": "2025-04-13",
+      "swaps": 230,
+      "missing_usd": 0,
+      "volume_usd_exact": "1.7852"
+    },
+    {
+      "date": "2025-04-14",
+      "swaps": 484,
+      "missing_usd": 0,
+      "volume_usd_exact": "50.3309"
+    },
+    {
+      "date": "2025-04-15",
+      "swaps": 1338,
+      "missing_usd": 0,
+      "volume_usd_exact": "14.2182"
+    },
+    {
+      "date": "2025-04-16",
+      "swaps": 1356,
+      "missing_usd": 0,
+      "volume_usd_exact": "70.0791"
+    },
+    {
+      "date": "2025-04-17",
+      "swaps": 1298,
+      "missing_usd": 0,
+      "volume_usd_exact": "126.6089"
+    },
+    {
+      "date": "2025-04-18",
+      "swaps": 1251,
+      "missing_usd": 0,
+      "volume_usd_exact": "737.6176"
+    },
+    {
+      "date": "2025-04-19",
+      "swaps": 1376,
+      "missing_usd": 0,
+      "volume_usd_exact": "1368.9268"
+    },
+    {
+      "date": "2025-04-20",
+      "swaps": 1465,
+      "missing_usd": 0,
+      "volume_usd_exact": "1456.4254"
+    },
+    {
+      "date": "2025-04-21",
+      "swaps": 128,
+      "missing_usd": 0,
+      "volume_usd_exact": "566.371"
+    },
+    {
+      "date": "2025-04-22",
+      "swaps": 169,
+      "missing_usd": 0,
+      "volume_usd_exact": "96.6202"
+    },
+    {
+      "date": "2025-04-23",
+      "swaps": 175,
+      "missing_usd": 0,
+      "volume_usd_exact": "18.0882"
+    },
+    {
+      "date": "2025-04-24",
+      "swaps": 405,
+      "missing_usd": 0,
+      "volume_usd_exact": "59.7571"
+    },
+    {
+      "date": "2025-04-25",
+      "swaps": 487,
+      "missing_usd": 0,
+      "volume_usd_exact": "217.4523"
+    },
+    {
+      "date": "2025-04-26",
+      "swaps": 320,
+      "missing_usd": 0,
+      "volume_usd_exact": "644.2157"
+    },
+    {
+      "date": "2025-04-27",
+      "swaps": 242,
+      "missing_usd": 0,
+      "volume_usd_exact": "36.0143"
+    },
+    {
+      "date": "2025-04-28",
+      "swaps": 250,
+      "missing_usd": 0,
+      "volume_usd_exact": "77.9007"
+    },
+    {
+      "date": "2025-04-29",
+      "swaps": 192,
+      "missing_usd": 0,
+      "volume_usd_exact": "35.214"
+    },
+    {
+      "date": "2025-04-30",
+      "swaps": 156,
+      "missing_usd": 0,
+      "volume_usd_exact": "39.0733"
+    },
+    {
+      "date": "2025-05-01",
+      "swaps": 143,
+      "missing_usd": 0,
+      "volume_usd_exact": "13.8898"
+    },
+    {
+      "date": "2025-05-02",
+      "swaps": 144,
+      "missing_usd": 0,
+      "volume_usd_exact": "16.1672"
+    },
+    {
+      "date": "2025-05-03",
+      "swaps": 168,
+      "missing_usd": 0,
+      "volume_usd_exact": "16.2832"
+    },
+    {
+      "date": "2025-05-04",
+      "swaps": 150,
+      "missing_usd": 0,
+      "volume_usd_exact": "14.5644"
+    },
+    {
+      "date": "2025-05-05",
+      "swaps": 186,
+      "missing_usd": 0,
+      "volume_usd_exact": "45.4108"
+    },
+    {
+      "date": "2025-05-06",
+      "swaps": 107,
+      "missing_usd": 0,
+      "volume_usd_exact": "61.9631"
+    },
+    {
+      "date": "2025-05-07",
+      "swaps": 95,
+      "missing_usd": 0,
+      "volume_usd_exact": "16.93"
+    },
+    {
+      "date": "2025-05-08",
+      "swaps": 170,
+      "missing_usd": 0,
+      "volume_usd_exact": "51.1578"
+    },
+    {
+      "date": "2025-05-09",
+      "swaps": 159,
+      "missing_usd": 0,
+      "volume_usd_exact": "824.9765"
+    },
+    {
+      "date": "2025-05-10",
+      "swaps": 151,
+      "missing_usd": 0,
+      "volume_usd_exact": "27.4681"
+    },
+    {
+      "date": "2025-05-11",
+      "swaps": 161,
+      "missing_usd": 0,
+      "volume_usd_exact": "34.3806"
+    },
+    {
+      "date": "2025-05-12",
+      "swaps": 356,
+      "missing_usd": 0,
+      "volume_usd_exact": "75.0815"
+    },
+    {
+      "date": "2025-05-13",
+      "swaps": 265,
+      "missing_usd": 0,
+      "volume_usd_exact": "13913.9952"
+    },
+    {
+      "date": "2025-05-14",
+      "swaps": 324,
+      "missing_usd": 0,
+      "volume_usd_exact": "161.6629"
+    },
+    {
+      "date": "2025-05-15",
+      "swaps": 261,
+      "missing_usd": 0,
+      "volume_usd_exact": "60.4989"
+    },
+    {
+      "date": "2025-05-16",
+      "swaps": 288,
+      "missing_usd": 0,
+      "volume_usd_exact": "62.7991"
+    },
+    {
+      "date": "2025-05-17",
+      "swaps": 219,
+      "missing_usd": 0,
+      "volume_usd_exact": "21.1506"
+    },
+    {
+      "date": "2025-05-18",
+      "swaps": 161,
+      "missing_usd": 0,
+      "volume_usd_exact": "15.5392"
+    },
+    {
+      "date": "2025-05-19",
+      "swaps": 26,
+      "missing_usd": 0,
+      "volume_usd_exact": "41.3098"
+    },
+    {
+      "date": "2025-05-20",
+      "swaps": 14,
+      "missing_usd": 0,
+      "volume_usd_exact": "67.5251"
+    },
+    {
+      "date": "2025-05-21",
+      "swaps": 14,
+      "missing_usd": 0,
+      "volume_usd_exact": "39.0049"
+    },
+    {
+      "date": "2025-05-22",
+      "swaps": 51,
+      "missing_usd": 0,
+      "volume_usd_exact": "853.8391"
+    },
+    {
+      "date": "2025-05-23",
+      "swaps": 148,
+      "missing_usd": 0,
+      "volume_usd_exact": "36919.2192"
+    },
+    {
+      "date": "2025-05-24",
+      "swaps": 79,
+      "missing_usd": 0,
+      "volume_usd_exact": "7409.659"
+    },
+    {
+      "date": "2025-05-25",
+      "swaps": 103,
+      "missing_usd": 0,
+      "volume_usd_exact": "28182.3197"
+    },
+    {
+      "date": "2025-05-26",
+      "swaps": 63,
+      "missing_usd": 0,
+      "volume_usd_exact": "3121.4342"
+    },
+    {
+      "date": "2025-05-27",
+      "swaps": 34,
+      "missing_usd": 0,
+      "volume_usd_exact": "2321.0907"
+    },
+    {
+      "date": "2025-05-28",
+      "swaps": 43,
+      "missing_usd": 0,
+      "volume_usd_exact": "27560.1577"
+    },
+    {
+      "date": "2025-05-29",
+      "swaps": 143,
+      "missing_usd": 0,
+      "volume_usd_exact": "135900.299"
+    },
+    {
+      "date": "2025-05-30",
+      "swaps": 42,
+      "missing_usd": 0,
+      "volume_usd_exact": "1256.9857"
+    },
+    {
+      "date": "2025-05-31",
+      "swaps": 107,
+      "missing_usd": 0,
+      "volume_usd_exact": "157.0055"
+    },
+    {
+      "date": "2025-06-01",
+      "swaps": 118,
+      "missing_usd": 0,
+      "volume_usd_exact": "1566.2495"
+    },
+    {
+      "date": "2025-06-02",
+      "swaps": 93,
+      "missing_usd": 0,
+      "volume_usd_exact": "7305.5323"
+    },
+    {
+      "date": "2025-06-03",
+      "swaps": 75,
+      "missing_usd": 0,
+      "volume_usd_exact": "41791.0102"
+    },
+    {
+      "date": "2025-06-04",
+      "swaps": 145,
+      "missing_usd": 0,
+      "volume_usd_exact": "6532.0611"
+    },
+    {
+      "date": "2025-06-05",
+      "swaps": 179,
+      "missing_usd": 0,
+      "volume_usd_exact": "29943.9777"
+    },
+    {
+      "date": "2025-06-06",
+      "swaps": 152,
+      "missing_usd": 0,
+      "volume_usd_exact": "15886.5738"
+    },
+    {
+      "date": "2025-06-07",
+      "swaps": 136,
+      "missing_usd": 0,
+      "volume_usd_exact": "5096.9172"
+    },
+    {
+      "date": "2025-06-08",
+      "swaps": 139,
+      "missing_usd": 0,
+      "volume_usd_exact": "34774.5415"
+    },
+    {
+      "date": "2025-06-09",
+      "swaps": 143,
+      "missing_usd": 0,
+      "volume_usd_exact": "56132.47"
+    },
+    {
+      "date": "2025-06-10",
+      "swaps": 165,
+      "missing_usd": 0,
+      "volume_usd_exact": "28649.1826"
+    },
+    {
+      "date": "2025-06-11",
+      "swaps": 378,
+      "missing_usd": 0,
+      "volume_usd_exact": "559243.15"
+    },
+    {
+      "date": "2025-06-12",
+      "swaps": 238,
+      "missing_usd": 0,
+      "volume_usd_exact": "614539.0492"
+    },
+    {
+      "date": "2025-06-13",
+      "swaps": 160,
+      "missing_usd": 0,
+      "volume_usd_exact": "670596.8954"
+    },
+    {
+      "date": "2025-06-14",
+      "swaps": 128,
+      "missing_usd": 0,
+      "volume_usd_exact": "421593.0104"
+    },
+    {
+      "date": "2025-06-15",
+      "swaps": 116,
+      "missing_usd": 0,
+      "volume_usd_exact": "268673.5159"
+    },
+    {
+      "date": "2025-06-16",
+      "swaps": 151,
+      "missing_usd": 0,
+      "volume_usd_exact": "521848.1686"
+    },
+    {
+      "date": "2025-06-17",
+      "swaps": 157,
+      "missing_usd": 0,
+      "volume_usd_exact": "2349714.5474"
+    },
+    {
+      "date": "2025-06-18",
+      "swaps": 207,
+      "missing_usd": 0,
+      "volume_usd_exact": "1481272.5413"
+    },
+    {
+      "date": "2025-06-19",
+      "swaps": 218,
+      "missing_usd": 0,
+      "volume_usd_exact": "996277.8043"
+    },
+    {
+      "date": "2025-06-20",
+      "swaps": 213,
+      "missing_usd": 0,
+      "volume_usd_exact": "2588099.0945"
+    },
+    {
+      "date": "2025-06-21",
+      "swaps": 151,
+      "missing_usd": 0,
+      "volume_usd_exact": "533589.1427"
+    },
+    {
+      "date": "2025-06-22",
+      "swaps": 154,
+      "missing_usd": 0,
+      "volume_usd_exact": "1075915.5745"
+    },
+    {
+      "date": "2025-06-23",
+      "swaps": 128,
+      "missing_usd": 0,
+      "volume_usd_exact": "744590.4115"
+    },
+    {
+      "date": "2025-06-24",
+      "swaps": 155,
+      "missing_usd": 0,
+      "volume_usd_exact": "402055.4626"
+    },
+    {
+      "date": "2025-06-25",
+      "swaps": 124,
+      "missing_usd": 0,
+      "volume_usd_exact": "352852.6753"
+    },
+    {
+      "date": "2025-06-26",
+      "swaps": 333,
+      "missing_usd": 0,
+      "volume_usd_exact": "838156.7247"
+    },
+    {
+      "date": "2025-06-27",
+      "swaps": 121,
+      "missing_usd": 0,
+      "volume_usd_exact": "264620.5224"
+    },
+    {
+      "date": "2025-06-28",
+      "swaps": 94,
+      "missing_usd": 0,
+      "volume_usd_exact": "175475.4105"
+    },
+    {
+      "date": "2025-06-29",
+      "swaps": 79,
+      "missing_usd": 0,
+      "volume_usd_exact": "2100955.4233"
+    },
+    {
+      "date": "2025-06-30",
+      "swaps": 96,
+      "missing_usd": 0,
+      "volume_usd_exact": "1149978.7763"
+    },
+    {
+      "date": "2025-07-01",
+      "swaps": 64,
+      "missing_usd": 0,
+      "volume_usd_exact": "79634.0407"
+    },
+    {
+      "date": "2025-07-02",
+      "swaps": 141,
+      "missing_usd": 0,
+      "volume_usd_exact": "938777.1725"
+    },
+    {
+      "date": "2025-07-03",
+      "swaps": 195,
+      "missing_usd": 0,
+      "volume_usd_exact": "963516.9333"
+    },
+    {
+      "date": "2025-07-04",
+      "swaps": 80,
+      "missing_usd": 0,
+      "volume_usd_exact": "474193.798"
+    },
+    {
+      "date": "2025-07-05",
+      "swaps": 111,
+      "missing_usd": 0,
+      "volume_usd_exact": "1322153.6055"
+    },
+    {
+      "date": "2025-07-06",
+      "swaps": 79,
+      "missing_usd": 0,
+      "volume_usd_exact": "918904.8714"
+    },
+    {
+      "date": "2025-07-07",
+      "swaps": 89,
+      "missing_usd": 0,
+      "volume_usd_exact": "540347.3046"
+    },
+    {
+      "date": "2025-07-08",
+      "swaps": 97,
+      "missing_usd": 0,
+      "volume_usd_exact": "76727.6526"
+    },
+    {
+      "date": "2025-07-09",
+      "swaps": 165,
+      "missing_usd": 0,
+      "volume_usd_exact": "1330354.9706"
+    },
+    {
+      "date": "2025-07-10",
+      "swaps": 134,
+      "missing_usd": 0,
+      "volume_usd_exact": "892779.3531"
+    },
+    {
+      "date": "2025-07-11",
+      "swaps": 150,
+      "missing_usd": 0,
+      "volume_usd_exact": "924077.2064"
+    },
+    {
+      "date": "2025-07-12",
+      "swaps": 99,
+      "missing_usd": 0,
+      "volume_usd_exact": "872369.2231"
+    },
+    {
+      "date": "2025-07-13",
+      "swaps": 110,
+      "missing_usd": 0,
+      "volume_usd_exact": "422648.5666"
+    },
+    {
+      "date": "2025-07-14",
+      "swaps": 207,
+      "missing_usd": 0,
+      "volume_usd_exact": "1247749.8283"
+    },
+    {
+      "date": "2025-07-15",
+      "swaps": 297,
+      "missing_usd": 0,
+      "volume_usd_exact": "1040462.7212"
+    },
+    {
+      "date": "2025-07-16",
+      "swaps": 302,
+      "missing_usd": 0,
+      "volume_usd_exact": "912849.5095"
+    },
+    {
+      "date": "2025-07-17",
+      "swaps": 236,
+      "missing_usd": 0,
+      "volume_usd_exact": "1314232.9676"
+    },
+    {
+      "date": "2025-07-18",
+      "swaps": 258,
+      "missing_usd": 0,
+      "volume_usd_exact": "1053722.9261"
+    },
+    {
+      "date": "2025-07-19",
+      "swaps": 196,
+      "missing_usd": 0,
+      "volume_usd_exact": "1467582.972"
+    },
+    {
+      "date": "2025-07-20",
+      "swaps": 239,
+      "missing_usd": 0,
+      "volume_usd_exact": "3194215.4738"
+    },
+    {
+      "date": "2025-07-21",
+      "swaps": 601,
+      "missing_usd": 0,
+      "volume_usd_exact": "4941274.7845"
+    },
+    {
+      "date": "2025-07-22",
+      "swaps": 543,
+      "missing_usd": 0,
+      "volume_usd_exact": "3288177.4088"
+    },
+    {
+      "date": "2025-07-23",
+      "swaps": 373,
+      "missing_usd": 0,
+      "volume_usd_exact": "1955207.8053"
+    },
+    {
+      "date": "2025-07-24",
+      "swaps": 807,
+      "missing_usd": 0,
+      "volume_usd_exact": "1872676.3132"
+    },
+    {
+      "date": "2025-07-25",
+      "swaps": 688,
+      "missing_usd": 0,
+      "volume_usd_exact": "1647190.7545"
+    },
+    {
+      "date": "2025-07-26",
+      "swaps": 600,
+      "missing_usd": 0,
+      "volume_usd_exact": "3026979.0393"
+    },
+    {
+      "date": "2025-07-27",
+      "swaps": 818,
+      "missing_usd": 0,
+      "volume_usd_exact": "4021010.5557"
+    },
+    {
+      "date": "2025-07-28",
+      "swaps": 375,
+      "missing_usd": 0,
+      "volume_usd_exact": "1666984.2363"
+    },
+    {
+      "date": "2025-07-29",
+      "swaps": 427,
+      "missing_usd": 0,
+      "volume_usd_exact": "3310058.5556"
+    },
+    {
+      "date": "2025-07-30",
+      "swaps": 615,
+      "missing_usd": 0,
+      "volume_usd_exact": "3327612.3518"
+    },
+    {
+      "date": "2025-07-31",
+      "swaps": 1036,
+      "missing_usd": 0,
+      "volume_usd_exact": "5193974.6216"
+    },
+    {
+      "date": "2025-08-01",
+      "swaps": 927,
+      "missing_usd": 0,
+      "volume_usd_exact": "4292514.9578"
+    },
+    {
+      "date": "2025-08-02",
+      "swaps": 884,
+      "missing_usd": 0,
+      "volume_usd_exact": "4763751.18"
+    },
+    {
+      "date": "2025-08-03",
+      "swaps": 1954,
+      "missing_usd": 0,
+      "volume_usd_exact": "5863899.6403"
+    },
+    {
+      "date": "2025-08-04",
+      "swaps": 894,
+      "missing_usd": 0,
+      "volume_usd_exact": "2212465.1318"
+    },
+    {
+      "date": "2025-08-05",
+      "swaps": 481,
+      "missing_usd": 0,
+      "volume_usd_exact": "1119207.8137"
+    },
+    {
+      "date": "2025-08-06",
+      "swaps": 635,
+      "missing_usd": 0,
+      "volume_usd_exact": "598164.6908"
+    },
+    {
+      "date": "2025-08-07",
+      "swaps": 1064,
+      "missing_usd": 0,
+      "volume_usd_exact": "960525.1158"
+    },
+    {
+      "date": "2025-08-08",
+      "swaps": 2311,
+      "missing_usd": 0,
+      "volume_usd_exact": "5501376.4715"
+    },
+    {
+      "date": "2025-08-09",
+      "swaps": 2255,
+      "missing_usd": 0,
+      "volume_usd_exact": "3601402.7061"
+    },
+    {
+      "date": "2025-08-10",
+      "swaps": 2035,
+      "missing_usd": 0,
+      "volume_usd_exact": "5790997.2491"
+    },
+    {
+      "date": "2025-08-11",
+      "swaps": 2224,
+      "missing_usd": 0,
+      "volume_usd_exact": "4871191.1749"
+    },
+    {
+      "date": "2025-08-12",
+      "swaps": 1245,
+      "missing_usd": 0,
+      "volume_usd_exact": "1299487.8404"
+    },
+    {
+      "date": "2025-08-13",
+      "swaps": 1518,
+      "missing_usd": 0,
+      "volume_usd_exact": "2532932.7656"
+    },
+    {
+      "date": "2025-08-14",
+      "swaps": 1654,
+      "missing_usd": 0,
+      "volume_usd_exact": "1875456.9768"
+    },
+    {
+      "date": "2025-08-15",
+      "swaps": 1549,
+      "missing_usd": 0,
+      "volume_usd_exact": "1585565.6052"
+    },
+    {
+      "date": "2025-08-16",
+      "swaps": 2330,
+      "missing_usd": 0,
+      "volume_usd_exact": "804487.4343"
+    },
+    {
+      "date": "2025-08-17",
+      "swaps": 3607,
+      "missing_usd": 0,
+      "volume_usd_exact": "1536539.4458"
+    },
+    {
+      "date": "2025-08-18",
+      "swaps": 3066,
+      "missing_usd": 0,
+      "volume_usd_exact": "1199003.3876"
+    },
+    {
+      "date": "2025-08-19",
+      "swaps": 4607,
+      "missing_usd": 0,
+      "volume_usd_exact": "3688848.1236"
+    },
+    {
+      "date": "2025-08-20",
+      "swaps": 2039,
+      "missing_usd": 0,
+      "volume_usd_exact": "1884723.826"
+    },
+    {
+      "date": "2025-08-21",
+      "swaps": 1728,
+      "missing_usd": 0,
+      "volume_usd_exact": "1869814.4965"
+    },
+    {
+      "date": "2025-08-22",
+      "swaps": 2761,
+      "missing_usd": 0,
+      "volume_usd_exact": "3071859.776"
+    },
+    {
+      "date": "2025-08-23",
+      "swaps": 3065,
+      "missing_usd": 0,
+      "volume_usd_exact": "5321839.8833"
+    },
+    {
+      "date": "2025-08-24",
+      "swaps": 2953,
+      "missing_usd": 0,
+      "volume_usd_exact": "2618098.2962"
+    },
+    {
+      "date": "2025-08-25",
+      "swaps": 2821,
+      "missing_usd": 0,
+      "volume_usd_exact": "2106425.4585"
+    },
+    {
+      "date": "2025-08-26",
+      "swaps": 2920,
+      "missing_usd": 0,
+      "volume_usd_exact": "2117884.6211"
+    },
+    {
+      "date": "2025-08-27",
+      "swaps": 3395,
+      "missing_usd": 0,
+      "volume_usd_exact": "2634073.7673"
+    },
+    {
+      "date": "2025-08-28",
+      "swaps": 3289,
+      "missing_usd": 0,
+      "volume_usd_exact": "2517548.844"
+    },
+    {
+      "date": "2025-08-29",
+      "swaps": 3256,
+      "missing_usd": 0,
+      "volume_usd_exact": "3555712.0916"
+    },
+    {
+      "date": "2025-08-30",
+      "swaps": 2761,
+      "missing_usd": 0,
+      "volume_usd_exact": "1765544.0312"
+    },
+    {
+      "date": "2025-08-31",
+      "swaps": 2547,
+      "missing_usd": 0,
+      "volume_usd_exact": "1025946.7495"
+    },
+    {
+      "date": "2025-09-01",
+      "swaps": 3560,
+      "missing_usd": 0,
+      "volume_usd_exact": "2042688.6743"
+    },
+    {
+      "date": "2025-09-02",
+      "swaps": 3836,
+      "missing_usd": 0,
+      "volume_usd_exact": "3758206.3285"
+    },
+    {
+      "date": "2025-09-03",
+      "swaps": 3180,
+      "missing_usd": 0,
+      "volume_usd_exact": "2949651.1575"
+    },
+    {
+      "date": "2025-09-04",
+      "swaps": 3544,
+      "missing_usd": 0,
+      "volume_usd_exact": "2517910.5831"
+    },
+    {
+      "date": "2025-09-05",
+      "swaps": 3514,
+      "missing_usd": 0,
+      "volume_usd_exact": "4103108.1508"
+    },
+    {
+      "date": "2025-09-06",
+      "swaps": 3095,
+      "missing_usd": 0,
+      "volume_usd_exact": "2588152.1838"
+    },
+    {
+      "date": "2025-09-07",
+      "swaps": 2823,
+      "missing_usd": 0,
+      "volume_usd_exact": "1671289.0675"
+    },
+    {
+      "date": "2025-09-08",
+      "swaps": 3386,
+      "missing_usd": 0,
+      "volume_usd_exact": "3585039.6709"
+    },
+    {
+      "date": "2025-09-09",
+      "swaps": 3574,
+      "missing_usd": 0,
+      "volume_usd_exact": "3064105.2347"
+    },
+    {
+      "date": "2025-09-10",
+      "swaps": 4133,
+      "missing_usd": 0,
+      "volume_usd_exact": "3631105.9761"
+    },
+    {
+      "date": "2025-09-11",
+      "swaps": 3930,
+      "missing_usd": 0,
+      "volume_usd_exact": "3252714.1884"
+    },
+    {
+      "date": "2025-09-12",
+      "swaps": 4901,
+      "missing_usd": 0,
+      "volume_usd_exact": "5073682.9337"
+    },
+    {
+      "date": "2025-09-13",
+      "swaps": 4670,
+      "missing_usd": 0,
+      "volume_usd_exact": "5020739.5728"
+    },
+    {
+      "date": "2025-09-14",
+      "swaps": 4008,
+      "missing_usd": 0,
+      "volume_usd_exact": "4456231.7039"
+    },
+    {
+      "date": "2025-09-15",
+      "swaps": 4906,
+      "missing_usd": 0,
+      "volume_usd_exact": "4471612.5689"
+    },
+    {
+      "date": "2025-09-16",
+      "swaps": 4356,
+      "missing_usd": 0,
+      "volume_usd_exact": "3856109.8645"
+    },
+    {
+      "date": "2025-09-17",
+      "swaps": 3448,
+      "missing_usd": 0,
+      "volume_usd_exact": "3933108.8397"
+    },
+    {
+      "date": "2025-09-18",
+      "swaps": 5547,
+      "missing_usd": 0,
+      "volume_usd_exact": "5512522.2413"
+    },
+    {
+      "date": "2025-09-19",
+      "swaps": 4462,
+      "missing_usd": 0,
+      "volume_usd_exact": "2977999.0483"
+    },
+    {
+      "date": "2025-09-20",
+      "swaps": 5023,
+      "missing_usd": 0,
+      "volume_usd_exact": "2285715.6266"
+    },
+    {
+      "date": "2025-09-21",
+      "swaps": 5631,
+      "missing_usd": 0,
+      "volume_usd_exact": "3933064.0188"
+    },
+    {
+      "date": "2025-09-22",
+      "swaps": 5565,
+      "missing_usd": 0,
+      "volume_usd_exact": "4808587.8866"
+    },
+    {
+      "date": "2025-09-23",
+      "swaps": 4225,
+      "missing_usd": 0,
+      "volume_usd_exact": "2745187.9127"
+    },
+    {
+      "date": "2025-09-24",
+      "swaps": 3889,
+      "missing_usd": 0,
+      "volume_usd_exact": "2558896.6939"
+    },
+    {
+      "date": "2025-09-25",
+      "swaps": 6736,
+      "missing_usd": 0,
+      "volume_usd_exact": "6645887.6745"
+    },
+    {
+      "date": "2025-09-26",
+      "swaps": 6609,
+      "missing_usd": 0,
+      "volume_usd_exact": "6460174.9663"
+    },
+    {
+      "date": "2025-09-27",
+      "swaps": 6306,
+      "missing_usd": 0,
+      "volume_usd_exact": "4809053.5972"
+    },
+    {
+      "date": "2025-09-28",
+      "swaps": 5624,
+      "missing_usd": 0,
+      "volume_usd_exact": "5711138.0441"
+    },
+    {
+      "date": "2025-09-29",
+      "swaps": 7125,
+      "missing_usd": 0,
+      "volume_usd_exact": "6345668.66"
+    },
+    {
+      "date": "2025-09-30",
+      "swaps": 7126,
+      "missing_usd": 0,
+      "volume_usd_exact": "7665650.6319"
+    },
+    {
+      "date": "2025-10-01",
+      "swaps": 9721,
+      "missing_usd": 0,
+      "volume_usd_exact": "15905998.4737"
+    },
+    {
+      "date": "2025-10-02",
+      "swaps": 11727,
+      "missing_usd": 0,
+      "volume_usd_exact": "26960112.5476"
+    },
+    {
+      "date": "2025-10-03",
+      "swaps": 12130,
+      "missing_usd": 0,
+      "volume_usd_exact": "25035105.456"
+    },
+    {
+      "date": "2025-10-04",
+      "swaps": 9964,
+      "missing_usd": 0,
+      "volume_usd_exact": "14189789.5836"
+    },
+    {
+      "date": "2025-10-05",
+      "swaps": 9866,
+      "missing_usd": 0,
+      "volume_usd_exact": "12989638.7668"
+    },
+    {
+      "date": "2025-10-06",
+      "swaps": 9481,
+      "missing_usd": 0,
+      "volume_usd_exact": "12013165.3193"
+    },
+    {
+      "date": "2025-10-07",
+      "swaps": 14329,
+      "missing_usd": 0,
+      "volume_usd_exact": "13887310.8662"
+    },
+    {
+      "date": "2025-10-08",
+      "swaps": 14373,
+      "missing_usd": 0,
+      "volume_usd_exact": "15035205.3838"
+    },
+    {
+      "date": "2025-10-09",
+      "swaps": 13840,
+      "missing_usd": 0,
+      "volume_usd_exact": "15624499.7361"
+    },
+    {
+      "date": "2025-10-10",
+      "swaps": 11495,
+      "missing_usd": 0,
+      "volume_usd_exact": "20755529.4866"
+    },
+    {
+      "date": "2025-10-11",
+      "swaps": 7551,
+      "missing_usd": 0,
+      "volume_usd_exact": "17993906.3076"
+    },
+    {
+      "date": "2025-10-12",
+      "swaps": 7671,
+      "missing_usd": 0,
+      "volume_usd_exact": "17011420.5353"
+    },
+    {
+      "date": "2025-10-13",
+      "swaps": 8387,
+      "missing_usd": 0,
+      "volume_usd_exact": "14804202.7736"
+    },
+    {
+      "date": "2025-10-14",
+      "swaps": 5493,
+      "missing_usd": 0,
+      "volume_usd_exact": "10847314.1777"
+    },
+    {
+      "date": "2025-10-15",
+      "swaps": 5844,
+      "missing_usd": 0,
+      "volume_usd_exact": "12003083.4562"
+    },
+    {
+      "date": "2025-10-16",
+      "swaps": 5525,
+      "missing_usd": 0,
+      "volume_usd_exact": "21128366.0069"
+    },
+    {
+      "date": "2025-10-17",
+      "swaps": 6146,
+      "missing_usd": 0,
+      "volume_usd_exact": "19644933.8884"
+    },
+    {
+      "date": "2025-10-18",
+      "swaps": 5043,
+      "missing_usd": 0,
+      "volume_usd_exact": "7981770.0534"
+    },
+    {
+      "date": "2025-10-19",
+      "swaps": 4789,
+      "missing_usd": 0,
+      "volume_usd_exact": "8287230.8017"
+    },
+    {
+      "date": "2025-10-20",
+      "swaps": 5684,
+      "missing_usd": 0,
+      "volume_usd_exact": "21513738.4988"
+    },
+    {
+      "date": "2025-10-21",
+      "swaps": 6006,
+      "missing_usd": 0,
+      "volume_usd_exact": "14871117.4369"
+    },
+    {
+      "date": "2025-10-22",
+      "swaps": 6122,
+      "missing_usd": 0,
+      "volume_usd_exact": "18356005.4772"
+    },
+    {
+      "date": "2025-10-23",
+      "swaps": 6088,
+      "missing_usd": 0,
+      "volume_usd_exact": "12385102.548"
+    },
+    {
+      "date": "2025-10-24",
+      "swaps": 6927,
+      "missing_usd": 0,
+      "volume_usd_exact": "20783190.4531"
+    },
+    {
+      "date": "2025-10-25",
+      "swaps": 5823,
+      "missing_usd": 0,
+      "volume_usd_exact": "11446856.2178"
+    },
+    {
+      "date": "2025-10-26",
+      "swaps": 6765,
+      "missing_usd": 0,
+      "volume_usd_exact": "23238651.5746"
+    },
+    {
+      "date": "2025-10-27",
+      "swaps": 7518,
+      "missing_usd": 0,
+      "volume_usd_exact": "28284131.5222"
+    },
+    {
+      "date": "2025-10-28",
+      "swaps": 6729,
+      "missing_usd": 0,
+      "volume_usd_exact": "21354254.7389"
+    },
+    {
+      "date": "2025-10-29",
+      "swaps": 9453,
+      "missing_usd": 0,
+      "volume_usd_exact": "22674100.9794"
+    },
+    {
+      "date": "2025-10-30",
+      "swaps": 12778,
+      "missing_usd": 0,
+      "volume_usd_exact": "33155770.8247"
+    },
+    {
+      "date": "2025-10-31",
+      "swaps": 11422,
+      "missing_usd": 0,
+      "volume_usd_exact": "31634884.0919"
+    },
+    {
+      "date": "2025-11-01",
+      "swaps": 10761,
+      "missing_usd": 0,
+      "volume_usd_exact": "38896751.7378"
+    },
+    {
+      "date": "2025-11-02",
+      "swaps": 10213,
+      "missing_usd": 0,
+      "volume_usd_exact": "29111322.4108"
+    },
+    {
+      "date": "2025-11-03",
+      "swaps": 11091,
+      "missing_usd": 0,
+      "volume_usd_exact": "37021927.0814"
+    },
+    {
+      "date": "2025-11-04",
+      "swaps": 14597,
+      "missing_usd": 0,
+      "volume_usd_exact": "71108887.5095"
+    },
+    {
+      "date": "2025-11-05",
+      "swaps": 12666,
+      "missing_usd": 0,
+      "volume_usd_exact": "36872345.5788"
+    },
+    {
+      "date": "2025-11-06",
+      "swaps": 12983,
+      "missing_usd": 0,
+      "volume_usd_exact": "52923532.6058"
+    },
+    {
+      "date": "2025-11-07",
+      "swaps": 15538,
+      "missing_usd": 0,
+      "volume_usd_exact": "67429059.1672"
+    },
+    {
+      "date": "2025-11-08",
+      "swaps": 13524,
+      "missing_usd": 0,
+      "volume_usd_exact": "40361872.6566"
+    },
+    {
+      "date": "2025-11-09",
+      "swaps": 12981,
+      "missing_usd": 0,
+      "volume_usd_exact": "32836054.2372"
+    },
+    {
+      "date": "2025-11-10",
+      "swaps": 14023,
+      "missing_usd": 0,
+      "volume_usd_exact": "39737965.2672"
+    },
+    {
+      "date": "2025-11-11",
+      "swaps": 14005,
+      "missing_usd": 0,
+      "volume_usd_exact": "34785375.5102"
+    },
+    {
+      "date": "2025-11-12",
+      "swaps": 14256,
+      "missing_usd": 0,
+      "volume_usd_exact": "56521790.4048"
+    },
+    {
+      "date": "2025-11-13",
+      "swaps": 15982,
+      "missing_usd": 0,
+      "volume_usd_exact": "44818551.3367"
+    },
+    {
+      "date": "2025-11-14",
+      "swaps": 16045,
+      "missing_usd": 0,
+      "volume_usd_exact": "56021174.5008"
+    },
+    {
+      "date": "2025-11-15",
+      "swaps": 12329,
+      "missing_usd": 0,
+      "volume_usd_exact": "42220856.508"
+    },
+    {
+      "date": "2025-11-16",
+      "swaps": 12050,
+      "missing_usd": 0,
+      "volume_usd_exact": "47175236.3197"
+    },
+    {
+      "date": "2025-11-17",
+      "swaps": 13953,
+      "missing_usd": 0,
+      "volume_usd_exact": "44475314.7684"
+    },
+    {
+      "date": "2025-11-18",
+      "swaps": 10979,
+      "missing_usd": 0,
+      "volume_usd_exact": "43577729.2626"
+    },
+    {
+      "date": "2025-11-19",
+      "swaps": 18529,
+      "missing_usd": 0,
+      "volume_usd_exact": "52063905.815"
+    },
+    {
+      "date": "2025-11-20",
+      "swaps": 19255,
+      "missing_usd": 0,
+      "volume_usd_exact": "68086105.0219"
+    },
+    {
+      "date": "2025-11-21",
+      "swaps": 21396,
+      "missing_usd": 0,
+      "volume_usd_exact": "94712089.6415"
+    },
+    {
+      "date": "2025-11-22",
+      "swaps": 12717,
+      "missing_usd": 0,
+      "volume_usd_exact": "42426746.5552"
+    },
+    {
+      "date": "2025-11-23",
+      "swaps": 11841,
+      "missing_usd": 0,
+      "volume_usd_exact": "41608604.4951"
+    },
+    {
+      "date": "2025-11-24",
+      "swaps": 17103,
+      "missing_usd": 0,
+      "volume_usd_exact": "33524181.8014"
+    },
+    {
+      "date": "2025-11-25",
+      "swaps": 19648,
+      "missing_usd": 0,
+      "volume_usd_exact": "33303717.0346"
+    },
+    {
+      "date": "2025-11-26",
+      "swaps": 15696,
+      "missing_usd": 0,
+      "volume_usd_exact": "28059486.6578"
+    },
+    {
+      "date": "2025-11-27",
+      "swaps": 20697,
+      "missing_usd": 0,
+      "volume_usd_exact": "27776017.5227"
+    },
+    {
+      "date": "2025-11-28",
+      "swaps": 20316,
+      "missing_usd": 0,
+      "volume_usd_exact": "34149438.1531"
+    },
+    {
+      "date": "2025-11-29",
+      "swaps": 15010,
+      "missing_usd": 0,
+      "volume_usd_exact": "18722449.7129"
+    },
+    {
+      "date": "2025-11-30",
+      "swaps": 12596,
+      "missing_usd": 0,
+      "volume_usd_exact": "18329590.905"
+    },
+    {
+      "date": "2025-12-01",
+      "swaps": 20222,
+      "missing_usd": 0,
+      "volume_usd_exact": "46145059.878"
+    },
+    {
+      "date": "2025-12-02",
+      "swaps": 20614,
+      "missing_usd": 0,
+      "volume_usd_exact": "41111493.5808"
+    },
+    {
+      "date": "2025-12-03",
+      "swaps": 15500,
+      "missing_usd": 0,
+      "volume_usd_exact": "28272482.5942"
+    },
+    {
+      "date": "2025-12-04",
+      "swaps": 19339,
+      "missing_usd": 0,
+      "volume_usd_exact": "17904662.0595"
+    },
+    {
+      "date": "2025-12-05",
+      "swaps": 14324,
+      "missing_usd": 0,
+      "volume_usd_exact": "25942408.4511"
+    },
+    {
+      "date": "2025-12-06",
+      "swaps": 10757,
+      "missing_usd": 0,
+      "volume_usd_exact": "17691971.7038"
+    },
+    {
+      "date": "2025-12-07",
+      "swaps": 10436,
+      "missing_usd": 0,
+      "volume_usd_exact": "16150106.1563"
+    },
+    {
+      "date": "2025-12-08",
+      "swaps": 13587,
+      "missing_usd": 0,
+      "volume_usd_exact": "17454081.5057"
+    },
+    {
+      "date": "2025-12-09",
+      "swaps": 14604,
+      "missing_usd": 0,
+      "volume_usd_exact": "30616776.8423"
+    },
+    {
+      "date": "2025-12-10",
+      "swaps": 12689,
+      "missing_usd": 0,
+      "volume_usd_exact": "21890620.5273"
+    },
+    {
+      "date": "2025-12-11",
+      "swaps": 14874,
+      "missing_usd": 0,
+      "volume_usd_exact": "21361584.9681"
+    },
+    {
+      "date": "2025-12-12",
+      "swaps": 14026,
+      "missing_usd": 0,
+      "volume_usd_exact": "18777402.302"
+    },
+    {
+      "date": "2025-12-13",
+      "swaps": 12403,
+      "missing_usd": 0,
+      "volume_usd_exact": "16808172.3388"
+    },
+    {
+      "date": "2025-12-14",
+      "swaps": 12961,
+      "missing_usd": 0,
+      "volume_usd_exact": "17953683.9888"
+    },
+    {
+      "date": "2025-12-15",
+      "swaps": 17145,
+      "missing_usd": 0,
+      "volume_usd_exact": "28771147.243"
+    },
+    {
+      "date": "2025-12-16",
+      "swaps": 15290,
+      "missing_usd": 0,
+      "volume_usd_exact": "21370838.5409"
+    },
+    {
+      "date": "2025-12-17",
+      "swaps": 13395,
+      "missing_usd": 0,
+      "volume_usd_exact": "27801432.5038"
+    },
+    {
+      "date": "2025-12-18",
+      "swaps": 12892,
+      "missing_usd": 0,
+      "volume_usd_exact": "22482553.7602"
+    },
+    {
+      "date": "2025-12-19",
+      "swaps": 12775,
+      "missing_usd": 0,
+      "volume_usd_exact": "35920543.3805"
+    },
+    {
+      "date": "2025-12-20",
+      "swaps": 11601,
+      "missing_usd": 0,
+      "volume_usd_exact": "18236775.5293"
+    },
+    {
+      "date": "2025-12-21",
+      "swaps": 12751,
+      "missing_usd": 0,
+      "volume_usd_exact": "11520212.3433"
+    },
+    {
+      "date": "2025-12-22",
+      "swaps": 14295,
+      "missing_usd": 0,
+      "volume_usd_exact": "26067184.0269"
+    },
+    {
+      "date": "2025-12-23",
+      "swaps": 11158,
+      "missing_usd": 0,
+      "volume_usd_exact": "19821525.9706"
+    },
+    {
+      "date": "2025-12-24",
+      "swaps": 12976,
+      "missing_usd": 0,
+      "volume_usd_exact": "33969425.5816"
+    },
+    {
+      "date": "2025-12-25",
+      "swaps": 13298,
+      "missing_usd": 0,
+      "volume_usd_exact": "28557662.1973"
+    },
+    {
+      "date": "2025-12-26",
+      "swaps": 13982,
+      "missing_usd": 0,
+      "volume_usd_exact": "29872121.8526"
+    },
+    {
+      "date": "2025-12-27",
+      "swaps": 14187,
+      "missing_usd": 0,
+      "volume_usd_exact": "29720100.5043"
+    },
+    {
+      "date": "2025-12-28",
+      "swaps": 13066,
+      "missing_usd": 0,
+      "volume_usd_exact": "17267827.5841"
+    },
+    {
+      "date": "2025-12-29",
+      "swaps": 16697,
+      "missing_usd": 0,
+      "volume_usd_exact": "25432827.2667"
+    },
+    {
+      "date": "2025-12-30",
+      "swaps": 17936,
+      "missing_usd": 0,
+      "volume_usd_exact": "22796492.1418"
+    },
+    {
+      "date": "2025-12-31",
+      "swaps": 27346,
+      "missing_usd": 0,
+      "volume_usd_exact": "18344027.2644"
+    },
+    {
+      "date": "2026-01-01",
+      "swaps": 18564,
+      "missing_usd": 0,
+      "volume_usd_exact": "11930780.4384"
+    },
+    {
+      "date": "2026-01-02",
+      "swaps": 23062,
+      "missing_usd": 0,
+      "volume_usd_exact": "22931544.9101"
+    },
+    {
+      "date": "2026-01-03",
+      "swaps": 17602,
+      "missing_usd": 0,
+      "volume_usd_exact": "18049344.961"
+    },
+    {
+      "date": "2026-01-04",
+      "swaps": 20146,
+      "missing_usd": 0,
+      "volume_usd_exact": "17973828.2345"
+    },
+    {
+      "date": "2026-01-05",
+      "swaps": 24854,
+      "missing_usd": 0,
+      "volume_usd_exact": "37871514.7233"
+    },
+    {
+      "date": "2026-01-06",
+      "swaps": 25218,
+      "missing_usd": 0,
+      "volume_usd_exact": "35273704.1808"
+    },
+    {
+      "date": "2026-01-07",
+      "swaps": 21846,
+      "missing_usd": 0,
+      "volume_usd_exact": "40889680.1514"
+    },
+    {
+      "date": "2026-01-08",
+      "swaps": 33150,
+      "missing_usd": 0,
+      "volume_usd_exact": "39595381.6163"
+    },
+    {
+      "date": "2026-01-09",
+      "swaps": 21604,
+      "missing_usd": 0,
+      "volume_usd_exact": "35592156.35"
+    },
+    {
+      "date": "2026-01-10",
+      "swaps": 26322,
+      "missing_usd": 0,
+      "volume_usd_exact": "20573232.0999"
+    },
+    {
+      "date": "2026-01-11",
+      "swaps": 14173,
+      "missing_usd": 0,
+      "volume_usd_exact": "12802281.6697"
+    },
+    {
+      "date": "2026-01-12",
+      "swaps": 22556,
+      "missing_usd": 0,
+      "volume_usd_exact": "31020933.9103"
+    },
+    {
+      "date": "2026-01-13",
+      "swaps": 22062,
+      "missing_usd": 0,
+      "volume_usd_exact": "41401111.3947"
+    },
+    {
+      "date": "2026-01-14",
+      "swaps": 20026,
+      "missing_usd": 0,
+      "volume_usd_exact": "40120095.5884"
+    },
+    {
+      "date": "2026-01-15",
+      "swaps": 10822,
+      "missing_usd": 0,
+      "volume_usd_exact": "35440259.4415"
+    },
+    {
+      "date": "2026-01-16",
+      "swaps": 13465,
+      "missing_usd": 0,
+      "volume_usd_exact": "39699719.1949"
+    },
+    {
+      "date": "2026-01-17",
+      "swaps": 13277,
+      "missing_usd": 0,
+      "volume_usd_exact": "14935136.975"
+    },
+    {
+      "date": "2026-01-18",
+      "swaps": 12987,
+      "missing_usd": 0,
+      "volume_usd_exact": "15129515.3775"
+    },
+    {
+      "date": "2026-01-19",
+      "swaps": 25914,
+      "missing_usd": 0,
+      "volume_usd_exact": "36205055.4696"
+    },
+    {
+      "date": "2026-01-20",
+      "swaps": 20999,
+      "missing_usd": 0,
+      "volume_usd_exact": "43579393.4618"
+    },
+    {
+      "date": "2026-01-21",
+      "swaps": 19908,
+      "missing_usd": 0,
+      "volume_usd_exact": "40266207.4051"
+    },
+    {
+      "date": "2026-01-22",
+      "swaps": 18143,
+      "missing_usd": 0,
+      "volume_usd_exact": "34096011.683"
+    },
+    {
+      "date": "2026-01-23",
+      "swaps": 15138,
+      "missing_usd": 0,
+      "volume_usd_exact": "32915191.5752"
+    },
+    {
+      "date": "2026-01-24",
+      "swaps": 14140,
+      "missing_usd": 0,
+      "volume_usd_exact": "18195218.4533"
+    },
+    {
+      "date": "2026-01-25",
+      "swaps": 15787,
+      "missing_usd": 0,
+      "volume_usd_exact": "32242008.603"
+    },
+    {
+      "date": "2026-01-26",
+      "swaps": 18153,
+      "missing_usd": 0,
+      "volume_usd_exact": "38045918.1004"
+    },
+    {
+      "date": "2026-01-27",
+      "swaps": 19579,
+      "missing_usd": 0,
+      "volume_usd_exact": "43142822.3772"
+    },
+    {
+      "date": "2026-01-28",
+      "swaps": 21571,
+      "missing_usd": 0,
+      "volume_usd_exact": "33230909.1891"
+    },
+    {
+      "date": "2026-01-29",
+      "swaps": 18318,
+      "missing_usd": 0,
+      "volume_usd_exact": "34661222.32973525"
+    },
+    {
+      "date": "2026-01-30",
+      "swaps": 20905,
+      "missing_usd": 0,
+      "volume_usd_exact": "30228296.276"
+    },
+    {
+      "date": "2026-01-31",
+      "swaps": 21418,
+      "missing_usd": 0,
+      "volume_usd_exact": "34023728.2167"
+    },
+    {
+      "date": "2026-02-01",
+      "swaps": 16764,
+      "missing_usd": 0,
+      "volume_usd_exact": "25238881.868"
+    },
+    {
+      "date": "2026-02-02",
+      "swaps": 23534,
+      "missing_usd": 1,
+      "volume_usd_exact": null
+    },
+    {
+      "date": "2026-02-03",
+      "swaps": 28728,
+      "missing_usd": 0,
+      "volume_usd_exact": "47607487.2909"
+    },
+    {
+      "date": "2026-02-04",
+      "swaps": 28011,
+      "missing_usd": 1,
+      "volume_usd_exact": null
+    },
+    {
+      "date": "2026-02-05",
+      "swaps": 30827,
+      "missing_usd": 0,
+      "volume_usd_exact": "67062189.295"
+    },
+    {
+      "date": "2026-02-06",
+      "swaps": 31384,
+      "missing_usd": 0,
+      "volume_usd_exact": "56074437.7612"
+    },
+    {
+      "date": "2026-02-07",
+      "swaps": 19980,
+      "missing_usd": 0,
+      "volume_usd_exact": "31036255.8892"
+    },
+    {
+      "date": "2026-02-08",
+      "swaps": 19817,
+      "missing_usd": 0,
+      "volume_usd_exact": "22080772.8421"
+    },
+    {
+      "date": "2026-02-09",
+      "swaps": 19679,
+      "missing_usd": 0,
+      "volume_usd_exact": "33437021.7799"
+    },
+    {
+      "date": "2026-02-10",
+      "swaps": 17522,
+      "missing_usd": 0,
+      "volume_usd_exact": "29173223.6922"
+    },
+    {
+      "date": "2026-02-11",
+      "swaps": 17226,
+      "missing_usd": 0,
+      "volume_usd_exact": "37619341.6478"
+    },
+    {
+      "date": "2026-02-12",
+      "swaps": 20591,
+      "missing_usd": 0,
+      "volume_usd_exact": "30891429.4692"
+    },
+    {
+      "date": "2026-02-13",
+      "swaps": 18265,
+      "missing_usd": 0,
+      "volume_usd_exact": "28768640.1607"
+    },
+    {
+      "date": "2026-02-14",
+      "swaps": 12978,
+      "missing_usd": 0,
+      "volume_usd_exact": "22192244.6378"
+    },
+    {
+      "date": "2026-02-15",
+      "swaps": 13086,
+      "missing_usd": 0,
+      "volume_usd_exact": "26688334.6068"
+    },
+    {
+      "date": "2026-02-16",
+      "swaps": 12072,
+      "missing_usd": 0,
+      "volume_usd_exact": "14675502.5183"
+    },
+    {
+      "date": "2026-02-17",
+      "swaps": 13290,
+      "missing_usd": 0,
+      "volume_usd_exact": "15103808.0521"
+    },
+    {
+      "date": "2026-02-18",
+      "swaps": 15605,
+      "missing_usd": 0,
+      "volume_usd_exact": "27615290.4464"
+    },
+    {
+      "date": "2026-02-19",
+      "swaps": 15200,
+      "missing_usd": 0,
+      "volume_usd_exact": "21484025.1022"
+    },
+    {
+      "date": "2026-02-20",
+      "swaps": 11487,
+      "missing_usd": 0,
+      "volume_usd_exact": "17552958.3207"
+    },
+    {
+      "date": "2026-02-21",
+      "swaps": 11445,
+      "missing_usd": 0,
+      "volume_usd_exact": "14080096.6058"
+    },
+    {
+      "date": "2026-02-22",
+      "swaps": 12845,
+      "missing_usd": 0,
+      "volume_usd_exact": "12551666.4071"
+    },
+    {
+      "date": "2026-02-23",
+      "swaps": 15657,
+      "missing_usd": 0,
+      "volume_usd_exact": "24097358.0553"
+    },
+    {
+      "date": "2026-02-24",
+      "swaps": 16858,
+      "missing_usd": 0,
+      "volume_usd_exact": "31315234.2497"
+    },
+    {
+      "date": "2026-02-25",
+      "swaps": 18024,
+      "missing_usd": 0,
+      "volume_usd_exact": "31493106.1264"
+    },
+    {
+      "date": "2026-02-26",
+      "swaps": 17731,
+      "missing_usd": 0,
+      "volume_usd_exact": "33620764.2232"
+    },
+    {
+      "date": "2026-02-27",
+      "swaps": 19137,
+      "missing_usd": 0,
+      "volume_usd_exact": "23574426.0671"
+    },
+    {
+      "date": "2026-02-28",
+      "swaps": 18733,
+      "missing_usd": 0,
+      "volume_usd_exact": "26106741.5513"
+    },
+    {
+      "date": "2026-03-01",
+      "swaps": 17411,
+      "missing_usd": 0,
+      "volume_usd_exact": "19789610.1504"
+    },
+    {
+      "date": "2026-03-02",
+      "swaps": 20673,
+      "missing_usd": 0,
+      "volume_usd_exact": "30177375.684979744"
+    },
+    {
+      "date": "2026-03-03",
+      "swaps": 20512,
+      "missing_usd": 0,
+      "volume_usd_exact": "27462555.3327"
+    },
+    {
+      "date": "2026-03-04",
+      "swaps": 20957,
+      "missing_usd": 0,
+      "volume_usd_exact": "40160574.3676"
+    },
+    {
+      "date": "2026-03-05",
+      "swaps": 20529,
+      "missing_usd": 0,
+      "volume_usd_exact": "29160175.8111"
+    },
+    {
+      "date": "2026-03-06",
+      "swaps": 18373,
+      "missing_usd": 0,
+      "volume_usd_exact": "22927814.6819"
+    },
+    {
+      "date": "2026-03-07",
+      "swaps": 15079,
+      "missing_usd": 0,
+      "volume_usd_exact": "17675651.2814"
+    },
+    {
+      "date": "2026-03-08",
+      "swaps": 14556,
+      "missing_usd": 0,
+      "volume_usd_exact": "14026829.6605"
+    },
+    {
+      "date": "2026-03-09",
+      "swaps": 17589,
+      "missing_usd": 0,
+      "volume_usd_exact": "24480384.3334"
+    },
+    {
+      "date": "2026-03-10",
+      "swaps": 20485,
+      "missing_usd": 0,
+      "volume_usd_exact": "26573688.4382"
+    },
+    {
+      "date": "2026-03-11",
+      "swaps": 17588,
+      "missing_usd": 0,
+      "volume_usd_exact": "25044921.8166"
+    },
+    {
+      "date": "2026-03-12",
+      "swaps": 17698,
+      "missing_usd": 0,
+      "volume_usd_exact": "21532660.7385"
+    },
+    {
+      "date": "2026-03-13",
+      "swaps": 17680,
+      "missing_usd": 0,
+      "volume_usd_exact": "26783394.1836"
+    },
+    {
+      "date": "2026-03-14",
+      "swaps": 12869,
+      "missing_usd": 0,
+      "volume_usd_exact": "14162970.2361"
+    },
+    {
+      "date": "2026-03-15",
+      "swaps": 14877,
+      "missing_usd": 0,
+      "volume_usd_exact": "17765913.8235"
+    },
+    {
+      "date": "2026-03-16",
+      "swaps": 20598,
+      "missing_usd": 0,
+      "volume_usd_exact": "43934992.8783"
+    },
+    {
+      "date": "2026-03-17",
+      "swaps": 16372,
+      "missing_usd": 0,
+      "volume_usd_exact": "18078417.5547"
+    },
+    {
+      "date": "2026-03-18",
+      "swaps": 20107,
+      "missing_usd": 0,
+      "volume_usd_exact": "31353041.2899"
+    },
+    {
+      "date": "2026-03-19",
+      "swaps": 21577,
+      "missing_usd": 0,
+      "volume_usd_exact": "30797375.016"
+    },
+    {
+      "date": "2026-03-20",
+      "swaps": 17890,
+      "missing_usd": 0,
+      "volume_usd_exact": "25142360.0551"
+    },
+    {
+      "date": "2026-03-21",
+      "swaps": 15840,
+      "missing_usd": 0,
+      "volume_usd_exact": "19817199.4252"
+    },
+    {
+      "date": "2026-03-22",
+      "swaps": 16848,
+      "missing_usd": 0,
+      "volume_usd_exact": "24909008.7331"
+    },
+    {
+      "date": "2026-03-23",
+      "swaps": 22423,
+      "missing_usd": 0,
+      "volume_usd_exact": "32254556.2885"
+    },
+    {
+      "date": "2026-03-24",
+      "swaps": 24327,
+      "missing_usd": 0,
+      "volume_usd_exact": "30643328.0792"
+    },
+    {
+      "date": "2026-03-25",
+      "swaps": 27542,
+      "missing_usd": 0,
+      "volume_usd_exact": "34006253.1123"
+    },
+    {
+      "date": "2026-03-26",
+      "swaps": 21587,
+      "missing_usd": 0,
+      "volume_usd_exact": "26641993.3932"
+    },
+    {
+      "date": "2026-03-27",
+      "swaps": 22826,
+      "missing_usd": 0,
+      "volume_usd_exact": "29571022.645"
+    },
+    {
+      "date": "2026-03-28",
+      "swaps": 16879,
+      "missing_usd": 0,
+      "volume_usd_exact": "21032975.3046"
+    },
+    {
+      "date": "2026-03-29",
+      "swaps": 15522,
+      "missing_usd": 0,
+      "volume_usd_exact": "15336335.5517"
+    },
+    {
+      "date": "2026-03-30",
+      "swaps": 23594,
+      "missing_usd": 0,
+      "volume_usd_exact": "31924189.3809"
+    },
+    {
+      "date": "2026-03-31",
+      "swaps": 24188,
+      "missing_usd": 0,
+      "volume_usd_exact": "39225082.4596"
+    },
+    {
+      "date": "2026-04-01",
+      "swaps": 22217,
+      "missing_usd": 0,
+      "volume_usd_exact": "47840831.7036"
+    },
+    {
+      "date": "2026-04-02",
+      "swaps": 19792,
+      "missing_usd": 0,
+      "volume_usd_exact": "36040491.8216"
+    },
+    {
+      "date": "2026-04-03",
+      "swaps": 17004,
+      "missing_usd": 0,
+      "volume_usd_exact": "19900533.5382"
+    },
+    {
+      "date": "2026-04-04",
+      "swaps": 16026,
+      "missing_usd": 0,
+      "volume_usd_exact": "10750798.7618"
+    },
+    {
+      "date": "2026-04-05",
+      "swaps": 16566,
+      "missing_usd": 0,
+      "volume_usd_exact": "25435836.5561"
+    },
+    {
+      "date": "2026-04-06",
+      "swaps": 19820,
+      "missing_usd": 0,
+      "volume_usd_exact": "29026340.0495"
+    },
+    {
+      "date": "2026-04-07",
+      "swaps": 20368,
+      "missing_usd": 0,
+      "volume_usd_exact": "36136935.4212"
+    },
+    {
+      "date": "2026-04-08",
+      "swaps": 20868,
+      "missing_usd": 0,
+      "volume_usd_exact": "39641689.6832"
+    },
+    {
+      "date": "2026-04-09",
+      "swaps": 23257,
+      "missing_usd": 0,
+      "volume_usd_exact": "32178104.5852"
+    },
+    {
+      "date": "2026-04-10",
+      "swaps": 22166,
+      "missing_usd": 0,
+      "volume_usd_exact": "31989437.1197"
+    },
+    {
+      "date": "2026-04-11",
+      "swaps": 18374,
+      "missing_usd": 0,
+      "volume_usd_exact": "18684488.1023"
+    },
+    {
+      "date": "2026-04-12",
+      "swaps": 17406,
+      "missing_usd": 0,
+      "volume_usd_exact": "20416493.2903"
+    },
+    {
+      "date": "2026-04-13",
+      "swaps": 22456,
+      "missing_usd": 0,
+      "volume_usd_exact": "32580764.753"
+    },
+    {
+      "date": "2026-04-14",
+      "swaps": 22768,
+      "missing_usd": 0,
+      "volume_usd_exact": "36902873.9868"
+    },
+    {
+      "date": "2026-04-15",
+      "swaps": 17736,
+      "missing_usd": 0,
+      "volume_usd_exact": "25643226.4357"
+    },
+    {
+      "date": "2026-04-16",
+      "swaps": 7760,
+      "missing_usd": 0,
+      "volume_usd_exact": "20350858.3493"
+    },
+    {
+      "date": "2026-04-17",
+      "swaps": 12042,
+      "missing_usd": 0,
+      "volume_usd_exact": "21336212.7515"
+    },
+    {
+      "date": "2026-04-18",
+      "swaps": 19595,
+      "missing_usd": 0,
+      "volume_usd_exact": "25016794.1137"
+    },
+    {
+      "date": "2026-04-19",
+      "swaps": 21225,
+      "missing_usd": 0,
+      "volume_usd_exact": "23340128.4817"
+    },
+    {
+      "date": "2026-04-20",
+      "swaps": 22250,
+      "missing_usd": 0,
+      "volume_usd_exact": "29695402.8778"
+    },
+    {
+      "date": "2026-04-21",
+      "swaps": 20771,
+      "missing_usd": 0,
+      "volume_usd_exact": "27672546.5293"
+    },
+    {
+      "date": "2026-04-22",
+      "swaps": 26141,
+      "missing_usd": 0,
+      "volume_usd_exact": "28642989.703"
+    },
+    {
+      "date": "2026-04-23",
+      "swaps": 23421,
+      "missing_usd": 0,
+      "volume_usd_exact": "27782069.0771"
+    },
+    {
+      "date": "2026-04-24",
+      "swaps": 21031,
+      "missing_usd": 0,
+      "volume_usd_exact": "21595044.1864"
+    },
+    {
+      "date": "2026-04-25",
+      "swaps": 12858,
+      "missing_usd": 0,
+      "volume_usd_exact": "11073205.5281"
+    },
+    {
+      "date": "2026-04-26",
+      "swaps": 16970,
+      "missing_usd": 0,
+      "volume_usd_exact": "16010637.8214"
+    },
+    {
+      "date": "2026-04-27",
+      "swaps": 21607,
+      "missing_usd": 0,
+      "volume_usd_exact": "28286797.7527"
+    },
+    {
+      "date": "2026-04-28",
+      "swaps": 20901,
+      "missing_usd": 0,
+      "volume_usd_exact": "23337761.3711"
+    },
+    {
+      "date": "2026-04-29",
+      "swaps": 21130,
+      "missing_usd": 0,
+      "volume_usd_exact": "26544504.3369"
+    },
+    {
+      "date": "2026-04-30",
+      "swaps": 20688,
+      "missing_usd": 0,
+      "volume_usd_exact": "31242293.0184"
+    },
+    {
+      "date": "2026-05-01",
+      "swaps": 19519,
+      "missing_usd": 0,
+      "volume_usd_exact": "22907883.0643"
+    },
+    {
+      "date": "2026-05-02",
+      "swaps": 13984,
+      "missing_usd": 0,
+      "volume_usd_exact": "13535999.149"
+    },
+    {
+      "date": "2026-05-03",
+      "swaps": 16192,
+      "missing_usd": 0,
+      "volume_usd_exact": "15717204.8101"
+    },
+    {
+      "date": "2026-05-04",
+      "swaps": 21865,
+      "missing_usd": 0,
+      "volume_usd_exact": "28980193.6528"
+    },
+    {
+      "date": "2026-05-05",
+      "swaps": 18559,
+      "missing_usd": 0,
+      "volume_usd_exact": "33225840.8149"
+    },
+    {
+      "date": "2026-05-06",
+      "swaps": 22343,
+      "missing_usd": 0,
+      "volume_usd_exact": "32891603.7323"
+    },
+    {
+      "date": "2026-05-07",
+      "swaps": 19565,
+      "missing_usd": 0,
+      "volume_usd_exact": "28334672.9921"
+    },
+    {
+      "date": "2026-05-08",
+      "swaps": 18754,
+      "missing_usd": 0,
+      "volume_usd_exact": "26613908.8169"
+    },
+    {
+      "date": "2026-05-09",
+      "swaps": 17502,
+      "missing_usd": 0,
+      "volume_usd_exact": "20860106.5588"
+    },
+    {
+      "date": "2026-05-10",
+      "swaps": 13323,
+      "missing_usd": 0,
+      "volume_usd_exact": "21592867.2449"
+    },
+    {
+      "date": "2026-05-11",
+      "swaps": 15551,
+      "missing_usd": 0,
+      "volume_usd_exact": "29101512.4814"
+    },
+    {
+      "date": "2026-05-12",
+      "swaps": 13363,
+      "missing_usd": 0,
+      "volume_usd_exact": "27127602.3345"
+    },
+    {
+      "date": "2026-05-13",
+      "swaps": 17644,
+      "missing_usd": 0,
+      "volume_usd_exact": "24636722.8032"
+    },
+    {
+      "date": "2026-05-14",
+      "swaps": 20722,
+      "missing_usd": 0,
+      "volume_usd_exact": "32142631.8283"
+    },
+    {
+      "date": "2026-05-15",
+      "swaps": 20715,
+      "missing_usd": 0,
+      "volume_usd_exact": "31185766.2564"
+    },
+    {
+      "date": "2026-05-16",
+      "swaps": 17092,
+      "missing_usd": 0,
+      "volume_usd_exact": "21450927.9069"
+    },
+    {
+      "date": "2026-05-17",
+      "swaps": 16027,
+      "missing_usd": 0,
+      "volume_usd_exact": "22968428.8573"
+    },
+    {
+      "date": "2026-05-18",
+      "swaps": 19641,
+      "missing_usd": 0,
+      "volume_usd_exact": "34030226.7184"
+    },
+    {
+      "date": "2026-05-19",
+      "swaps": 21469,
+      "missing_usd": 0,
+      "volume_usd_exact": "29827945.9762"
+    },
+    {
+      "date": "2026-05-20",
+      "swaps": 19164,
+      "missing_usd": 0,
+      "volume_usd_exact": "36476203.0132"
+    },
+    {
+      "date": "2026-05-21",
+      "swaps": 19878,
+      "missing_usd": 0,
+      "volume_usd_exact": "31393565.174"
+    },
+    {
+      "date": "2026-05-22",
+      "swaps": 22036,
+      "missing_usd": 0,
+      "volume_usd_exact": "41854918.9828"
+    },
+    {
+      "date": "2026-05-23",
+      "swaps": 20886,
+      "missing_usd": 0,
+      "volume_usd_exact": "55978480.6836"
+    },
+    {
+      "date": "2026-05-24",
+      "swaps": 18666,
+      "missing_usd": 0,
+      "volume_usd_exact": "34329361.477"
+    },
+    {
+      "date": "2026-05-25",
+      "swaps": 21043,
+      "missing_usd": 0,
+      "volume_usd_exact": "46905392.4038"
+    },
+    {
+      "date": "2026-05-26",
+      "swaps": 21323,
+      "missing_usd": 0,
+      "volume_usd_exact": "60903045.32"
+    },
+    {
+      "date": "2026-05-27",
+      "swaps": 19911,
+      "missing_usd": 0,
+      "volume_usd_exact": "44280135.776"
+    },
+    {
+      "date": "2026-05-28",
+      "swaps": 19861,
+      "missing_usd": 0,
+      "volume_usd_exact": "42959718.969149510547"
+    },
+    {
+      "date": "2026-05-29",
+      "swaps": 18076,
+      "missing_usd": 0,
+      "volume_usd_exact": "25950821.5911"
+    },
+    {
+      "date": "2026-05-30",
+      "swaps": 15538,
+      "missing_usd": 0,
+      "volume_usd_exact": "42360098.7612"
+    },
+    {
+      "date": "2026-05-31",
+      "swaps": 16455,
+      "missing_usd": 0,
+      "volume_usd_exact": "88125059.1407"
+    },
+    {
+      "date": "2026-06-01",
+      "swaps": 20417,
+      "missing_usd": 0,
+      "volume_usd_exact": "47569898.64161"
+    },
+    {
+      "date": "2026-06-02",
+      "swaps": 21845,
+      "missing_usd": 0,
+      "volume_usd_exact": "37703797.983136351328"
+    },
+    {
+      "date": "2026-06-03",
+      "swaps": 23160,
+      "missing_usd": 0,
+      "volume_usd_exact": "40733527.1434"
+    },
+    {
+      "date": "2026-06-04",
+      "swaps": 19842,
+      "missing_usd": 0,
+      "volume_usd_exact": "56373687.463482831775"
+    },
+    {
+      "date": "2026-06-05",
+      "swaps": 28739,
+      "missing_usd": 0,
+      "volume_usd_exact": "86707782.453038694156"
+    },
+    {
+      "date": "2026-06-06",
+      "swaps": 17458,
+      "missing_usd": 0,
+      "volume_usd_exact": "27812131.6778"
+    },
+    {
+      "date": "2026-06-07",
+      "swaps": 17900,
+      "missing_usd": 0,
+      "volume_usd_exact": "31574013.7624"
+    },
+    {
+      "date": "2026-06-08",
+      "swaps": 24473,
+      "missing_usd": 0,
+      "volume_usd_exact": "40448482.4497"
+    },
+    {
+      "date": "2026-06-09",
+      "swaps": 19856,
+      "missing_usd": 0,
+      "volume_usd_exact": "36841521.9577"
+    },
+    {
+      "date": "2026-06-10",
+      "swaps": 20442,
+      "missing_usd": 0,
+      "volume_usd_exact": "31149581.5274"
+    },
+    {
+      "date": "2026-06-11",
+      "swaps": 19232,
+      "missing_usd": 0,
+      "volume_usd_exact": "37160749.7348"
+    },
+    {
+      "date": "2026-06-12",
+      "swaps": 20642,
+      "missing_usd": 0,
+      "volume_usd_exact": "40675433.2256"
+    },
+    {
+      "date": "2026-06-13",
+      "swaps": 15366,
+      "missing_usd": 0,
+      "volume_usd_exact": "16106923.699518949533"
+    },
+    {
+      "date": "2026-06-14",
+      "swaps": 15779,
+      "missing_usd": 0,
+      "volume_usd_exact": "17357724.1712"
+    },
+    {
+      "date": "2026-06-15",
+      "swaps": 22276,
+      "missing_usd": 0,
+      "volume_usd_exact": "51433343.6479"
+    },
+    {
+      "date": "2026-06-16",
+      "swaps": 19640,
+      "missing_usd": 0,
+      "volume_usd_exact": "38905149.9887"
+    },
+    {
+      "date": "2026-06-17",
+      "swaps": 20224,
+      "missing_usd": 0,
+      "volume_usd_exact": "31208198.5802"
+    },
+    {
+      "date": "2026-06-18",
+      "swaps": 20753,
+      "missing_usd": 0,
+      "volume_usd_exact": "30357331.854"
+    },
+    {
+      "date": "2026-06-19",
+      "swaps": 17326,
+      "missing_usd": 0,
+      "volume_usd_exact": "22089987.6908"
+    },
+    {
+      "date": "2026-06-20",
+      "swaps": 17848,
+      "missing_usd": 0,
+      "volume_usd_exact": "20046565.275"
+    },
+    {
+      "date": "2026-06-21",
+      "swaps": 15874,
+      "missing_usd": 0,
+      "volume_usd_exact": "20701534.68625987"
+    },
+    {
+      "date": "2026-06-22",
+      "swaps": 18776,
+      "missing_usd": 0,
+      "volume_usd_exact": "37934290.4567"
+    },
+    {
+      "date": "2026-06-23",
+      "swaps": 17742,
+      "missing_usd": 0,
+      "volume_usd_exact": "33345063.250672139067"
+    },
+    {
+      "date": "2026-06-24",
+      "swaps": 21828,
+      "missing_usd": 0,
+      "volume_usd_exact": "40098727.227844181799"
+    },
+    {
+      "date": "2026-06-25",
+      "swaps": 19735,
+      "missing_usd": 0,
+      "volume_usd_exact": "29190988.508674936066"
+    },
+    {
+      "date": "2026-06-26",
+      "swaps": 18092,
+      "missing_usd": 0,
+      "volume_usd_exact": "27462489.411003655692"
+    },
+    {
+      "date": "2026-06-27",
+      "swaps": 14649,
+      "missing_usd": 0,
+      "volume_usd_exact": "16827475.528960145779"
+    },
+    {
+      "date": "2026-06-28",
+      "swaps": 15288,
+      "missing_usd": 0,
+      "volume_usd_exact": "22703551.815951165275"
+    },
+    {
+      "date": "2026-06-29",
+      "swaps": 18486,
+      "missing_usd": 0,
+      "volume_usd_exact": "31488861.691639369541"
+    },
+    {
+      "date": "2026-06-30",
+      "swaps": 19787,
+      "missing_usd": 0,
+      "volume_usd_exact": "43290765.011133054272"
+    },
+    {
+      "date": "2026-07-01",
+      "swaps": 20246,
+      "missing_usd": 0,
+      "volume_usd_exact": "47392102.018839493577"
+    },
+    {
+      "date": "2026-07-02",
+      "swaps": 20193,
+      "missing_usd": 0,
+      "volume_usd_exact": "46583396.764730088204"
+    },
+    {
+      "date": "2026-07-03",
+      "swaps": 18611,
+      "missing_usd": 0,
+      "volume_usd_exact": "35357671.943704490628"
+    },
+    {
+      "date": "2026-07-04",
+      "swaps": 17450,
+      "missing_usd": 0,
+      "volume_usd_exact": "26118537.323152912261"
+    },
+    {
+      "date": "2026-07-05",
+      "swaps": 16965,
+      "missing_usd": 0,
+      "volume_usd_exact": "22247852.229250669041"
+    },
+    {
+      "date": "2026-07-06",
+      "swaps": 20280,
+      "missing_usd": 0,
+      "volume_usd_exact": "46926114.07648546136"
+    },
+    {
+      "date": "2026-07-07",
+      "swaps": 19942,
+      "missing_usd": 0,
+      "volume_usd_exact": "41615995.651515776193"
+    },
+    {
+      "date": "2026-07-08",
+      "swaps": 20534,
+      "missing_usd": 0,
+      "volume_usd_exact": "43163351.988487107713"
+    },
+    {
+      "date": "2026-07-09",
+      "swaps": 18059,
+      "missing_usd": 0,
+      "volume_usd_exact": "39037773.731742502426"
+    },
+    {
+      "date": "2026-07-10",
+      "swaps": 18774,
+      "missing_usd": 0,
+      "volume_usd_exact": "39020484.310368638257"
+    },
+    {
+      "date": "2026-07-11",
+      "swaps": 16516,
+      "missing_usd": 0,
+      "volume_usd_exact": "20528036.034752212334"
+    },
+    {
+      "date": "2026-07-12",
+      "swaps": 15274,
+      "missing_usd": 0,
+      "volume_usd_exact": "20842803.215781087185"
+    },
+    {
+      "date": "2026-07-13",
+      "swaps": 18771,
+      "missing_usd": 0,
+      "volume_usd_exact": "39695870.616612372681"
+    },
+    {
+      "date": "2026-07-14",
+      "swaps": 19234,
+      "missing_usd": 0,
+      "volume_usd_exact": "48476826.159271931945"
+    },
+    {
+      "date": "2026-07-15",
+      "swaps": 20885,
+      "missing_usd": 0,
+      "volume_usd_exact": "49883267.674321960743"
+    },
+    {
+      "date": "2026-07-16",
+      "swaps": 19508,
+      "missing_usd": 0,
+      "volume_usd_exact": "41050850.26759006618"
+    },
+    {
+      "date": "2026-07-17",
+      "swaps": 17443,
+      "missing_usd": 0,
+      "volume_usd_exact": "31748151.366420142347"
+    },
+    {
+      "date": "2026-07-18",
+      "swaps": 16002,
+      "missing_usd": 0,
+      "volume_usd_exact": "27209403.507182469532"
+    },
+    {
+      "date": "2026-07-19",
+      "swaps": 15894,
+      "missing_usd": 0,
+      "volume_usd_exact": "20279813.245378249032"
+    },
+    {
+      "date": "2026-07-20",
+      "swaps": 15991,
+      "missing_usd": 0,
+      "volume_usd_exact": "29377754.37668213334"
+    },
+    {
+      "date": "2026-07-21",
+      "swaps": 19129,
+      "missing_usd": 0,
+      "volume_usd_exact": "50784530.035353934603"
+    },
+    {
+      "date": "2026-07-22",
+      "swaps": 19658,
+      "missing_usd": 0,
+      "volume_usd_exact": "42111725.405914199543"
+    },
+    {
+      "date": "2026-07-23",
+      "swaps": 20780,
+      "missing_usd": 0,
+      "volume_usd_exact": "30489326.267077112057"
+    },
+    {
+      "date": "2026-07-24",
+      "swaps": 20679,
+      "missing_usd": 0,
+      "volume_usd_exact": "28242398.909072957056"
+    },
+    {
+      "date": "2026-07-25",
+      "swaps": 18223,
+      "missing_usd": 0,
+      "volume_usd_exact": "21855514.470463009005"
+    },
+    {
+      "date": "2026-07-26",
+      "swaps": 17924,
+      "missing_usd": 0,
+      "volume_usd_exact": "22954552.963119604922"
+    },
+    {
+      "date": "2026-07-27",
+      "swaps": 21216,
+      "missing_usd": 0,
+      "volume_usd_exact": "29763414.954204613461"
+    },
+    {
+      "date": "2026-07-28",
+      "swaps": 21399,
+      "missing_usd": 0,
+      "volume_usd_exact": "33331811.26657568613"
+    },
+    {
+      "date": "2026-07-29",
+      "swaps": 21225,
+      "missing_usd": 0,
+      "volume_usd_exact": "27563001.730323275607"
+    },
+    {
+      "date": "2026-07-30",
+      "swaps": 23704,
+      "missing_usd": 0,
+      "volume_usd_exact": "37062417.373105260217"
+    },
+    {
+      "date": "2026-07-31",
+      "swaps": 22816,
+      "missing_usd": 0,
+      "volume_usd_exact": "32826143.095037759502"
+    },
+    {
+      "date": "2026-08-01",
+      "swaps": 20329,
+      "missing_usd": 0,
+      "volume_usd_exact": "28052608.383414604826"
+    },
+    {
+      "date": "2026-08-02",
+      "swaps": 18314,
+      "missing_usd": 0,
+      "volume_usd_exact": "15802280.680880623267"
+    },
+    {
+      "date": "2026-08-03",
+      "swaps": 21739,
+      "missing_usd": 0,
+      "volume_usd_exact": "33217952.356295894502"
+    },
+    {
+      "date": "2026-08-04",
+      "swaps": 22116,
+      "missing_usd": 0,
+      "volume_usd_exact": "25543886.581252423729"
+    },
+    {
+      "date": "2026-08-05",
+      "swaps": 22991,
+      "missing_usd": 0,
+      "volume_usd_exact": "31184947.309999666273"
+    },
+    {
+      "date": "2026-08-06",
+      "swaps": 23381,
+      "missing_usd": 0,
+      "volume_usd_exact": "35003297.553552141038"
+    },
+    {
+      "date": "2026-08-07",
+      "swaps": 23041,
+      "missing_usd": 0,
+      "volume_usd_exact": "32348708.965408533441"
+    },
+    {
+      "date": "2026-08-08",
+      "swaps": 21624,
+      "missing_usd": 0,
+      "volume_usd_exact": "25150571.481722458494"
+    },
+    {
+      "date": "2026-08-09",
+      "swaps": 20540,
+      "missing_usd": 0,
+      "volume_usd_exact": "16948054.351023283618"
+    },
+    {
+      "date": "2026-08-10",
+      "swaps": 24506,
+      "missing_usd": 0,
+      "volume_usd_exact": "33013803.532330865072"
+    },
+    {
+      "date": "2026-08-11",
+      "swaps": 24894,
+      "missing_usd": 0,
+      "volume_usd_exact": "35091869.44370766907"
+    },
+    {
+      "date": "2026-08-12",
+      "swaps": 24551,
+      "missing_usd": 0,
+      "volume_usd_exact": "31432272.901060623708"
+    },
+    {
+      "date": "2026-08-13",
+      "swaps": 24179,
+      "missing_usd": 0,
+      "volume_usd_exact": "30143659.276789751716"
+    },
+    {
+      "date": "2026-08-14",
+      "swaps": 23952,
+      "missing_usd": 0,
+      "volume_usd_exact": "33606767.798497697699"
+    },
+    {
+      "date": "2026-08-15",
+      "swaps": 14024,
+      "missing_usd": 0,
+      "volume_usd_exact": "14966286.499441405122"
+    },
+    {
+      "date": "2026-08-16",
+      "swaps": 20272,
+      "missing_usd": 0,
+      "volume_usd_exact": "22626323.882252400575"
+    },
+    {
+      "date": "2026-08-17",
+      "swaps": 25803,
+      "missing_usd": 0,
+      "volume_usd_exact": "38144224.743438085059"
+    },
+    {
+      "date": "2026-08-18",
+      "swaps": 26219,
+      "missing_usd": 0,
+      "volume_usd_exact": "38315379.775715753961"
+    },
+    {
+      "date": "2026-08-19",
+      "swaps": 30753,
+      "missing_usd": 0,
+      "volume_usd_exact": "59278405.03989106976"
+    },
+    {
+      "date": "2026-08-20",
+      "swaps": 34606,
+      "missing_usd": 0,
+      "volume_usd_exact": "59253192.437414401475"
+    },
+    {
+      "date": "2026-08-21",
+      "swaps": 38663,
+      "missing_usd": 0,
+      "volume_usd_exact": "73023090.912604134314"
+    },
+    {
+      "date": "2026-08-22",
+      "swaps": 30748,
+      "missing_usd": 0,
+      "volume_usd_exact": "55704976.838318853832"
+    },
+    {
+      "date": "2026-08-23",
+      "swaps": 29818,
+      "missing_usd": 0,
+      "volume_usd_exact": "50137292.854591044622"
+    },
+    {
+      "date": "2026-08-24",
+      "swaps": 36167,
+      "missing_usd": 0,
+      "volume_usd_exact": "65443712.085483154933"
+    },
+    {
+      "date": "2026-08-25",
+      "swaps": 36916,
+      "missing_usd": 0,
+      "volume_usd_exact": "63733671.939071219722"
+    },
+    {
+      "date": "2026-08-26",
+      "swaps": 29352,
+      "missing_usd": 0,
+      "volume_usd_exact": "56905877.028618293586"
+    },
+    {
+      "date": "2026-08-27",
+      "swaps": 30860,
+      "missing_usd": 0,
+      "volume_usd_exact": "55531456.001867568818"
+    },
+    {
+      "date": "2026-08-28",
+      "swaps": 28100,
+      "missing_usd": 0,
+      "volume_usd_exact": "47419961.308679244017"
+    },
+    {
+      "date": "2026-08-29",
+      "swaps": 22646,
+      "missing_usd": 0,
+      "volume_usd_exact": "22255906.913177946749"
+    },
+    {
+      "date": "2026-08-30",
+      "swaps": 28486,
+      "missing_usd": 0,
+      "volume_usd_exact": "28692151.934243567457"
+    },
+    {
+      "date": "2026-08-31",
+      "swaps": 38016,
+      "missing_usd": 0,
+      "volume_usd_exact": "54669347.943683861513"
+    },
+    {
+      "date": "2026-09-01",
+      "swaps": 33656,
+      "missing_usd": 0,
+      "volume_usd_exact": "43648763.668386101945"
+    },
+    {
+      "date": "2026-09-02",
+      "swaps": 31626,
+      "missing_usd": 0,
+      "volume_usd_exact": "50321455.503653083114"
+    },
+    {
+      "date": "2026-09-03",
+      "swaps": 34041,
+      "missing_usd": 0,
+      "volume_usd_exact": "56589738.474184345451"
+    },
+    {
+      "date": "2026-09-04",
+      "swaps": 33885,
+      "missing_usd": 0,
+      "volume_usd_exact": "42472807.421289466821"
+    },
+    {
+      "date": "2026-09-05",
+      "swaps": 29352,
+      "missing_usd": 0,
+      "volume_usd_exact": "32277140.614902917775"
+    },
+    {
+      "date": "2026-09-06",
+      "swaps": 29086,
+      "missing_usd": 0,
+      "volume_usd_exact": "39054292.722837921576"
+    },
+    {
+      "date": "2026-09-07",
+      "swaps": 30187,
+      "missing_usd": 0,
+      "volume_usd_exact": "41376844.595139958388"
+    },
+    {
+      "date": "2026-09-08",
+      "swaps": 21541,
+      "missing_usd": 0,
+      "volume_usd_exact": "35057120.946742774069"
+    },
+    {
+      "date": "2026-09-09",
+      "swaps": 22172,
+      "missing_usd": 0,
+      "volume_usd_exact": "64879500.270159454214"
+    },
+    {
+      "date": "2026-09-10",
+      "swaps": 19861,
+      "missing_usd": 0,
+      "volume_usd_exact": "56005123.376251266032"
+    },
+    {
+      "date": "2026-09-11",
+      "swaps": 20009,
+      "missing_usd": 0,
+      "volume_usd_exact": "59198990.339824367881"
+    },
+    {
+      "date": "2026-09-12",
+      "swaps": 14685,
+      "missing_usd": 0,
+      "volume_usd_exact": "40361159.138068749489"
+    },
+    {
+      "date": "2026-09-13",
+      "swaps": 12650,
+      "missing_usd": 0,
+      "volume_usd_exact": "27151065.473607509712"
+    },
+    {
+      "date": "2026-09-14",
+      "swaps": 15450,
+      "missing_usd": 0,
+      "volume_usd_exact": "40778504.254888198727"
+    },
+    {
+      "date": "2026-09-15",
+      "swaps": 16100,
+      "missing_usd": 0,
+      "volume_usd_exact": "43888358.249883437563"
+    },
+    {
+      "date": "2026-09-16",
+      "swaps": 16358,
+      "missing_usd": 0,
+      "volume_usd_exact": "47160172.310469841565"
+    },
+    {
+      "date": "2026-09-17",
+      "swaps": 19595,
+      "missing_usd": 0,
+      "volume_usd_exact": "95193001.782176958156"
+    },
+    {
+      "date": "2026-09-18",
+      "swaps": 22391,
+      "missing_usd": 0,
+      "volume_usd_exact": "78290072.501270317347"
+    },
+    {
+      "date": "2026-09-19",
+      "swaps": 17838,
+      "missing_usd": 0,
+      "volume_usd_exact": "38604392.77597367087"
+    },
+    {
+      "date": "2026-09-20",
+      "swaps": 16253,
+      "missing_usd": 0,
+      "volume_usd_exact": "31324998.953678069333"
+    },
+    {
+      "date": "2026-09-21",
+      "swaps": 27557,
+      "missing_usd": 0,
+      "volume_usd_exact": "78150577.780520866794"
+    },
+    {
+      "date": "2026-09-22",
+      "swaps": 23759,
+      "missing_usd": 0,
+      "volume_usd_exact": "62746400.803330967201"
+    },
+    {
+      "date": "2026-09-23",
+      "swaps": 23102,
+      "missing_usd": 0,
+      "volume_usd_exact": "60867579.391450069589"
+    },
+    {
+      "date": "2026-09-24",
+      "swaps": 21113,
+      "missing_usd": 0,
+      "volume_usd_exact": "51229675.621738043447"
+    },
+    {
+      "date": "2026-09-25",
+      "swaps": 22265,
+      "missing_usd": 0,
+      "volume_usd_exact": "48790344.462471702712"
+    },
+    {
+      "date": "2026-09-26",
+      "swaps": 18676,
+      "missing_usd": 0,
+      "volume_usd_exact": "27083751.329402888714"
+    },
+    {
+      "date": "2026-09-27",
+      "swaps": 25175,
+      "missing_usd": 0,
+      "volume_usd_exact": "41057095.472758555238"
+    },
+    {
+      "date": "2026-09-28",
+      "swaps": 28902,
+      "missing_usd": 0,
+      "volume_usd_exact": "57363103.704317245549"
+    },
+    {
+      "date": "2026-09-29",
+      "swaps": 29041,
+      "missing_usd": 0,
+      "volume_usd_exact": "69451651.200621918598"
+    },
+    {
+      "date": "2026-09-30",
+      "swaps": 23250,
+      "missing_usd": 0,
+      "volume_usd_exact": "53401903.073386577753"
+    },
+    {
+      "date": "2026-10-01",
+      "swaps": 16575,
+      "missing_usd": 0,
+      "volume_usd_exact": "32612894.145756209035"
+    },
+    {
+      "date": "2026-10-02",
+      "swaps": 17318,
+      "missing_usd": 0,
+      "volume_usd_exact": "38177459.896899166479"
+    },
+    {
+      "date": "2026-10-03",
+      "swaps": 14262,
+      "missing_usd": 0,
+      "volume_usd_exact": "23788457.124468405505"
+    },
+    {
+      "date": "2026-10-04",
+      "swaps": 13601,
+      "missing_usd": 0,
+      "volume_usd_exact": "19818709.434693745197"
+    },
+    {
+      "date": "2026-10-05",
+      "swaps": 17650,
+      "missing_usd": 0,
+      "volume_usd_exact": "39029985.45003083676"
+    },
+    {
+      "date": "2026-10-06",
+      "swaps": 17166,
+      "missing_usd": 0,
+      "volume_usd_exact": "35741240.191057793475"
+    },
+    {
+      "date": "2026-10-07",
+      "swaps": 18268,
+      "missing_usd": 0,
+      "volume_usd_exact": "34353313.278678700341"
+    },
+    {
+      "date": "2026-10-08",
+      "swaps": 22681,
+      "missing_usd": 0,
+      "volume_usd_exact": "52727281.132860692049"
+    },
+    {
+      "date": "2026-10-09",
+      "swaps": 20243,
+      "missing_usd": 0,
+      "volume_usd_exact": "68451116.534018846337"
+    },
+    {
+      "date": "2026-10-10",
+      "swaps": 16167,
+      "missing_usd": 0,
+      "volume_usd_exact": "39777175.18222549391"
+    },
+    {
+      "date": "2026-10-11",
+      "swaps": 15239,
+      "missing_usd": 0,
+      "volume_usd_exact": "34562592.478527826852"
+    },
+    {
+      "date": "2026-10-12",
+      "swaps": 18171,
+      "missing_usd": 0,
+      "volume_usd_exact": "38912412.309253404493"
+    },
+    {
+      "date": "2026-10-13",
+      "swaps": 17692,
+      "missing_usd": 0,
+      "volume_usd_exact": "39477893.90965369831"
+    },
+    {
+      "date": "2026-10-14",
+      "swaps": 18291,
+      "missing_usd": 0,
+      "volume_usd_exact": "31397449.388264895971"
+    },
+    {
+      "date": "2026-10-15",
+      "swaps": 15396,
+      "missing_usd": 0,
+      "volume_usd_exact": "30002737.351772742539"
+    },
+    {
+      "date": "2026-10-16",
+      "swaps": 14646,
+      "missing_usd": 0,
+      "volume_usd_exact": "21246167.816941903989"
+    },
+    {
+      "date": "2026-10-17",
+      "swaps": 11975,
+      "missing_usd": 0,
+      "volume_usd_exact": "41827639.740081684189"
+    },
+    {
+      "date": "2026-10-18",
+      "swaps": 12046,
+      "missing_usd": 0,
+      "volume_usd_exact": "41060770.637806330432"
+    },
+    {
+      "date": "2026-10-19",
+      "swaps": 14526,
+      "missing_usd": 0,
+      "volume_usd_exact": "26124694.443188433936"
+    },
+    {
+      "date": "2026-10-20",
+      "swaps": 12670,
+      "missing_usd": 0,
+      "volume_usd_exact": "35644520.387423637773"
+    },
+    {
+      "date": "2026-10-21",
+      "swaps": 18779,
+      "missing_usd": 0,
+      "volume_usd_exact": "37513846.619534482526"
+    },
+    {
+      "date": "2026-10-22",
+      "swaps": 16199,
+      "missing_usd": 0,
+      "volume_usd_exact": "30178366.801604272862"
+    },
+    {
+      "date": "2026-10-23",
+      "swaps": 16042,
+      "missing_usd": 0,
+      "volume_usd_exact": "30871421.055868105967"
+    },
+    {
+      "date": "2026-10-24",
+      "swaps": 15989,
+      "missing_usd": 0,
+      "volume_usd_exact": "22986129.917520619712"
+    },
+    {
+      "date": "2026-10-25",
+      "swaps": 13789,
+      "missing_usd": 0,
+      "volume_usd_exact": "23091579.045505872748"
+    },
+    {
+      "date": "2026-10-26",
+      "swaps": 17522,
+      "missing_usd": 0,
+      "volume_usd_exact": "41527112.854423755724"
+    },
+    {
+      "date": "2026-10-27",
+      "swaps": 17885,
+      "missing_usd": 0,
+      "volume_usd_exact": "38112560.182140053184"
+    },
+    {
+      "date": "2026-10-28",
+      "swaps": 15660,
+      "missing_usd": 0,
+      "volume_usd_exact": "32621604.664546230413"
+    },
+    {
+      "date": "2026-10-29",
+      "swaps": 15697,
+      "missing_usd": 0,
+      "volume_usd_exact": "33835786.44798274464"
+    },
+    {
+      "date": "2026-10-30",
+      "swaps": 23925,
+      "missing_usd": 0,
+      "volume_usd_exact": "57942904.367486503492"
+    },
+    {
+      "date": "2026-10-31",
+      "swaps": 14126,
+      "missing_usd": 0,
+      "volume_usd_exact": "21945275.823405527791"
+    },
+    {
+      "date": "2026-11-01",
+      "swaps": 16874,
+      "missing_usd": 0,
+      "volume_usd_exact": "26473239.914258248212"
+    }
+  ],
+  "rows": 7509299,
+  "pages": 7513,
+  "pagesSha256": "f982c92bb80348f45800dd6b0514c1e8b42b2c4d7f879494592dfa7e13dcf207",
+  "completedAt": "2026-11-09T12:35:22.309Z"
+}

@@ -35,6 +35,20 @@ Checked on 2026-11-09 (UTC).
 - `npm run rebuild` passes using `data/public/` only. It generates `dashboard/NUMBERS.md` and charts, verifies `THESIS.md`, and copies the reviewed thesis without changing the source file.
 - The first rebuild against the unconverted thesis failed as expected. After the evidence table was reviewed and inserted by hand, rebuild passed. The CLI regression test independently alters the offset and verifies nonzero exit with the altered prose preserved.
 - The dashboard contains no JWT and no deposit addresses.
+- After the pull completed, `npm run refresh` reused all five cached BigQuery results (0 bytes billed; cumulative stays 242.87 GB) and refetched prices. The exported `bigquery/*.json` and `prices.json` are byte-identical to the earlier snapshot. Refresh then stopped, as designed, because the thesis was stale. `npm run export-public -- --swaps` wrote `data/public/swaps.json`: 611 UTC days, 7,509,299 swaps, no wallet-level fields.
+- T2 was computed with the rule and code unchanged since commit `62fa25a` (first week with 7,000 swaps, 52-change minimum, lags 1, 2, 4 and 8, 4-week blocks, 10,000 resamples, seed 20261108). Result: CAN'T TELL. The reasoning was then written by hand in `THESIS.md`, and rebuild verifies every tagged value.
+
+## 1Click pull audit
+
+Run over all 7,513 saved pages after `complete.json` was written (2026-11-09T12:35:22Z):
+
+- 7,509,299 rows; newest 2026-11-01T23:59:47.681Z, oldest 2025-03-27T08:56:14.383Z. All rows are inside the window and have status SUCCESS. No page is empty.
+- Pages 1–4,404 used the old address cursor; pages 4,405–7,513 used timestamp paging.
+- Time order: zero rows newer than the row before them, within pages or across page boundaries.
+- Composite duplicates (address, memo, `createdAt`): zero.
+- Largest gap between pages: 61.21 minutes (page 7,492, early low-volume history). Largest gap between any two consecutive swaps: 4,192.56 minutes, ending 2025-04-04T14:18:41Z, also in early history before the T2 start week. Six page boundaries share a timestamp with the previous page's oldest row; those rows have different keys and were kept.
+- Deposit address reuse: 7,473,224 distinct addresses. 67 addresses appear on more than one swap, covering 36,142 swaps; one address accounts for 36,010 of them.
+- Weekly counts: the T2 start week 2025-04-14 has 8,568 swaps. The next 15 weeks are below 7,000; the next week at or above 7,000 is 2025-08-04. The fixed rule keeps those weeks in the test.
 
 ## Data-quality findings
 
@@ -51,5 +65,4 @@ Checked on 2026-11-09 (UTC).
 
 ## Pending
 
-- T2 needs the full 1Click pull: about 6,600 pages at one request per 5.2 s. It is running in the background under `caffeinate -i` and is resumable with `npm run pull-swaps`. Until it completes, T2 is "can't tell".
-- After the pull: publish aggregate daily totals, write the completed T2 interpretation, and repeat the no-credentials rebuild from a temporary Git clone, comparing all generated charts and numbers.
+- Repeat the no-credentials rebuild from a temporary Git clone of the final commit and compare every generated file.

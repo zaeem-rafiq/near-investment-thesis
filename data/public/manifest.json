@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "2026-11-09T00-36-50-813Z_91785bfb",
-  "fetchedAt": "2026-11-09T00:36:50.813Z",
+  "id": "2026-11-09T12-41-06-955Z_a996bcbf",
+  "fetchedAt": "2026-11-09T12:41:06.956Z",
   "files": {
     "signers": {
       "path": "data/public/bigquery/signers.json",
@@ -26,9 +26,11 @@
     "prices": {
       "path": "data/public/prices.json",
       "sha256": "5eb2920cef28d43bb21a9a0a3de3bd648c37435592ff52108d265f7598ecd2aa"
+    },
+    "swaps": {
+      "path": "data/public/swaps.json",
+      "sha256": "7025973671275ba53f7b71a712b7d607813630590156e2bc9bf9dea5ea288e61"
     }
   },
-  "unavailable": {
-    "swaps": "1Click pull pending. Partial pages are not published or used for T2."
-  }
+  "unavailable": {}
 }
