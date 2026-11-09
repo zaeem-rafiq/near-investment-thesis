@@ -111,12 +111,17 @@ export async function pullSwapsResumable(window, jwt, options = {}) {
     else delete params.lastDepositMemo;
   };
   if (last) setCursor(last);
-  let n = pages.length, fetched = 0, previousRequest = 0;
+  // Every HTTP attempt, retries included, starts at least PACE_MS after the previous attempt.
+  let previousAttempt = 0;
+  const paced = async (url, init) => {
+    const wait = previousAttempt + PACE_MS - Date.now();
+    if (previousAttempt && wait > 0) await pause(wait);
+    previousAttempt = Date.now();
+    return request(url, init);
+  };
+  let n = pages.length, fetched = 0;
   while (fetched < maxPages) {
-    const wait = previousRequest + PACE_MS - Date.now();
-    if (previousRequest && wait > 0) await pause(wait);
-    previousRequest = Date.now();
-    const raw = await fetchPage(`${EXPLORER}?${new URLSearchParams(params)}`, jwt, request, pause, log);
+    const raw = await fetchPage(`${EXPLORER}?${new URLSearchParams(params)}`, jwt, paced, pause, log);
     fetched++;
     if (raw.length === 0) {
       const summary = { ...meta, pages: n, rows, complete: true, completedAt: new Date().toISOString() };

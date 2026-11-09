@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, rm, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { pullSwapsResumable, savedPages, readPage } from '../scripts/swaps.mjs';
+import { pullSwapsResumable, savedPages, readPage, PACE_MS } from '../scripts/swaps.mjs';
 
 // Synthetic protocol fixtures only.
 const window = { start: '2026-10-01', end: '2026-10-02' };
@@ -21,6 +21,13 @@ function server(pages) {
   return { request, urls };
 }
 const tempDir = () => mkdtemp(join(tmpdir(), 'swaps-test-'));
+// Fake clock: pause() advances Date.now, so pacing can be checked without real sleeps.
+async function withFakeClock(fn) {
+  const realNow = Date.now;
+  let t = 1_800_000_000_000;
+  Date.now = () => t;
+  try { return await fn({ now: () => t, pause: async ms => { t += ms; } }); } finally { Date.now = realNow; }
+}
 
 test('swap pull saves each page and resumes from the last saved cursor without refetching', async () => {
   const dir = await tempDir();
@@ -62,11 +69,34 @@ test('swap pull retries 429 and 5xx with pacing, and stops on 401 without the bo
     let calls = 0; const waits = [];
     const request = async () => [ { status: 429, ok: false, headers: new Headers({ 'retry-after': '9' }) },
       { status: 503, ok: false, headers: new Headers() }][calls++] || ok([]);
-    const done = await pullSwapsResumable(window, 'test-only', { dir, request, pause: async ms => waits.push(ms) });
+    const done = await withFakeClock(clock => pullSwapsResumable(window, 'test-only', { dir, request,
+      pause: async ms => { waits.push(ms); await clock.pause(ms); } }));
     assert.equal(done.complete, true);
     assert.deepEqual(waits, [9000, 10400]);
     const dir2 = await tempDir();
     await assert.rejects(pullSwapsResumable(window, 'test-only', { dir: dir2, request: async () => ({ ok: false, status: 401 }) }), /^Error: Explorer HTTP 401; response body omitted\.$/);
     await rm(dir2, { recursive: true, force: true });
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+test('every HTTP attempt, including retries, is at least one pace interval after the previous attempt', async () => {
+  const dir = await tempDir();
+  try {
+    await withFakeClock(async clock => {
+      const attempts = [];
+      const pages = [[swap('a')], [swap('b')], [swap('c')]];
+      let throttled = 0;
+      const request = async url => {
+        attempts.push(clock.now());
+        const after = new URL(url).searchParams.get('lastDepositAddress');
+        const i = after ? pages.findIndex(p => p.at(-1).depositAddress === after) + 1 : 0;
+        // Each page's first attempt is throttled once (no retry-after), then succeeds.
+        if (i < pages.length && throttled <= i) { throttled++; return { status: 429, ok: false, headers: new Headers() }; }
+        return ok(pages[i] || []);
+      };
+      const done = await pullSwapsResumable(window, 'test-only', { dir, request, pause: clock.pause });
+      assert.equal(done.complete, true);
+      assert.equal(attempts.length, 7);
+      for (let k = 1; k < attempts.length; k++) assert.ok(attempts[k] - attempts[k - 1] >= PACE_MS, `attempt ${k} only ${attempts[k] - attempts[k - 1]} ms after the previous one`);
+    });
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
