@@ -276,16 +276,26 @@ export function t2Series(swaps, signers, prices) {
       price: priceVals.every(v => v != null) ? priceVals.reduce((a, b) => a + b, 0) / 7 : null };
   });
   const startIndex = swaps ? rows.findIndex(r => r.swaps >= CAL.t2.minSwaps) : -1;
-  rows.forEach((r, i) => { r.excluded = startIndex < 0 || i < startIndex; });
+  return { rows: t2Changes(rows, startIndex), start: startIndex >= 0 ? rows[startIndex].week : null };
+}
+// Shared by the official series and the sensitivity check so both use identical weekly changes.
+function t2Changes(rows, startIndex) {
   const change = (a, b) => a != null && b != null && a > 0 ? b / a - 1 : null;
-  rows.forEach((r, i) => {
-    const prev = rows[i - 1];
-    const inTest = startIndex >= 0 && i > startIndex;
-    r.dv = inTest ? change(prev.volume, r.volume) : null;
-    r.dp = inTest ? change(prev.price, r.price) : null;
-    r.du = inTest ? change(prev.usage, r.usage) : null;
+  return rows.map((r, i) => {
+    const prev = rows[i - 1], inTest = startIndex >= 0 && i > startIndex;
+    return { ...r, excluded: startIndex < 0 || i < startIndex,
+      dv: inTest ? change(prev.volume, r.volume) : null,
+      dp: inTest ? change(prev.price, r.price) : null,
+      du: inTest ? change(prev.usage, r.usage) : null };
   });
-  return { rows, start: startIndex >= 0 ? rows[startIndex].week : null };
+}
+// Sensitivity check, added after the official T2 result was seen; it never feeds the official verdict.
+// Design fixed before computing: start at 2025-08-04, otherwise the official method and t2Test unchanged.
+export const T2_SENSITIVITY_START = '2025-08-04';
+export function t2SensitivitySeries(series, start = T2_SENSITIVITY_START) {
+  const i = series.rows.findIndex(r => r.week === start);
+  const hasSwaps = i >= 0 && series.rows[i].swaps != null;
+  return { rows: t2Changes(series.rows, hasSwaps ? i : -1), start: hasSwaps ? start : null };
 }
 export function t2Test(series, options = CAL.t2) {
   const { rows, start } = series;
@@ -433,10 +443,14 @@ export function analyse(sources) {
   if (sources.swaps?.reason) t2.reasons.unshift(sources.swaps.reason);
   if (sources.prices?.reason) t2.reasons.unshift(sources.prices.reason);
   if (!d('prices') || !d('signers')) t2.verdict = "CAN'T TELL";
+  const sensitivitySeries = t2SensitivitySeries(series);
+  const t2sens = t2Test(sensitivitySeries);
+  if (!d('prices') || !d('signers')) t2sens.verdict = "CAN'T TELL";
+  t2sens.weeksBelowMin = sensitivitySeries.start ? sensitivitySeries.rows.filter(r => !r.excluded && r.swaps < CAL.t2.minSwaps).length : null;
   const t3 = t3Test(d('supply'), d('burn'));
   const coverage = d('coverage');
   const duplicates = coverage ? [...coverage.values()].filter(c => c.duplicates > 0) : [];
-  return { t1, t2, series, t3, duplicates };
+  return { t1, t2, t2sens, series, t3, duplicates };
 }
 // ---------- charts ----------
 // points: [{ x, v, v2?, excluded? }]; gaps (null) break the line.
@@ -543,6 +557,17 @@ export function metricValues(a) {
     for (const k of ['low', 'high']) values[`t2.lag${l.lag}.ci.${k}`] = fmt(l.ci?.[k], 3);
     values[`t2.lag${l.lag}.favours`] = l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither';
   }
+  const s = a.t2sens || { lags: [], changes: 0 };
+  values['t2sens.start'] = s.start || 'none';
+  values['t2sens.weeksBelowMin'] = String(s.weeksBelowMin ?? 'Unavailable');
+  values['t2sens.changes'] = String(s.changes);
+  values['t2sens.ruleOutcome'] = s.verdict ?? "CAN'T TELL";
+  for (const l of s.lags) {
+    for (const k of ['pairs', 'rv', 'rp', 'advantage']) values[`t2sens.lag${l.lag}.${k}`] = fmt(l[k], k === 'pairs' ? 0 : 3);
+    for (const [i, h] of l.halves.entries()) for (const k of ['rv', 'rp']) values[`t2sens.lag${l.lag}.half${i + 1}.${k}`] = fmt(h[k], 3);
+    for (const k of ['low', 'high']) values[`t2sens.lag${l.lag}.ci.${k}`] = fmt(l.ci?.[k], 3);
+    values[`t2sens.lag${l.lag}.favours`] = l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither';
+  }
   for (const k of ['burnt', 'issued', 'delta', 'endpointDelta', 'gross', 'fields', 'offset', 'fieldOffset', 'gap']) {
     const v = a.t3.totals?.[k];
     values[`t3.${k}`] = k === 'gap' ? pct(v, 2) : ['offset', 'fieldOffset'].includes(k) ? share(v, 2) : fmt(v);
@@ -619,6 +644,8 @@ export async function render(manifest, sources, write, root = ROOT) {
   const report = '# Generated evidence tables\n\n' + numberTables(a);
   const verdictRow = (id, label, r) => `<dt>${escape(id)}. ${escape(label)}</dt><dd><strong class="${VERDICT_CLASS[r.verdict]}">${escape(r.verdict)}</strong>${r.reasons.length ? `<p>${escape(r.reasons.join(' '))}</p>` : ''}</dd>`;
   const lagTable = a.t2.lags.length ? `<div class="table-wrap"><table><caption>T2 correlations by lag (weekly % changes, from ${escape(a.t2.start)})</caption><thead><tr><th>Lag</th><th>Pairs</th><th>r volume</th><th>r price</th><th>Advantage</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${a.t2.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td><td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
+  const sens = a.t2sens;
+  const sensTable = sens?.lags.length ? `<div class="table-wrap"><table><caption>Sensitivity check, not official: T2 method from ${escape(sens.start)}, added after the official result was seen. It does not change the official T2 result, which stays ${escape(a.t2.verdict)}. Same lines on this window would give ${escape(sens.verdict)} (not official).</caption><thead><tr><th>Lag</th><th>Pairs</th><th>r volume</th><th>r price</th><th>Advantage</th><th>First half (r volume / r price)</th><th>Second half (r volume / r price)</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${sens.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td>${l.halves.map(h => `<td>${fmt(h.rv, 3)} / ${fmt(h.rp, 3)}</td>`).join('')}<td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
   const statusRows = Object.entries(sources).map(([name, s]) => `<tr><th scope="row">${escape(name)}</th><td>${escape(s.reason || (s.entry?.reused ? 'Cached result reused' : 'Fetched'))}</td></tr>`).join('');
   await write('NUMBERS.md', report);
   await write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -628,7 +655,7 @@ export async function render(manifest, sources, write, root = ROOT) {
     <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="#status">Source status</a><a href="#signers">T1</a><a href="#swaps">T2</a><a href="#burn">T3</a><a href="thesis.html">Read thesis</a></nav>
     <main id="main"><header class="intro"><p>Investment Thesis / NEAR Hackathon</p><h1>Three tests, fixed before the results.</h1><p>Each test can pass, fail or end as “can’t tell”. Rules are in the thesis.</p>
     <p class="window">Snapshot ${escape(manifest.id)}${manifest.fetchedAt ? ` · fetched ${escape(manifest.fetchedAt)}` : ' · no data fetched'}</p></header>
-    <section class="hypotheses"><h2>Results</h2><dl>${verdictRow('T1', 'Usage is broadening', a.t1)}${verdictRow('T2', '1Click volume leads usage better than NEAR price', a.t2)}${verdictRow('T3', 'Usage reaches holders through burn', a.t3)}</dl>${lagTable}</section>
+    <section class="hypotheses"><h2>Results</h2><dl>${verdictRow('T1', 'Usage is broadening', a.t1)}${verdictRow('T2', '1Click volume leads usage better than NEAR price', a.t2)}${verdictRow('T3', 'Usage reaches holders through burn', a.t3)}</dl>${lagTable}${sensTable}</section>
     <section id="status"><h2>Source status</h2><div class="table-wrap"><table><thead><tr><th>Source</th><th>Status</th></tr></thead><tbody>${statusRows}</tbody></table></div>${a.duplicates.length ? `<p>Duplicate block rows: ${escape(a.duplicates.map(d => `${d.date} (${d.duplicates})`).join(', '))}.</p>` : ''}</section>
     ${sections.join('')}
     <section><h2>What this cannot tell you</h2><p>Accounts are not people. 1Click is not all of NEAR Intents. Correlation is not causation. None of this sets a fair NEAR price.</p><a href="thesis.html">Rules, limits and sources</a></section>

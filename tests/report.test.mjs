@@ -5,7 +5,7 @@ import { gzipSync } from 'node:zlib';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { CAL, addDays, dayRange, weeksBetween, weekStart, parseSigners, parseContracts, parseCoverage, t1Test, t2Series, t2Test, t3Test,
-  pearson, bootstrapAdvantage, newSwapAggregate, addSwapRows, swapDays, weeklyFromDaily, parseSwapDays, loadSwapDir, gapBand, analyse, numberTables, verifyThesis, thesisHTML, usdUnits, usdString, seriesSVG, render, loadSources } from '../scripts/report.mjs';
+  pearson, bootstrapAdvantage, newSwapAggregate, addSwapRows, swapDays, weeklyFromDaily, parseSwapDays, loadSwapDir, gapBand, analyse, numberTables, verifyThesis, thesisHTML, metricValues, t2SensitivitySeries, T2_SENSITIVITY_START, usdUnits, usdString, seriesSVG, render, loadSources } from '../scripts/report.mjs';
 import { ROOT, hash, literalDateFilters } from '../scripts/sources.mjs';
 
 // Synthetic fixtures only; never research data.
@@ -273,4 +273,33 @@ test('chart axis ticks fit the left margin and the excluded label sits above the
   assert.match(mixed, />157.5K<\/text>/);
   assert.match(mixed, />78.8K<\/text>/);
   assert.match(svg, /<title>a: 106,298,020 \(excluded from test\)<\/title>/);
+});
+
+// Official T2 values as published before the sensitivity check existed (dashboard/NUMBERS.md at 16587a8).
+const OFFICIAL_T2 = `t2.verdict=CAN'T TELL|t2.start=2025-04-14|t2.changes=78|t2.weeks=81|t2.startSwaps=8,568|t2.weeksBelowMinAfterStart=15|t2.nextWeekAtMin=2025-08-04|t2.volumeUnavailable.weeks=2026-02-02|t2.volumeUnavailable.missingUsd=2|t2.volumeUnavailable.swaps=182,281|t2.lag1.pairs=77|t2.lag1.rv=0|t2.lag1.rp=0.284|t2.lag1.advantage=-0.284|t2.lag1.half1.rv=-0.003|t2.lag1.half1.rp=0.193|t2.lag1.half2.rv=0.121|t2.lag1.half2.rp=0.317|t2.lag1.ci.low=-0.613|t2.lag1.ci.high=0.179|t2.lag1.favours=neither|t2.lag2.pairs=76|t2.lag2.rv=-0.065|t2.lag2.rp=0.039|t2.lag2.advantage=-0.104|t2.lag2.half1.rv=-0.186|t2.lag2.half1.rp=-0.082|t2.lag2.half2.rv=0.151|t2.lag2.half2.rp=0.038|t2.lag2.ci.low=-0.385|t2.lag2.ci.high=0.263|t2.lag2.favours=neither|t2.lag4.pairs=74|t2.lag4.rv=0.013|t2.lag4.rp=0.009|t2.lag4.advantage=0.004|t2.lag4.half1.rv=0.091|t2.lag4.half1.rp=-0.012|t2.lag4.half2.rv=-0.005|t2.lag4.half2.rp=0.002|t2.lag4.ci.low=-0.241|t2.lag4.ci.high=0.201|t2.lag4.favours=neither|t2.lag8.pairs=70|t2.lag8.rv=-0.004|t2.lag8.rp=-0.187|t2.lag8.advantage=0.183|t2.lag8.half1.rv=-0.056|t2.lag8.half1.rp=-0.174|t2.lag8.half2.rv=-0.177|t2.lag8.half2.rp=-0.165|t2.lag8.ci.low=0.02|t2.lag8.ci.high=0.304|t2.lag8.favours=neither`;
+test('the sensitivity check leaves the official T2 verdict, start rule and every published number unchanged', async () => {
+  const { sources } = await loadSources();
+  const a = analyse(sources), v = metricValues(a);
+  const official = Object.fromEntries(OFFICIAL_T2.split('|').map(p => p.split('=')));
+  for (const [k, value] of Object.entries(official)) assert.equal(v[k], value, k);
+  assert.deepEqual(Object.keys(v).filter(k => k.startsWith('t2.')).sort(), Object.keys(official).sort());
+  assert.equal(a.t2.verdict, "CAN'T TELL");
+  assert.equal(a.t2.start, a.series.rows.find(r => r.swaps >= CAL.t2.minSwaps).week);
+  assert.deepEqual(t2Test(a.series), a.t2);
+  assert.equal(a.t2sens.start, T2_SENSITIVITY_START);
+  assert.notEqual(a.t2sens.start, a.t2.start);
+  assert.equal(v['t2sens.weeksBelowMin'], '0');
+});
+test('sensitivity series starts at its fixed week with the official change method and leaves the input series intact', () => {
+  const series = t2Series(...t2Inputs('volume'));
+  const before = JSON.stringify(series);
+  const start = addDays(CAL.t2.firstWeek, 7 * 20), sens = t2SensitivitySeries(series, start);
+  assert.equal(JSON.stringify(series), before);
+  assert.equal(sens.start, start);
+  const i = sens.rows.findIndex(r => r.week === start);
+  assert.ok(sens.rows.every((r, j) => r.excluded === j < i));
+  assert.ok(sens.rows.slice(0, i + 1).every(r => r.dv == null && r.du == null));
+  for (const [j, r] of sens.rows.entries()) if (j > i) assert.equal(r.dv, series.rows[j].dv);
+  assert.equal(t2Test(sens).changes, series.rows.length - i - 1);
+  assert.equal(t2SensitivitySeries(t2Series(null, null, null)).start, null);
 });

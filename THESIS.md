@@ -67,7 +67,30 @@ Price also did not win at two lags, so the test does not fail:
 
 **Interpretation.** Weekly changes in 1Click volume had near-zero correlations with later changes in NEAR signers, from <!-- metric:t2.lag2.rv -->-0.065<!-- /metric --> to <!-- metric:t2.lag4.rv -->0.013<!-- /metric --> across the four lags. The claim that 1Click activity is a leading indicator of chain usage is not supported. The rule's failure condition, price clearly leading instead, was not met either. For an investor, 1Click volume should be read as its own business metric, not as a proxy for NEAR usage.
 
-**Disclosed feature of the fixed start.** The start week is an isolated early spike of <!-- metric:t2.startSwaps -->8,568<!-- /metric --> swaps. The following <!-- metric:t2.weeksBelowMinAfterStart -->15<!-- /metric --> weeks fall below 7,000 swaps, and the next week at or above 7,000 is <!-- metric:t2.nextWeekAtMin -->2025-08-04<!-- /metric -->. As the rule specifies, those weeks stay in the test. No alternative start was tested, and any later sensitivity check would not be pre-registered.
+**Disclosed feature of the fixed start.** The start week is an isolated early spike of <!-- metric:t2.startSwaps -->8,568<!-- /metric --> swaps. The following <!-- metric:t2.weeksBelowMinAfterStart -->15<!-- /metric --> weeks fall below 7,000 swaps, and the next week at or above 7,000 is <!-- metric:t2.nextWeekAtMin -->2025-08-04<!-- /metric -->. As the rule specifies, those weeks stay in the official test.
+
+### T2 sensitivity check (not official)
+
+**This is a sensitivity check, added after the official result was seen. It does not change the official T2 result, which stays <!-- metric:t2.verdict -->CAN'T TELL<!-- /metric -->.** The owner approved it, and its design was fixed before it was computed. It starts at <!-- metric:t2sens.start -->2025-08-04<!-- /metric -->, the first week of the unbroken run at or above 7,000 swaps; <!-- metric:t2sens.weeksBelowMin -->0<!-- /metric --> weeks from there fall below 7,000. Everything else follows the official method: the same weekly changes, lags of 1, 2, 4 and 8 weeks, 4-week blocks, 10,000 resamples, seed 20261108 plus the lag, and the 52-change minimum. Week 2026-02-02 stays unavailable under the same rule, which leaves <!-- metric:t2sens.changes -->62<!-- /metric --> weekly changes.
+
+| Lag | Pairs | r volume | r price | Advantage | First half (r volume / r price) | Second half (r volume / r price) | 90% interval | Favours |
+|---|---|---|---|---|---|---|---|---|
+| 1 | <!-- metric:t2sens.lag1.pairs -->61<!-- /metric --> | <!-- metric:t2sens.lag1.rv -->0.017<!-- /metric --> | <!-- metric:t2sens.lag1.rp -->0.293<!-- /metric --> | <!-- metric:t2sens.lag1.advantage -->-0.276<!-- /metric --> | <!-- metric:t2sens.lag1.half1.rv -->0.019<!-- /metric --> / <!-- metric:t2sens.lag1.half1.rp -->-0.153<!-- /metric --> | <!-- metric:t2sens.lag1.half2.rv -->0.023<!-- /metric --> / <!-- metric:t2sens.lag1.half2.rp -->0.532<!-- /metric --> | <!-- metric:t2sens.lag1.ci.low -->-0.643<!-- /metric --> to <!-- metric:t2sens.lag1.ci.high -->0.285<!-- /metric --> | <!-- metric:t2sens.lag1.favours -->neither<!-- /metric --> |
+| 2 | <!-- metric:t2sens.lag2.pairs -->60<!-- /metric --> | <!-- metric:t2sens.lag2.rv -->0.075<!-- /metric --> | <!-- metric:t2sens.lag2.rp -->0.048<!-- /metric --> | <!-- metric:t2sens.lag2.advantage -->0.028<!-- /metric --> | <!-- metric:t2sens.lag2.half1.rv -->0.008<!-- /metric --> / <!-- metric:t2sens.lag2.half1.rp -->-0.371<!-- /metric --> | <!-- metric:t2sens.lag2.half2.rv -->0.181<!-- /metric --> / <!-- metric:t2sens.lag2.half2.rp -->0.295<!-- /metric --> | <!-- metric:t2sens.lag2.ci.low -->-0.243<!-- /metric --> to <!-- metric:t2sens.lag2.ci.high -->0.404<!-- /metric --> | <!-- metric:t2sens.lag2.favours -->neither<!-- /metric --> |
+| 4 | <!-- metric:t2sens.lag4.pairs -->58<!-- /metric --> | <!-- metric:t2sens.lag4.rv -->0.016<!-- /metric --> | <!-- metric:t2sens.lag4.rp -->0.003<!-- /metric --> | <!-- metric:t2sens.lag4.advantage -->0.013<!-- /metric --> | <!-- metric:t2sens.lag4.half1.rv -->0.149<!-- /metric --> / <!-- metric:t2sens.lag4.half1.rp -->0.268<!-- /metric --> | <!-- metric:t2sens.lag4.half2.rv -->-0.295<!-- /metric --> / <!-- metric:t2sens.lag4.half2.rp -->-0.142<!-- /metric --> | <!-- metric:t2sens.lag4.ci.low -->-0.293<!-- /metric --> to <!-- metric:t2sens.lag4.ci.high -->0.252<!-- /metric --> | <!-- metric:t2sens.lag4.favours -->neither<!-- /metric --> |
+| 8 | <!-- metric:t2sens.lag8.pairs -->54<!-- /metric --> | <!-- metric:t2sens.lag8.rv -->-0.153<!-- /metric --> | <!-- metric:t2sens.lag8.rp -->-0.194<!-- /metric --> | <!-- metric:t2sens.lag8.advantage -->0.041<!-- /metric --> | <!-- metric:t2sens.lag8.half1.rv -->-0.096<!-- /metric --> / <!-- metric:t2sens.lag8.half1.rp -->-0.229<!-- /metric --> | <!-- metric:t2sens.lag8.half2.rv -->-0.343<!-- /metric --> / <!-- metric:t2sens.lag8.half2.rp -->-0.174<!-- /metric --> | <!-- metric:t2sens.lag8.ci.low -->-0.172<!-- /metric --> to <!-- metric:t2sens.lag8.ci.high -->0.25<!-- /metric --> | <!-- metric:t2sens.lag8.favours -->neither<!-- /metric --> |
+
+**The same pass and fail lines on this window would give <!-- metric:t2sens.ruleOutcome -->CAN'T TELL<!-- /metric --> (not official).** No lag favours volume or price.
+
+**How it differs from the official test:**
+
+- At lag 8, the official 90% interval was above zero (<!-- metric:t2.lag8.ci.low -->0.02<!-- /metric --> to <!-- metric:t2.lag8.ci.high -->0.304<!-- /metric -->). Here it includes zero (<!-- metric:t2sens.lag8.ci.low -->-0.172<!-- /metric --> to <!-- metric:t2sens.lag8.ci.high -->0.25<!-- /metric -->).
+- At lag 1, price beat volume in both halves in the official test. Here volume is ahead in the first half (<!-- metric:t2sens.lag1.half1.rv -->0.019<!-- /metric --> against <!-- metric:t2sens.lag1.half1.rp -->-0.153<!-- /metric -->), and price is ahead in the second (<!-- metric:t2sens.lag1.half2.rp -->0.532<!-- /metric --> against <!-- metric:t2sens.lag1.half2.rv -->0.023<!-- /metric -->).
+- At lag 2, the halves reverse: officially price led the first half and volume the second; here volume leads the first (<!-- metric:t2sens.lag2.half1.rv -->0.008<!-- /metric --> against <!-- metric:t2sens.lag2.half1.rp -->-0.371<!-- /metric -->) and price the second (<!-- metric:t2sens.lag2.half2.rp -->0.295<!-- /metric --> against <!-- metric:t2sens.lag2.half2.rv -->0.181<!-- /metric -->). At lag 4, officially volume led the first half; here price leads both halves (<!-- metric:t2sens.lag4.half1.rp -->0.268<!-- /metric --> against <!-- metric:t2sens.lag4.half1.rv -->0.149<!-- /metric -->, and <!-- metric:t2sens.lag4.half2.rp -->-0.142<!-- /metric --> against <!-- metric:t2sens.lag4.half2.rv -->-0.295<!-- /metric -->), but its overall margin is too small for a price win.
+- The window is shorter: <!-- metric:t2sens.changes -->62<!-- /metric --> weekly changes against <!-- metric:t2.changes -->78<!-- /metric --> officially.
+- The highest volume correlation here is <!-- metric:t2sens.lag2.rv -->0.075<!-- /metric --> at lag 2. In the official test it was <!-- metric:t2.lag4.rv -->0.013<!-- /metric --> at lag 4. Both are far below 0.30.
+
+The outcome matches the official result. The official interpretation above is unchanged.
 
 The feed covers **1Click only**, not all NEAR Intents. The first successful swap observed in the feed is dated 2025-03-27. Weekly input USD volume is not protocol revenue and does not establish demand for the NEAR token.
 
@@ -164,6 +187,54 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | t2.lag8.ci.low | 0.02 |
 | t2.lag8.ci.high | 0.304 |
 | t2.lag8.favours | neither |
+| t2sens.start | 2025-08-04 |
+| t2sens.weeksBelowMin | 0 |
+| t2sens.changes | 62 |
+| t2sens.ruleOutcome | CAN'T TELL |
+| t2sens.lag1.pairs | 61 |
+| t2sens.lag1.rv | 0.017 |
+| t2sens.lag1.rp | 0.293 |
+| t2sens.lag1.advantage | -0.276 |
+| t2sens.lag1.half1.rv | 0.019 |
+| t2sens.lag1.half1.rp | -0.153 |
+| t2sens.lag1.half2.rv | 0.023 |
+| t2sens.lag1.half2.rp | 0.532 |
+| t2sens.lag1.ci.low | -0.643 |
+| t2sens.lag1.ci.high | 0.285 |
+| t2sens.lag1.favours | neither |
+| t2sens.lag2.pairs | 60 |
+| t2sens.lag2.rv | 0.075 |
+| t2sens.lag2.rp | 0.048 |
+| t2sens.lag2.advantage | 0.028 |
+| t2sens.lag2.half1.rv | 0.008 |
+| t2sens.lag2.half1.rp | -0.371 |
+| t2sens.lag2.half2.rv | 0.181 |
+| t2sens.lag2.half2.rp | 0.295 |
+| t2sens.lag2.ci.low | -0.243 |
+| t2sens.lag2.ci.high | 0.404 |
+| t2sens.lag2.favours | neither |
+| t2sens.lag4.pairs | 58 |
+| t2sens.lag4.rv | 0.016 |
+| t2sens.lag4.rp | 0.003 |
+| t2sens.lag4.advantage | 0.013 |
+| t2sens.lag4.half1.rv | 0.149 |
+| t2sens.lag4.half1.rp | 0.268 |
+| t2sens.lag4.half2.rv | -0.295 |
+| t2sens.lag4.half2.rp | -0.142 |
+| t2sens.lag4.ci.low | -0.293 |
+| t2sens.lag4.ci.high | 0.252 |
+| t2sens.lag4.favours | neither |
+| t2sens.lag8.pairs | 54 |
+| t2sens.lag8.rv | -0.153 |
+| t2sens.lag8.rp | -0.194 |
+| t2sens.lag8.advantage | 0.041 |
+| t2sens.lag8.half1.rv | -0.096 |
+| t2sens.lag8.half1.rp | -0.229 |
+| t2sens.lag8.half2.rv | -0.343 |
+| t2sens.lag8.half2.rp | -0.174 |
+| t2sens.lag8.ci.low | -0.172 |
+| t2sens.lag8.ci.high | 0.25 |
+| t2sens.lag8.favours | neither |
 | t3.burnt | 500,289.94 |
 | t3.issued | 32,123,695.5 |
 | t3.delta | 31,623,405.56 |

@@ -15,7 +15,7 @@ The results are in `THESIS.md` and `dashboard/index.html`. The swap data is **1C
 
 Requires Node.js 22 or newer. No npm dependencies, no install step.
 
-1. Run `npm test`. You should see 41 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
+1. Run `npm test`. You should see 43 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
 2. Run `npm run rebuild`. This rebuilds charts and number tables in `dashboard/` from `data/public/`, with no credentials or network access. It verifies, but never overwrites, `THESIS.md`. The last line prints the T1, T2 and T3 results.
 3. Open `dashboard/index.html`. You'll see the three results, then every chart with its query and an expandable values table. The thesis link opens `dashboard/thesis.html`, a readable page generated from `THESIS.md` during rebuild, with the metric tags removed.
 

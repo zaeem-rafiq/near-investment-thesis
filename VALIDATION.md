@@ -6,7 +6,7 @@ Checked on 2026-11-09 (UTC).
 
 - `npm run check`: syntax checks passed for every module.
 - `npm audit --offline`: zero vulnerabilities (no dependencies).
-- `npm test`: 41 tests passed, none failed or skipped. Rule tests use synthetic fixtures; public-data and CLI checks use the committed snapshot. They cover:
+- `npm test`: 43 tests passed, none failed or skipped. Rule tests use synthetic fixtures; public-data and CLI checks use the committed snapshot. They cover:
   - the literal `block_date` guard, run on every SQL file and on known bad patterns, including an unfiltered `MIN(block_date)`;
   - the approved query windows;
   - `us-east1` on every BigQuery call;
@@ -23,6 +23,7 @@ Checked on 2026-11-09 (UTC).
   - no deposit addresses, memos or wallet fields in public JSON or generated output;
   - manifests refusing arbitrary paths and incomplete or altered 1Click snapshots;
   - unavailable-data rendering;
+  - the T2 sensitivity check leaving the official verdict, start rule and every published official T2 value unchanged, and using the official change method from its fixed start;
   - `dashboard/thesis.html` generated from the real `THESIS.md` with no metric or evidence tags, escaped markup, no scripts and the dashboard's content security policy;
   - compact chart axis ticks that fit the left margin, and the excluded-weeks label placed above the plot area;
   - daily aggregation, full-week selection and rejection of incomplete daily windows;
@@ -52,6 +53,7 @@ Run over all 7,513 saved pages after `complete.json` was written (2026-11-09T12:
 - Largest gap between pages: 61.21 minutes (page 7,492, early low-volume history). Largest gap between any two consecutive swaps: 4,192.56 minutes, ending 2025-04-04T14:18:41Z, also in early history before the T2 start week. Six page boundaries share a timestamp with the previous page's oldest row; those rows have different keys and were kept.
 - Deposit address reuse: 7,473,224 distinct addresses. 67 addresses appear on more than one swap, covering 36,142 swaps; one address accounts for 36,010 of them.
 - Weekly counts: the T2 start week 2025-04-14 has 8,568 swaps. The next 15 weeks are below 7,000; the next week at or above 7,000 is 2025-08-04. The fixed rule keeps those weeks in the test.
+- **T2 sensitivity check (not official).** Added after the official result was seen, with owner approval; it does not change the official T2 result, which stays CAN'T TELL. The design was fixed before computing: start at 2025-08-04 (the first week of the unbroken run at or above 7,000 swaps; 0 weeks below 7,000 from there), otherwise the official method, lags, blocks, resamples, seed and 52-change minimum, with 2026-02-02 still unavailable. It has 62 weekly changes. The same lines give CAN'T TELL (not official): no lag favours either series. It differs from the official test at individual lags: the lag-8 interval includes zero (−0.172 to 0.25, officially 0.02 to 0.304), at lag 1 volume is ahead in the first half while price is ahead in the second, the half-by-half leads at lags 2 and 4 differ from the official test, and the highest volume correlation is 0.075 (lag 2). Full tagged table in `THESIS.md`, second table on the dashboard. `t2Test` and its start rule are unchanged: the full-precision official T2 output and weekly series hash identically before and after, and a test pins every published official T2 value.
 - T2 has 78 weekly changes from 81 in-test weeks. Week 2026-02-02 has 2 swaps with no USD value out of 182,281, so its volume is unavailable under the rule, and the two changes touching it drop out.
 
 ## Data-quality findings
