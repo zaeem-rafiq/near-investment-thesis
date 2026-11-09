@@ -665,6 +665,7 @@ export async function render(manifest, sources, write, root = ROOT) {
       <div><strong data-metric="burn-offset">${escape(values['t3.offset'])}</strong><p>Fee burn offset of new supply.</p><p class="source">~${millions(a.t3.totals?.burnt)} million NEAR burned vs ${millions(a.t3.totals?.issued)} million issued.<br>Burn = NEAR destroyed as fees.</p></div>
     </div>
     <a class="evidence-button" href="#signers">See the evidence</a>
+    <p class="rebuild-note">Every chart rebuilds from public data with one command.</p>
     </header><!-- first-screen:end -->
     <section class="plain-claims"><h2>Three claims, three results</h2><p>1Click is the NEAR Intents swap service; this sample is not all Intents activity.</p>
     <ul><li><span>More accounts are using NEAR, across more apps.</span><strong>${escape(a.t1.verdict)}</strong></li>

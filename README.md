@@ -7,7 +7,7 @@ Mean daily signing accounts fell **73.1% year over year**. Fee burn offset **1.5
 | Claim | Result |
 |---|---|
 | More accounts are using NEAR, across more apps (T1). | **FAIL** |
-| 1Click swap volume leads account activity better than NEAR’s price does (T2). | **CAN'T TELL** |
+| Swap volume on 1Click, the NEAR Intents swap service, leads account activity better than NEAR’s price does (T2). | **CAN'T TELL** |
 | Fees destroy enough NEAR to meaningfully offset new supply (T3). | **FAIL** |
 
 The investment pass/fail rules were fixed before metrics were computed. A later T3 reconciliation rule is disclosed in `THESIS.md`; it was not pre-registered.
@@ -38,7 +38,7 @@ Real browser captures of the final rebuilt dashboard and thesis, in reading orde
 
 ![Dashboard headline and computed metrics](docs/screens/01-headline.png)
 
-The dashboard leads with the conclusion, the signer decline and the fee-burn offset.
+The dashboard leads with the conclusion, the signer decline and the fee-burn offset, with the three claims directly below.
 
 ![Three claims and their results](docs/screens/02-claims.png)
 

@@ -288,7 +288,7 @@ test('first-screen numbers match the published public-snapshot metrics', async (
   assert.ok(first.includes(`data-metric="burn-offset">${v['t3.offset']}</strong>`));
   assert.ok(first.includes(`${(a.t3.totals.burnt / 1e6).toFixed(1)} million NEAR burned`));
   assert.ok(first.includes(`${(a.t3.totals.issued / 1e6).toFixed(1)} million issued`));
-  assert.match(first, /href="#signers">See the evidence<\/a>/);
+  assert.match(first, /href="#signers">See the evidence<\/a>\s*<p class="rebuild-note">Every chart rebuilds from public data with one command\.<\/p>/);
 });
 test('first screen uses plain labels and keeps technical results below it', async () => {
   const { manifest, sources } = await loadSources(), files = new Map();
@@ -300,6 +300,10 @@ test('first screen uses plain labels and keeps technical results below it', asyn
   assert.match(rest, /correlation with price/);
   assert.doesNotMatch(rest, />r volume<|>r price</);
   assert.ok(!rest.includes('<div class="table-wrap">'), 'wide result tables must be keyboard-focusable');
+  const css = await readFile(join(ROOT, 'web/style.css'), 'utf8');
+  assert.match(css, /\.hypotheses \.table-wrap \{ max-height: none; \}/, 'result tables must not clip behind an inner scrollbar');
+  assert.match(css, /^\.table-wrap \{[^}]*max-height: 400px/m, 'long values tables keep their height limit');
+  assert.doesNotMatch(css, /\.first-screen \{[^}]*min-height/, 'first screen must not force empty height');
 });
 test('the sensitivity check leaves the official T2 verdict, start rule and every published number unchanged', async () => {
   const { sources } = await loadSources();
