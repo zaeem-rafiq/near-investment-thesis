@@ -132,8 +132,8 @@ export function addSwapRows(agg, rows) {
   for (const row of rows) {
     const ts = Date.parse(row.createdAt);
     if (!Number.isFinite(ts) || ts < start || ts >= end || row.status !== 'SUCCESS') throw new Error('Invalid raw swap.');
-    const key = hash(JSON.stringify([row.depositAddress, row.depositMemo ?? null])).slice(0, 24);
-    if (agg.seen.has(key)) throw new Error('Invalid raw swap: duplicate deposit address/memo.');
+    const key = hash(JSON.stringify([row.depositAddress, row.depositMemo ?? null, row.createdAt])).slice(0, 24);
+    if (agg.seen.has(key)) throw new Error('Invalid raw swap: duplicate address/memo/createdAt.');
     agg.seen.add(key);
     const date = new Date(ts).toISOString().slice(0, 10);
     const d = agg.days.get(date) || { date, swaps: 0, missingUsd: 0, units: 0n };
@@ -546,7 +546,7 @@ export function verifyThesis(text, a) {
 }
 export async function render(manifest, sources, write, root = ROOT) {
   const a = analyse(sources), defs = chartDefs(sources, a), artifact = [], sections = [];
-  const explorerMethod = `GET ${EXPLORER}\n${new URLSearchParams(explorerParams(CAL.swapWindow))}\nAuthorization: Bearer [read locally from .env, never included here]\n\nPaginate with lastDepositAddress + lastDepositMemo to an empty page, one request per 5.2 s.\nDeduplicate depositAddress+depositMemo; sum amountInUsd once; group by Monday-start UTC week of createdAt.`;
+  const explorerMethod = `GET ${EXPLORER}\n${new URLSearchParams(explorerParams(CAL.swapWindow))}\nAuthorization: Bearer [read locally from .env, never included here]\n\nPaginate with endTimestamp = previous oldest createdAt + 1 ms; every HTTP attempt is at least 5.2 s apart.\nSkip known swaps only at the previous boundary timestamp; reject other duplicates or broken timestamp continuity.\nStop on an empty response or a short response with no new rows; a full 1,000-row response with no new rows is an error.\nIdentity is depositAddress+depositMemo+createdAt (addresses can repeat); sum amountInUsd once; group by Monday-start UTC week of createdAt.`;
   const priceMethod = `GET ${PRICE_SOURCE}?granularity=86400&start=…&end=…\nDaily UTC candles [time, low, high, open, close, volume]; weekly value = mean of the 7 daily closes.`;
   for (const def of defs) {
     const svg = seriesSVG(def);

@@ -79,7 +79,7 @@ T1 account counts are period means; `change` is relative change, except `changeP
 - Signers include failed transactions, relayers, bots and multiple accounts per person. Accounts are not people.
 - Receiver accounts receive `FUNCTION_CALL` actions on a one-day-a-week sample of 104 Mondays, 52 per comparison period. They are not a measured daily series.
 - Duplicate block rows occur on 2024-11-04, 2024-11-05 and 2025-08-20, outside the T3 window. Distinct signer and receiver counts are unaffected; transaction concentration may include duplicate transaction rows.
-- Daily 1Click totals sum `amountInUsd` exactly once per deposit address and memo, by UTC creation day. Only full seven-day weeks enter the weekly series. Missing USD makes the day's and week's volume unavailable.
+- Daily 1Click totals sum `amountInUsd` exactly once per deposit address, memo (null when absent) and `createdAt`, by UTC creation day. Deposit addresses can repeat at different times. Only full seven-day weeks enter the weekly series. Missing USD makes the day's and week's volume unavailable.
 - Prices are Coinbase Exchange NEAR-USD daily UTC closes. Weekly price is their seven-day mean.
 - Supply and burn source fields are FLOAT64 in yoctoNEAR. Float precision is well below typical block burn, but the sources are not exact integer balances.
 - Supply changes link each block to its parent by `prev_block_hash`. The first block's parent lies outside the window, so that first change is not counted. Minting can coincide with burn at epoch boundaries, so falls are a net-change proxy and may undercount burn on those blocks.

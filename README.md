@@ -15,7 +15,7 @@ The results are in `THESIS.md` and `dashboard/index.html`. The swap data is **1C
 
 Requires Node.js 22 or newer. No npm dependencies, no install step.
 
-1. Run `npm test`. You should see 33 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
+1. Run `npm test`. You should see 39 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
 2. Run `npm run rebuild`. This rebuilds charts and number tables in `dashboard/` from `data/public/`, with no credentials or network access. It verifies, but never overwrites, `THESIS.md`. The last line prints the T1, T2 and T3 results.
 3. Open `dashboard/index.html`. You'll see the three results, then every chart with its query and an expandable values table.
 
@@ -50,7 +50,7 @@ All queries read `bigquery-public-data.crypto_near_mainnet_us`, in location `us-
 End dates are excluded. Every table read must be followed directly by a literal `block_date` range or date list. `scripts/sources.mjs` (`literalDateFilters`) enforces this before any request, and `tests/sources.test.mjs` checks every SQL file plus known bad patterns, including an unfiltered `MIN(block_date)`.
 
 Other sources:
-- **1Click Explorer:** `GET https://explorer.near-intents.org/api/v0/transactions` with `statuses=SUCCESS`, `showTestTxs=false`, `minUsdPrice=0`. Pages are fetched with an address-and-memo cursor until an empty page.
+- **1Click Explorer:** `GET https://explorer.near-intents.org/api/v0/transactions` with `statuses=SUCCESS`, `showTestTxs=false`, `minUsdPrice=0`. After each page, set the exclusive `endTimestamp` to its oldest `createdAt` plus 1 ms. Resume from the last saved row, including old address-cursor pages. Skip known swaps only at that boundary timestamp. Stop at an empty response or a short response with no new rows; a full 1,000-row response with no new rows is an error.
 - **NEAR/USD price:** Coinbase Exchange public candles, `https://api.exchange.coinbase.com/products/NEAR-USD/candles` (free, no key), daily UTC closes.
 
 ## Files
@@ -69,7 +69,7 @@ THESIS.md               Hand-written rules and interpretation with verified metr
 tests/                  Synthetic rules plus public-snapshot and offline CLI checks
 ```
 
-Raw swap pages contain deposit addresses for deduplication and stay in ignored `data/raw/`. Public evidence contains BigQuery aggregate rows, daily closes and, after the pull, daily swap counts and exact USD totals. No deposit addresses, memos, recipients or transaction hashes are exported.
+Raw swap pages contain deposit addresses for deduplication and stay in ignored `data/raw/`. Addresses can repeat: swap identity is `depositAddress` + `depositMemo` (null when absent) + `createdAt`. True duplicates and broken timestamp continuity stop the pull. Public evidence contains BigQuery aggregate rows, daily closes and, after the pull, daily swap counts and exact USD totals. No deposit addresses, memos, recipients or transaction hashes are exported.
 
 ## Hackathon notes
 

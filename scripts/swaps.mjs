@@ -11,7 +11,7 @@ const FIELDS = ['depositAddress', 'depositMemo', 'createdAt', 'status', 'originA
 
 export const swapDir = (window, root = ROOT) => resolve(root, 'data/raw/swaps', `${window.start}_${window.end}`);
 const pageName = n => `page-${String(n).padStart(6, '0')}.json.gz`;
-const swapKey = row => createHash('sha256').update(JSON.stringify([row.depositAddress, row.depositMemo ?? null])).digest('base64').slice(0, 22);
+const swapKey = row => createHash('sha256').update(JSON.stringify([row.depositAddress, row.depositMemo ?? null, row.createdAt])).digest('base64').slice(0, 22);
 
 async function atomic(path, body) {
   const temp = `${path}.${randomUUID()}.tmp`;
@@ -32,18 +32,27 @@ export async function readPage(dir, name) {
   return JSON.parse(gunzipSync(await readFile(resolve(dir, 'pages', name))).toString('utf8'));
 }
 
-function cleanRows(rows, window, seen) {
+function cleanRows(rows, window, seen, boundary) {
   const start = Date.parse(window.start), end = Date.parse(window.end), clean = [];
+  const pageKeys = new Set();
+  let previous = boundary == null ? end : Date.parse(boundary);
   for (const row of rows) {
     if (!row.depositAddress || !row.createdAt || row.status !== 'SUCCESS' || !row.originAsset || !row.destinationAsset) {
       throw new Error('Invalid successful swap record.');
     }
     const ts = Date.parse(row.createdAt);
     if (!Number.isFinite(ts)) throw new Error('Invalid swap timestamp.');
+    if (ts > previous) throw new Error('Explorer timestamp order/continuity failed.');
+    previous = ts;
     if (ts === start - 1) continue;
     if (ts < start || ts >= end) throw new Error('Explorer returned a record outside the requested interval.');
     const key = swapKey(row);
-    if (seen.has(key)) throw new Error('Duplicate deposit address/memo; refuse ambiguous pagination.');
+    if (pageKeys.has(key)) throw new Error('Duplicate swap within Explorer page.');
+    pageKeys.add(key);
+    if (seen.has(key)) {
+      if (row.createdAt === boundary) continue;
+      throw new Error('Duplicate swap away from page boundary.');
+    }
     seen.add(key);
     clean.push(Object.fromEntries(FIELDS.map(k => [k, row[k] ?? null])));
   }
@@ -76,7 +85,7 @@ async function fetchPage(url, jwt, request, pause, log) {
   }
 }
 
-// Each page is saved before the next request, so a restart continues from the last saved cursor.
+// Each page is saved before the next request; resume from its oldest row, including legacy pages.
 export async function pullSwapsResumable(window, jwt, options = {}) {
   if (!jwt) throw new Error('NEAR_INTENTS_JWT missing; add the partner JWT to .env.');
   const { dir = swapDir(window), request = fetch, pause = sleep, log = () => {}, maxPages = Infinity } = options;
@@ -101,15 +110,11 @@ export async function pullSwapsResumable(window, jwt, options = {}) {
       seen.add(key);
     }
     rows += page.rows.length;
-    last = page.cursor;
+    if (page.rows.length) last = page.rows.at(-1).createdAt;
   }
   if (pages.length) log(`resuming after ${pages.length} saved pages, ${rows} rows`);
   const params = { ...base };
-  const setCursor = cursor => {
-    params.lastDepositAddress = cursor.depositAddress;
-    if (cursor.depositMemo != null) params.lastDepositMemo = cursor.depositMemo;
-    else delete params.lastDepositMemo;
-  };
+  const setCursor = timestamp => { params.endTimestamp = new Date(Date.parse(timestamp) + 1).toISOString(); };
   if (last) setCursor(last);
   // Every HTTP attempt, retries included, starts at least PACE_MS after the previous attempt.
   let previousAttempt = 0;
@@ -123,20 +128,20 @@ export async function pullSwapsResumable(window, jwt, options = {}) {
   while (fetched < maxPages) {
     const raw = await fetchPage(`${EXPLORER}?${new URLSearchParams(params)}`, jwt, paced, pause, log);
     fetched++;
-    if (raw.length === 0) {
+    const clean = cleanRows(raw, window, seen, last);
+    if (clean.length === 0 && raw.length >= Number(base.numberOfTransactions)) {
+      throw new Error('Explorer timestamp pagination stalled: full page with no new rows.');
+    }
+    if (clean.length === 0) {
       const summary = { ...meta, pages: n, rows, complete: true, completedAt: new Date().toISOString() };
       await atomic(resolve(dir, 'complete.json'), JSON.stringify(summary, null, 2) + '\n');
       log(`complete: ${n} pages, ${rows} rows`);
       return summary;
     }
-    const tail = raw.at(-1), cursor = { depositAddress: tail.depositAddress, depositMemo: tail.depositMemo ?? null };
-    if (last && cursor.depositAddress === last.depositAddress && cursor.depositMemo === last.depositMemo) {
-      throw new Error('Explorer cursor did not advance.');
-    }
-    const clean = cleanRows(raw, window, seen);
+    const cursor = { createdAt: clean.at(-1).createdAt };
     n++; rows += clean.length;
     await atomic(resolve(dir, 'pages', pageName(n)), gzipSync(JSON.stringify({ page: n, fetchedAt: new Date().toISOString(), cursor, rows: clean })));
-    last = cursor; setCursor(cursor);
+    last = cursor.createdAt; setCursor(last);
     log(`page ${n}: ${clean.length} rows, oldest ${clean.at(-1)?.createdAt ?? 'n/a'}, total ${rows}`);
   }
   return { ...meta, pages: n, rows, complete: false };

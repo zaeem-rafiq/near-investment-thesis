@@ -6,7 +6,7 @@ Checked on 2026-11-09 (UTC).
 
 - `npm run check`: syntax checks passed for every module.
 - `npm audit --offline`: zero vulnerabilities (no dependencies).
-- `npm test`: 33 tests passed, none failed or skipped. Rule tests use synthetic fixtures; public-data and CLI checks use the committed snapshot. They cover:
+- `npm test`: 39 tests passed, none failed or skipped. Rule tests use synthetic fixtures; public-data and CLI checks use the committed snapshot. They cover:
   - the literal `block_date` guard, run on every SQL file and on known bad patterns, including an unfiltered `MIN(block_date)`;
   - the approved query windows;
   - `us-east1` on every BigQuery call;
@@ -14,7 +14,7 @@ Checked on 2026-11-09 (UTC).
   - the 300 GB run budget and the 1 TB cumulative ledger;
   - cache reuse, `--rescan`, and SQL changes invalidating the cache;
   - live schema type checks;
-  - resumable 1Click paging (resume without refetch, memo cursor, duplicates, 429/5xx retry, 401 without the response body);
+  - resumable 1Click timestamp paging (legacy-page resume from saved rows, exclusive end bound plus 1 ms, boundary-only overlap removal, reused addresses at different times, true duplicates, ordering/continuity, full-page stalls, empty/short end-of-data, paced 429/5xx retries, 401 without the response body);
   - exact USD sums;
   - the T1, T2 and T3 rules, including the T2 7,000-swap start week, the 52-change minimum and excluded-week marking;
   - bootstrap determinism;
@@ -37,6 +37,8 @@ Checked on 2026-11-09 (UTC).
 - The dashboard contains no JWT and no deposit addresses.
 
 ## Data-quality findings
+
+- The initial swap pull stopped after page 4,404 because an address with no memo reappeared at a different creation time. Address-and-memo identity is not unique, and the address cursor can resume at an older occurrence. The fix keys swaps by address, memo and `createdAt`, pages by timestamp, and preserves all saved pages and original pull parameters. A full boundary-only page fails closed rather than skipping an unresolved timestamp.
 
 - Duplicate block rows appear on 2024-11-04 (1,615), 2024-11-05 (31) and 2025-08-20 (6,021). None fall in the T3 window. Distinct signer and receiver counts are unaffected. The top-10 transaction share may include duplicated transaction rows on those days.
 - T3 burn: block-to-block falls in `total_supply` total 500,290 NEAR. The burn fields total 612,527 NEAR, a gap of -18.3%.

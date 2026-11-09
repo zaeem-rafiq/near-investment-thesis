@@ -114,6 +114,8 @@ test('1Click weekly aggregation is exact, rejects duplicates and never zero-fill
   assert.equal(w.volumeExact, '1.3');
   assert.equal(w.swaps, 3);
   assert.throws(() => addSwapRows(agg, [swap('a')]), /duplicate/);
+  addSwapRows(agg, [swap('a', '2', '2025-06-04T11:00:00Z')]);
+  assert.equal(agg.rows, 4);
   const missing = weeklyFromDaily(parseSwapDays({ window: CAL.swapWindow, rows: 1, days: swapDays(addSwapRows(newSwapAggregate(CAL.swapWindow), [swap('a', null)])) })).get('2025-06-02');
   assert.equal(missing.volume, null);
   assert.equal(usdString(usdUnits('12.000000000000000001')), '12.000000000000000001');
