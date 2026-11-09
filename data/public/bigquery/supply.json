@@ -1,0 +1,537 @@
+{
+  "name": "supply",
+  "sql": "-- Weekly (Monday-start, UTC) block-to-block changes in total_supply (yoctoNEAR, FLOAT64).\n-- nearcore: supply = previous + minted - burnt, minting only on an epoch's first block,\n-- so falls measure burn and rises measure issuance net of that block's burn.\n-- Blocks are linked by prev_block_hash; the window's first block has no parent and no change.\nWITH b AS (\n  SELECT block_date, block_height, block_hash, prev_block_hash, total_supply\n  FROM `bigquery-public-data.crypto_near_mainnet_us.blocks`\n  WHERE block_date >= DATE '2025-11-03' AND block_date < DATE '2026-11-02'\n), changes AS (\n  SELECT DATE_TRUNC(b.block_date, WEEK(MONDAY)) AS week_start, b.block_height,\n    b.total_supply, b.total_supply - p.total_supply AS change\n  FROM b LEFT JOIN b AS p ON b.prev_block_hash = p.block_hash\n)\nSELECT week_start, COUNT(*) AS blocks,\n  COUNTIF(change IS NULL) AS unlinked_blocks,\n  COUNTIF(change > 0) AS rising_blocks,\n  FORMAT('%.17g', SUM(IF(change < 0, -change, 0))) AS supply_falls_yocto,\n  FORMAT('%.17g', SUM(IF(change > 0, change, 0))) AS supply_rises_yocto,\n  FORMAT('%.17g', ARRAY_AGG(total_supply ORDER BY block_height LIMIT 1)[OFFSET(0)]) AS opening_supply_yocto,\n  FORMAT('%.17g', ARRAY_AGG(total_supply ORDER BY block_height DESC LIMIT 1)[OFFSET(0)]) AS closing_supply_yocto\nFROM changes\nGROUP BY week_start\nORDER BY week_start;\n",
+  "filters": [
+    {
+      "table": "blocks",
+      "start": "2025-11-03",
+      "end": "2026-11-02"
+    }
+  ],
+  "rows": [
+    {
+      "week_start": "2025-11-03",
+      "blocks": "980739",
+      "unlinked_blocks": "1",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.8674342333010033e+28",
+      "supply_rises_yocto": "6.166007096988182e+29",
+      "opening_supply_yocto": "1.278952620792226e+33",
+      "closing_supply_yocto": "1.2795505471595918e+33"
+    },
+    {
+      "week_start": "2025-11-10",
+      "blocks": "976123",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.9074519743337119e+28",
+      "supply_rises_yocto": "6.1862780509914987e+29",
+      "opening_supply_yocto": "1.2795505471546432e+33",
+      "closing_supply_yocto": "1.2801501004449476e+33"
+    },
+    {
+      "week_start": "2025-11-17",
+      "blocks": "985720",
+      "unlinked_blocks": "0",
+      "rising_blocks": "22",
+      "supply_falls_yocto": "1.9088117528561486e+28",
+      "supply_rises_yocto": "5.8805492200339529e+29",
+      "opening_supply_yocto": "1.2801501004414899e+33",
+      "closing_supply_yocto": "1.2807190672494224e+33"
+    },
+    {
+      "week_start": "2025-11-24",
+      "blocks": "986203",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.8218581852622914e+28",
+      "supply_rises_yocto": "6.1385473783660672e+29",
+      "opening_supply_yocto": "1.2807190672029e+33",
+      "closing_supply_yocto": "1.2813147034054064e+33"
+    },
+    {
+      "week_start": "2025-12-01",
+      "blocks": "968797",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.7871916966502448e+28",
+      "supply_rises_yocto": "6.2413953271894596e+29",
+      "opening_supply_yocto": "1.2813147033999467e+33",
+      "closing_supply_yocto": "1.2819209710211589e+33"
+    },
+    {
+      "week_start": "2025-12-08",
+      "blocks": "975612",
+      "unlinked_blocks": "0",
+      "rising_blocks": "22",
+      "supply_falls_yocto": "1.6045460631456942e+28",
+      "supply_rises_yocto": "5.9232396009105359e+29",
+      "opening_supply_yocto": "1.2819209710174064e+33",
+      "closing_supply_yocto": "1.2824972495206185e+33"
+    },
+    {
+      "week_start": "2025-12-15",
+      "blocks": "973170",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.5836824318660055e+28",
+      "supply_rises_yocto": "6.2142401319653478e+29",
+      "opening_supply_yocto": "1.2824972495169026e+33",
+      "closing_supply_yocto": "1.2831028367094963e+33"
+    },
+    {
+      "week_start": "2025-12-22",
+      "blocks": "927882",
+      "unlinked_blocks": "0",
+      "rising_blocks": "22",
+      "supply_falls_yocto": "1.5374807773603098e+28",
+      "supply_rises_yocto": "6.1670537377684813e+29",
+      "opening_supply_yocto": "1.2831028367054841e+33",
+      "closing_supply_yocto": "1.2837041672754996e+33"
+    },
+    {
+      "week_start": "2025-12-29",
+      "blocks": "981660",
+      "unlinked_blocks": "0",
+      "rising_blocks": "22",
+      "supply_falls_yocto": "1.5174161664831204e+28",
+      "supply_rises_yocto": "5.9153981015039285e+29",
+      "opening_supply_yocto": "1.2837041672736151e+33",
+      "closing_supply_yocto": "1.2842805329239852e+33"
+    },
+    {
+      "week_start": "2026-01-05",
+      "blocks": "991162",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.538311346523034e+28",
+      "supply_rises_yocto": "6.1483255758092929e+29",
+      "opening_supply_yocto": "1.2842805329221844e+33",
+      "closing_supply_yocto": "1.2848799823681009e+33"
+    },
+    {
+      "week_start": "2026-01-12",
+      "blocks": "998799",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.516892011891572e+28",
+      "supply_rises_yocto": "6.1048195343766646e+29",
+      "opening_supply_yocto": "1.284879982365574e+33",
+      "closing_supply_yocto": "1.2854752954014196e+33"
+    },
+    {
+      "week_start": "2026-01-19",
+      "blocks": "975706",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.5013402351683056e+28",
+      "supply_rises_yocto": "6.1682721007290736e+29",
+      "opening_supply_yocto": "1.2854752953991368e+33",
+      "closing_supply_yocto": "1.2860771092091408e+33"
+    },
+    {
+      "week_start": "2026-01-26",
+      "blocks": "991306",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.5088781376819248e+28",
+      "supply_rises_yocto": "6.153841403908127e+29",
+      "opening_supply_yocto": "1.2860771092066331e+33",
+      "closing_supply_yocto": "1.2866774045681548e+33"
+    },
+    {
+      "week_start": "2026-02-02",
+      "blocks": "998102",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.5347403770366656e+28",
+      "supply_rises_yocto": "6.1194579248372543e+29",
+      "opening_supply_yocto": "1.28667740456511e+33",
+      "closing_supply_yocto": "1.2872740029568682e+33"
+    },
+    {
+      "week_start": "2026-02-09",
+      "blocks": "1001354",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.4871377606868169e+28",
+      "supply_rises_yocto": "6.1002613782111421e+29",
+      "opening_supply_yocto": "1.28727400295499e+33",
+      "closing_supply_yocto": "1.2878691577170824e+33"
+    },
+    {
+      "week_start": "2026-02-16",
+      "blocks": "996553",
+      "unlinked_blocks": "0",
+      "rising_blocks": "24",
+      "supply_falls_yocto": "1.4188597158628109e+28",
+      "supply_rises_yocto": "6.3997245979614731e+29",
+      "opening_supply_yocto": "1.2878691577150844e+33",
+      "closing_supply_yocto": "1.28849494157972e+33"
+    },
+    {
+      "week_start": "2026-02-23",
+      "blocks": "990075",
+      "unlinked_blocks": "0",
+      "rising_blocks": "22",
+      "supply_falls_yocto": "1.6323937644473661e+28",
+      "supply_rises_yocto": "5.9031755751078636e+29",
+      "opening_supply_yocto": "1.2884949415768165e+33",
+      "closing_supply_yocto": "1.2890689351995863e+33"
+    },
+    {
+      "week_start": "2026-03-02",
+      "blocks": "994904",
+      "unlinked_blocks": "0",
+      "rising_blocks": "24",
+      "supply_falls_yocto": "1.5352983926445739e+28",
+      "supply_rises_yocto": "6.4149377384838492e+29",
+      "opening_supply_yocto": "1.2890689351982145e+33",
+      "closing_supply_yocto": "1.2896950759895082e+33"
+    },
+    {
+      "week_start": "2026-03-09",
+      "blocks": "1002432",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.4716758670066747e+28",
+      "supply_rises_yocto": "6.1095588945247542e+29",
+      "opening_supply_yocto": "1.2896950759870252e+33",
+      "closing_supply_yocto": "1.2902913151202906e+33"
+    },
+    {
+      "week_start": "2026-03-16",
+      "blocks": "1002926",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.4380679085150935e+28",
+      "supply_rises_yocto": "6.1051120864661059e+29",
+      "opening_supply_yocto": "1.2902913151186632e+33",
+      "closing_supply_yocto": "1.290887445649852e+33"
+    },
+    {
+      "week_start": "2026-03-23",
+      "blocks": "1006744",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "1.5103305212951583e+28",
+      "supply_rises_yocto": "6.0823340928133998e+29",
+      "opening_supply_yocto": "1.290887445622016e+33",
+      "closing_supply_yocto": "1.2914805757539205e+33"
+    },
+    {
+      "week_start": "2026-03-30",
+      "blocks": "1008035",
+      "unlinked_blocks": "0",
+      "rising_blocks": "24",
+      "supply_falls_yocto": "8.1258094443915052e+27",
+      "supply_rises_yocto": "6.3282165837359487e+29",
+      "opening_supply_yocto": "1.2914805757518612e+33",
+      "closing_supply_yocto": "1.2921052716028497e+33"
+    },
+    {
+      "week_start": "2026-04-06",
+      "blocks": "1014187",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.315856644405092e+27",
+      "supply_rises_yocto": "6.0546888273436419e+29",
+      "opening_supply_yocto": "1.2921052716011812e+33",
+      "closing_supply_yocto": "1.2927064246289396e+33"
+    },
+    {
+      "week_start": "2026-04-13",
+      "blocks": "998636",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.2197753719094012e+27",
+      "supply_rises_yocto": "6.1285643730010486e+29",
+      "opening_supply_yocto": "1.2927064246149884e+33",
+      "closing_supply_yocto": "1.2933150612908678e+33"
+    },
+    {
+      "week_start": "2026-04-20",
+      "blocks": "1003490",
+      "unlinked_blocks": "0",
+      "rising_blocks": "24",
+      "supply_falls_yocto": "4.0856002306126377e+27",
+      "supply_rises_yocto": "6.3732975113206551e+29",
+      "opening_supply_yocto": "1.2933150612861898e+33",
+      "closing_supply_yocto": "1.2939483054417692e+33"
+    },
+    {
+      "week_start": "2026-04-27",
+      "blocks": "1019525",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.0274196279703816e+27",
+      "supply_rises_yocto": "6.0332079600146186e+29",
+      "opening_supply_yocto": "1.2939483054402522e+33",
+      "closing_supply_yocto": "1.2945475988181427e+33"
+    },
+    {
+      "week_start": "2026-05-04",
+      "blocks": "1016681",
+      "unlinked_blocks": "0",
+      "rising_blocks": "24",
+      "supply_falls_yocto": "4.4098278650390945e+27",
+      "supply_rises_yocto": "6.3091790094352933e+29",
+      "opening_supply_yocto": "1.294547598815023e+33",
+      "closing_supply_yocto": "1.2951741068912212e+33"
+    },
+    {
+      "week_start": "2026-05-11",
+      "blocks": "987052",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.398376742122334e+27",
+      "supply_rises_yocto": "6.2070710931402997e+29",
+      "opening_supply_yocto": "1.2951741068840232e+33",
+      "closing_supply_yocto": "1.2957904156237931e+33"
+    },
+    {
+      "week_start": "2026-05-18",
+      "blocks": "992559",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "5.1517643502044156e+27",
+      "supply_rises_yocto": "6.1921601159380486e+29",
+      "opening_supply_yocto": "1.2957904156211812e+33",
+      "closing_supply_yocto": "1.2964044798710368e+33"
+    },
+    {
+      "week_start": "2026-05-25",
+      "blocks": "1000364",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "5.2448128275181318e+27",
+      "supply_rises_yocto": "6.1555801239040048e+29",
+      "opening_supply_yocto": "1.2964044798698096e+33",
+      "closing_supply_yocto": "1.2970147930705996e+33"
+    },
+    {
+      "week_start": "2026-06-01",
+      "blocks": "992289",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "6.1135253078466957e+27",
+      "supply_rises_yocto": "6.2056829526667041e+29",
+      "opening_supply_yocto": "1.2970147930693284e+33",
+      "closing_supply_yocto": "1.2976292478405584e+33"
+    },
+    {
+      "week_start": "2026-06-08",
+      "blocks": "966244",
+      "unlinked_blocks": "0",
+      "rising_blocks": "22",
+      "supply_falls_yocto": "4.8651220630410358e+27",
+      "supply_rises_yocto": "6.0363463846153662e+29",
+      "opening_supply_yocto": "1.2976292478382222e+33",
+      "closing_supply_yocto": "1.2982280173569569e+33"
+    },
+    {
+      "week_start": "2026-06-15",
+      "blocks": "995898",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.810682083956287e+27",
+      "supply_rises_yocto": "6.1866800533276968e+29",
+      "opening_supply_yocto": "1.2982280173536453e+33",
+      "closing_supply_yocto": "1.2988418746802057e+33"
+    },
+    {
+      "week_start": "2026-06-22",
+      "blocks": "1001268",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.4784019283681312e+27",
+      "supply_rises_yocto": "6.1672874274562694e+29",
+      "opening_supply_yocto": "1.2988418746727689e+33",
+      "closing_supply_yocto": "1.2994541250210229e+33"
+    },
+    {
+      "week_start": "2026-06-29",
+      "blocks": "992349",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.4530686429145206e+27",
+      "supply_rises_yocto": "6.1891090936521943e+29",
+      "opening_supply_yocto": "1.2994541250190732e+33",
+      "closing_supply_yocto": "1.3000685828617453e+33"
+    },
+    {
+      "week_start": "2026-07-06",
+      "blocks": "990729",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.4913107004635746e+27",
+      "supply_rises_yocto": "6.21771303329281e+29",
+      "opening_supply_yocto": "1.3000685828599396e+33",
+      "closing_supply_yocto": "1.3006858628543742e+33"
+    },
+    {
+      "week_start": "2026-07-13",
+      "blocks": "983852",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.0637328344395163e+27",
+      "supply_rises_yocto": "6.2583872490465741e+29",
+      "opening_supply_yocto": "1.3006858628518236e+33",
+      "closing_supply_yocto": "1.3013076378464443e+33"
+    },
+    {
+      "week_start": "2026-07-20",
+      "blocks": "978823",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.6242482266420024e+27",
+      "supply_rises_yocto": "6.2576376145987739e+29",
+      "opening_supply_yocto": "1.3013076378359902e+33",
+      "closing_supply_yocto": "1.3019287773596777e+33"
+    },
+    {
+      "week_start": "2026-07-27",
+      "blocks": "983497",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.6285224836649119e+27",
+      "supply_rises_yocto": "6.2529346682485458e+29",
+      "opening_supply_yocto": "1.3019287773592191e+33",
+      "closing_supply_yocto": "1.3025494423040189e+33"
+    },
+    {
+      "week_start": "2026-08-03",
+      "blocks": "987499",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.5865016495034591e+27",
+      "supply_rises_yocto": "6.2464802252753246e+29",
+      "opening_supply_yocto": "1.3025494422992109e+33",
+      "closing_supply_yocto": "1.3031695038248969e+33"
+    },
+    {
+      "week_start": "2026-08-10",
+      "blocks": "986051",
+      "unlinked_blocks": "0",
+      "rising_blocks": "22",
+      "supply_falls_yocto": "4.3371311057305312e+27",
+      "supply_rises_yocto": "5.9959140854412829e+29",
+      "opening_supply_yocto": "1.303169503821701e+33",
+      "closing_supply_yocto": "1.3037647581023352e+33"
+    },
+    {
+      "week_start": "2026-08-17",
+      "blocks": "985558",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "5.2924849295247264e+27",
+      "supply_rises_yocto": "6.2710325518938466e+29",
+      "opening_supply_yocto": "1.3037647581009743e+33",
+      "closing_supply_yocto": "1.304386568872595e+33"
+    },
+    {
+      "week_start": "2026-08-24",
+      "blocks": "984478",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "4.7693156774403477e+27",
+      "supply_rises_yocto": "6.2757527773726592e+29",
+      "opening_supply_yocto": "1.304386568869075e+33",
+      "closing_supply_yocto": "1.3050093748346549e+33"
+    },
+    {
+      "week_start": "2026-08-31",
+      "blocks": "965147",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "5.1052810166260798e+27",
+      "supply_rises_yocto": "6.37901988767341e+29",
+      "opening_supply_yocto": "1.3050093748326771e+33",
+      "closing_supply_yocto": "1.3056421715424055e+33"
+    },
+    {
+      "week_start": "2026-09-07",
+      "blocks": "974969",
+      "unlinked_blocks": "0",
+      "rising_blocks": "22",
+      "supply_falls_yocto": "4.7935415806358614e+27",
+      "supply_rises_yocto": "6.0582881768791546e+29",
+      "opening_supply_yocto": "1.3056421715391432e+33",
+      "closing_supply_yocto": "1.306243206818513e+33"
+    },
+    {
+      "week_start": "2026-09-14",
+      "blocks": "985156",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "5.446863065699544e+27",
+      "supply_rises_yocto": "6.28381630275795e+29",
+      "opening_supply_yocto": "1.3062432068162475e+33",
+      "closing_supply_yocto": "1.306866141585723e+33"
+    },
+    {
+      "week_start": "2026-09-21",
+      "blocks": "1001987",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "6.8799966123013183e+27",
+      "supply_rises_yocto": "6.1843597084769226e+29",
+      "opening_supply_yocto": "1.306866141584712e+33",
+      "closing_supply_yocto": "1.3074776975599584e+33"
+    },
+    {
+      "week_start": "2026-09-28",
+      "blocks": "1010316",
+      "unlinked_blocks": "0",
+      "rising_blocks": "24",
+      "supply_falls_yocto": "8.6738889075835471e+27",
+      "supply_rises_yocto": "6.3945653124851754e+29",
+      "opening_supply_yocto": "1.307477697556431e+33",
+      "closing_supply_yocto": "1.3081084802022993e+33"
+    },
+    {
+      "week_start": "2026-10-05",
+      "blocks": "1027055",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "9.9074694278419865e+27",
+      "supply_rises_yocto": "6.0598787421612934e+29",
+      "opening_supply_yocto": "1.3081084802016202e+33",
+      "closing_supply_yocto": "1.3087045606070877e+33"
+    },
+    {
+      "week_start": "2026-10-12",
+      "blocks": "981778",
+      "unlinked_blocks": "0",
+      "rising_blocks": "23",
+      "supply_falls_yocto": "8.6822195186003039e+27",
+      "supply_rises_yocto": "6.26674464860666e+29",
+      "opening_supply_yocto": "1.3087045606062794e+33",
+      "closing_supply_yocto": "1.3093225528524297e+33"
+    },
+    {
+      "week_start": "2026-10-19",
+      "blocks": "1027658",
+      "unlinked_blocks": "0",
+      "rising_blocks": "24",
+      "supply_falls_yocto": "4.5147677791066628e+27",
+      "supply_rises_yocto": "6.3246019640202796e+29",
+      "opening_supply_yocto": "1.3093225528509098e+33",
+      "closing_supply_yocto": "1.3099504982810525e+33"
+    },
+    {
+      "week_start": "2026-10-26",
+      "blocks": "1029842",
+      "unlinked_blocks": "0",
+      "rising_blocks": "24",
+      "supply_falls_yocto": "4.4946241155868484e+27",
+      "supply_rises_yocto": "6.3002269580146739e+29",
+      "opening_supply_yocto": "1.3099504982796288e+33",
+      "closing_supply_yocto": "1.3105760263527386e+33"
+    }
+  ],
+  "jobId": "near_thesis_0bb7524ef53d4b199bb968514857a415",
+  "estimatedBytes": 5977467368,
+  "billedBytes": 5977931776,
+  "fetchedAt": "2026-11-09T00:32:46.431Z"
+}

@@ -1,0 +1,6073 @@
+{
+  "name": "signers",
+  "sql": "-- Transaction signers per UTC day: an activity proxy, not unique people.\n-- Includes failed transactions and relayer accounts. One scan feeds three grains:\n-- day (signers, transactions), month (accounts signing on 2+ days) and 12-month period\n-- (transactions by the period's 10 largest signers). Partial November 2026 is excluded from month/period.\nWITH per_signer_day AS (\n  SELECT block_date, signer_account_id, COUNT(*) AS transactions\n  FROM `bigquery-public-data.crypto_near_mainnet_us.transactions`\n  WHERE block_date >= DATE '2024-11-01' AND block_date < DATE '2026-11-02'\n  GROUP BY block_date, signer_account_id\n), complete_months AS (\n  SELECT * FROM per_signer_day WHERE block_date < DATE '2026-11-01'\n), per_signer_month AS (\n  SELECT DATE_TRUNC(block_date, MONTH) AS month, signer_account_id, COUNT(*) AS active_days\n  FROM complete_months GROUP BY month, signer_account_id\n), per_signer_period AS (\n  SELECT IF(block_date < DATE '2025-11-01', DATE '2024-11-01', DATE '2025-11-01') AS period_start,\n    signer_account_id, SUM(transactions) AS transactions\n  FROM complete_months GROUP BY period_start, signer_account_id\n), periods AS (\n  SELECT period_start, SUM(transactions) AS transactions, COUNT(*) AS signers,\n    ARRAY_AGG(transactions ORDER BY transactions DESC LIMIT 10) AS top10\n  FROM per_signer_period GROUP BY period_start\n)\nSELECT 'day' AS grain, block_date AS period_start, SUM(transactions) AS transactions,\n  COUNT(*) AS signers, CAST(NULL AS INT64) AS accounts_2plus_days, CAST(NULL AS INT64) AS top10_transactions\nFROM per_signer_day GROUP BY block_date\nUNION ALL\nSELECT 'month', month, NULL, COUNT(*), COUNTIF(active_days >= 2), NULL\nFROM per_signer_month GROUP BY month\nUNION ALL\nSELECT 'period', period_start, transactions, signers, NULL,\n  (SELECT SUM(t) FROM UNNEST(top10) AS t)\nFROM periods\nORDER BY grain, period_start;\n",
+  "filters": [
+    {
+      "table": "transactions",
+      "start": "2024-11-01",
+      "end": "2026-11-02"
+    }
+  ],
+  "rows": [
+    {
+      "grain": "day",
+      "period_start": "2024-11-01",
+      "transactions": "7065623",
+      "signers": "930504",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-02",
+      "transactions": "6684726",
+      "signers": "936021",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-03",
+      "transactions": "7158662",
+      "signers": "944061",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-04",
+      "transactions": "7171039",
+      "signers": "955500",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-05",
+      "transactions": "8087924",
+      "signers": "978788",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-06",
+      "transactions": "7832567",
+      "signers": "947509",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-07",
+      "transactions": "7725112",
+      "signers": "947215",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-08",
+      "transactions": "7874763",
+      "signers": "940764",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-09",
+      "transactions": "7397470",
+      "signers": "922814",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-10",
+      "transactions": "7188448",
+      "signers": "995855",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-11",
+      "transactions": "7398523",
+      "signers": "962354",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-12",
+      "transactions": "7510342",
+      "signers": "982375",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-13",
+      "transactions": "7064151",
+      "signers": "968916",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-14",
+      "transactions": "6940126",
+      "signers": "998878",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-15",
+      "transactions": "6408259",
+      "signers": "922103",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-16",
+      "transactions": "6891651",
+      "signers": "980793",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-17",
+      "transactions": "7350855",
+      "signers": "928495",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-18",
+      "transactions": "7204727",
+      "signers": "931996",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-19",
+      "transactions": "7020806",
+      "signers": "933016",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-20",
+      "transactions": "7259860",
+      "signers": "888273",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-21",
+      "transactions": "7912955",
+      "signers": "961648",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-22",
+      "transactions": "6901716",
+      "signers": "787118",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-23",
+      "transactions": "6703047",
+      "signers": "634343",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-24",
+      "transactions": "6494932",
+      "signers": "618495",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-25",
+      "transactions": "6750164",
+      "signers": "789897",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-26",
+      "transactions": "7215298",
+      "signers": "938501",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-27",
+      "transactions": "6981527",
+      "signers": "916276",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-28",
+      "transactions": "7579663",
+      "signers": "946361",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-29",
+      "transactions": "8062046",
+      "signers": "949070",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-11-30",
+      "transactions": "6235487",
+      "signers": "735144",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-01",
+      "transactions": "7218253",
+      "signers": "957418",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-02",
+      "transactions": "7635889",
+      "signers": "876100",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-03",
+      "transactions": "7762478",
+      "signers": "938957",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-04",
+      "transactions": "7727763",
+      "signers": "916759",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-05",
+      "transactions": "7752641",
+      "signers": "911671",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-06",
+      "transactions": "7966436",
+      "signers": "899206",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-07",
+      "transactions": "6693766",
+      "signers": "760412",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-08",
+      "transactions": "9375412",
+      "signers": "970513",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-09",
+      "transactions": "9385041",
+      "signers": "949697",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-10",
+      "transactions": "8979346",
+      "signers": "949143",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-11",
+      "transactions": "8399830",
+      "signers": "938360",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-12",
+      "transactions": "9551708",
+      "signers": "968516",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-13",
+      "transactions": "9328765",
+      "signers": "962016",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-14",
+      "transactions": "9155317",
+      "signers": "959159",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-15",
+      "transactions": "8687819",
+      "signers": "945658",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-16",
+      "transactions": "8364504",
+      "signers": "954765",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-17",
+      "transactions": "8587239",
+      "signers": "929129",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-18",
+      "transactions": "9560209",
+      "signers": "957164",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-19",
+      "transactions": "9151260",
+      "signers": "931235",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-20",
+      "transactions": "6876467",
+      "signers": "764232",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-21",
+      "transactions": "8338833",
+      "signers": "945049",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-22",
+      "transactions": "8392083",
+      "signers": "915003",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-23",
+      "transactions": "7968004",
+      "signers": "914993",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-24",
+      "transactions": "7765193",
+      "signers": "944508",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-25",
+      "transactions": "7987593",
+      "signers": "958008",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-26",
+      "transactions": "8074488",
+      "signers": "923122",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-27",
+      "transactions": "7781277",
+      "signers": "915334",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-28",
+      "transactions": "8340345",
+      "signers": "935908",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-29",
+      "transactions": "7982634",
+      "signers": "953441",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-30",
+      "transactions": "7630629",
+      "signers": "922574",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2024-12-31",
+      "transactions": "7826738",
+      "signers": "904006",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-01",
+      "transactions": "7858227",
+      "signers": "926102",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-02",
+      "transactions": "7634852",
+      "signers": "948727",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-03",
+      "transactions": "6609596",
+      "signers": "904239",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-04",
+      "transactions": "6398910",
+      "signers": "896647",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-05",
+      "transactions": "6324006",
+      "signers": "899709",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-06",
+      "transactions": "6622157",
+      "signers": "900500",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-07",
+      "transactions": "6311764",
+      "signers": "903202",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-08",
+      "transactions": "6459697",
+      "signers": "894398",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-09",
+      "transactions": "6246802",
+      "signers": "898839",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-10",
+      "transactions": "6301014",
+      "signers": "907588",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-11",
+      "transactions": "6331920",
+      "signers": "882091",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-12",
+      "transactions": "6463502",
+      "signers": "898531",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-13",
+      "transactions": "6055283",
+      "signers": "900378",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-14",
+      "transactions": "6245690",
+      "signers": "890323",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-15",
+      "transactions": "6286677",
+      "signers": "885122",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-16",
+      "transactions": "6520428",
+      "signers": "890182",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-17",
+      "transactions": "6308992",
+      "signers": "884108",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-18",
+      "transactions": "6247788",
+      "signers": "853291",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-19",
+      "transactions": "7760651",
+      "signers": "876500",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-20",
+      "transactions": "8889596",
+      "signers": "881410",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-21",
+      "transactions": "9225695",
+      "signers": "900209",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-22",
+      "transactions": "9469279",
+      "signers": "871791",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-23",
+      "transactions": "9628788",
+      "signers": "863825",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-24",
+      "transactions": "9055018",
+      "signers": "864267",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-25",
+      "transactions": "7585980",
+      "signers": "850574",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-26",
+      "transactions": "7434447",
+      "signers": "870328",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-27",
+      "transactions": "7540416",
+      "signers": "870495",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-28",
+      "transactions": "7375065",
+      "signers": "848717",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-29",
+      "transactions": "7236179",
+      "signers": "830606",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-30",
+      "transactions": "7173756",
+      "signers": "836218",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-01-31",
+      "transactions": "6905870",
+      "signers": "829335",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-01",
+      "transactions": "5747806",
+      "signers": "846344",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-02",
+      "transactions": "4242379",
+      "signers": "837061",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-03",
+      "transactions": "5506609",
+      "signers": "841959",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-04",
+      "transactions": "7151263",
+      "signers": "848989",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-05",
+      "transactions": "7308555",
+      "signers": "831685",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-06",
+      "transactions": "7321763",
+      "signers": "845346",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-07",
+      "transactions": "6996098",
+      "signers": "838707",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-08",
+      "transactions": "7335803",
+      "signers": "829661",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-09",
+      "transactions": "7287911",
+      "signers": "812031",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-10",
+      "transactions": "7391616",
+      "signers": "817530",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-11",
+      "transactions": "7414366",
+      "signers": "839105",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-12",
+      "transactions": "7155909",
+      "signers": "827883",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-13",
+      "transactions": "7471978",
+      "signers": "827453",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-14",
+      "transactions": "6345534",
+      "signers": "826085",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-15",
+      "transactions": "6839532",
+      "signers": "820327",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-16",
+      "transactions": "7202784",
+      "signers": "816780",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-17",
+      "transactions": "7422911",
+      "signers": "827605",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-18",
+      "transactions": "6113040",
+      "signers": "837902",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-19",
+      "transactions": "5878785",
+      "signers": "625237",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-20",
+      "transactions": "7309102",
+      "signers": "529711",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-21",
+      "transactions": "7328410",
+      "signers": "527180",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-22",
+      "transactions": "7475608",
+      "signers": "496414",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-23",
+      "transactions": "7225845",
+      "signers": "519868",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-24",
+      "transactions": "7090534",
+      "signers": "526016",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-25",
+      "transactions": "6827987",
+      "signers": "508849",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-26",
+      "transactions": "7411619",
+      "signers": "521413",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-27",
+      "transactions": "7037319",
+      "signers": "530101",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-02-28",
+      "transactions": "6512749",
+      "signers": "527904",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-01",
+      "transactions": "6356660",
+      "signers": "520137",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-02",
+      "transactions": "6318899",
+      "signers": "512451",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-03",
+      "transactions": "6143343",
+      "signers": "509502",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-04",
+      "transactions": "6266846",
+      "signers": "525173",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-05",
+      "transactions": "6525309",
+      "signers": "528703",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-06",
+      "transactions": "6762329",
+      "signers": "529072",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-07",
+      "transactions": "5799788",
+      "signers": "518306",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-08",
+      "transactions": "6345902",
+      "signers": "516656",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-09",
+      "transactions": "6406183",
+      "signers": "511374",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-10",
+      "transactions": "6331756",
+      "signers": "515782",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-11",
+      "transactions": "6980029",
+      "signers": "522875",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-12",
+      "transactions": "6422858",
+      "signers": "489849",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-13",
+      "transactions": "6669334",
+      "signers": "497261",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-14",
+      "transactions": "6682450",
+      "signers": "488858",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-15",
+      "transactions": "5036104",
+      "signers": "481091",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-16",
+      "transactions": "4790589",
+      "signers": "502296",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-17",
+      "transactions": "5578841",
+      "signers": "508006",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-18",
+      "transactions": "6224495",
+      "signers": "508154",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-19",
+      "transactions": "6337321",
+      "signers": "500382",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-20",
+      "transactions": "11724238",
+      "signers": "496933",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-21",
+      "transactions": "7292754",
+      "signers": "493171",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-22",
+      "transactions": "6953254",
+      "signers": "482538",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-23",
+      "transactions": "6826968",
+      "signers": "485335",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-24",
+      "transactions": "6045144",
+      "signers": "480622",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-25",
+      "transactions": "6923342",
+      "signers": "498243",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-26",
+      "transactions": "6727480",
+      "signers": "530492",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-27",
+      "transactions": "7071806",
+      "signers": "561797",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-28",
+      "transactions": "7424116",
+      "signers": "557000",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-29",
+      "transactions": "6893453",
+      "signers": "518283",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-30",
+      "transactions": "6257678",
+      "signers": "538260",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-03-31",
+      "transactions": "6339795",
+      "signers": "547879",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-01",
+      "transactions": "6370296",
+      "signers": "545226",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-02",
+      "transactions": "6174893",
+      "signers": "531276",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-03",
+      "transactions": "6203070",
+      "signers": "488868",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-04",
+      "transactions": "6529852",
+      "signers": "516388",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-05",
+      "transactions": "7078248",
+      "signers": "512307",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-06",
+      "transactions": "6540425",
+      "signers": "473875",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-07",
+      "transactions": "6663977",
+      "signers": "460606",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-08",
+      "transactions": "6922482",
+      "signers": "470232",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-09",
+      "transactions": "6937852",
+      "signers": "459237",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-10",
+      "transactions": "6737026",
+      "signers": "453240",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-11",
+      "transactions": "6714695",
+      "signers": "448616",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-12",
+      "transactions": "6764251",
+      "signers": "439424",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-13",
+      "transactions": "6800539",
+      "signers": "453248",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-14",
+      "transactions": "6948584",
+      "signers": "470112",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-15",
+      "transactions": "6920661",
+      "signers": "490070",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-16",
+      "transactions": "7619284",
+      "signers": "472869",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-17",
+      "transactions": "6664498",
+      "signers": "482917",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-18",
+      "transactions": "5857254",
+      "signers": "468571",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-19",
+      "transactions": "5668813",
+      "signers": "462528",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-20",
+      "transactions": "5845108",
+      "signers": "464017",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-21",
+      "transactions": "5749983",
+      "signers": "474049",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-22",
+      "transactions": "5676656",
+      "signers": "471750",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-23",
+      "transactions": "5640156",
+      "signers": "471364",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-24",
+      "transactions": "5573863",
+      "signers": "466693",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-25",
+      "transactions": "5102094",
+      "signers": "464769",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-26",
+      "transactions": "6027940",
+      "signers": "457880",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-27",
+      "transactions": "5401300",
+      "signers": "458419",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-28",
+      "transactions": "5601954",
+      "signers": "460209",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-29",
+      "transactions": "5012554",
+      "signers": "457640",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-04-30",
+      "transactions": "6101678",
+      "signers": "443569",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-01",
+      "transactions": "5389675",
+      "signers": "429070",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-02",
+      "transactions": "5330559",
+      "signers": "420796",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-03",
+      "transactions": "5429355",
+      "signers": "418981",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-04",
+      "transactions": "5460210",
+      "signers": "432851",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-05",
+      "transactions": "5191825",
+      "signers": "429449",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-06",
+      "transactions": "5852948",
+      "signers": "430946",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-07",
+      "transactions": "5579468",
+      "signers": "420297",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-08",
+      "transactions": "5575292",
+      "signers": "420967",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-09",
+      "transactions": "5486034",
+      "signers": "420246",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-10",
+      "transactions": "5369053",
+      "signers": "415087",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-11",
+      "transactions": "5306074",
+      "signers": "405452",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-12",
+      "transactions": "5453606",
+      "signers": "491311",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-13",
+      "transactions": "5283314",
+      "signers": "417747",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-14",
+      "transactions": "5148004",
+      "signers": "426689",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-15",
+      "transactions": "4720478",
+      "signers": "419109",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-16",
+      "transactions": "5216473",
+      "signers": "418040",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-17",
+      "transactions": "5310551",
+      "signers": "412090",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-18",
+      "transactions": "5181399",
+      "signers": "408333",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-19",
+      "transactions": "5546958",
+      "signers": "469010",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-20",
+      "transactions": "5641020",
+      "signers": "498143",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-21",
+      "transactions": "5343032",
+      "signers": "460736",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-22",
+      "transactions": "5321053",
+      "signers": "460426",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-23",
+      "transactions": "5357220",
+      "signers": "458683",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-24",
+      "transactions": "5126780",
+      "signers": "406734",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-25",
+      "transactions": "4478192",
+      "signers": "321261",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-26",
+      "transactions": "4713706",
+      "signers": "357948",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-27",
+      "transactions": "4922121",
+      "signers": "380070",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-28",
+      "transactions": "4985054",
+      "signers": "390933",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-29",
+      "transactions": "4878176",
+      "signers": "386657",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-30",
+      "transactions": "5185180",
+      "signers": "377728",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-05-31",
+      "transactions": "4890090",
+      "signers": "374501",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-01",
+      "transactions": "4698529",
+      "signers": "375278",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-02",
+      "transactions": "4831116",
+      "signers": "383342",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-03",
+      "transactions": "5037145",
+      "signers": "381871",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-04",
+      "transactions": "5110333",
+      "signers": "381014",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-05",
+      "transactions": "4984351",
+      "signers": "376161",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-06",
+      "transactions": "4895557",
+      "signers": "367680",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-07",
+      "transactions": "4871398",
+      "signers": "364181",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-08",
+      "transactions": "4823565",
+      "signers": "362274",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-09",
+      "transactions": "5086480",
+      "signers": "365214",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-10",
+      "transactions": "5045427",
+      "signers": "364759",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-11",
+      "transactions": "4884141",
+      "signers": "358318",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-12",
+      "transactions": "4845526",
+      "signers": "359832",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-13",
+      "transactions": "4777173",
+      "signers": "362868",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-14",
+      "transactions": "4688138",
+      "signers": "370719",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-15",
+      "transactions": "4904516",
+      "signers": "354289",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-16",
+      "transactions": "4929018",
+      "signers": "359217",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-17",
+      "transactions": "5001393",
+      "signers": "357000",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-18",
+      "transactions": "4746621",
+      "signers": "355850",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-19",
+      "transactions": "4784025",
+      "signers": "351976",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-20",
+      "transactions": "4768857",
+      "signers": "340842",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-21",
+      "transactions": "4736950",
+      "signers": "336316",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-22",
+      "transactions": "4691867",
+      "signers": "333420",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-23",
+      "transactions": "4965623",
+      "signers": "339407",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-24",
+      "transactions": "4988306",
+      "signers": "338221",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-25",
+      "transactions": "5013256",
+      "signers": "338158",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-26",
+      "transactions": "5099015",
+      "signers": "337653",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-27",
+      "transactions": "4944857",
+      "signers": "330300",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-28",
+      "transactions": "5001256",
+      "signers": "331801",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-29",
+      "transactions": "4856484",
+      "signers": "327118",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-06-30",
+      "transactions": "4804847",
+      "signers": "331757",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-01",
+      "transactions": "4750327",
+      "signers": "332768",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-02",
+      "transactions": "4787468",
+      "signers": "336980",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-03",
+      "transactions": "4806810",
+      "signers": "332250",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-04",
+      "transactions": "4821673",
+      "signers": "326534",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-05",
+      "transactions": "4784885",
+      "signers": "320988",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-06",
+      "transactions": "4688518",
+      "signers": "320850",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-07",
+      "transactions": "4577327",
+      "signers": "327188",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-08",
+      "transactions": "4559117",
+      "signers": "314864",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-09",
+      "transactions": "4576165",
+      "signers": "332420",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-10",
+      "transactions": "4713058",
+      "signers": "333705",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-11",
+      "transactions": "4778058",
+      "signers": "332288",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-12",
+      "transactions": "3925395",
+      "signers": "331019",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-13",
+      "transactions": "2272640",
+      "signers": "334042",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-14",
+      "transactions": "3832640",
+      "signers": "343207",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-15",
+      "transactions": "4806572",
+      "signers": "342543",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-16",
+      "transactions": "4837616",
+      "signers": "356571",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-17",
+      "transactions": "4892308",
+      "signers": "346083",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-18",
+      "transactions": "4865080",
+      "signers": "346033",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-19",
+      "transactions": "4586524",
+      "signers": "326848",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-20",
+      "transactions": "4634768",
+      "signers": "342912",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-21",
+      "transactions": "4886481",
+      "signers": "344125",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-22",
+      "transactions": "4767942",
+      "signers": "348000",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-23",
+      "transactions": "5240127",
+      "signers": "346444",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-24",
+      "transactions": "5381716",
+      "signers": "345606",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-25",
+      "transactions": "5283100",
+      "signers": "322797",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-26",
+      "transactions": "4855734",
+      "signers": "339124",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-27",
+      "transactions": "4918823",
+      "signers": "341823",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-28",
+      "transactions": "5827094",
+      "signers": "348450",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-29",
+      "transactions": "5815172",
+      "signers": "349733",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-30",
+      "transactions": "5881218",
+      "signers": "348115",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-07-31",
+      "transactions": "5595814",
+      "signers": "346511",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-01",
+      "transactions": "5697762",
+      "signers": "335863",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-02",
+      "transactions": "5481203",
+      "signers": "331718",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-03",
+      "transactions": "5276984",
+      "signers": "332812",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-04",
+      "transactions": "5354974",
+      "signers": "336555",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-05",
+      "transactions": "4999811",
+      "signers": "336613",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-06",
+      "transactions": "5015345",
+      "signers": "340225",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-07",
+      "transactions": "5125929",
+      "signers": "339947",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-08",
+      "transactions": "4948636",
+      "signers": "335408",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-09",
+      "transactions": "4790288",
+      "signers": "322587",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-10",
+      "transactions": "4866005",
+      "signers": "334719",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-11",
+      "transactions": "4951535",
+      "signers": "338800",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-12",
+      "transactions": "5008307",
+      "signers": "331954",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-13",
+      "transactions": "4976883",
+      "signers": "334078",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-14",
+      "transactions": "5133268",
+      "signers": "345915",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-15",
+      "transactions": "5195571",
+      "signers": "343984",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-16",
+      "transactions": "4965339",
+      "signers": "331618",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-17",
+      "transactions": "4999807",
+      "signers": "342561",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-18",
+      "transactions": "5013328",
+      "signers": "341139",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-19",
+      "transactions": "4984756",
+      "signers": "340767",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-20",
+      "transactions": "5160311",
+      "signers": "334579",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-21",
+      "transactions": "4925621",
+      "signers": "326732",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-22",
+      "transactions": "4946062",
+      "signers": "324678",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-23",
+      "transactions": "5027549",
+      "signers": "324053",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-24",
+      "transactions": "4984764",
+      "signers": "322260",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-25",
+      "transactions": "4954601",
+      "signers": "326060",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-26",
+      "transactions": "5004186",
+      "signers": "328537",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-27",
+      "transactions": "4905631",
+      "signers": "328561",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-28",
+      "transactions": "4836376",
+      "signers": "326532",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-29",
+      "transactions": "4742351",
+      "signers": "320988",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-30",
+      "transactions": "4774224",
+      "signers": "310255",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-08-31",
+      "transactions": "4759174",
+      "signers": "314056",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-01",
+      "transactions": "4928973",
+      "signers": "311868",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-02",
+      "transactions": "4950123",
+      "signers": "318121",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-03",
+      "transactions": "4951963",
+      "signers": "319260",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-04",
+      "transactions": "4726604",
+      "signers": "291056",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-05",
+      "transactions": "4865153",
+      "signers": "311068",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-06",
+      "transactions": "4830883",
+      "signers": "302108",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-07",
+      "transactions": "4841481",
+      "signers": "304489",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-08",
+      "transactions": "4748752",
+      "signers": "312006",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-09",
+      "transactions": "4870224",
+      "signers": "306005",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-10",
+      "transactions": "4895042",
+      "signers": "306075",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-11",
+      "transactions": "4964681",
+      "signers": "301726",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-12",
+      "transactions": "4831054",
+      "signers": "303334",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-13",
+      "transactions": "4726073",
+      "signers": "299216",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-14",
+      "transactions": "4649034",
+      "signers": "297625",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-15",
+      "transactions": "4644068",
+      "signers": "293261",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-16",
+      "transactions": "4603334",
+      "signers": "297817",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-17",
+      "transactions": "4588911",
+      "signers": "295987",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-18",
+      "transactions": "4514113",
+      "signers": "291200",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-19",
+      "transactions": "4462434",
+      "signers": "291407",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-20",
+      "transactions": "4468326",
+      "signers": "284191",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-21",
+      "transactions": "4513832",
+      "signers": "285420",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-22",
+      "transactions": "4547800",
+      "signers": "297450",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-23",
+      "transactions": "4475363",
+      "signers": "296093",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-24",
+      "transactions": "4513944",
+      "signers": "293327",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-25",
+      "transactions": "4533732",
+      "signers": "290785",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-26",
+      "transactions": "4592721",
+      "signers": "292210",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-27",
+      "transactions": "4525562",
+      "signers": "285253",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-28",
+      "transactions": "4527076",
+      "signers": "286548",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-29",
+      "transactions": "4564228",
+      "signers": "291148",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-09-30",
+      "transactions": "4475446",
+      "signers": "289877",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-01",
+      "transactions": "4632736",
+      "signers": "288151",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-02",
+      "transactions": "4575116",
+      "signers": "290966",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-03",
+      "transactions": "4514419",
+      "signers": "279048",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-04",
+      "transactions": "4457849",
+      "signers": "279183",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-05",
+      "transactions": "4467062",
+      "signers": "285332",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-06",
+      "transactions": "4456327",
+      "signers": "286177",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-07",
+      "transactions": "4612911",
+      "signers": "284782",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-08",
+      "transactions": "4580424",
+      "signers": "279945",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-09",
+      "transactions": "4779971",
+      "signers": "282311",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-10",
+      "transactions": "4793375",
+      "signers": "270141",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-11",
+      "transactions": "4848246",
+      "signers": "271597",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-12",
+      "transactions": "4867365",
+      "signers": "276041",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-13",
+      "transactions": "4767320",
+      "signers": "274103",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-14",
+      "transactions": "4754962",
+      "signers": "277670",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-15",
+      "transactions": "4564782",
+      "signers": "275570",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-16",
+      "transactions": "4786354",
+      "signers": "278201",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-17",
+      "transactions": "4388829",
+      "signers": "273287",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-18",
+      "transactions": "4304916",
+      "signers": "265871",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-19",
+      "transactions": "4379507",
+      "signers": "274624",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-20",
+      "transactions": "4821640",
+      "signers": "272951",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-21",
+      "transactions": "4592452",
+      "signers": "270008",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-22",
+      "transactions": "4441563",
+      "signers": "269303",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-23",
+      "transactions": "4379425",
+      "signers": "266769",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-24",
+      "transactions": "4378326",
+      "signers": "260345",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-25",
+      "transactions": "4307497",
+      "signers": "257743",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-26",
+      "transactions": "4310749",
+      "signers": "265895",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-27",
+      "transactions": "4460228",
+      "signers": "274422",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-28",
+      "transactions": "4472170",
+      "signers": "266364",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-29",
+      "transactions": "4460424",
+      "signers": "269242",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-30",
+      "transactions": "4499926",
+      "signers": "265974",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-10-31",
+      "transactions": "4325534",
+      "signers": "253889",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-01",
+      "transactions": "4294270",
+      "signers": "250232",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-02",
+      "transactions": "4327572",
+      "signers": "249882",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-03",
+      "transactions": "4323513",
+      "signers": "255577",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-04",
+      "transactions": "4324097",
+      "signers": "250396",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-05",
+      "transactions": "4247145",
+      "signers": "250359",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-06",
+      "transactions": "4068138",
+      "signers": "251003",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-07",
+      "transactions": "4213365",
+      "signers": "247287",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-08",
+      "transactions": "4262119",
+      "signers": "247576",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-09",
+      "transactions": "4156257",
+      "signers": "226994",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-10",
+      "transactions": "4355752",
+      "signers": "264240",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-11",
+      "transactions": "4228785",
+      "signers": "260821",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-12",
+      "transactions": "4337790",
+      "signers": "257073",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-13",
+      "transactions": "4351120",
+      "signers": "255819",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-14",
+      "transactions": "4363339",
+      "signers": "246721",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-15",
+      "transactions": "4328149",
+      "signers": "245464",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-16",
+      "transactions": "4284834",
+      "signers": "246092",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-17",
+      "transactions": "4366874",
+      "signers": "250997",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-18",
+      "transactions": "4266045",
+      "signers": "230724",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-19",
+      "transactions": "4274079",
+      "signers": "248104",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-20",
+      "transactions": "4457064",
+      "signers": "245664",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-21",
+      "transactions": "4286527",
+      "signers": "234358",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-22",
+      "transactions": "4333041",
+      "signers": "233103",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-23",
+      "transactions": "4315430",
+      "signers": "234393",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-24",
+      "transactions": "4222699",
+      "signers": "240156",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-25",
+      "transactions": "4331713",
+      "signers": "242275",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-26",
+      "transactions": "3828036",
+      "signers": "191444",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-27",
+      "transactions": "4332084",
+      "signers": "237363",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-28",
+      "transactions": "4413456",
+      "signers": "230475",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-29",
+      "transactions": "4031761",
+      "signers": "227227",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-11-30",
+      "transactions": "4107373",
+      "signers": "231143",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-01",
+      "transactions": "4228761",
+      "signers": "234018",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-02",
+      "transactions": "4081654",
+      "signers": "229497",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-03",
+      "transactions": "4105359",
+      "signers": "229124",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-04",
+      "transactions": "4216807",
+      "signers": "235437",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-05",
+      "transactions": "3983361",
+      "signers": "224477",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-06",
+      "transactions": "3861406",
+      "signers": "219165",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-07",
+      "transactions": "3879668",
+      "signers": "227365",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-08",
+      "transactions": "3919127",
+      "signers": "227236",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-09",
+      "transactions": "3969897",
+      "signers": "226922",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-10",
+      "transactions": "3936999",
+      "signers": "221290",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-11",
+      "transactions": "3881276",
+      "signers": "217393",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-12",
+      "transactions": "3748277",
+      "signers": "210947",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-13",
+      "transactions": "3626525",
+      "signers": "208393",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-14",
+      "transactions": "3780233",
+      "signers": "208069",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-15",
+      "transactions": "3843544",
+      "signers": "218775",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-16",
+      "transactions": "3870281",
+      "signers": "220887",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-17",
+      "transactions": "3839700",
+      "signers": "265963",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-18",
+      "transactions": "4026913",
+      "signers": "366653",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-19",
+      "transactions": "3876577",
+      "signers": "229111",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-20",
+      "transactions": "3836808",
+      "signers": "310404",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-21",
+      "transactions": "3725545",
+      "signers": "208213",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-22",
+      "transactions": "3824384",
+      "signers": "265530",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-23",
+      "transactions": "3755622",
+      "signers": "204741",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-24",
+      "transactions": "3760062",
+      "signers": "206156",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-25",
+      "transactions": "3802237",
+      "signers": "203808",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-26",
+      "transactions": "3649009",
+      "signers": "203100",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-27",
+      "transactions": "3645108",
+      "signers": "196306",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-28",
+      "transactions": "3604294",
+      "signers": "203562",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-29",
+      "transactions": "3613999",
+      "signers": "196537",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-30",
+      "transactions": "3608436",
+      "signers": "199536",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2025-12-31",
+      "transactions": "3621035",
+      "signers": "194584",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-01",
+      "transactions": "3506624",
+      "signers": "186611",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-02",
+      "transactions": "3593062",
+      "signers": "192007",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-03",
+      "transactions": "3520716",
+      "signers": "190454",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-04",
+      "transactions": "3541417",
+      "signers": "196293",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-05",
+      "transactions": "3647154",
+      "signers": "203459",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-06",
+      "transactions": "3683216",
+      "signers": "197610",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-07",
+      "transactions": "3623519",
+      "signers": "194287",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-08",
+      "transactions": "3718695",
+      "signers": "191228",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-09",
+      "transactions": "3594342",
+      "signers": "182000",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-10",
+      "transactions": "3548648",
+      "signers": "177006",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-11",
+      "transactions": "3412165",
+      "signers": "170319",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-12",
+      "transactions": "3523288",
+      "signers": "177938",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-13",
+      "transactions": "2826774",
+      "signers": "179170",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-14",
+      "transactions": "4277725",
+      "signers": "173925",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-15",
+      "transactions": "3440557",
+      "signers": "168488",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-16",
+      "transactions": "3413354",
+      "signers": "163927",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-17",
+      "transactions": "3392056",
+      "signers": "166524",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-18",
+      "transactions": "3417900",
+      "signers": "170355",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-19",
+      "transactions": "3511364",
+      "signers": "178071",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-20",
+      "transactions": "3577884",
+      "signers": "174717",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-21",
+      "transactions": "3494194",
+      "signers": "170934",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-22",
+      "transactions": "3392561",
+      "signers": "170580",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-23",
+      "transactions": "3372711",
+      "signers": "170480",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-24",
+      "transactions": "3426823",
+      "signers": "167198",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-25",
+      "transactions": "3448570",
+      "signers": "165205",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-26",
+      "transactions": "3485043",
+      "signers": "169950",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-27",
+      "transactions": "3467652",
+      "signers": "174298",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-28",
+      "transactions": "3480999",
+      "signers": "171937",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-29",
+      "transactions": "3430439",
+      "signers": "174583",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-30",
+      "transactions": "3454330",
+      "signers": "167021",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-01-31",
+      "transactions": "3457212",
+      "signers": "171914",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-01",
+      "transactions": "3410196",
+      "signers": "167981",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-02",
+      "transactions": "3391098",
+      "signers": "172277",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-03",
+      "transactions": "3685228",
+      "signers": "363348",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-04",
+      "transactions": "3595251",
+      "signers": "301580",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-05",
+      "transactions": "3637869",
+      "signers": "266188",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-06",
+      "transactions": "3562713",
+      "signers": "258339",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-07",
+      "transactions": "3447863",
+      "signers": "252619",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-08",
+      "transactions": "3441513",
+      "signers": "251386",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-09",
+      "transactions": "3435600",
+      "signers": "262363",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-10",
+      "transactions": "3534923",
+      "signers": "379672",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-11",
+      "transactions": "3550475",
+      "signers": "380569",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-12",
+      "transactions": "3520045",
+      "signers": "377569",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-13",
+      "transactions": "3596766",
+      "signers": "376533",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-14",
+      "transactions": "3489869",
+      "signers": "333146",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-15",
+      "transactions": "3790938",
+      "signers": "592250",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-16",
+      "transactions": "3568949",
+      "signers": "426088",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-17",
+      "transactions": "3673260",
+      "signers": "541983",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-18",
+      "transactions": "3227703",
+      "signers": "504588",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-19",
+      "transactions": "3270228",
+      "signers": "146971",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-20",
+      "transactions": "3251929",
+      "signers": "143359",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-21",
+      "transactions": "3202198",
+      "signers": "143063",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-22",
+      "transactions": "3249572",
+      "signers": "144950",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-23",
+      "transactions": "3335654",
+      "signers": "155478",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-24",
+      "transactions": "3219737",
+      "signers": "158821",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-25",
+      "transactions": "3793647",
+      "signers": "161206",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-26",
+      "transactions": "3840625",
+      "signers": "156943",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-27",
+      "transactions": "3424852",
+      "signers": "157018",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-02-28",
+      "transactions": "3532396",
+      "signers": "150870",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-01",
+      "transactions": "3595113",
+      "signers": "138509",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-02",
+      "transactions": "3664541",
+      "signers": "142175",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-03",
+      "transactions": "3336584",
+      "signers": "149175",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-04",
+      "transactions": "3325268",
+      "signers": "151854",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-05",
+      "transactions": "3325419",
+      "signers": "151028",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-06",
+      "transactions": "3306784",
+      "signers": "148857",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-07",
+      "transactions": "3247636",
+      "signers": "146239",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-08",
+      "transactions": "3315460",
+      "signers": "144938",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-09",
+      "transactions": "3351758",
+      "signers": "148494",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-10",
+      "transactions": "3332900",
+      "signers": "150666",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-11",
+      "transactions": "3287695",
+      "signers": "148943",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-12",
+      "transactions": "3335521",
+      "signers": "156082",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-13",
+      "transactions": "3269575",
+      "signers": "146734",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-14",
+      "transactions": "3169552",
+      "signers": "144157",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-15",
+      "transactions": "3178560",
+      "signers": "141444",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-16",
+      "transactions": "3290512",
+      "signers": "145991",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-17",
+      "transactions": "3219245",
+      "signers": "145799",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-18",
+      "transactions": "3237808",
+      "signers": "142216",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-19",
+      "transactions": "3208457",
+      "signers": "143729",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-20",
+      "transactions": "3145237",
+      "signers": "137325",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-21",
+      "transactions": "3114793",
+      "signers": "135621",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-22",
+      "transactions": "3106917",
+      "signers": "137209",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-23",
+      "transactions": "3444711",
+      "signers": "139910",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-24",
+      "transactions": "3891497",
+      "signers": "140101",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-25",
+      "transactions": "4232584",
+      "signers": "140965",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-26",
+      "transactions": "3915239",
+      "signers": "138346",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-27",
+      "transactions": "3618171",
+      "signers": "136891",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-28",
+      "transactions": "4563367",
+      "signers": "133798",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-29",
+      "transactions": "4191688",
+      "signers": "133415",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-30",
+      "transactions": "3464917",
+      "signers": "138598",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-03-31",
+      "transactions": "4169826",
+      "signers": "139225",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-01",
+      "transactions": "3758663",
+      "signers": "139048",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-02",
+      "transactions": "1063375",
+      "signers": "137183",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-03",
+      "transactions": "907861",
+      "signers": "131893",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-04",
+      "transactions": "908553",
+      "signers": "130579",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-05",
+      "transactions": "896322",
+      "signers": "129245",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-06",
+      "transactions": "959480",
+      "signers": "134018",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-07",
+      "transactions": "957226",
+      "signers": "132219",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-08",
+      "transactions": "971381",
+      "signers": "133993",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-09",
+      "transactions": "972850",
+      "signers": "133071",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-10",
+      "transactions": "992732",
+      "signers": "132673",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-11",
+      "transactions": "960660",
+      "signers": "131792",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-12",
+      "transactions": "992071",
+      "signers": "131282",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-13",
+      "transactions": "895923",
+      "signers": "139249",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-14",
+      "transactions": "785094",
+      "signers": "127401",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-15",
+      "transactions": "763144",
+      "signers": "133306",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-16",
+      "transactions": "1058803",
+      "signers": "133652",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-17",
+      "transactions": "729376",
+      "signers": "130982",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-18",
+      "transactions": "763796",
+      "signers": "129021",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-19",
+      "transactions": "802962",
+      "signers": "127462",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-20",
+      "transactions": "808458",
+      "signers": "129958",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-21",
+      "transactions": "805053",
+      "signers": "129703",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-22",
+      "transactions": "778988",
+      "signers": "129984",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-23",
+      "transactions": "751971",
+      "signers": "126197",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-24",
+      "transactions": "686968",
+      "signers": "121955",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-25",
+      "transactions": "622133",
+      "signers": "122432",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-26",
+      "transactions": "722389",
+      "signers": "118616",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-27",
+      "transactions": "713204",
+      "signers": "124353",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-28",
+      "transactions": "709459",
+      "signers": "120906",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-29",
+      "transactions": "932580",
+      "signers": "123229",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-04-30",
+      "transactions": "726837",
+      "signers": "119499",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-01",
+      "transactions": "704350",
+      "signers": "119055",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-02",
+      "transactions": "695144",
+      "signers": "128424",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-03",
+      "transactions": "726605",
+      "signers": "126433",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-04",
+      "transactions": "768403",
+      "signers": "129115",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-05",
+      "transactions": "761084",
+      "signers": "133244",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-06",
+      "transactions": "847917",
+      "signers": "128094",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-07",
+      "transactions": "783747",
+      "signers": "124915",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-08",
+      "transactions": "761282",
+      "signers": "124037",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-09",
+      "transactions": "740471",
+      "signers": "120268",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-10",
+      "transactions": "757261",
+      "signers": "119985",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-11",
+      "transactions": "757788",
+      "signers": "124825",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-12",
+      "transactions": "788621",
+      "signers": "123869",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-13",
+      "transactions": "790516",
+      "signers": "122413",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-14",
+      "transactions": "786025",
+      "signers": "120501",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-15",
+      "transactions": "751448",
+      "signers": "107035",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-16",
+      "transactions": "722169",
+      "signers": "111501",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-17",
+      "transactions": "726935",
+      "signers": "115963",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-18",
+      "transactions": "787300",
+      "signers": "118091",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-19",
+      "transactions": "779071",
+      "signers": "118559",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-20",
+      "transactions": "817159",
+      "signers": "119992",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-21",
+      "transactions": "836842",
+      "signers": "116316",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-22",
+      "transactions": "1109094",
+      "signers": "125196",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-23",
+      "transactions": "879647",
+      "signers": "122630",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-24",
+      "transactions": "898928",
+      "signers": "122760",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-25",
+      "transactions": "898740",
+      "signers": "126133",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-26",
+      "transactions": "957320",
+      "signers": "124386",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-27",
+      "transactions": "831632",
+      "signers": "118211",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-28",
+      "transactions": "825571",
+      "signers": "115174",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-29",
+      "transactions": "864412",
+      "signers": "115762",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-30",
+      "transactions": "776204",
+      "signers": "112655",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-05-31",
+      "transactions": "761360",
+      "signers": "113585",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-01",
+      "transactions": "882995",
+      "signers": "117957",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-02",
+      "transactions": "971904",
+      "signers": "118358",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-03",
+      "transactions": "987134",
+      "signers": "121069",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-04",
+      "transactions": "1020616",
+      "signers": "118953",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-05",
+      "transactions": "1055518",
+      "signers": "115801",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-06",
+      "transactions": "830379",
+      "signers": "111304",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-07",
+      "transactions": "845410",
+      "signers": "111870",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-08",
+      "transactions": "876622",
+      "signers": "123836",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-09",
+      "transactions": "804550",
+      "signers": "112294",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-10",
+      "transactions": "804245",
+      "signers": "114609",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-11",
+      "transactions": "804656",
+      "signers": "112200",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-12",
+      "transactions": "789334",
+      "signers": "111915",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-13",
+      "transactions": "734123",
+      "signers": "110134",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-14",
+      "transactions": "756764",
+      "signers": "110032",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-15",
+      "transactions": "851039",
+      "signers": "117898",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-16",
+      "transactions": "804245",
+      "signers": "114118",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-17",
+      "transactions": "823188",
+      "signers": "115824",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-18",
+      "transactions": "801660",
+      "signers": "111472",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-19",
+      "transactions": "812658",
+      "signers": "110263",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-20",
+      "transactions": "719919",
+      "signers": "106396",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-21",
+      "transactions": "722402",
+      "signers": "109135",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-22",
+      "transactions": "757253",
+      "signers": "112032",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-23",
+      "transactions": "757769",
+      "signers": "112986",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-24",
+      "transactions": "768173",
+      "signers": "110260",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-25",
+      "transactions": "743096",
+      "signers": "109728",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-26",
+      "transactions": "736132",
+      "signers": "106389",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-27",
+      "transactions": "697852",
+      "signers": "106056",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-28",
+      "transactions": "711388",
+      "signers": "105934",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-29",
+      "transactions": "796983",
+      "signers": "108811",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-06-30",
+      "transactions": "747039",
+      "signers": "107730",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-01",
+      "transactions": "720865",
+      "signers": "104101",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-02",
+      "transactions": "747871",
+      "signers": "105844",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-03",
+      "transactions": "739047",
+      "signers": "104465",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-04",
+      "transactions": "753757",
+      "signers": "103825",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-05",
+      "transactions": "737968",
+      "signers": "106184",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-06",
+      "transactions": "796655",
+      "signers": "106771",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-07",
+      "transactions": "819335",
+      "signers": "105153",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-08",
+      "transactions": "873695",
+      "signers": "105152",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-09",
+      "transactions": "823411",
+      "signers": "102571",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-10",
+      "transactions": "770836",
+      "signers": "102400",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-11",
+      "transactions": "715477",
+      "signers": "90183",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-12",
+      "transactions": "694076",
+      "signers": "89871",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-13",
+      "transactions": "794924",
+      "signers": "91883",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-14",
+      "transactions": "757867",
+      "signers": "92405",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-15",
+      "transactions": "725079",
+      "signers": "90939",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-16",
+      "transactions": "724947",
+      "signers": "89017",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-17",
+      "transactions": "711903",
+      "signers": "88616",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-18",
+      "transactions": "672538",
+      "signers": "87019",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-19",
+      "transactions": "664256",
+      "signers": "85909",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-20",
+      "transactions": "754988",
+      "signers": "88674",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-21",
+      "transactions": "737854",
+      "signers": "89928",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-22",
+      "transactions": "718549",
+      "signers": "89683",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-23",
+      "transactions": "732946",
+      "signers": "88801",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-24",
+      "transactions": "712611",
+      "signers": "85291",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-25",
+      "transactions": "718997",
+      "signers": "86103",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-26",
+      "transactions": "706844",
+      "signers": "85718",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-27",
+      "transactions": "698017",
+      "signers": "87128",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-28",
+      "transactions": "703205",
+      "signers": "86405",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-29",
+      "transactions": "705004",
+      "signers": "86375",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-30",
+      "transactions": "733277",
+      "signers": "85469",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-07-31",
+      "transactions": "708126",
+      "signers": "82072",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-01",
+      "transactions": "681793",
+      "signers": "82192",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-02",
+      "transactions": "671128",
+      "signers": "81729",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-03",
+      "transactions": "690732",
+      "signers": "85195",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-04",
+      "transactions": "696617",
+      "signers": "85551",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-05",
+      "transactions": "671609",
+      "signers": "84061",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-06",
+      "transactions": "675341",
+      "signers": "84184",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-07",
+      "transactions": "656089",
+      "signers": "82269",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-08",
+      "transactions": "656235",
+      "signers": "78514",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-09",
+      "transactions": "637854",
+      "signers": "80418",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-10",
+      "transactions": "672018",
+      "signers": "82610",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-11",
+      "transactions": "660154",
+      "signers": "82799",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-12",
+      "transactions": "685406",
+      "signers": "82166",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-13",
+      "transactions": "664804",
+      "signers": "82572",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-14",
+      "transactions": "639732",
+      "signers": "79800",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-15",
+      "transactions": "584733",
+      "signers": "79812",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-16",
+      "transactions": "615151",
+      "signers": "80163",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-17",
+      "transactions": "669250",
+      "signers": "80576",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-18",
+      "transactions": "673834",
+      "signers": "80055",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-19",
+      "transactions": "733400",
+      "signers": "80931",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-20",
+      "transactions": "758797",
+      "signers": "82216",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-21",
+      "transactions": "786077",
+      "signers": "81667",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-22",
+      "transactions": "804701",
+      "signers": "79636",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-23",
+      "transactions": "726225",
+      "signers": "79394",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-24",
+      "transactions": "805717",
+      "signers": "81373",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-25",
+      "transactions": "719568",
+      "signers": "79464",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-26",
+      "transactions": "655345",
+      "signers": "81506",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-27",
+      "transactions": "681264",
+      "signers": "81525",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-28",
+      "transactions": "654889",
+      "signers": "78375",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-29",
+      "transactions": "594141",
+      "signers": "76934",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-30",
+      "transactions": "623892",
+      "signers": "76955",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-08-31",
+      "transactions": "684883",
+      "signers": "77790",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-01",
+      "transactions": "670529",
+      "signers": "77130",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-02",
+      "transactions": "659622",
+      "signers": "77127",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-03",
+      "transactions": "703698",
+      "signers": "77607",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-04",
+      "transactions": "735463",
+      "signers": "76042",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-05",
+      "transactions": "674162",
+      "signers": "74288",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-06",
+      "transactions": "763172",
+      "signers": "74652",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-07",
+      "transactions": "746044",
+      "signers": "75711",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-08",
+      "transactions": "704254",
+      "signers": "71768",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-09",
+      "transactions": "772841",
+      "signers": "71964",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-10",
+      "transactions": "728736",
+      "signers": "71159",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-11",
+      "transactions": "846582",
+      "signers": "70014",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-12",
+      "transactions": "651970",
+      "signers": "67170",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-13",
+      "transactions": "626447",
+      "signers": "61501",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-14",
+      "transactions": "706600",
+      "signers": "49972",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-15",
+      "transactions": "706597",
+      "signers": "45247",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-16",
+      "transactions": "777089",
+      "signers": "42517",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-17",
+      "transactions": "840314",
+      "signers": "44749",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-18",
+      "transactions": "973388",
+      "signers": "62965",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-19",
+      "transactions": "839380",
+      "signers": "52391",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-20",
+      "transactions": "846013",
+      "signers": "57466",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-21",
+      "transactions": "871723",
+      "signers": "60298",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-22",
+      "transactions": "971959",
+      "signers": "57797",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-23",
+      "transactions": "869892",
+      "signers": "56105",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-24",
+      "transactions": "741291",
+      "signers": "54027",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-25",
+      "transactions": "715469",
+      "signers": "57300",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-26",
+      "transactions": "603143",
+      "signers": "54118",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-27",
+      "transactions": "1217209",
+      "signers": "63589",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-28",
+      "transactions": "1129793",
+      "signers": "61771",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-29",
+      "transactions": "987627",
+      "signers": "62990",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-09-30",
+      "transactions": "923526",
+      "signers": "58749",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-01",
+      "transactions": "1151492",
+      "signers": "62105",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-02",
+      "transactions": "868026",
+      "signers": "118077",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-03",
+      "transactions": "690438",
+      "signers": "176719",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-04",
+      "transactions": "839450",
+      "signers": "177196",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-05",
+      "transactions": "865681",
+      "signers": "95992",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-06",
+      "transactions": "909765",
+      "signers": "124809",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-07",
+      "transactions": "971068",
+      "signers": "175774",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-08",
+      "transactions": "1014850",
+      "signers": "82447",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-09",
+      "transactions": "680332",
+      "signers": "53950",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-10",
+      "transactions": "850344",
+      "signers": "56881",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-11",
+      "transactions": "1109584",
+      "signers": "54865",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-12",
+      "transactions": "712621",
+      "signers": "59164",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-13",
+      "transactions": "731054",
+      "signers": "55685",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-14",
+      "transactions": "767812",
+      "signers": "58615",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-15",
+      "transactions": "911980",
+      "signers": "55503",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-16",
+      "transactions": "658427",
+      "signers": "54936",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-17",
+      "transactions": "557903",
+      "signers": "54322",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-18",
+      "transactions": "569735",
+      "signers": "51810",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-19",
+      "transactions": "607019",
+      "signers": "53107",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-20",
+      "transactions": "617990",
+      "signers": "52116",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-21",
+      "transactions": "658784",
+      "signers": "53919",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-22",
+      "transactions": "547267",
+      "signers": "51423",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-23",
+      "transactions": "609236",
+      "signers": "51214",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-24",
+      "transactions": "635438",
+      "signers": "50178",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-25",
+      "transactions": "550250",
+      "signers": "49245",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-26",
+      "transactions": "573801",
+      "signers": "49601",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-27",
+      "transactions": "604320",
+      "signers": "61855",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-28",
+      "transactions": "520096",
+      "signers": "49273",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-29",
+      "transactions": "649103",
+      "signers": "49292",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-30",
+      "transactions": "691420",
+      "signers": "47349",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-10-31",
+      "transactions": "502649",
+      "signers": "46019",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "day",
+      "period_start": "2026-11-01",
+      "transactions": "509345",
+      "signers": "46478",
+      "accounts_2plus_days": null,
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2024-11-01",
+      "transactions": null,
+      "signers": "9122234",
+      "accounts_2plus_days": "984882",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2024-12-01",
+      "transactions": null,
+      "signers": "10110598",
+      "accounts_2plus_days": "1019014",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-01-01",
+      "transactions": null,
+      "signers": "10459535",
+      "accounts_2plus_days": "896207",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-02-01",
+      "transactions": null,
+      "signers": "6522634",
+      "accounts_2plus_days": "801686",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-03-01",
+      "transactions": null,
+      "signers": "1477897",
+      "accounts_2plus_days": "772017",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-04-01",
+      "transactions": null,
+      "signers": "1463875",
+      "accounts_2plus_days": "712687",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-05-01",
+      "transactions": null,
+      "signers": "1275879",
+      "accounts_2plus_days": "638783",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-06-01",
+      "transactions": null,
+      "signers": "768658",
+      "accounts_2plus_days": "566784",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-07-01",
+      "transactions": null,
+      "signers": "751113",
+      "accounts_2plus_days": "555707",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-08-01",
+      "transactions": null,
+      "signers": "766535",
+      "accounts_2plus_days": "536876",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-09-01",
+      "transactions": null,
+      "signers": "615785",
+      "accounts_2plus_days": "475960",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-10-01",
+      "transactions": null,
+      "signers": "593043",
+      "accounts_2plus_days": "442264",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-11-01",
+      "transactions": null,
+      "signers": "556744",
+      "accounts_2plus_days": "399213",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2025-12-01",
+      "transactions": null,
+      "signers": "915686",
+      "accounts_2plus_days": "361359",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-01-01",
+      "transactions": null,
+      "signers": "526590",
+      "accounts_2plus_days": "323759",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-02-01",
+      "transactions": null,
+      "signers": "3791961",
+      "accounts_2plus_days": "273687",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-03-01",
+      "transactions": null,
+      "signers": "381465",
+      "accounts_2plus_days": "249716",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-04-01",
+      "transactions": null,
+      "signers": "335794",
+      "accounts_2plus_days": "222087",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-05-01",
+      "transactions": null,
+      "signers": "359151",
+      "accounts_2plus_days": "217753",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-06-01",
+      "transactions": null,
+      "signers": "302563",
+      "accounts_2plus_days": "196098",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-07-01",
+      "transactions": null,
+      "signers": "252587",
+      "accounts_2plus_days": "175545",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-08-01",
+      "transactions": null,
+      "signers": "215609",
+      "accounts_2plus_days": "148112",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-09-01",
+      "transactions": null,
+      "signers": "302272",
+      "accounts_2plus_days": "168892",
+      "top10_transactions": null
+    },
+    {
+      "grain": "month",
+      "period_start": "2026-10-01",
+      "transactions": null,
+      "signers": "826700",
+      "accounts_2plus_days": "123431",
+      "top10_transactions": null
+    },
+    {
+      "grain": "period",
+      "period_start": "2024-11-01",
+      "transactions": "2175050095",
+      "signers": "35763846",
+      "accounts_2plus_days": null,
+      "top10_transactions": "1750358518"
+    },
+    {
+      "grain": "period",
+      "period_start": "2025-11-01",
+      "transactions": "729719933",
+      "signers": "5981181",
+      "accounts_2plus_days": null,
+      "top10_transactions": "579040384"
+    }
+  ],
+  "jobId": "near_thesis_e4eda600ec3d434581159d53d46d1275",
+  "estimatedBytes": 76695800677,
+  "billedBytes": 76695994368,
+  "fetchedAt": "2026-11-09T00:32:37.098Z"
+}

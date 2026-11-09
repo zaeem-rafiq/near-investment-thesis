@@ -1,0 +1,641 @@
+{
+  "name": "contracts",
+  "sql": "-- ONE-DAY-A-WEEK SAMPLE: 104 Mondays, every seventh day from 2024-11-04 through 2026-10-26.\n-- Accounts receiving at least one FUNCTION_CALL action that day, regardless of execution success.\nSELECT block_date,\n  COUNT(DISTINCT receipt_receiver_account_id) AS receiver_accounts,\n  COUNT(*) AS function_call_actions\nFROM `bigquery-public-data.crypto_near_mainnet_us.receipt_actions`\nWHERE block_date IN (\n    DATE '2024-11-04', DATE '2024-11-11', DATE '2024-11-18', DATE '2024-11-25', DATE '2024-12-02', DATE '2024-12-09',\n    DATE '2024-12-16', DATE '2024-12-23', DATE '2024-12-30', DATE '2025-01-06', DATE '2025-01-13', DATE '2025-01-20',\n    DATE '2025-01-27', DATE '2025-02-03', DATE '2025-02-10', DATE '2025-02-17', DATE '2025-02-24', DATE '2025-03-03',\n    DATE '2025-03-10', DATE '2025-03-17', DATE '2025-03-24', DATE '2025-03-31', DATE '2025-04-07', DATE '2025-04-14',\n    DATE '2025-04-21', DATE '2025-04-28', DATE '2025-05-05', DATE '2025-05-12', DATE '2025-05-19', DATE '2025-05-26',\n    DATE '2025-06-02', DATE '2025-06-09', DATE '2025-06-16', DATE '2025-06-23', DATE '2025-06-30', DATE '2025-07-07',\n    DATE '2025-07-14', DATE '2025-07-21', DATE '2025-07-28', DATE '2025-08-04', DATE '2025-08-11', DATE '2025-08-18',\n    DATE '2025-08-25', DATE '2025-09-01', DATE '2025-09-08', DATE '2025-09-15', DATE '2025-09-22', DATE '2025-09-29',\n    DATE '2025-10-06', DATE '2025-10-13', DATE '2025-10-20', DATE '2025-10-27', DATE '2025-11-03', DATE '2025-11-10',\n    DATE '2025-11-17', DATE '2025-11-24', DATE '2025-12-01', DATE '2025-12-08', DATE '2025-12-15', DATE '2025-12-22',\n    DATE '2025-12-29', DATE '2026-01-05', DATE '2026-01-12', DATE '2026-01-19', DATE '2026-01-26', DATE '2026-02-02',\n    DATE '2026-02-09', DATE '2026-02-16', DATE '2026-02-23', DATE '2026-03-02', DATE '2026-03-09', DATE '2026-03-16',\n    DATE '2026-03-23', DATE '2026-03-30', DATE '2026-04-06', DATE '2026-04-13', DATE '2026-04-20', DATE '2026-04-27',\n    DATE '2026-05-04', DATE '2026-05-11', DATE '2026-05-18', DATE '2026-05-25', DATE '2026-06-01', DATE '2026-06-08',\n    DATE '2026-06-15', DATE '2026-06-22', DATE '2026-06-29', DATE '2026-07-06', DATE '2026-07-13', DATE '2026-07-20',\n    DATE '2026-07-27', DATE '2026-08-03', DATE '2026-08-10', DATE '2026-08-17', DATE '2026-08-24', DATE '2026-08-31',\n    DATE '2026-09-07', DATE '2026-09-14', DATE '2026-09-21', DATE '2026-09-28', DATE '2026-10-05', DATE '2026-10-12',\n    DATE '2026-10-19', DATE '2026-10-26')\n  AND action_kind = 'FUNCTION_CALL'\nGROUP BY block_date\nORDER BY block_date;\n",
+  "filters": [
+    {
+      "table": "receipt_actions",
+      "dates": [
+        "2024-11-04",
+        "2024-11-11",
+        "2024-11-18",
+        "2024-11-25",
+        "2024-12-02",
+        "2024-12-09",
+        "2024-12-16",
+        "2024-12-23",
+        "2024-12-30",
+        "2025-01-06",
+        "2025-01-13",
+        "2025-01-20",
+        "2025-01-27",
+        "2025-02-03",
+        "2025-02-10",
+        "2025-02-17",
+        "2025-02-24",
+        "2025-03-03",
+        "2025-03-10",
+        "2025-03-17",
+        "2025-03-24",
+        "2025-03-31",
+        "2025-04-07",
+        "2025-04-14",
+        "2025-04-21",
+        "2025-04-28",
+        "2025-05-05",
+        "2025-05-12",
+        "2025-05-19",
+        "2025-05-26",
+        "2025-06-02",
+        "2025-06-09",
+        "2025-06-16",
+        "2025-06-23",
+        "2025-06-30",
+        "2025-07-07",
+        "2025-07-14",
+        "2025-07-21",
+        "2025-07-28",
+        "2025-08-04",
+        "2025-08-11",
+        "2025-08-18",
+        "2025-08-25",
+        "2025-09-01",
+        "2025-09-08",
+        "2025-09-15",
+        "2025-09-22",
+        "2025-09-29",
+        "2025-10-06",
+        "2025-10-13",
+        "2025-10-20",
+        "2025-10-27",
+        "2025-11-03",
+        "2025-11-10",
+        "2025-11-17",
+        "2025-11-24",
+        "2025-12-01",
+        "2025-12-08",
+        "2025-12-15",
+        "2025-12-22",
+        "2025-12-29",
+        "2026-01-05",
+        "2026-01-12",
+        "2026-01-19",
+        "2026-01-26",
+        "2026-02-02",
+        "2026-02-09",
+        "2026-02-16",
+        "2026-02-23",
+        "2026-03-02",
+        "2026-03-09",
+        "2026-03-16",
+        "2026-03-23",
+        "2026-03-30",
+        "2026-04-06",
+        "2026-04-13",
+        "2026-04-20",
+        "2026-04-27",
+        "2026-05-04",
+        "2026-05-11",
+        "2026-05-18",
+        "2026-05-25",
+        "2026-06-01",
+        "2026-06-08",
+        "2026-06-15",
+        "2026-06-22",
+        "2026-06-29",
+        "2026-07-06",
+        "2026-07-13",
+        "2026-07-20",
+        "2026-07-27",
+        "2026-08-03",
+        "2026-08-10",
+        "2026-08-17",
+        "2026-08-24",
+        "2026-08-31",
+        "2026-09-07",
+        "2026-09-14",
+        "2026-09-21",
+        "2026-09-28",
+        "2026-10-05",
+        "2026-10-12",
+        "2026-10-19",
+        "2026-10-26"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "block_date": "2024-11-04",
+      "receiver_accounts": "751",
+      "function_call_actions": "9353130"
+    },
+    {
+      "block_date": "2024-11-11",
+      "receiver_accounts": "981",
+      "function_call_actions": "9956594"
+    },
+    {
+      "block_date": "2024-11-18",
+      "receiver_accounts": "819",
+      "function_call_actions": "9864966"
+    },
+    {
+      "block_date": "2024-11-25",
+      "receiver_accounts": "870",
+      "function_call_actions": "9735561"
+    },
+    {
+      "block_date": "2024-12-02",
+      "receiver_accounts": "1064",
+      "function_call_actions": "11216468"
+    },
+    {
+      "block_date": "2024-12-09",
+      "receiver_accounts": "823",
+      "function_call_actions": "13805790"
+    },
+    {
+      "block_date": "2024-12-16",
+      "receiver_accounts": "1312",
+      "function_call_actions": "12209953"
+    },
+    {
+      "block_date": "2024-12-23",
+      "receiver_accounts": "813",
+      "function_call_actions": "11995226"
+    },
+    {
+      "block_date": "2024-12-30",
+      "receiver_accounts": "762",
+      "function_call_actions": "12805591"
+    },
+    {
+      "block_date": "2025-01-06",
+      "receiver_accounts": "832",
+      "function_call_actions": "11065019"
+    },
+    {
+      "block_date": "2025-01-13",
+      "receiver_accounts": "822",
+      "function_call_actions": "9670909"
+    },
+    {
+      "block_date": "2025-01-20",
+      "receiver_accounts": "887",
+      "function_call_actions": "12877507"
+    },
+    {
+      "block_date": "2025-01-27",
+      "receiver_accounts": "748",
+      "function_call_actions": "11312404"
+    },
+    {
+      "block_date": "2025-02-03",
+      "receiver_accounts": "755",
+      "function_call_actions": "7525226"
+    },
+    {
+      "block_date": "2025-02-10",
+      "receiver_accounts": "880",
+      "function_call_actions": "11893796"
+    },
+    {
+      "block_date": "2025-02-17",
+      "receiver_accounts": "872",
+      "function_call_actions": "12426867"
+    },
+    {
+      "block_date": "2025-02-24",
+      "receiver_accounts": "789",
+      "function_call_actions": "11125979"
+    },
+    {
+      "block_date": "2025-03-03",
+      "receiver_accounts": "750",
+      "function_call_actions": "9717457"
+    },
+    {
+      "block_date": "2025-03-10",
+      "receiver_accounts": "736",
+      "function_call_actions": "10584136"
+    },
+    {
+      "block_date": "2025-03-17",
+      "receiver_accounts": "720",
+      "function_call_actions": "8228764"
+    },
+    {
+      "block_date": "2025-03-24",
+      "receiver_accounts": "738",
+      "function_call_actions": "9836101"
+    },
+    {
+      "block_date": "2025-03-31",
+      "receiver_accounts": "719",
+      "function_call_actions": "10882487"
+    },
+    {
+      "block_date": "2025-04-07",
+      "receiver_accounts": "742",
+      "function_call_actions": "10922343"
+    },
+    {
+      "block_date": "2025-04-14",
+      "receiver_accounts": "994",
+      "function_call_actions": "11250571"
+    },
+    {
+      "block_date": "2025-04-21",
+      "receiver_accounts": "743",
+      "function_call_actions": "10516539"
+    },
+    {
+      "block_date": "2025-04-28",
+      "receiver_accounts": "825",
+      "function_call_actions": "10052263"
+    },
+    {
+      "block_date": "2025-05-05",
+      "receiver_accounts": "702",
+      "function_call_actions": "8978282"
+    },
+    {
+      "block_date": "2025-05-12",
+      "receiver_accounts": "735",
+      "function_call_actions": "9801951"
+    },
+    {
+      "block_date": "2025-05-19",
+      "receiver_accounts": "731",
+      "function_call_actions": "9841666"
+    },
+    {
+      "block_date": "2025-05-26",
+      "receiver_accounts": "716",
+      "function_call_actions": "9071856"
+    },
+    {
+      "block_date": "2025-06-02",
+      "receiver_accounts": "729",
+      "function_call_actions": "9218297"
+    },
+    {
+      "block_date": "2025-06-09",
+      "receiver_accounts": "702",
+      "function_call_actions": "9376663"
+    },
+    {
+      "block_date": "2025-06-16",
+      "receiver_accounts": "708",
+      "function_call_actions": "9203970"
+    },
+    {
+      "block_date": "2025-06-23",
+      "receiver_accounts": "741",
+      "function_call_actions": "9605662"
+    },
+    {
+      "block_date": "2025-06-30",
+      "receiver_accounts": "728",
+      "function_call_actions": "9152997"
+    },
+    {
+      "block_date": "2025-07-07",
+      "receiver_accounts": "763",
+      "function_call_actions": "8974973"
+    },
+    {
+      "block_date": "2025-07-14",
+      "receiver_accounts": "877",
+      "function_call_actions": "6832903"
+    },
+    {
+      "block_date": "2025-07-21",
+      "receiver_accounts": "899",
+      "function_call_actions": "9412335"
+    },
+    {
+      "block_date": "2025-07-28",
+      "receiver_accounts": "1485",
+      "function_call_actions": "10016578"
+    },
+    {
+      "block_date": "2025-08-04",
+      "receiver_accounts": "1010",
+      "function_call_actions": "9629763"
+    },
+    {
+      "block_date": "2025-08-11",
+      "receiver_accounts": "1511",
+      "function_call_actions": "9309452"
+    },
+    {
+      "block_date": "2025-08-18",
+      "receiver_accounts": "1104",
+      "function_call_actions": "9394742"
+    },
+    {
+      "block_date": "2025-08-25",
+      "receiver_accounts": "1064",
+      "function_call_actions": "9332321"
+    },
+    {
+      "block_date": "2025-09-01",
+      "receiver_accounts": "966",
+      "function_call_actions": "9322021"
+    },
+    {
+      "block_date": "2025-09-08",
+      "receiver_accounts": "847",
+      "function_call_actions": "9100148"
+    },
+    {
+      "block_date": "2025-09-15",
+      "receiver_accounts": "841",
+      "function_call_actions": "9207274"
+    },
+    {
+      "block_date": "2025-09-22",
+      "receiver_accounts": "883",
+      "function_call_actions": "8991974"
+    },
+    {
+      "block_date": "2025-09-29",
+      "receiver_accounts": "54511",
+      "function_call_actions": "9080406"
+    },
+    {
+      "block_date": "2025-10-06",
+      "receiver_accounts": "1268",
+      "function_call_actions": "8913770"
+    },
+    {
+      "block_date": "2025-10-13",
+      "receiver_accounts": "1229",
+      "function_call_actions": "9216493"
+    },
+    {
+      "block_date": "2025-10-20",
+      "receiver_accounts": "1988",
+      "function_call_actions": "9288546"
+    },
+    {
+      "block_date": "2025-10-27",
+      "receiver_accounts": "2597",
+      "function_call_actions": "9131954"
+    },
+    {
+      "block_date": "2025-11-03",
+      "receiver_accounts": "1468",
+      "function_call_actions": "8990327"
+    },
+    {
+      "block_date": "2025-11-10",
+      "receiver_accounts": "1295",
+      "function_call_actions": "9070152"
+    },
+    {
+      "block_date": "2025-11-17",
+      "receiver_accounts": "1121",
+      "function_call_actions": "8929170"
+    },
+    {
+      "block_date": "2025-11-24",
+      "receiver_accounts": "6123",
+      "function_call_actions": "8767972"
+    },
+    {
+      "block_date": "2025-12-01",
+      "receiver_accounts": "1072",
+      "function_call_actions": "8835715"
+    },
+    {
+      "block_date": "2025-12-08",
+      "receiver_accounts": "1021",
+      "function_call_actions": "8362740"
+    },
+    {
+      "block_date": "2025-12-15",
+      "receiver_accounts": "1160",
+      "function_call_actions": "8300320"
+    },
+    {
+      "block_date": "2025-12-22",
+      "receiver_accounts": "1009",
+      "function_call_actions": "8202479"
+    },
+    {
+      "block_date": "2025-12-29",
+      "receiver_accounts": "962",
+      "function_call_actions": "8039867"
+    },
+    {
+      "block_date": "2026-01-05",
+      "receiver_accounts": "1051",
+      "function_call_actions": "8140138"
+    },
+    {
+      "block_date": "2026-01-12",
+      "receiver_accounts": "993",
+      "function_call_actions": "8013218"
+    },
+    {
+      "block_date": "2026-01-19",
+      "receiver_accounts": "1089",
+      "function_call_actions": "8012316"
+    },
+    {
+      "block_date": "2026-01-26",
+      "receiver_accounts": "1126",
+      "function_call_actions": "7886314"
+    },
+    {
+      "block_date": "2026-02-02",
+      "receiver_accounts": "1021",
+      "function_call_actions": "7935710"
+    },
+    {
+      "block_date": "2026-02-09",
+      "receiver_accounts": "1015",
+      "function_call_actions": "7755134"
+    },
+    {
+      "block_date": "2026-02-16",
+      "receiver_accounts": "1019",
+      "function_call_actions": "7668695"
+    },
+    {
+      "block_date": "2026-02-23",
+      "receiver_accounts": "1004",
+      "function_call_actions": "7774535"
+    },
+    {
+      "block_date": "2026-03-02",
+      "receiver_accounts": "1038",
+      "function_call_actions": "8595471"
+    },
+    {
+      "block_date": "2026-03-09",
+      "receiver_accounts": "1089",
+      "function_call_actions": "7768286"
+    },
+    {
+      "block_date": "2026-03-16",
+      "receiver_accounts": "1005",
+      "function_call_actions": "7743855"
+    },
+    {
+      "block_date": "2026-03-23",
+      "receiver_accounts": "1019",
+      "function_call_actions": "7664328"
+    },
+    {
+      "block_date": "2026-03-30",
+      "receiver_accounts": "965",
+      "function_call_actions": "7650857"
+    },
+    {
+      "block_date": "2026-04-06",
+      "receiver_accounts": "1049",
+      "function_call_actions": "1362266"
+    },
+    {
+      "block_date": "2026-04-13",
+      "receiver_accounts": "1089",
+      "function_call_actions": "1423151"
+    },
+    {
+      "block_date": "2026-04-20",
+      "receiver_accounts": "975",
+      "function_call_actions": "1472353"
+    },
+    {
+      "block_date": "2026-04-27",
+      "receiver_accounts": "979",
+      "function_call_actions": "1267281"
+    },
+    {
+      "block_date": "2026-05-04",
+      "receiver_accounts": "988",
+      "function_call_actions": "1366027"
+    },
+    {
+      "block_date": "2026-05-11",
+      "receiver_accounts": "1010",
+      "function_call_actions": "1368935"
+    },
+    {
+      "block_date": "2026-05-18",
+      "receiver_accounts": "950",
+      "function_call_actions": "1469411"
+    },
+    {
+      "block_date": "2026-05-25",
+      "receiver_accounts": "1126",
+      "function_call_actions": "1797372"
+    },
+    {
+      "block_date": "2026-06-01",
+      "receiver_accounts": "1023",
+      "function_call_actions": "1907954"
+    },
+    {
+      "block_date": "2026-06-08",
+      "receiver_accounts": "1042",
+      "function_call_actions": "1767963"
+    },
+    {
+      "block_date": "2026-06-15",
+      "receiver_accounts": "1017",
+      "function_call_actions": "1703891"
+    },
+    {
+      "block_date": "2026-06-22",
+      "receiver_accounts": "956",
+      "function_call_actions": "1402304"
+    },
+    {
+      "block_date": "2026-06-29",
+      "receiver_accounts": "1001",
+      "function_call_actions": "1446150"
+    },
+    {
+      "block_date": "2026-07-06",
+      "receiver_accounts": "944",
+      "function_call_actions": "1513460"
+    },
+    {
+      "block_date": "2026-07-13",
+      "receiver_accounts": "917",
+      "function_call_actions": "1417023"
+    },
+    {
+      "block_date": "2026-07-20",
+      "receiver_accounts": "887",
+      "function_call_actions": "1290471"
+    },
+    {
+      "block_date": "2026-07-27",
+      "receiver_accounts": "946",
+      "function_call_actions": "1291998"
+    },
+    {
+      "block_date": "2026-08-03",
+      "receiver_accounts": "898",
+      "function_call_actions": "1315491"
+    },
+    {
+      "block_date": "2026-08-10",
+      "receiver_accounts": "910",
+      "function_call_actions": "1317665"
+    },
+    {
+      "block_date": "2026-08-17",
+      "receiver_accounts": "886",
+      "function_call_actions": "1334574"
+    },
+    {
+      "block_date": "2026-08-24",
+      "receiver_accounts": "960",
+      "function_call_actions": "1843977"
+    },
+    {
+      "block_date": "2026-08-31",
+      "receiver_accounts": "922",
+      "function_call_actions": "1513307"
+    },
+    {
+      "block_date": "2026-09-07",
+      "receiver_accounts": "996",
+      "function_call_actions": "1561408"
+    },
+    {
+      "block_date": "2026-09-14",
+      "receiver_accounts": "982",
+      "function_call_actions": "1368969"
+    },
+    {
+      "block_date": "2026-09-21",
+      "receiver_accounts": "1195",
+      "function_call_actions": "1965380"
+    },
+    {
+      "block_date": "2026-09-28",
+      "receiver_accounts": "2984",
+      "function_call_actions": "2657692"
+    },
+    {
+      "block_date": "2026-10-05",
+      "receiver_accounts": "2032",
+      "function_call_actions": "1607626"
+    },
+    {
+      "block_date": "2026-10-12",
+      "receiver_accounts": "1671",
+      "function_call_actions": "2005834"
+    },
+    {
+      "block_date": "2026-10-19",
+      "receiver_accounts": "1451",
+      "function_call_actions": "1386885"
+    },
+    {
+      "block_date": "2026-10-26",
+      "receiver_accounts": "1354",
+      "function_call_actions": "1313890"
+    }
+  ],
+  "jobId": "near_thesis_8d62a15e712542b3bf0cb91287b1ef12",
+  "estimatedBytes": 79483680888,
+  "billedBytes": 79484157952,
+  "fetchedAt": "2026-11-09T00:32:39.543Z"
+}

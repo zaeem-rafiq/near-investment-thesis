@@ -1,0 +1,386 @@
+{
+  "name": "burn",
+  "sql": "-- Weekly (Monday-start, UTC) recorded burn in yoctoNEAR (FLOAT64 sums):\n-- receipt execution outcomes plus transaction-to-receipt conversion.\nWITH outcomes AS (\n  SELECT DATE_TRUNC(block_date, WEEK(MONDAY)) AS week_start, SUM(tokens_burnt) AS burnt, COUNTIF(tokens_burnt IS NULL) AS null_rows\n  FROM `bigquery-public-data.crypto_near_mainnet_us.execution_outcomes`\n  WHERE block_date >= DATE '2025-11-03' AND block_date < DATE '2026-11-02'\n  GROUP BY week_start\n), conversions AS (\n  SELECT DATE_TRUNC(block_date, WEEK(MONDAY)) AS week_start, SUM(receipt_conversion_tokens_burnt) AS burnt, COUNTIF(receipt_conversion_tokens_burnt IS NULL) AS null_rows\n  FROM `bigquery-public-data.crypto_near_mainnet_us.transactions`\n  WHERE block_date >= DATE '2025-11-03' AND block_date < DATE '2026-11-02'\n  GROUP BY week_start\n)\nSELECT week_start,\n  FORMAT('%.17g', o.burnt) AS outcome_burn_yocto, o.null_rows AS outcome_null_rows,\n  FORMAT('%.17g', c.burnt) AS conversion_burn_yocto, c.null_rows AS conversion_null_rows\nFROM outcomes AS o FULL OUTER JOIN conversions AS c USING (week_start)\nORDER BY week_start;\n",
+  "filters": [
+    {
+      "table": "execution_outcomes",
+      "start": "2025-11-03",
+      "end": "2026-11-02"
+    },
+    {
+      "table": "transactions",
+      "start": "2025-11-03",
+      "end": "2026-11-02"
+    }
+  ],
+  "rows": [
+    {
+      "week_start": "2025-11-03",
+      "outcome_burn_yocto": "2.0787897331940564e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.9170409473087845e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2025-11-10",
+      "outcome_burn_yocto": "2.123730050508461e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.991521774846735e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2025-11-17",
+      "outcome_burn_yocto": "2.1178410588916709e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.0437045163456026e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2025-11-24",
+      "outcome_burn_yocto": "2.0088962494568697e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.9766496292618746e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2025-12-01",
+      "outcome_burn_yocto": "1.9871356051882031e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.8411913861656667e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2025-12-08",
+      "outcome_burn_yocto": "1.7562566846378412e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.7220135761226904e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2025-12-15",
+      "outcome_burn_yocto": "1.7279771065283565e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.7037384202267819e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2025-12-22",
+      "outcome_burn_yocto": "1.6757934651490428e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.6506783872473372e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2025-12-29",
+      "outcome_burn_yocto": "1.6584925533922737e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.60083269210566e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-01-05",
+      "outcome_burn_yocto": "1.6814314111271377e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.6284835920907365e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-01-12",
+      "outcome_burn_yocto": "1.6649322556171743e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.5550738565296482e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-01-19",
+      "outcome_burn_yocto": "1.6518655717526311e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.5277388924319685e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-01-26",
+      "outcome_burn_yocto": "1.6592903236463369e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.5407904290076741e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-02-02",
+      "outcome_burn_yocto": "1.6932177803005551e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.5490975829577005e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-02-09",
+      "outcome_burn_yocto": "1.6293826869605464e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.564726600540482e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-02-16",
+      "outcome_burn_yocto": "1.5534233090574978e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.4827312405748755e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-02-23",
+      "outcome_burn_yocto": "1.8297945144713832e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.5573068059854899e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-03-02",
+      "outcome_burn_yocto": "1.7043459856986117e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.5143671753002512e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-03-09",
+      "outcome_burn_yocto": "1.6251790817210607e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.4779798017076533e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-03-16",
+      "outcome_burn_yocto": "1.5900613957261528e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.4260244740647047e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-03-23",
+      "outcome_burn_yocto": "1.6364880682575457e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.6900163815619427e+27",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-03-30",
+      "outcome_burn_yocto": "8.954378949970673e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "8.8837234545424159e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-04-06",
+      "outcome_burn_yocto": "5.0722385893278643e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "3.7376062004651143e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-04-13",
+      "outcome_burn_yocto": "5.0668578499327567e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "3.1404865599190668e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-04-20",
+      "outcome_burn_yocto": "4.9299199468408633e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.9172606103634348e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-04-27",
+      "outcome_burn_yocto": "4.8132002210578e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.931257934289906e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-05-04",
+      "outcome_burn_yocto": "5.2999126194024341e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "3.0392702157086736e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-05-11",
+      "outcome_burn_yocto": "5.34766443072555e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.9592153931099443e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-05-18",
+      "outcome_burn_yocto": "6.2948401749420233e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "3.3043784780830815e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-05-25",
+      "outcome_burn_yocto": "6.4374586733931984e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "3.1906284688829083e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-06-01",
+      "outcome_burn_yocto": "7.53198640645389e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "3.3843492252128815e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-06-08",
+      "outcome_burn_yocto": "5.9706974028295567e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.9942453573067265e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-06-15",
+      "outcome_burn_yocto": "5.8851920017145573e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "3.0252327494758672e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-06-22",
+      "outcome_burn_yocto": "5.4736122804757121e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.9015789469208279e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-06-29",
+      "outcome_burn_yocto": "5.387023222210252e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.9856050667441456e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-07-06",
+      "outcome_burn_yocto": "5.4415927427803865e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "3.0544313251229156e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-07-13",
+      "outcome_burn_yocto": "4.9351631260354361e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.650791587792498e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-07-20",
+      "outcome_burn_yocto": "5.5243787982043395e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.4381578152054096e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-07-27",
+      "outcome_burn_yocto": "5.536304525913258e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.3628126533591686e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-08-03",
+      "outcome_burn_yocto": "5.4847248913545385e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.20230085106241e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-08-10",
+      "outcome_burn_yocto": "5.22768414323879e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.1005720539957525e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-08-17",
+      "outcome_burn_yocto": "6.4089072504292e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.3276246306582061e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-08-24",
+      "outcome_burn_yocto": "5.7705554242188243e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.1333998335218059e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-08-31",
+      "outcome_burn_yocto": "6.2007221025902374e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.2004207336907904e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-09-07",
+      "outcome_burn_yocto": "5.8263863059674241e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.277000512124922e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-09-14",
+      "outcome_burn_yocto": "6.6379711060457333e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.4361153879868517e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-09-21",
+      "outcome_burn_yocto": "8.254294152892656e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.5497433025951662e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-09-28",
+      "outcome_burn_yocto": "1.0693113319854e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.7552928970948733e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-10-05",
+      "outcome_burn_yocto": "1.1950254299586833e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "2.6234394811181981e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-10-12",
+      "outcome_burn_yocto": "1.0544789352346961e+28",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "4.1327789919752913e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-10-19",
+      "outcome_burn_yocto": "5.5417073060657546e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.900501727212778e+26",
+      "conversion_null_rows": "0"
+    },
+    {
+      "week_start": "2026-10-26",
+      "outcome_burn_yocto": "5.44137872218563e+27",
+      "outcome_null_rows": "0",
+      "conversion_burn_yocto": "1.8262110811793742e+26",
+      "conversion_null_rows": "0"
+    }
+  ],
+  "jobId": "near_thesis_293e9956c40b4c0380b8d51ff11d54b0",
+  "estimatedBytes": 65863333808,
+  "billedBytes": 65864204288,
+  "fetchedAt": "2026-11-09T00:32:49.099Z"
+}

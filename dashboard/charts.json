@@ -1,0 +1,13 @@
+{
+  "snapshot": "2026-11-09T00-36-50-813Z_91785bfb",
+  "files": [
+    "charts/signers.svg",
+    "charts/accounts2.svg",
+    "charts/receivers.svg",
+    "charts/price.svg",
+    "charts/usage.svg",
+    "charts/burn.svg",
+    "charts/offset.svg",
+    "charts/coverage.svg"
+  ]
+}

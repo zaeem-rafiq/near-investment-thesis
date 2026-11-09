@@ -1,0 +1,16 @@
+{
+  "name": "near-evidence-thesis",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "rebuild": "node scripts/run.mjs build",
+    "export-public": "node scripts/run.mjs export",
+    "refresh": "node scripts/run.mjs refresh",
+    "pull-swaps": "node scripts/pull-swaps.mjs",
+    "plan": "node scripts/run.mjs plan",
+    "test": "node --test",
+    "check": "node --check scripts/sources.mjs && node --check scripts/report.mjs && node --check scripts/run.mjs && node --check scripts/swaps.mjs && node --check scripts/pull-swaps.mjs && node --check scripts/store.mjs && node --check scripts/public.mjs"
+  }
+}

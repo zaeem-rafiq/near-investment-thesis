@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "id": "2026-11-09T00-36-50-813Z_91785bfb",
+  "fetchedAt": "2026-11-09T00:36:50.813Z",
+  "files": {
+    "signers": {
+      "path": "data/public/bigquery/signers.json",
+      "sha256": "7b179ab9db95ecc9bf40b658240f32a145c94b740a702393e2393b367a4e42f5"
+    },
+    "contracts": {
+      "path": "data/public/bigquery/contracts.json",
+      "sha256": "7fb48e5d7fe9f63b1e03d25014a2091ff574f03d7f46ac400bdb51b9960f55ab"
+    },
+    "coverage": {
+      "path": "data/public/bigquery/coverage.json",
+      "sha256": "498ba4fc26c259373614c25529dc87b9cae7f93f8ca6279592b1ca124869b97e"
+    },
+    "supply": {
+      "path": "data/public/bigquery/supply.json",
+      "sha256": "9252baf249906068ccce96b78f02e52fa65fab407f9c7a1833f4d46b2cba9e75"
+    },
+    "burn": {
+      "path": "data/public/bigquery/burn.json",
+      "sha256": "6a156dc1582cc63d7fc949032f9d7967af214cdd702cd7c6c3001e9fa5cabbc2"
+    },
+    "prices": {
+      "path": "data/public/prices.json",
+      "sha256": "5eb2920cef28d43bb21a9a0a3de3bd648c37435592ff52108d265f7598ecd2aa"
+    }
+  },
+  "unavailable": {
+    "swaps": "1Click pull pending. Partial pages are not published or used for T2."
+  }
+}
