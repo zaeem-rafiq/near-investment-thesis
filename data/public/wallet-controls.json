@@ -1,0 +1,613 @@
+{
+  "version": 1,
+  "rpcSource": "https://rpc.mainnet.near.org",
+  "fetchedAt": "2026-11-09T21:32:20.174Z",
+  "block": {
+    "height": 223823013,
+    "hash": "7anBBun6YtAsxmtTD8Dhafh1RBq8wntLu6USAA6PYpaN",
+    "timestampNanosec": "1794259888018179597",
+    "timeUtc": "2026-11-09T21:31:28.018Z",
+    "finality": "final",
+    "method": "block"
+  },
+  "notes": [
+    "Native NEAR is view_account.amount; it excludes locked stake and includes storage reserve, not a spendable-balance estimate.",
+    "All balances are exact decimal NEAR strings (24 decimals). Intents NEAR is token nep141:wrap.near inside intents.near.",
+    "DAO permissions are proposal-kind:action. An override applies to that kind; otherwise the default vote policy applies.",
+    "Sputnik RoleWeight ratio threshold: min(floor(numerator * group size / denominator) + 1, group size), then max with quorum.",
+    "Role counts may overlap and do not establish independent people. Admin policy/upgrade permissions can change fund controls.",
+    "Any full-access key can bypass contract voting. Function-call key counts are not a contract-reported member count.",
+    "Multisig confirm keys count self-scoped function-call keys permitting confirm. Key custody and Intents signer authorization are not audited."
+  ],
+  "wallets": [
+    {
+      "wallet": "fefundsadmin.sputnik-dao.near",
+      "nativeNear": {
+        "status": "ok",
+        "value": "1994812.252877263375139754343196",
+        "method": "query:view_account"
+      },
+      "wrapNear": {
+        "status": "ok",
+        "value": "0",
+        "method": "query:call_function:wrap.near.ft_balance_of"
+      },
+      "intentsNear": {
+        "status": "ok",
+        "value": "0",
+        "method": "query:call_function:intents.near.mt_balance_of"
+      },
+      "contractDeployed": {
+        "status": "ok",
+        "value": true,
+        "method": "query:view_account"
+      },
+      "fullAccessKeys": {
+        "status": "ok",
+        "value": 0,
+        "method": "query:view_access_key_list"
+      },
+      "functionCallKeys": {
+        "status": "ok",
+        "value": 0,
+        "method": "query:view_access_key_list"
+      },
+      "policy": {
+        "status": "ok",
+        "value": {
+          "defaultVotePolicy": {
+            "weightKind": "RoleWeight",
+            "quorum": "0",
+            "threshold": [
+              1,
+              2
+            ]
+          },
+          "roles": [
+            {
+              "index": 0,
+              "name": "Requestor",
+              "kind": "Group",
+              "memberCount": 5,
+              "memberCountReason": null,
+              "permissions": [
+                "call:AddProposal",
+                "call:VoteRemove",
+                "transfer:AddProposal",
+                "transfer:VoteRemove"
+              ],
+              "votePolicyOverrides": [
+                {
+                  "proposal": "call",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "transfer",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "name": "Admin",
+              "kind": "Group",
+              "memberCount": 5,
+              "memberCountReason": null,
+              "permissions": [
+                "add_bounty:*",
+                "add_member_to_role:*",
+                "bounty_done:*",
+                "config:*",
+                "factory_info_update:*",
+                "policy:*",
+                "policy_add_or_update_role:*",
+                "policy_remove_role:*",
+                "policy_update_default_vote_policy:*",
+                "policy_update_parameters:*",
+                "remove_member_from_role:*",
+                "set_vote_token:*",
+                "upgrade_remote:*",
+                "upgrade_self:*"
+              ],
+              "votePolicyOverrides": [
+                {
+                  "proposal": "add_bounty",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "add_member_to_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "bounty_done",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "config",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "factory_info_update",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "policy",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "policy_add_or_update_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "policy_remove_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "policy_update_default_vote_policy",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "policy_update_parameters",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "remove_member_from_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "set_vote_token",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "upgrade_remote",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "upgrade_self",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "name": "Approver",
+              "kind": "Group",
+              "memberCount": 5,
+              "memberCountReason": null,
+              "permissions": [
+                "call:Finalize",
+                "call:RemoveProposal",
+                "call:VoteApprove",
+                "call:VoteReject",
+                "transfer:Finalize",
+                "transfer:RemoveProposal",
+                "transfer:VoteApprove",
+                "transfer:VoteReject"
+              ],
+              "votePolicyOverrides": [
+                {
+                  "proposal": "add_bounty",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "add_member_to_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "bounty_done",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "call",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "config",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "policy",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "remove_member_from_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "set_vote_token",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "transfer",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "upgrade_remote",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "upgrade_self",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "vote",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                }
+              ]
+            }
+          ]
+        },
+        "method": "query:call_function:fefundsadmin.sputnik-dao.near.get_policy"
+      }
+    },
+    {
+      "wallet": "1csfundsadmin.sputnik-dao.near",
+      "nativeNear": {
+        "status": "ok",
+        "value": "270.875891412420848813311023",
+        "method": "query:view_account"
+      },
+      "wrapNear": {
+        "status": "ok",
+        "value": "0",
+        "method": "query:call_function:wrap.near.ft_balance_of"
+      },
+      "intentsNear": {
+        "status": "ok",
+        "value": "0.00100010001000100010001",
+        "method": "query:call_function:intents.near.mt_balance_of"
+      },
+      "contractDeployed": {
+        "status": "ok",
+        "value": true,
+        "method": "query:view_account"
+      },
+      "fullAccessKeys": {
+        "status": "ok",
+        "value": 0,
+        "method": "query:view_access_key_list"
+      },
+      "functionCallKeys": {
+        "status": "ok",
+        "value": 0,
+        "method": "query:view_access_key_list"
+      },
+      "policy": {
+        "status": "ok",
+        "value": {
+          "defaultVotePolicy": {
+            "weightKind": "RoleWeight",
+            "quorum": "0",
+            "threshold": [
+              1,
+              2
+            ]
+          },
+          "roles": [
+            {
+              "index": 0,
+              "name": "Requestor",
+              "kind": "Group",
+              "memberCount": 4,
+              "memberCountReason": null,
+              "permissions": [
+                "call:AddProposal",
+                "call:VoteRemove",
+                "transfer:AddProposal",
+                "transfer:VoteRemove"
+              ],
+              "votePolicyOverrides": [
+                {
+                  "proposal": "call",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                },
+                {
+                  "proposal": "transfer",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "1"
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "name": "Admin",
+              "kind": "Group",
+              "memberCount": 4,
+              "memberCountReason": null,
+              "permissions": [
+                "add_bounty:*",
+                "add_member_to_role:*",
+                "bounty_done:*",
+                "config:*",
+                "factory_info_update:*",
+                "policy:*",
+                "policy_add_or_update_role:*",
+                "policy_remove_role:*",
+                "policy_update_default_vote_policy:*",
+                "policy_update_parameters:*",
+                "remove_member_from_role:*",
+                "set_vote_token:*",
+                "upgrade_remote:*",
+                "upgrade_self:*"
+              ],
+              "votePolicyOverrides": [
+                {
+                  "proposal": "add_bounty",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "add_member_to_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "bounty_done",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "call",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "config",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "policy",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "remove_member_from_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "set_vote_token",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "transfer",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "upgrade_remote",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "upgrade_self",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "vote",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "name": "Approver",
+              "kind": "Group",
+              "memberCount": 4,
+              "memberCountReason": null,
+              "permissions": [
+                "call:Finalize",
+                "call:RemoveProposal",
+                "call:VoteApprove",
+                "call:VoteReject",
+                "transfer:Finalize",
+                "transfer:RemoveProposal",
+                "transfer:VoteApprove",
+                "transfer:VoteReject"
+              ],
+              "votePolicyOverrides": [
+                {
+                  "proposal": "add_bounty",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "add_member_to_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "bounty_done",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "call",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "config",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "policy",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "remove_member_from_role",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "set_vote_token",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "transfer",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "upgrade_remote",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "upgrade_self",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                },
+                {
+                  "proposal": "vote",
+                  "weightKind": "RoleWeight",
+                  "quorum": "0",
+                  "threshold": "2"
+                }
+              ]
+            }
+          ]
+        },
+        "method": "query:call_function:1csfundsadmin.sputnik-dao.near.get_policy"
+      }
+    },
+    {
+      "wallet": "buybacks.multisignature.near",
+      "nativeNear": {
+        "status": "ok",
+        "value": "2229439.344194882091281972700843",
+        "method": "query:view_account"
+      },
+      "wrapNear": {
+        "status": "ok",
+        "value": "0",
+        "method": "query:call_function:wrap.near.ft_balance_of"
+      },
+      "intentsNear": {
+        "status": "ok",
+        "value": "0",
+        "method": "query:call_function:intents.near.mt_balance_of"
+      },
+      "contractDeployed": {
+        "status": "ok",
+        "value": true,
+        "method": "query:view_account"
+      },
+      "fullAccessKeys": {
+        "status": "ok",
+        "value": 0,
+        "method": "query:view_access_key_list"
+      },
+      "functionCallKeys": {
+        "status": "ok",
+        "value": 4,
+        "method": "query:view_access_key_list"
+      },
+      "requiredConfirmations": {
+        "status": "ok",
+        "value": 2,
+        "method": "query:call_function:buybacks.multisignature.near.get_num_confirmations"
+      },
+      "contractMemberCount": {
+        "status": "not_measurable",
+        "value": null,
+        "reason": "Contract view is not exported (MethodNotFound).",
+        "method": "query:call_function:buybacks.multisignature.near.get_members"
+      },
+      "multisigConfirmKeys": {
+        "status": "ok",
+        "value": 4,
+        "method": "query:view_access_key_list"
+      }
+    }
+  ]
+}

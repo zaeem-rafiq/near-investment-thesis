@@ -38,6 +38,10 @@
     "exchange_labels": {
       "path": "data/public/exchange-labels.json",
       "sha256": "be1e39378cf6234524f648c0631b6b55a486689b5b4b1207ad983dbdbae03945"
+    },
+    "wallet_controls": {
+      "path": "data/public/wallet-controls.json",
+      "sha256": "3ce40cf1316b4f253d43c2c9e199c0a5a8e06eb228267b6d999359f0cdba4ad7"
     }
   },
   "unavailable": {}
