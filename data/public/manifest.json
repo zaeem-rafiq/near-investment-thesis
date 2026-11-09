@@ -42,6 +42,10 @@
     "wallet_controls": {
       "path": "data/public/wallet-controls.json",
       "sha256": "3ce40cf1316b4f253d43c2c9e199c0a5a8e06eb228267b6d999359f0cdba4ad7"
+    },
+    "position_results": {
+      "path": "data/public/position-results.json",
+      "sha256": "9108f9a34a036743fbb8b09d75c2e8afc426f41c3ff8a455bada565dfee44fa5"
     }
   },
   "unavailable": {}

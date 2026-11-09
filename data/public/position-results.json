@@ -1,0 +1,923 @@
+{
+  "version": 1,
+  "notes": [
+    "Aggregates only. Account-level rows remain in ignored private files.",
+    "Check 1 final excludes buys whose recipient is a revenue wallet and sells whose senders include one. Swaps with no USD value are left out and counted.",
+    "Check 2 counts successful native TRANSFER receipts into the three wallets from outside them, plus wNEAR from outside (none found). Moves among the three wallets are excluded; returns from wrap.near and system are not received.",
+    "Two-way, exchange, lead-or-follow and concentration results are descriptive and change no check. The refundTo two-way variant and the concentration cut are after-the-fact.",
+    "Issuance value and USD received use each week's mean of 7 daily Coinbase NEAR-USD closes.",
+    "NEARBlocks prints yocto amounts as JSON numbers; most are already rounded to about 16 significant digits by the source."
+  ],
+  "sources": {
+    "participants": {
+      "window": {
+        "start": "2025-11-03",
+        "end": "2026-11-02"
+      },
+      "reconciliationPass": true,
+      "comparisons": 10,
+      "rows": 657004,
+      "nearToNearExcluded": 85117,
+      "duplicateRows": 85117
+    },
+    "walletHistory": {
+      "source": "https://api.nearblocks.io/v1/account/{wallet}/receipts and /ft-txns?contract=wrap.near",
+      "perPage": 100,
+      "order": "asc",
+      "balanceBlock": {
+        "height": 223823013,
+        "hash": "7anBBun6YtAsxmtTD8Dhafh1RBq8wntLu6USAA6PYpaN",
+        "timestampNanosec": "1794259888018179597",
+        "timeUtc": "2026-11-09T21:31:28.018Z",
+        "finality": "final",
+        "method": "block"
+      }
+    },
+    "holdersRevenue": {
+      "source": "https://api.llama.fi/summary/fees/near-intents?dataType=dailyHoldersRevenue"
+    },
+    "signerSplit": {
+      "sqlSha256": "b5079be28999f524e3f0237821074ab01d04b1e1ea9f80a17fa87ac6ae3887f0",
+      "billedBytes": 148435369984,
+      "dayRows": 730,
+      "receiverPeriodRowsNotDownloaded": 363988830
+    },
+    "exchangeLabels": {
+      "publicFile": "data/public/exchange-labels.json",
+      "accounts": 17
+    }
+  },
+  "issuance": {
+    "weeks": 52,
+    "issuedNear": 32123695.496474344,
+    "issuanceValueUsd": 66987430.78046612
+  },
+  "check1": {
+    "issuanceUsd": 66987430.78046612,
+    "provisional": {
+      "buysUsd": 153513711.48745617,
+      "sellsUsd": 101431526.03940386,
+      "netUsd": 52082185.44805232,
+      "buyRows": 308117,
+      "sellRows": 348887,
+      "missingUsdRows": 0,
+      "shareOfIssuanceValue": 0.7774919091723063
+    },
+    "final": {
+      "buysUsd": 153513711.48745617,
+      "sellsUsd": 101431526.03940386,
+      "netUsd": 52082185.44805232,
+      "buyRows": 308117,
+      "sellRows": 348887,
+      "missingUsdRows": 0,
+      "shareOfIssuanceValue": 0.7774919091723063
+    },
+    "excluded": {
+      "buyRows": 0,
+      "buysUsd": 0,
+      "sellRows": 0,
+      "sellsUsd": 0
+    },
+    "pass": true,
+    "senderCoverage": {
+      "sells": 348887,
+      "withSenders": 224485,
+      "share": 0.6434318274971552,
+      "usdShare": 0.35443779031755823
+    },
+    "refundToRevenueWalletNotSender": {
+      "sells": 0,
+      "usd": 0
+    },
+    "weeklyFinalNetUsd": [
+      {
+        "week": "2025-11-03",
+        "netUsd": 2558932.7107,
+        "meanClose": 2.3675714285714284
+      },
+      {
+        "week": "2025-11-10",
+        "netUsd": -3147480.7747,
+        "meanClose": 2.4792857142857136
+      },
+      {
+        "week": "2025-11-17",
+        "netUsd": 2715874.9193,
+        "meanClose": 2.072857142857143
+      },
+      {
+        "week": "2025-11-24",
+        "netUsd": 2388964.5068,
+        "meanClose": 1.885
+      },
+      {
+        "week": "2025-12-01",
+        "netUsd": 514321.8818,
+        "meanClose": 1.7382857142857142
+      },
+      {
+        "week": "2025-12-08",
+        "netUsd": -450663.5787,
+        "meanClose": 1.697142857142857
+      },
+      {
+        "week": "2025-12-15",
+        "netUsd": 2728040.1418,
+        "meanClose": 1.5127142857142857
+      },
+      {
+        "week": "2025-12-22",
+        "netUsd": 849191.3489,
+        "meanClose": 1.5104285714285715
+      },
+      {
+        "week": "2025-12-29",
+        "netUsd": 298453.5784,
+        "meanClose": 1.614142857142857
+      },
+      {
+        "week": "2026-01-05",
+        "netUsd": 147301.3634,
+        "meanClose": 1.7245714285714284
+      },
+      {
+        "week": "2026-01-12",
+        "netUsd": 37529.528,
+        "meanClose": 1.7372857142857143
+      },
+      {
+        "week": "2026-01-19",
+        "netUsd": 989159.0615000001,
+        "meanClose": 1.5124285714285715
+      },
+      {
+        "week": "2026-01-26",
+        "netUsd": 380950.1997,
+        "meanClose": 1.3578571428571429
+      },
+      {
+        "week": "2026-02-02",
+        "netUsd": -8445.100199999999,
+        "meanClose": 1.1002857142857143
+      },
+      {
+        "week": "2026-02-09",
+        "netUsd": 218068.20070000002,
+        "meanClose": 1.0154285714285716
+      },
+      {
+        "week": "2026-02-16",
+        "netUsd": 591417.3487,
+        "meanClose": 1.0364285714285713
+      },
+      {
+        "week": "2026-02-23",
+        "netUsd": 1301850.5177,
+        "meanClose": 1.095
+      },
+      {
+        "week": "2026-03-02",
+        "netUsd": 596783.2755,
+        "meanClose": 1.2794285714285714
+      },
+      {
+        "week": "2026-03-09",
+        "netUsd": -1017887.9618,
+        "meanClose": 1.314142857142857
+      },
+      {
+        "week": "2026-03-16",
+        "netUsd": -557174.6581,
+        "meanClose": 1.3619999999999999
+      },
+      {
+        "week": "2026-03-23",
+        "netUsd": -675178.8812999999,
+        "meanClose": 1.231857142857143
+      },
+      {
+        "week": "2026-03-30",
+        "netUsd": 202440.5361,
+        "meanClose": 1.2022857142857144
+      },
+      {
+        "week": "2026-04-06",
+        "netUsd": -96544.7522,
+        "meanClose": 1.3378571428571429
+      },
+      {
+        "week": "2026-04-13",
+        "netUsd": 1636569.1928,
+        "meanClose": 1.3854285714285712
+      },
+      {
+        "week": "2026-04-20",
+        "netUsd": -148919.08289999998,
+        "meanClose": 1.3947142857142854
+      },
+      {
+        "week": "2026-04-27",
+        "netUsd": -366508.9561,
+        "meanClose": 1.3137142857142856
+      },
+      {
+        "week": "2026-05-04",
+        "netUsd": 307948.8339,
+        "meanClose": 1.4637142857142855
+      },
+      {
+        "week": "2026-05-11",
+        "netUsd": 906734.9532,
+        "meanClose": 1.5492857142857142
+      },
+      {
+        "week": "2026-05-18",
+        "netUsd": 7469849.6244,
+        "meanClose": 1.9709999999999999
+      },
+      {
+        "week": "2026-05-25",
+        "netUsd": 20877355.4186,
+        "meanClose": 2.4535714285714283
+      },
+      {
+        "week": "2026-06-01",
+        "netUsd": 797622.0737000001,
+        "meanClose": 2.307714285714286
+      },
+      {
+        "week": "2026-06-08",
+        "netUsd": 2094831.7031,
+        "meanClose": 2.095142857142857
+      },
+      {
+        "week": "2026-06-15",
+        "netUsd": 1372504.3459,
+        "meanClose": 2.2274285714285713
+      },
+      {
+        "week": "2026-06-22",
+        "netUsd": -195830.18749045726,
+        "meanClose": 1.905
+      },
+      {
+        "week": "2026-06-29",
+        "netUsd": -640988.0415477431,
+        "meanClose": 1.9204285714285714
+      },
+      {
+        "week": "2026-07-06",
+        "netUsd": -498535.0326443347,
+        "meanClose": 1.9252857142857143
+      },
+      {
+        "week": "2026-07-13",
+        "netUsd": -85126.2105624476,
+        "meanClose": 1.961285714285714
+      },
+      {
+        "week": "2026-07-20",
+        "netUsd": -131596.322652063,
+        "meanClose": 1.870285714285714
+      },
+      {
+        "week": "2026-07-27",
+        "netUsd": -567163.0887725989,
+        "meanClose": 1.6691428571428573
+      },
+      {
+        "week": "2026-08-03",
+        "netUsd": 1183304.9411938423,
+        "meanClose": 1.658257142857143
+      },
+      {
+        "week": "2026-08-10",
+        "netUsd": -1986914.2687422275,
+        "meanClose": 1.6218571428571429
+      },
+      {
+        "week": "2026-08-17",
+        "netUsd": 635077.8661176913,
+        "meanClose": 1.796742857142857
+      },
+      {
+        "week": "2026-08-24",
+        "netUsd": 1396412.972826547,
+        "meanClose": 1.8789714285714287
+      },
+      {
+        "week": "2026-08-31",
+        "netUsd": 238746.05414040227,
+        "meanClose": 2.064571428571429
+      },
+      {
+        "week": "2026-09-07",
+        "netUsd": -703126.7808800602,
+        "meanClose": 2.369428571428571
+      },
+      {
+        "week": "2026-09-14",
+        "netUsd": -1727435.4195325414,
+        "meanClose": 3.1542285714285714
+      },
+      {
+        "week": "2026-09-21",
+        "netUsd": 4118573.00930859,
+        "meanClose": 4.7095714285714285
+      },
+      {
+        "week": "2026-09-28",
+        "netUsd": 1007839.2831613239,
+        "meanClose": 4.899842857142857
+      },
+      {
+        "week": "2026-10-05",
+        "netUsd": 2283031.23482652,
+        "meanClose": 5.173128571428571
+      },
+      {
+        "week": "2026-10-12",
+        "netUsd": 2088166.1779687214,
+        "meanClose": 5.024728571428571
+      },
+      {
+        "week": "2026-10-19",
+        "netUsd": 377073.9896694983,
+        "meanClose": 4.816828571428571
+      },
+      {
+        "week": "2026-10-26",
+        "netUsd": -223216.24693634262,
+        "meanClose": 4.4220999999999995
+      }
+    ]
+  },
+  "check2": {
+    "weeks": [
+      {
+        "week": "2026-02-23",
+        "burnedNear": 16323.93764447366,
+        "issuedNear": 590317.5575107863,
+        "receivedNear": 179856.7468368338,
+        "meanClose": 1.095,
+        "receivedUsd": 196943.137786333,
+        "defillamaHoldersRevenueUsd": 200548
+      },
+      {
+        "week": "2026-03-02",
+        "burnedNear": 15352.983926445739,
+        "issuedNear": 641493.7738483849,
+        "receivedNear": 47205.63923086334,
+        "meanClose": 1.2794285714285714,
+        "receivedUsd": 60396.243564516,
+        "defillamaHoldersRevenueUsd": 61947
+      },
+      {
+        "week": "2026-03-09",
+        "burnedNear": 14716.758670066747,
+        "issuedNear": 610955.8894524754,
+        "receivedNear": 79456.3401362809,
+        "meanClose": 1.314142857142857,
+        "receivedUsd": 104416.98184480684,
+        "defillamaHoldersRevenueUsd": 106136
+      },
+      {
+        "week": "2026-03-16",
+        "burnedNear": 14380.679085150936,
+        "issuedNear": 610511.2086466106,
+        "receivedNear": 51859.964085904474,
+        "meanClose": 1.3619999999999999,
+        "receivedUsd": 70633.27108500189,
+        "defillamaHoldersRevenueUsd": 71440
+      },
+      {
+        "week": "2026-03-23",
+        "burnedNear": 15103.305212951584,
+        "issuedNear": 608233.40928134,
+        "receivedNear": 250490.45578154904,
+        "meanClose": 1.231857142857143,
+        "receivedUsd": 308568.4571720425,
+        "defillamaHoldersRevenueUsd": 298237
+      },
+      {
+        "week": "2026-03-30",
+        "burnedNear": 8125.809444391506,
+        "issuedNear": 632821.6583735949,
+        "receivedNear": 49339.194087566626,
+        "meanClose": 1.2022857142857144,
+        "receivedUsd": 59319.808205851536,
+        "defillamaHoldersRevenueUsd": 58685
+      },
+      {
+        "week": "2026-04-06",
+        "burnedNear": 4315.856644405092,
+        "issuedNear": 605468.8827343641,
+        "receivedNear": 45202.33674526367,
+        "meanClose": 1.3378571428571429,
+        "receivedUsd": 60474.26908848489,
+        "defillamaHoldersRevenueUsd": 60385
+      },
+      {
+        "week": "2026-04-13",
+        "burnedNear": 4219.775371909401,
+        "issuedNear": 612856.4373001049,
+        "receivedNear": 47399.28389162864,
+        "meanClose": 1.3854285714285712,
+        "receivedUsd": 65668.32216871636,
+        "defillamaHoldersRevenueUsd": 65667
+      },
+      {
+        "week": "2026-04-20",
+        "burnedNear": 4085.600230612638,
+        "issuedNear": 637329.7511320654,
+        "receivedNear": 40680.57197743425,
+        "meanClose": 1.3947142857142854,
+        "receivedUsd": 56737.774887955784,
+        "defillamaHoldersRevenueUsd": 56830.05
+      },
+      {
+        "week": "2026-04-27",
+        "burnedNear": 4027.419627970382,
+        "issuedNear": 603320.7960014618,
+        "receivedNear": 50639.2579958815,
+        "meanClose": 1.3137142857142856,
+        "receivedUsd": 66525.51664716088,
+        "defillamaHoldersRevenueUsd": 66418
+      },
+      {
+        "week": "2026-05-04",
+        "burnedNear": 4409.827865039095,
+        "issuedNear": 630917.9009435293,
+        "receivedNear": 65563.83960740137,
+        "meanClose": 1.4637142857142855,
+        "receivedUsd": 95966.72865963349,
+        "defillamaHoldersRevenueUsd": 94097
+      },
+      {
+        "week": "2026-05-11",
+        "burnedNear": 4398.376742122335,
+        "issuedNear": 620707.1093140299,
+        "receivedNear": 58932.87228962821,
+        "meanClose": 1.5492857142857142,
+        "receivedUsd": 91303.85714014541,
+        "defillamaHoldersRevenueUsd": 91253
+      },
+      {
+        "week": "2026-05-18",
+        "burnedNear": 5151.764350204416,
+        "issuedNear": 619216.0115938048,
+        "receivedNear": 82794.09393786323,
+        "meanClose": 1.9709999999999999,
+        "receivedUsd": 163187.1591515284,
+        "defillamaHoldersRevenueUsd": 170976
+      },
+      {
+        "week": "2026-05-25",
+        "burnedNear": 5244.8128275181325,
+        "issuedNear": 615558.0123904005,
+        "receivedNear": 95350.68450264251,
+        "meanClose": 2.4535714285714283,
+        "receivedUsd": 233949.71519041216,
+        "defillamaHoldersRevenueUsd": 236043
+      },
+      {
+        "week": "2026-06-01",
+        "burnedNear": 6113.525307846696,
+        "issuedNear": 620568.2952666704,
+        "receivedNear": 144646.3201583164,
+        "meanClose": 2.307714285714286,
+        "receivedUsd": 333802.379405349,
+        "defillamaHoldersRevenueUsd": 312166
+      },
+      {
+        "week": "2026-06-08",
+        "burnedNear": 4865.122063041035,
+        "issuedNear": 603634.6384615366,
+        "receivedNear": 51270.033214537754,
+        "meanClose": 2.095142857142857,
+        "receivedUsd": 107418.04387491582,
+        "defillamaHoldersRevenueUsd": 107032
+      },
+      {
+        "week": "2026-06-15",
+        "burnedNear": 4810.682083956287,
+        "issuedNear": 618668.0053327697,
+        "receivedNear": 46724.727002117485,
+        "meanClose": 2.2274285714285713,
+        "receivedUsd": 104075.99191671654,
+        "defillamaHoldersRevenueUsd": 105594
+      },
+      {
+        "week": "2026-06-22",
+        "burnedNear": 4478.401928368131,
+        "issuedNear": 616728.742745627,
+        "receivedNear": 37838.922101171906,
+        "meanClose": 1.905,
+        "receivedUsd": 72083.14660273248,
+        "defillamaHoldersRevenueUsd": 72446
+      },
+      {
+        "week": "2026-06-29",
+        "burnedNear": 4453.068642914521,
+        "issuedNear": 618910.9093652194,
+        "receivedNear": 45954.47804049346,
+        "meanClose": 1.9204285714285714,
+        "receivedUsd": 88252.2926140505,
+        "defillamaHoldersRevenueUsd": 88058
+      },
+      {
+        "week": "2026-07-06",
+        "burnedNear": 4491.310700463574,
+        "issuedNear": 621771.303329281,
+        "receivedNear": 56105.92765906661,
+        "meanClose": 1.9252857142857143,
+        "receivedUsd": 108019.94100874868,
+        "defillamaHoldersRevenueUsd": 108431
+      },
+      {
+        "week": "2026-07-13",
+        "burnedNear": 4063.732834439516,
+        "issuedNear": 625838.7249046573,
+        "receivedNear": 60974.80627622014,
+        "meanClose": 1.961285714285714,
+        "receivedUsd": 119589.01648088945,
+        "defillamaHoldersRevenueUsd": 134567
+      },
+      {
+        "week": "2026-07-20",
+        "burnedNear": 4624.248226642002,
+        "issuedNear": 625763.7614598774,
+        "receivedNear": 65199.27341802869,
+        "meanClose": 1.870285714285714,
+        "receivedUsd": 121941.26965554737,
+        "defillamaHoldersRevenueUsd": 122584
+      },
+      {
+        "week": "2026-07-27",
+        "burnedNear": 4628.522483664912,
+        "issuedNear": 625293.4668248546,
+        "receivedNear": 55520.63423047174,
+        "meanClose": 1.6691428571428573,
+        "receivedUsd": 92671.87004983312,
+        "defillamaHoldersRevenueUsd": 92391
+      },
+      {
+        "week": "2026-08-03",
+        "burnedNear": 4586.501649503459,
+        "issuedNear": 624648.0225275324,
+        "receivedNear": 61957.2836625325,
+        "meanClose": 1.658257142857143,
+        "receivedUsd": 102741.1081854207,
+        "defillamaHoldersRevenueUsd": 102154
+      },
+      {
+        "week": "2026-08-10",
+        "burnedNear": 4337.131105730531,
+        "issuedNear": 599591.4085441283,
+        "receivedNear": 54237.059718779,
+        "meanClose": 1.6218571428571429,
+        "receivedUsd": 87964.76271247114,
+        "defillamaHoldersRevenueUsd": 88122
+      },
+      {
+        "week": "2026-08-17",
+        "burnedNear": 5292.484929524726,
+        "issuedNear": 627103.2551893847,
+        "receivedNear": 155843.27428272748,
+        "meanClose": 1.796742857142857,
+        "receivedUsd": 280010.2899012457,
+        "defillamaHoldersRevenueUsd": 283767
+      },
+      {
+        "week": "2026-08-24",
+        "burnedNear": 4769.315677440348,
+        "issuedNear": 627575.2777372659,
+        "receivedNear": 109647.899675883,
+        "meanClose": 1.8789714285714287,
+        "receivedUsd": 206025.2706938506,
+        "defillamaHoldersRevenueUsd": 206367
+      },
+      {
+        "week": "2026-08-31",
+        "burnedNear": 5105.28101662608,
+        "issuedNear": 637901.988767341,
+        "receivedNear": 165529.29085632216,
+        "meanClose": 2.064571428571429,
+        "receivedUsd": 341747.0444936526,
+        "defillamaHoldersRevenueUsd": 348876
+      },
+      {
+        "week": "2026-09-07",
+        "burnedNear": 4793.5415806358615,
+        "issuedNear": 605828.8176879154,
+        "receivedNear": 91663.76807583019,
+        "meanClose": 2.369428571428571,
+        "receivedUsd": 217190.7510436742,
+        "defillamaHoldersRevenueUsd": 217908
+      },
+      {
+        "week": "2026-09-14",
+        "burnedNear": 5446.863065699544,
+        "issuedNear": 628381.630275795,
+        "receivedNear": 138411.04117620885,
+        "meanClose": 3.1542285714285714,
+        "receivedUsd": 436580.0606791744,
+        "defillamaHoldersRevenueUsd": 446287
+      },
+      {
+        "week": "2026-09-21",
+        "burnedNear": 6879.996612301318,
+        "issuedNear": 618435.9708476922,
+        "receivedNear": 132771.3592744415,
+        "meanClose": 4.7095714285714285,
+        "receivedUsd": 625296.2001715018,
+        "defillamaHoldersRevenueUsd": 606702
+      },
+      {
+        "week": "2026-09-28",
+        "burnedNear": 8673.888907583547,
+        "issuedNear": 639456.5312485175,
+        "receivedNear": 109795.52353308887,
+        "meanClose": 4.899842857142857,
+        "receivedUsd": 537980.811729866,
+        "defillamaHoldersRevenueUsd": 541373
+      },
+      {
+        "week": "2026-10-05",
+        "burnedNear": 9907.469427841987,
+        "issuedNear": 605987.8742161293,
+        "receivedNear": 112623.99743595689,
+        "meanClose": 5.173128571428571,
+        "receivedUsd": 582618.4189644468,
+        "defillamaHoldersRevenueUsd": 570229
+      },
+      {
+        "week": "2026-10-12",
+        "burnedNear": 8682.219518600305,
+        "issuedNear": 626674.4648606661,
+        "receivedNear": 96501.62655037637,
+        "meanClose": 5.024728571428571,
+        "receivedUsd": 484894.4801170061,
+        "defillamaHoldersRevenueUsd": 489623
+      },
+      {
+        "week": "2026-10-19",
+        "burnedNear": 4514.7677791066635,
+        "issuedNear": 632460.196402028,
+        "receivedNear": 83105.35933268472,
+        "meanClose": 4.816828571428571,
+        "receivedUsd": 400304.2692725138,
+        "defillamaHoldersRevenueUsd": 401502
+      },
+      {
+        "week": "2026-10-26",
+        "burnedNear": 4494.624115586848,
+        "issuedNear": 630022.6958014674,
+        "receivedNear": 104458.88197462806,
+        "meanClose": 4.4220999999999995,
+        "receivedUsd": 461927.62198000273,
+        "defillamaHoldersRevenueUsd": 459323
+      }
+    ],
+    "burnedNear": 239869.60730077955,
+    "issuedNear": 22320954.38031931,
+    "receivedNear": 3125552.7687566252,
+    "coverage": 0.15077412545696273,
+    "pass": false,
+    "receivedUsd": 7547226.2841462,
+    "perWallet": [
+      {
+        "wallet": "fefundsadmin.sputnik-dao.near",
+        "receivedNear": 1041071.0861112506,
+        "receivedUsd": 2433859.550338087
+      },
+      {
+        "wallet": "1csfundsadmin.sputnik-dao.near",
+        "receivedNear": 432327.19172745297,
+        "receivedUsd": 552736.9173549248
+      },
+      {
+        "wallet": "buybacks.multisignature.near",
+        "receivedNear": 1652154.4909179215,
+        "receivedUsd": 4560629.816453187
+      }
+    ],
+    "holdersRevenueComparison": {
+      "defillamaUsd": 7544164.05,
+      "ledgerUsd": 7547226.2841462,
+      "gapUsd": 3062.2341462001204,
+      "gapPercent": 0.04059076825351008
+    }
+  },
+  "check3": {
+    "prior": {
+      "days": 365,
+      "mean": 14580.391780821918
+    },
+    "latest": {
+      "days": 365,
+      "mean": 16705.956164383562
+    },
+    "growth": 0.14578239155119754,
+    "pass": false
+  },
+  "call": {
+    "passing": 1,
+    "result": "Not yet"
+  },
+  "descriptive": {
+    "twoWaySenders": {
+      "accounts": 18333,
+      "buysUsd": 106630568.30174364,
+      "sellsUsd": 76658942.85077439,
+      "netUsd": 29971625.45096925,
+      "buyRows": 107532,
+      "sellRows": 194823,
+      "missingUsdRows": 0,
+      "shareOfIssuanceValue": 0.4474216297262311
+    },
+    "twoWayRefundTo": {
+      "label": "After-the-fact descriptive cut; changes no check. refundTo treated as a sender.",
+      "accounts": 27546,
+      "buysUsd": 67272445.55814867,
+      "sellsUsd": 33460863.32923635,
+      "netUsd": 33811582.228912316,
+      "buyRows": 63942,
+      "sellRows": 107047,
+      "missingUsdRows": 0,
+      "shareOfIssuanceValue": 0.5047451713698498
+    },
+    "exchange": {
+      "labeledAccounts": 17,
+      "removedBuyRows": 0,
+      "removedSellRows": 0,
+      "buysUsd": 153513711.48745617,
+      "sellsUsd": 101431526.03940386,
+      "netUsd": 52082185.44805232,
+      "buyRows": 308117,
+      "sellRows": 348887,
+      "missingUsdRows": 0,
+      "shareOfIssuanceValue": 0.7774919091723063
+    },
+    "leadOrFollow": {
+      "lags": [
+        {
+          "lag": 1,
+          "pairs": 51,
+          "flowThenPrice": -0.04528076003438784,
+          "priceThenFlow": 0.3008944061777117
+        },
+        {
+          "lag": 2,
+          "pairs": 50,
+          "flowThenPrice": -0.18120384705913703,
+          "priceThenFlow": 0.16129050940826423
+        },
+        {
+          "lag": 4,
+          "pairs": 48,
+          "flowThenPrice": -0.20688156804534882,
+          "priceThenFlow": -0.060094895405385415
+        },
+        {
+          "lag": 8,
+          "pairs": 44,
+          "flowThenPrice": -0.199507222771581,
+          "priceThenFlow": -0.11650899674325026
+        }
+      ],
+      "flowLeadLags": 0,
+      "priceLeadLags": 1,
+      "result": "can't tell"
+    },
+    "concentration": {
+      "label": "After-the-fact descriptive cut; changes no check. Buyer = recipient; seller = first sender, else refundTo.",
+      "netBuyers": 48048,
+      "netSellers": 83482,
+      "netUsd": 52082185.44805232,
+      "shareOfIssuanceValue": 0.7774919091723063,
+      "withoutTopNetBuyers": {
+        "1": {
+          "netUsd": 24869647.74785232,
+          "share": 0.3712584205439394
+        },
+        "3": {
+          "netUsd": 1778868.702108863,
+          "share": 0.026555260910642215
+        },
+        "10": {
+          "netUsd": -11969197.068063587,
+          "share": -0.17867825245141164
+        }
+      },
+      "withoutTopNetBuyersAndSellers": {
+        "3": {
+          "netUsd": 8621054.760245627,
+          "share": 0.1286966026283183
+        },
+        "10": {
+          "netUsd": 4640235.161935319,
+          "share": 0.06927023633944826
+        }
+      },
+      "medianBuyerTotalUsd": 0.90695,
+      "buyersWithAnyBuy": 63558,
+      "unattributedNetUsd": 0,
+      "sellsWithMultipleSenders": 0
+    }
+  },
+  "walletReconciliation": {
+    "rows": [
+      {
+        "wallet": "fefundsadmin.sputnik-dao.near",
+        "receipts": 1543,
+        "wnearTransferRows": 0,
+        "nativeBalanceNear": 1994812.2528772636,
+        "inNear": 1994812.148715465,
+        "outNear": 1.5999999999999999,
+        "notReceivedNear": 1.0000000000000001e-24,
+        "movesFromOtherRevenueWalletsNear": 0,
+        "movesToOtherRevenueWalletsNear": 0,
+        "gapWithoutMoves": {
+          "near": -1.7041617981420598,
+          "percent": -0.0000854296
+        },
+        "gapWithMoves": {
+          "near": -1.7041617981420598,
+          "percent": -0.0000854296
+        },
+        "functionCallDepositsInNear": 1.7,
+        "missingOutcomes": 0,
+        "failedTransfers": 0,
+        "amountsPrintedRoundedBySource": 1342
+      },
+      {
+        "wallet": "1csfundsadmin.sputnik-dao.near",
+        "receipts": 547,
+        "wnearTransferRows": 0,
+        "nativeBalanceNear": 270.87589141242086,
+        "inNear": 555348.2729285762,
+        "outNear": 45010.5,
+        "notReceivedNear": 0,
+        "movesFromOtherRevenueWalletsNear": 0,
+        "movesToOtherRevenueWalletsNear": 510068.00000000006,
+        "gapWithoutMoves": {
+          "near": 510066.8970371638,
+          "percent": 188302.803316137
+        },
+        "gapWithMoves": {
+          "near": -1.1029628362124078,
+          "percent": -0.4071838325
+        },
+        "functionCallDepositsInNear": 1.1,
+        "missingOutcomes": 0,
+        "failedTransfers": 0,
+        "amountsPrintedRoundedBySource": 438
+      },
+      {
+        "wallet": "buybacks.multisignature.near",
+        "receipts": 3304,
+        "wnearTransferRows": 0,
+        "nativeBalanceNear": 2229439.344194882,
+        "inNear": 1731396.3589385324,
+        "outNear": 12025,
+        "notReceivedNear": 0.3276308879788676,
+        "movesFromOtherRevenueWalletsNear": 510068.00000000006,
+        "movesToOtherRevenueWalletsNear": 0,
+        "gapWithoutMoves": {
+          "near": -510067.65762546187,
+          "percent": -22.8787411935
+        },
+        "gapWithMoves": {
+          "near": 0.3423745381454056,
+          "percent": 0.0000153569
+        },
+        "functionCallDepositsInNear": 0,
+        "missingOutcomes": 0,
+        "failedTransfers": 0,
+        "amountsPrintedRoundedBySource": 3011
+      }
+    ],
+    "movesAmongRevenueWallets": [
+      {
+        "from": "1csfundsadmin.sputnik-dao.near",
+        "to": "buybacks.multisignature.near",
+        "near": 7274,
+        "at": "2026-07-14T16:01:20.451Z"
+      },
+      {
+        "from": "1csfundsadmin.sputnik-dao.near",
+        "to": "buybacks.multisignature.near",
+        "near": 1,
+        "at": "2026-08-28T09:01:19.990Z"
+      },
+      {
+        "from": "1csfundsadmin.sputnik-dao.near",
+        "to": "buybacks.multisignature.near",
+        "near": 502793,
+        "at": "2026-09-09T10:39:08.778Z"
+      }
+    ],
+    "stopRule": "Stop if any gap counting moves exceeds 5%."
+  }
+}
