@@ -46,6 +46,10 @@
     "position_results": {
       "path": "data/public/position-results.json",
       "sha256": "9108f9a34a036743fbb8b09d75c2e8afc426f41c3ff8a455bada565dfee44fa5"
+    },
+    "signer_top10": {
+      "path": "data/public/signer-top10.json",
+      "sha256": "41ebe00f1bdb5fa173338fc650c8c0fe89c26499511be09a2ad5b0a73ec49096"
     }
   },
   "unavailable": {}

@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "periods": {
+    "earlier": {
+      "start": "2024-11-01",
+      "endExclusive": "2025-11-01"
+    },
+    "later": {
+      "start": "2025-11-01",
+      "endExclusive": "2026-11-01"
+    }
+  },
+  "ranking": "2024-11-01 mean_daily_signers descending, ties by receiver_account_id ascending; frozen for both years",
+  "receivers": [
+    {
+      "rank": 1,
+      "receiver": "game.hot.tg",
+      "appEvidence": "contract code deployed at final block 223835670 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 421296.0219178082,
+      "laterMeanDailySigners": 124774.34246575342,
+      "change": -296521.6794520548,
+      "fractionalChange": -0.7038321370855574
+    },
+    {
+      "rank": 2,
+      "receiver": "unnamed account",
+      "appEvidence": null,
+      "earlierMeanDailySigners": 81627.8904109589,
+      "laterMeanDailySigners": 0.0136986301369863,
+      "change": -81627.87671232877,
+      "fractionalChange": -0.99999983218199
+    },
+    {
+      "rank": 3,
+      "receiver": "aa-harvest-moon.near",
+      "appEvidence": "contract code deployed at final block 223835652 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 16371.438356164384,
+      "laterMeanDailySigners": 872.6958904109589,
+      "change": -15498.742465753425,
+      "fractionalChange": -0.9466940001589805
+    },
+    {
+      "rank": 4,
+      "receiver": "firedrop.hot.tg",
+      "appEvidence": "contract code deployed at final block 223835664 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 10920.04109589041,
+      "laterMeanDailySigners": 1919.876712328767,
+      "change": -9000.164383561643,
+      "fractionalChange": -0.8241877759002864
+    },
+    {
+      "rank": 5,
+      "receiver": "wrap.near",
+      "appEvidence": "contract code deployed at final block 223835705 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 2952.3506849315067,
+      "laterMeanDailySigners": 913.5342465753424,
+      "change": -2038.8164383561643,
+      "fractionalChange": -0.6905739378326813
+    },
+    {
+      "rank": 6,
+      "receiver": "embr.playember_reserve.near",
+      "appEvidence": "contract code deployed at final block 223835658 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 2551.1561643835616,
+      "laterMeanDailySigners": 0.12054794520547946,
+      "change": -2551.035616438356,
+      "fractionalChange": -0.9999527477200775
+    },
+    {
+      "rank": 7,
+      "receiver": "omni.firedrop.hot.tg",
+      "appEvidence": "contract code deployed at final block 223835676 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 1783.4465753424658,
+      "laterMeanDailySigners": 0.663013698630137,
+      "change": -1782.7835616438358,
+      "fractionalChange": -0.9996282402244078
+    },
+    {
+      "rank": 8,
+      "receiver": "usdt.tether-token.near",
+      "appEvidence": "contract code deployed at final block 223835694 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 1495.9534246575342,
+      "laterMeanDailySigners": 932.1315068493151,
+      "change": -563.8219178082192,
+      "fractionalChange": -0.3768980427564407
+    },
+    {
+      "rank": 9,
+      "receiver": "v1-1.omni.hot.tg",
+      "appEvidence": "contract code deployed at final block 223835700 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 1323.3534246575343,
+      "laterMeanDailySigners": 0.18082191780821918,
+      "change": -1323.172602739726,
+      "fractionalChange": -0.9998633608267912
+    },
+    {
+      "rank": 10,
+      "receiver": "token.sweat",
+      "appEvidence": "contract code deployed at final block 223835688 (view_account, https://rpc.mainnet.near.org, 2026-11-09)",
+      "earlierMeanDailySigners": 1304.2328767123288,
+      "laterMeanDailySigners": 330.0219178082192,
+      "change": -974.2109589041096,
+      "fractionalChange": -0.7469608965538972
+    }
+  ],
+  "comparisons": [
+    {
+      "periodStart": "2024-11-01",
+      "receiverSum": 541625.8849315068,
+      "dayLevelTop10Mean": 520897.2109589041,
+      "difference": 20728.6739726027
+    },
+    {
+      "periodStart": "2025-11-01",
+      "receiverSum": 129743.58082191781,
+      "dayLevelTop10Mean": 127150.60821917809,
+      "difference": 2592.9726027397264
+    }
+  ],
+  "overlapExplanation": "Per-receiver means count a signer once for every app used on a day; day-level top10 counts that signer once across the ten. The difference is excess signer-app incidences, not distinct overlapping users.",
+  "usersKaiching": {
+    "amongFrozenTen": false,
+    "earlierMeanDailySigners": null,
+    "laterMeanDailySigners": null,
+    "meansStatus": "not extracted; only the ten frozen receivers were selected",
+    "breakDate": null,
+    "breakDateStatus": "not measured"
+  },
+  "unnamedAccounts": 1,
+  "source": {
+    "signerSplitJobId": "near_thesis_7aea41a27bd240bf9c22ebc5472990cd",
+    "extractionJobId": "near_thesis_b69a3bcebe5e499ab70eff45882f372b",
+    "dryRunBytes": 24003929054,
+    "billedBytes": 24004001792,
+    "signerSplitSqlSha256": "b5079be28999f524e3f0237821074ab01d04b1e1ea9f80a17fa87ac6ae3887f0",
+    "note": "Selected from the full signer_split result table; no new transactions scan."
+  }
+}
