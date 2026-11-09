@@ -616,7 +616,7 @@ export function thesisHTML(md) {
   flush();
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="${CSP}">
-    <title>NEAR / Thesis</title><link rel="stylesheet" href="style.css"></head><body>
+    <title>NEAR / Thesis</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to thesis</a>
     <nav aria-label="Research navigation"><a class="brand" href="index.html">NEAR / Evidence ledger</a><a href="index.html">Dashboard</a></nav>
     <main id="main"><article class="thesis">${out.join('\n')}</article></main></body></html>\n`;
@@ -663,7 +663,7 @@ export async function render(manifest, sources, write, root = ROOT) {
   await write('NUMBERS.md', report);
   await write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="${CSP}">
-    <title>NEAR / Evidence ledger</title><link rel="stylesheet" href="style.css"></head><body>
+    <title>NEAR / Evidence ledger</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to evidence</a>
     <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a><a href="thesis.html">Read thesis</a></nav>
     <main id="main"><header class="first-screen">

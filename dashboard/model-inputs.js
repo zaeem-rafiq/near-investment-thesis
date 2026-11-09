@@ -26,13 +26,51 @@ export const MODEL_INPUTS = {
     "status": "measured"
   },
   "yearlyNetBuying": {
-    "value": 52082185.44805231,
-    "source": "data/public/near_flows.json: sum of buys_usd minus sells_usd over 52 T3 weeks; before recipient/sender exclusions",
-    "status": "provisional"
+    "value": 52082185.44805232,
+    "source": "data/public/position-results.json: Check 1 final netUsd after revenue-wallet recipient/sender exclusions over 52 T3 weeks",
+    "status": "measured"
   },
   "yearlyBuybacks": {
-    "value": 0,
-    "source": "data/public/near_flows.json: no Check 2 receipts in the public snapshot; $0 placeholder, not measured zero",
-    "status": "pending Check 2"
+    "value": 10901549.077100066,
+    "source": "data/public/position-results.json: 36-week Check 2 receivedUsd at weekly prices × 52/36; annualized gross receipts, not observed annual revenue",
+    "status": "annualized"
+  }
+};
+export const MODEL_SCENARIOS = {
+  "bear": {
+    "startingSupply": 1310576026.3527384,
+    "startMonth": 24322,
+    "realizedShare": 0.9925247957251583,
+    "yearlyBurn": 500289.9359618764,
+    "price": 4.284,
+    "yearlyNetBuying": -12332694.074183963,
+    "yearlyBuybacks": 13931523.81421362,
+    "yearlyBuyingGrowth": 0,
+    "cut": 0,
+    "activationMonth": 24326
+  },
+  "base": {
+    "startingSupply": 1310576026.3527384,
+    "startMonth": 24322,
+    "realizedShare": 0.9925247957251583,
+    "yearlyBurn": 500289.9359618764,
+    "price": 4.284,
+    "yearlyNetBuying": 52082185.44805232,
+    "yearlyBuybacks": 19340920.533066,
+    "yearlyBuyingGrowth": 0,
+    "cut": 1,
+    "activationMonth": 24326
+  },
+  "bull": {
+    "startingSupply": 1310576026.3527384,
+    "startMonth": 24322,
+    "realizedShare": 0.9925247957251583,
+    "yearlyBurn": 500289.9359618764,
+    "price": 4.284,
+    "yearlyNetBuying": 139432214.81203818,
+    "yearlyBuybacks": 24273938.52005554,
+    "yearlyBuyingGrowth": 0,
+    "cut": 1,
+    "activationMonth": 24326
   }
 };

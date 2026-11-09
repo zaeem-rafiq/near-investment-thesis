@@ -6,6 +6,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; script-src 'self'">
   <title>Can buying absorb new NEAR?</title>
   <link rel="stylesheet" href="model.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <script type="module" src="model-ui.js"></script>
 </head>
 <body>
@@ -22,15 +23,21 @@
       <div class="needed">
         <p class="eyebrow">Total buying needed in 2031 at your price</p>
         <p><strong id="needed">Not calculated</strong> <span class="muted">a year</span></p>
-        <p id="multiple" class="muted">Compared with today's provisional annual net buying.</p>
+        <p id="multiple" class="muted">Compared with today's final annual net buying.</p>
       </div>
-      <p class="provisional">Starting net buying is provisional, before wallet exclusions. Buybacks start at $0 pending Check 2, not a measured zero.</p>
+      <p class="muted">Starting net buying is Check 1 final. Starting buybacks are observed 36-week gross outside receipts at weekly prices, annualized by 52/36. Receipts are not burns or guaranteed retention.</p>
     </section>
     <section aria-labelledby="assumptions-heading">
       <div class="section-heading">
         <h2 id="assumptions-heading">Your assumptions</h2>
         <button id="reset" type="button">Reset</button>
       </div>
+      <div class="scenarios" role="group" aria-label="Scenario inputs">
+        <button id="scenario-bear" type="button" aria-pressed="false">Bear</button>
+        <button id="scenario-base" type="button" aria-pressed="false">Base</button>
+        <button id="scenario-bull" type="button" aria-pressed="false">Bull</button>
+      </div>
+      <p class="muted">Inputs, not forecasts; no probabilities. Bear/Bull independently annualize the weakest/strongest rolling 13-week buying and receipt windows. Base keeps final buying and annualizes all receipts. Preset receipts use latest-price NEAR valuation, unlike Reset's weekly-price USD default.</p>
       <div class="toggle-row">
         <input id="cut" type="checkbox" aria-describedby="cut-description">
         <label for="cut">Apply the HSP-029 issuance cut <span class="muted">(assumption)</span></label>
@@ -47,14 +54,14 @@
         <div class="control">
           <label for="buying">Yearly net buying <span class="muted">(assumption)</span></label>
           <output id="buying-value" for="buying"></output>
-          <input id="buying" type="range" min="0" max="10" step="0.01" value="1" aria-describedby="buying-note">
-          <p id="buying-note" class="muted">0× to 10× the provisional 52-week total.</p>
+          <input id="buying" type="range" min="-1" max="10" step="0.01" value="1" aria-describedby="buying-note">
+          <p id="buying-note" class="muted">−1× to 10× the final 52-week total. Negative means net selling.</p>
         </div>
         <div class="control">
           <label for="buybacks">Yearly buybacks <span class="muted">(assumption)</span></label>
           <output id="buybacks-value" for="buybacks"></output>
           <input id="buybacks" type="range" min="0" max="100000000" step="100000" value="0" aria-describedby="buybacks-note">
-          <p id="buybacks-note" class="muted">$0 to $100M a year. Separate from net buying.</p>
+          <p id="buybacks-note" class="muted">$0 to $100M a year. Annualized gross receipts, separate from final net buying; not proof of token destruction.</p>
         </div>
         <div class="control">
           <label for="growth">Yearly growth in buying <span class="muted">(assumption)</span></label>

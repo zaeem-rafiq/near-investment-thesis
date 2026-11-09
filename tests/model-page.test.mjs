@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { ROOT } from '../scripts/sources.mjs';
 import { writeModelAssets, deriveModelInputs } from '../scripts/model-page.mjs';
-import { parseState, stateQuery, DEFAULT_STATE, renderModel } from '../dashboard/model-ui.js';
+import { parseState, stateQuery, DEFAULT_STATE, renderModel, scenarioState } from '../dashboard/model-ui.js';
+import { projectModel } from '../scripts/model.mjs';
 
 test('browser model is a byte copy and generated defaults independently match public evidence', async () => {
   const files = {};
@@ -15,7 +16,7 @@ test('browser model is a byte copy and generated defaults independently match pu
   const { MODEL_INPUTS: inputs } = await import(`data:text/javascript;base64,${Buffer.from(files['model-inputs.js']).toString('base64')}`);
   const supply = JSON.parse(await readFile(`${ROOT}/data/public/bigquery/supply.json`, 'utf8')).rows;
   const prices = JSON.parse(await readFile(`${ROOT}/data/public/prices.json`, 'utf8')).days;
-  const flows = JSON.parse(await readFile(`${ROOT}/data/public/near_flows.json`, 'utf8')).weeks;
+  const position = JSON.parse(await readFile(`${ROOT}/data/public/position-results.json`, 'utf8'));
   const total = field => supply.map(w => Number(w[field]) / 1e24).reduce((a, b) => a + b, 0);
   const mean = (total('opening_supply_yocto') + total('closing_supply_yocto')) / (2 * 52);
   const near = (actual, expected) => assert.ok(Math.abs(actual - expected) <= Math.max(1, Math.abs(expected)) * 1e-12);
@@ -23,12 +24,13 @@ test('browser model is a byte copy and generated defaults independently match pu
   near(inputs.realizedShare.value, total('supply_rises_yocto') / (0.025 * mean));
   near(inputs.yearlyBurn.value, total('supply_falls_yocto'));
   near(inputs.price.value, prices.at(-1).close);
-  near(inputs.yearlyNetBuying.value, flows.reduce((a, w) => a + Number(w.buys_usd), 0)
-    - flows.reduce((a, w) => a + Number(w.sells_usd), 0));
+  near(inputs.yearlyNetBuying.value, position.check1.final.netUsd);
+  near(inputs.yearlyNetBuying.value, position.check1.weeklyFinalNetUsd.reduce((s, w) => s + w.netUsd, 0));
   assert.equal(inputs.startMonth.value, 2026 * 12 + 10);
-  assert.equal(inputs.yearlyBuybacks.value, 0);
-  assert.equal(inputs.yearlyNetBuying.status, 'provisional');
-  assert.equal(inputs.yearlyBuybacks.status, 'pending Check 2');
+  near(inputs.yearlyBuybacks.value, position.check2.receivedUsd * 52 / 36);
+  near(inputs.yearlyBuybacks.value, position.check2.weeks.reduce((s, w) => s + w.receivedUsd, 0) * 52 / 36);
+  assert.equal(inputs.yearlyNetBuying.status, 'measured');
+  assert.equal(inputs.yearlyBuybacks.status, 'annualized');
   for (const input of Object.values(inputs)) assert.match(input.source, /^data\/public\//);
 });
 
@@ -38,7 +40,7 @@ test('model input generation refuses incomplete evidence', () => {
 
 test('URL settings clamp at slider bounds and snap to valid slider steps', () => {
   assert.deepEqual(parseState('?price=100&buying=-10&buybacks=200000000&growth=-2&cut=1'), {
-    price: 5, buying: 0, buybacks: 100_000_000, growth: -0.5, cut: 1
+    price: 5, buying: -1, buybacks: 100_000_000, growth: -0.5, cut: 1
   });
   assert.deepEqual(parseState('?price=-1&buying=99&buybacks=-5&growth=2&cut=0'), {
     price: 0.25, buying: 10, buybacks: 0, growth: 1, cut: 0
@@ -92,7 +94,7 @@ test('fixed-input rendering agrees with an independent constant-rate annuity for
   assert.doesNotMatch(view.chart, /\bstyle=/);
 });
 test('all 32 slider/toggle corners render finite rows and valid markup', () => {
-  for (const cut of [0, 1]) for (const price of [0.25, 5]) for (const buying of [0, 10]) {
+  for (const cut of [0, 1]) for (const price of [0.25, 5]) for (const buying of [-1, 10]) {
     for (const buybacks of [0, 100_000_000]) for (const growth of [-0.5, 1]) {
       const view = renderModel({ cut, price, buying, buybacks, growth });
       for (const row of view.years) {
@@ -126,4 +128,34 @@ test('standalone page keeps the existing CSP with only self-hosted script permis
   }
   const js = await readFile(`${ROOT}/dashboard/model-ui.js`, 'utf8');
   assert.doesNotMatch(js, /\bfetch\s*\(|XMLHttpRequest|https?:\/\//);
+});
+
+test('scenario buttons preserve exact sourced inputs through render, URL sharing and repeated preset changes', async () => {
+  const section = JSON.parse(await readFile(`${ROOT}/data/public/position-section.json`, 'utf8'));
+  for (const name of ['bear', 'base', 'bull', 'bear', 'base']) {
+    const state = scenarioState(name);
+    assert.deepEqual(parseState(stateQuery(state)), state);
+    const view = renderModel(state), expected = projectModel(section.scenarios[name].inputs);
+    for (const [i, row] of view.years.entries()) {
+      for (const [key, value] of Object.entries(expected.years[i])) {
+        if (value === null) assert.equal(row[key], null);
+        else assert.ok(Math.abs(row[key] - value) < Math.max(1, Math.abs(value)) * 1e-12, `${name}.${key}`);
+      }
+    }
+  }
+  assert.ok(scenarioState('bear').buying < 0);
+  assert.throws(() => scenarioState('toString'), /Unknown scenario/);
+  assert.deepEqual(renderModel(DEFAULT_STATE).state, DEFAULT_STATE, 'Reset must not round the annualized USD default.');
+  const html = await readFile(`${ROOT}/dashboard/model.html`, 'utf8');
+  for (const name of ['bear', 'base', 'bull']) assert.match(html, new RegExp(`id="scenario-${name}" type="button" aria-pressed="false"`));
+  assert.doesNotMatch(html, /provisional|pending Check 2/);
+});
+
+test('every page declares the local favicon and rebuild ships its exact source', async () => {
+  const icon = await readFile(`${ROOT}/web/favicon.svg`, 'utf8');
+  assert.equal(await readFile(`${ROOT}/dashboard/favicon.svg`, 'utf8'), icon);
+  assert.doesNotMatch(icon, /<script|<image|<foreignObject|\bon\w+=/i);
+  for (const page of ['index.html', 'thesis.html', 'model.html']) {
+    assert.match(await readFile(`${ROOT}/dashboard/${page}`, 'utf8'), /rel="icon" href="favicon.svg" type="image\/svg\+xml"/);
+  }
 });

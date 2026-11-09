@@ -85,7 +85,7 @@ test('rebuild CLI works offline, preserves prose and rejects inconsistent signer
     const before = await fileHashes(join(root, 'dashboard'));
     const chartManifest = JSON.parse(await readFile(join(ROOT, 'dashboard/charts.json'), 'utf8'));
     const generated = ['index.html', 'style.css', 'THESIS.md', 'thesis.html', 'NUMBERS.md', 'charts.json',
-      ...chartManifest.files, 'model.mjs', 'model-inputs.js'];
+      ...chartManifest.files, 'model.mjs', 'model-inputs.js', 'favicon.svg'];
     const current = Object.fromEntries(await Promise.all(generated.map(async path => [path, hash(await readFile(join(ROOT, 'dashboard', path)))])));
     assert.deepEqual(before, current);
     await rm(join(root, '.env'));

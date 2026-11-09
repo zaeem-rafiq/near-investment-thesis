@@ -83,6 +83,7 @@ async function main() {
   const thesis = await readFile(resolve(ROOT, 'THESIS.md'), 'utf8');
   verifyThesis(thesis, analysis);
   await copyFile(resolve(ROOT, 'web/style.css'), resolve(ROOT, 'dashboard/style.css'));
+  await copyFile(resolve(ROOT, 'web/favicon.svg'), resolve(ROOT, 'dashboard/favicon.svg'));
   await atomic(resolve(ROOT, 'dashboard/THESIS.md'), thesis);
   await atomic(resolve(ROOT, 'dashboard/thesis.html'), thesisHTML(thesis));
   await writeModelAssets(write);

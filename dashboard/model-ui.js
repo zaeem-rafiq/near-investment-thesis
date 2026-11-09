@@ -1,13 +1,21 @@
 import { projectModel } from './model.mjs';
-import { MODEL_INPUTS } from './model-inputs.js';
+import { MODEL_INPUTS, MODEL_SCENARIOS } from './model-inputs.js';
 
 export const DEFAULT_STATE = Object.freeze({
   cut: 0, price: 1, buying: 1, buybacks: MODEL_INPUTS.yearlyBuybacks.value, growth: 0
 });
 const limits = {
-  cut: [0, 1, 1], price: [0.25, 5, 0.01], buying: [0, 10, 0.01],
+  cut: [0, 1, 1], price: [0.25, 5, 0.01], buying: [-1, 10, 0.01],
   buybacks: [0, 100_000_000, 100_000], growth: [-0.5, 1, 0.01]
 };
+export function scenarioState(name) {
+  const input = Object.hasOwn(MODEL_SCENARIOS, name) ? MODEL_SCENARIOS[name] : null;
+  if (!input) throw new Error('Unknown scenario.');
+  return { cut: input.cut, price: input.price / MODEL_INPUTS.price.value,
+    buying: input.yearlyNetBuying / MODEL_INPUTS.yearlyNetBuying.value,
+    buybacks: input.yearlyBuybacks, growth: input.yearlyBuyingGrowth };
+}
+const presets = Object.keys(MODEL_SCENARIOS).map(scenarioState);
 export function parseState(search) {
   const query = new URLSearchParams(search), state = { ...DEFAULT_STATE };
   for (const [key, [min, max, step]] of Object.entries(limits)) {
@@ -16,7 +24,9 @@ export function parseState(search) {
     const value = Number(raw);
     if (!Number.isFinite(value) || (key === 'cut' && value !== 0 && value !== 1)) continue;
     const bounded = Math.min(max, Math.max(min, value));
-    state[key] = Number((min + Math.round((bounded - min) / step) * step).toFixed(6));
+    // Keep evidence-based defaults/presets exact; custom URL settings use slider steps.
+    state[key] = value === DEFAULT_STATE[key] || presets.some(p => value === p[key])
+      ? bounded : Number((min + Math.round((bounded - min) / step) * step).toFixed(6));
   }
   return state;
 }
@@ -25,7 +35,7 @@ export function stateQuery(state) {
 }
 const compact = value => Number.isFinite(value)
   ? new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 2 }).format(value) : 'Not defined';
-const dollars = value => Number.isFinite(value) ? `$${compact(value)}` : 'Not defined';
+const dollars = value => Number.isFinite(value) ? `${value < 0 ? '−' : ''}$${compact(Math.abs(value))}` : 'Not defined';
 const priceText = value => Number.isFinite(value)
   ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 4 }).format(value) : 'Not defined';
 const percent = value => Number.isFinite(value)
@@ -77,11 +87,11 @@ export function renderModel(rawState, inputs = MODEL_INPUTS) {
       : `Under these assumptions, buying and burn ${last.coverage >= 1 ? 'fully absorb' : 'do not fully absorb'} new NEAR in 2031.`,
     needed: dollars(neededUsd),
     comparison: multiple === null ? "Today's net buying is not positive, so a multiple is not defined."
-      : `${compact(multiple)}× today's provisional annual net buying. Includes net buying and buybacks, after burn.`,
+      : `${compact(multiple)}× today's final annual net buying. Includes net buying and buybacks, after burn.`,
     activation: result.activationAssumption,
     controls: {
       price: `${priceText(price)} · ${state.price}× latest close`,
-      buying: `${dollars(values.yearlyNetBuying * state.buying)} / year · ${state.buying}× current`,
+      buying: `${dollars(values.yearlyNetBuying * state.buying)} / year · ${compact(state.buying)}× current`,
       buybacks: `${dollars(state.buybacks)} / year`,
       growth: `${percent(state.growth)} / year`
     }
@@ -116,6 +126,11 @@ function mount() {
     byId('activation').textContent = view.activation;
     byId('activation').hidden = state.cut === 0;
     byId('cut').checked = state.cut === 1;
+    for (const name of Object.keys(MODEL_SCENARIOS)) {
+      const preset = scenarioState(name);
+      byId(`scenario-${name}`).setAttribute('aria-pressed',
+        String(Object.keys(limits).every(key => state[key] === preset[key])));
+    }
     for (const key of ['price', 'buying', 'buybacks', 'growth']) {
       byId(key).value = state[key];
       byId(`${key}-value`).textContent = view.controls[key];
@@ -132,6 +147,9 @@ function mount() {
     });
   }
   byId('reset').addEventListener('click', () => { state = { ...DEFAULT_STATE }; update(); });
+  for (const name of Object.keys(MODEL_SCENARIOS)) {
+    byId(`scenario-${name}`).addEventListener('click', () => { state = scenarioState(name); update(); });
+  }
   window.addEventListener('popstate', () => { state = parseState(window.location.search); update(); });
   update();
 }

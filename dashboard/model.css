@@ -21,7 +21,8 @@ section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--borde
 .big-number { margin: 8px 0; color: var(--heading); font-size: clamp(64px, 10vw, 96px); font-weight: 600; letter-spacing: -.05em; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .needed { margin: 32px 0 24px; }
 .needed strong { font-size: 24px; letter-spacing: -.02em; }
-.provisional { border-left: 2px solid var(--accent); padding-left: 16px; }
+.scenarios { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.scenarios [aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
 .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 button { min-height: 40px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--heading); font: inherit; cursor: pointer; }
 button:hover { background: #f0f0f0; }

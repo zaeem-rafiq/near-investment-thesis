@@ -26,13 +26,15 @@ The dashboard exposes every chart, value table and query. `THESIS.md` gives the 
 
 Requires Node.js 22 or newer. No npm dependencies, no install step.
 
-1. Run `npm test`. You should see 158 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
+1. Run `npm test`. You should see 160 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
 2. Run `npm run rebuild`. This rebuilds charts and number tables in `dashboard/` from `data/public/`, with no credentials or network access. It verifies, but never overwrites, `THESIS.md`. The last line prints the T1, T2 and T3 results.
 3. Run `open dashboard/index.html` on macOS, or open that file in any browser. You'll see the conclusion and two headline numbers; click **See the evidence** to reach the first chart, with its query and expandable values table. The thesis link opens `dashboard/thesis.html`, a readable page generated from `THESIS.md` during rebuild, with the metric tags removed.
 
 The committed BigQuery aggregates, price candles and daily 1Click totals reproduce all three results on a fresh clone: T1 FAIL, T2 CAN'T TELL, T3 FAIL. `data/raw/` and `.env` are not needed for rebuild.
 
 The thesis now also verifies the later position checks and recomputes the holder ledger and scenarios from hashed public inputs. These additions are separate from the original T1–T3 tests. Future review windows are not yet runnable: the thesis lists the dates, downgrade rules and parameters that must first be generalized. `node scripts/export-position-section.mjs` reproduces the current descriptive export from already completed local histories; it does not refresh sources. The public snapshot needs no private histories to rebuild.
+
+For the interactive scenario model, serve `dashboard/` over local HTTP and open `model.html`. For example, run `python3 -m http.server 8765 --bind 127.0.0.1 --directory dashboard` and visit `http://127.0.0.1:8765/model.html`. Try **Bear**, **Base**, **Bull**, then **Reset**; settings stay in the URL. The defaults use final net buying and annualized historical USD receipts. Presets use the thesis scenario inputs, including their different receipt valuation. This is scenario arithmetic, not a forecast.
 
 `dashboard/NUMBERS.md` is generated. `THESIS.md` is not. If the evidence table or a `<!-- metric:key -->value<!-- /metric -->` claim in the thesis differs from public data, rebuild exits nonzero. Review the generated table, update the thesis by hand, and rerun. Keep all computed claims in the evidence table or tagged spans; dates, source facts and rule thresholds are separate. This is structured metric verification, not natural-language fact checking.
 
