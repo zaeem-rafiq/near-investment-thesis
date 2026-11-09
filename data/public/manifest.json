@@ -34,6 +34,10 @@
     "near_flows": {
       "path": "data/public/near_flows.json",
       "sha256": "8c23337eb5ea408d263e58edab044e7497a922b8065f1de4756df9aeb189d89b"
+    },
+    "exchange_labels": {
+      "path": "data/public/exchange-labels.json",
+      "sha256": "be1e39378cf6234524f648c0631b6b55a486689b5b4b1207ad983dbdbae03945"
     }
   },
   "unavailable": {}

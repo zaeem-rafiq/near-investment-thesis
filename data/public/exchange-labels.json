@@ -1,0 +1,55 @@
+{
+  "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters",
+  "commit": "8caedd8fe7ccfface7871e96f2b10e61ea52b79f",
+  "retrievedAt": "2026-11-09T21:24:26Z",
+  "exchanges": [
+    {
+      "exchange": "Bitfinex",
+      "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters/blob/8caedd8fe7ccfface7871e96f2b10e61ea52b79f/projects/bitfinex/index.js#L85-L90",
+      "accountCount": 2,
+      "sortedListSha256": "0e1965e787e87ff591593e726e8021433fa28ad5970a681f5e35de58354dcdaf"
+    },
+    {
+      "exchange": "Bitget",
+      "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters/blob/8caedd8fe7ccfface7871e96f2b10e61ea52b79f/projects/bitget/index.js#L175-L180",
+      "accountCount": 2,
+      "sortedListSha256": "9c95919016435505a170a8b7ee363bf5e911f17fa847a9c85bf27d64a5dfeee5"
+    },
+    {
+      "exchange": "Bitlo",
+      "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters/blob/8caedd8fe7ccfface7871e96f2b10e61ea52b79f/cex/index.js#L293-L297",
+      "accountCount": 1,
+      "sortedListSha256": "2c873c5406b528b23f185bfc6dd378906dfd4d71d1f714393504fec475aa737b"
+    },
+    {
+      "exchange": "Flipster",
+      "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters/blob/8caedd8fe7ccfface7871e96f2b10e61ea52b79f/cex/flipster.js#L103-L107",
+      "accountCount": 1,
+      "sortedListSha256": "e32952f963d811d9063e0eba82742e4f2f053f8a5bd43510b89224dd1e8d4bbc"
+    },
+    {
+      "exchange": "Gate US",
+      "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters/blob/8caedd8fe7ccfface7871e96f2b10e61ea52b79f/cex/gate-us.js#L282-L287",
+      "accountCount": 2,
+      "sortedListSha256": "7b9769e172ff9814f2911e8be3ca990e70f2ee864cae3bcad43c9aef228c8338"
+    },
+    {
+      "exchange": "KuCoin",
+      "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters/blob/8caedd8fe7ccfface7871e96f2b10e61ea52b79f/projects/kucoin/index.js#L146-L152",
+      "accountCount": 3,
+      "sortedListSha256": "17e4ff830efdce0a9317e02ad0fca6b2cf878f962ff522e0450b109ee42b3df5"
+    },
+    {
+      "exchange": "MEXC",
+      "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters/blob/8caedd8fe7ccfface7871e96f2b10e61ea52b79f/cex/mexc-cex.js#L89-L91",
+      "accountCount": 1,
+      "sortedListSha256": "5bce3654b332e37dfa1a9c62299249d9d7d23ab18d4b4fe0b3fcdf5e37490d42"
+    },
+    {
+      "exchange": "SwissBorg",
+      "sourceUrl": "https://github.com/DefiLlama/DefiLlama-Adapters/blob/8caedd8fe7ccfface7871e96f2b10e61ea52b79f/cex/swissborg.js#L47-L55",
+      "accountCount": 5,
+      "sortedListSha256": "9d5584c3fa3e781a60dc5aa02ae1819cd81e2752e90c8945646d63e0bb2e8a7f"
+    }
+  ]
+}
