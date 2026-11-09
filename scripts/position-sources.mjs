@@ -6,7 +6,7 @@ import { fileStore } from './store.mjs';
 import { RECIPIENT_DIR } from './position-config.mjs';
 
 export const POSITION_QUERIES = {
-  signer_split: ['transactions'], wallet_flows: ['receipt_actions', 'execution_outcomes']
+  signer_split: ['transactions']
 };
 export const POSITION_SCAN_LIMIT = 900_000_000_000;
 
@@ -28,11 +28,7 @@ export async function pullPositionSources(env, store, dependencies = {}) {
   const result = await pullBigQuery({ ...env, MAX_BYTES_BILLED: String(Math.min(
     positiveInteger(env.MAX_BYTES_BILLED, headroom), headroom
   )) }, store, {
-    ...dependencies, queries: POSITION_QUERIES, cumulativeLimit: POSITION_SCAN_LIMIT,
-    requiredColumns: {
-      receipt_actions: { args: 'STRING', receipt_id: 'STRING', receipt_predecessor_account_id: 'STRING' },
-      execution_outcomes: { receipt_id: 'STRING', status: 'STRING' }
-    }
+    ...dependencies, queries: POSITION_QUERIES, cumulativeLimit: POSITION_SCAN_LIMIT
   });
   return { ...result, priorBilledBytes: spent, projectedCumulativeBilledBytes: spent + result.estimate };
 }

@@ -1,3 +1,4 @@
+-- NOT RUN: dry run estimated 1,053 GB; excluded from the BigQuery run path.
 -- Check 2, 36 complete UTC weeks. Only the three locked wallets leave this query.
 -- Argument encoding and success statuses follow near/near-public-lakehouse,
 -- src/lakehouse/notebooks/Silver Lake Mainnet.sql (commit 4de8e1a).

@@ -5,9 +5,15 @@ import { resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { DatabaseSync } from 'node:sqlite';
 import { literalDateFilters, ROOT, LEDGER } from '../scripts/sources.mjs';
-import { pullPositionSources, POSITION_SCAN_LIMIT } from '../scripts/position-sources.mjs';
+import { pullPositionSources, POSITION_SCAN_LIMIT, POSITION_QUERIES } from '../scripts/position-sources.mjs';
 import { atomic } from '../scripts/store.mjs';
 import { RECIPIENT_DIR } from '../scripts/position-config.mjs';
+
+test('only signer_split is permitted in the position BigQuery run path', async () => {
+  assert.deepEqual(POSITION_QUERIES, { signer_split: ['transactions'] });
+  const sql = await readFile(resolve(ROOT, 'sql/wallet_flows.sql'), 'utf8');
+  assert.match(sql.split('\n')[0], /NOT RUN.*1,053 GB/);
+});
 
 test('position source requests are blocked before reconciliation and at 900 GB', async () => {
   const root = await mkdtemp(resolve(tmpdir(), 'position-source-gate-'));
