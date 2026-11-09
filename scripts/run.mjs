@@ -7,6 +7,7 @@ import { CAL, loadSources, loadSwapDir, render, verifyThesis, thesisHTML } from 
 import { exportPublic } from './public.mjs';
 import { atomic, fileStore } from './store.mjs';
 import { verifyOptionalSignerSplit } from './signer-split.mjs';
+import { writeModelAssets } from './model-page.mjs';
 
 function safeError(error, env) {
   let message = error.message || 'Source request failed.';
@@ -84,6 +85,7 @@ async function main() {
   await copyFile(resolve(ROOT, 'web/style.css'), resolve(ROOT, 'dashboard/style.css'));
   await atomic(resolve(ROOT, 'dashboard/THESIS.md'), thesis);
   await atomic(resolve(ROOT, 'dashboard/thesis.html'), thesisHTML(thesis));
+  await writeModelAssets(write);
   console.log(`Rebuilt dashboard/ and verified THESIS.md from public snapshot ${manifest.id}: T1 ${analysis.t1.verdict}, T2 ${analysis.t2.verdict}, T3 ${analysis.t3.verdict}.`);
   if (mode === 'refresh' && Object.keys(manifest.unavailable).length) {
     console.error('Refresh incomplete. Unavailable sources are shown in the dashboard; no data was substituted.');

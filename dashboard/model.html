@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; script-src 'self'">
+  <title>Can buying absorb new NEAR?</title>
+  <link rel="stylesheet" href="model.css">
+  <script type="module" src="model-ui.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to model</a>
+  <main id="main">
+    <header>
+      <h1>Can buying absorb new NEAR?</h1>
+      <p class="muted">A supply and buying scenario through 2031. Change the assumptions, not the research results.</p>
+    </header>
+    <section class="hero" aria-label="2031 scenario">
+      <p class="eyebrow">2031 · New NEAR absorbed by buying and burn</p>
+      <p id="coverage" class="big-number" aria-live="polite" aria-atomic="true">Not calculated</p>
+      <p id="explanation">Enable JavaScript to calculate a scenario.</p>
+      <div class="needed">
+        <p class="eyebrow">Total buying needed in 2031 at your price</p>
+        <p><strong id="needed">Not calculated</strong> <span class="muted">a year</span></p>
+        <p id="multiple" class="muted">Compared with today's provisional annual net buying.</p>
+      </div>
+      <p class="provisional">Starting net buying is provisional, before wallet exclusions. Buybacks start at $0 pending Check 2, not a measured zero.</p>
+    </section>
+    <section aria-labelledby="assumptions-heading">
+      <div class="section-heading">
+        <h2 id="assumptions-heading">Your assumptions</h2>
+        <button id="reset" type="button">Reset</button>
+      </div>
+      <div class="toggle-row">
+        <input id="cut" type="checkbox" aria-describedby="cut-description">
+        <label for="cut">Apply the HSP-029 issuance cut <span class="muted">(assumption)</span></label>
+      </div>
+      <p id="cut-description" class="muted">Off: keep the 2.5% annual issuance cap. On: ramp to 1.6% over 24 months.</p>
+      <p id="activation" class="activation" hidden></p>
+      <div class="controls">
+        <div class="control">
+          <label for="price">NEAR price <span class="muted">(assumption)</span></label>
+          <output id="price-value" for="price"></output>
+          <input id="price" type="range" min="0.25" max="5" step="0.01" value="1" aria-describedby="price-note">
+          <p id="price-note" class="muted">0.25× to 5× the latest close.</p>
+        </div>
+        <div class="control">
+          <label for="buying">Yearly net buying <span class="muted">(assumption)</span></label>
+          <output id="buying-value" for="buying"></output>
+          <input id="buying" type="range" min="0" max="10" step="0.01" value="1" aria-describedby="buying-note">
+          <p id="buying-note" class="muted">0× to 10× the provisional 52-week total.</p>
+        </div>
+        <div class="control">
+          <label for="buybacks">Yearly buybacks <span class="muted">(assumption)</span></label>
+          <output id="buybacks-value" for="buybacks"></output>
+          <input id="buybacks" type="range" min="0" max="100000000" step="100000" value="0" aria-describedby="buybacks-note">
+          <p id="buybacks-note" class="muted">$0 to $100M a year. Separate from net buying.</p>
+        </div>
+        <div class="control">
+          <label for="growth">Yearly growth in buying <span class="muted">(assumption)</span></label>
+          <output id="growth-value" for="growth"></output>
+          <input id="growth" type="range" min="-0.5" max="1" step="0.01" value="0" aria-describedby="growth-note">
+          <p id="growth-note" class="muted">−50% to +100%. Buybacks and burn do not grow.</p>
+        </div>
+      </div>
+      <p class="muted">Settings stay in the URL. Prices stay constant; net buying grows each January from its November 2026 base. Buying and buybacks reduce modeled float, not total supply.</p>
+    </section>
+    <section aria-labelledby="years-heading">
+      <h2 id="years-heading">The path to 2031</h2>
+      <table>
+        <caption>Annual NEAR amounts. Coverage = (absorbed + burned) / new NEAR. Break-even price is undefined when no positive price can balance remaining issuance.</caption>
+        <thead><tr><th scope="col">Year</th><th scope="col">New NEAR</th><th scope="col">Burned</th><th scope="col">Absorbed</th><th scope="col">Coverage</th><th scope="col">Net float change</th><th scope="col">Break-even price</th></tr></thead>
+        <tbody id="year-rows"></tbody>
+      </table>
+      <div class="chart-heading">
+        <p><span class="key new-key"></span>New NEAR</p>
+        <p><span class="key absorbed-key"></span>Absorbed + burned</p>
+      </div>
+      <div id="chart"></div>
+    </section>
+    <section aria-labelledby="sources-heading">
+      <h2 id="sources-heading">Where the starting values come from</h2>
+      <p class="muted">Measured values are starting assumptions, not promises. The 52 T3 weeks end November 1, 2026.</p>
+      <dl id="sources"></dl>
+    </section>
+    <noscript><p>This model needs JavaScript. It runs locally without API calls.</p></noscript>
+    <footer>Scenario arithmetic, not a forecast. General research, not personal advice.</footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+:root {
+  --background: #fafafa;
+  --surface: #ffffff;
+  --border: #dedede;
+  --heading: #0a0a0a;
+  --body: #374151;
+  --muted: #606976;
+  --accent: #14756a;
+  --ink: #263238;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--background); color: var(--body); font: 15px/1.6 Inter, system-ui, -apple-system, sans-serif; }
+main { max-width: 1040px; margin: auto; padding: 48px 32px; min-width: 0; }
+h1, h2, strong, dt, output { color: var(--heading); font-weight: 600; }
+h1, h2 { margin: 0 0 16px; font-size: 24px; line-height: 1.3; letter-spacing: -.02em; }
+p { max-width: 65ch; margin: 8px 0; }
+.muted, caption, footer { color: var(--muted); }
+.eyebrow { color: var(--muted); }
+section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border); }
+.hero { padding-bottom: 8px; }
+.big-number { margin: 8px 0; color: var(--heading); font-size: clamp(64px, 10vw, 96px); font-weight: 600; letter-spacing: -.05em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.needed { margin: 32px 0 24px; }
+.needed strong { font-size: 24px; letter-spacing: -.02em; }
+.provisional { border-left: 2px solid var(--accent); padding-left: 16px; }
+.section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+button { min-height: 40px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--heading); font: inherit; cursor: pointer; }
+button:hover { background: #f0f0f0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.skip { position: absolute; top: -80px; left: 16px; padding: 8px; background: var(--surface); color: var(--ink); }
+.skip:focus { top: 8px; z-index: 1; }
+.toggle-row { display: flex; align-items: flex-start; gap: 12px; margin: 16px 0 8px; }
+.toggle-row label { cursor: pointer; }
+input[type="checkbox"] { width: 24px; height: 24px; margin: 0; flex: 0 0 24px; accent-color: var(--accent); }
+.activation { border-left: 2px solid var(--accent); padding-left: 16px; margin: 16px 0; }
+.controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; margin: 24px 0; }
+.control { padding: 24px 0; border-top: 1px solid var(--border); min-width: 0; }
+.control label, output { display: block; }
+output { margin: 8px 0; font-variant-numeric: tabular-nums; }
+input[type="range"] { display: block; width: 100%; height: 32px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+table { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: 13px; font-variant-numeric: tabular-nums; }
+caption { text-align: left; margin: 0 0 16px; font-size: 15px; }
+th, td { text-align: right; padding: 16px 8px; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+th { color: var(--muted); font-weight: 600; }
+th:first-child, td:first-child { text-align: left; padding-left: 0; width: 9%; }
+.chart-heading { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 32px; }
+.chart-heading p { display: flex; align-items: center; gap: 8px; }
+.key { display: inline-block; width: 12px; height: 12px; }
+.new-key { background: var(--ink); }
+.absorbed-key { background: var(--accent); }
+svg { display: block; width: 100%; height: auto; margin-top: 16px; overflow: visible; }
+svg text { fill: var(--body); font: 14px system-ui, sans-serif; }
+.bar-new { fill: var(--ink); }
+.bar-absorbed { fill: var(--accent); }
+.chart-axis { stroke: var(--border); stroke-width: 1; }
+dt { margin: 24px 0 4px; }
+dd { margin: 0; max-width: 65ch; overflow-wrap: anywhere; color: var(--muted); }
+footer { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
+[hidden] { display: none; }
+@media (max-width: 650px) {
+  main { padding: 32px 16px; }
+  .controls { grid-template-columns: 1fr; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  table, tbody { display: block; }
+  tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; margin-bottom: 16px; }
+  td { display: block; text-align: left; padding: 12px 0; }
+  td:first-child { grid-column: 1 / -1; width: auto; font-weight: 600; font-size: 15px; }
+  td::before { content: attr(data-label); display: block; color: var(--muted); font-weight: 400; }
+  td:first-child::before { content: none; }
+  .big-number { overflow-wrap: anywhere; }
+}
