@@ -6,6 +6,7 @@ import { SWAP_WINDOW, swapDir, savedPages, readJSON } from './swaps.mjs';
 import { CAL, loadSources, loadSwapDir, render, verifyThesis, thesisHTML } from './report.mjs';
 import { exportPublic } from './public.mjs';
 import { atomic, fileStore } from './store.mjs';
+import { verifyOptionalSignerSplit } from './signer-split.mjs';
 
 function safeError(error, env) {
   let message = error.message || 'Source request failed.';
@@ -74,6 +75,7 @@ async function main() {
     if (mode === 'export') return;
   }
   const { manifest, sources } = await loadSources();
+  await verifyOptionalSignerSplit(sources.signers?.data);
   if (manifest.id == null) throw new Error('No public snapshot. Export saved sources before rebuilding.');
   const write = (name, body) => atomic(resolve(ROOT, 'dashboard', name), body);
   const { analysis } = await render(manifest, sources, write);

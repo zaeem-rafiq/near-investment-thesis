@@ -17,8 +17,10 @@ export const QUERIES = {
   supply: ['blocks'],
   burn: ['execution_outcomes', 'transactions']
 };
+// Build-only additions are estimated by plan, never included in refresh.
+export const PLAN_ONLY_QUERIES = { signer_split: ['transactions'] };
 export const REQUIRED_COLUMNS = {
-  transactions: { block_date: 'DATE', signer_account_id: 'STRING', receipt_conversion_tokens_burnt: 'FLOAT' },
+  transactions: { block_date: 'DATE', signer_account_id: 'STRING', receiver_account_id: 'STRING', receipt_conversion_tokens_burnt: 'FLOAT' },
   receipt_actions: { block_date: 'DATE', action_kind: 'STRING', receipt_receiver_account_id: 'STRING' },
   blocks: { block_date: 'DATE', block_height: 'INTEGER', block_hash: 'STRING', prev_block_hash: 'STRING', block_timestamp_utc: 'TIMESTAMP', total_supply: 'FLOAT' },
   execution_outcomes: { block_date: 'DATE', tokens_burnt: 'FLOAT' }
@@ -148,8 +150,9 @@ export const LEDGER = 'data/raw/bigquery/ledger.json';
 // mode 'plan' dry-runs only; 'run' reuses cached results whose SQL and literal windows match unless force is set.
 export async function pullBigQuery(env, store, dependencies = {}) {
   const { mode = 'run', force = false } = dependencies;
+  const queries = mode === 'plan' ? { ...QUERIES, ...PLAN_ONLY_QUERIES } : QUERIES;
   const plans = [];
-  for (const [name, tables] of Object.entries(QUERIES)) {
+  for (const [name, tables] of Object.entries(queries)) {
     const sql = await readFile(resolve(dependencies.root || ROOT, `sql/${name}.sql`), 'utf8');
     const filters = literalDateFilters(sql);
     if (JSON.stringify([...new Set(filters.map(f => f.table))].sort()) !== JSON.stringify([...tables].sort())) {
@@ -181,7 +184,7 @@ export async function pullBigQuery(env, store, dependencies = {}) {
   const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
   const api = (url, body) => jsonRequest(url, { headers, ...(body ? { method: 'POST', body: JSON.stringify(body) } : {}) }, dependencies.fetcher);
 
-  for (const table of new Set(pending.flatMap(p => QUERIES[p.name]))) {
+  for (const table of new Set(pending.flatMap(p => queries[p.name]))) {
     const meta = await api(`https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/datasets/crypto_near_mainnet_us/tables/${table}`);
     const types = Object.fromEntries((meta.schema?.fields || []).map(f => [f.name, f.type]));
     for (const [column, type] of Object.entries(REQUIRED_COLUMNS[table])) {

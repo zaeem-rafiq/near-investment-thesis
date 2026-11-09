@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { pullBigQuery, QUERIES, REQUIRED_COLUMNS, LEDGER, PRE_LEDGER_BILLED_BYTES } from '../scripts/sources.mjs';
+import { pullBigQuery, QUERIES, PLAN_ONLY_QUERIES, REQUIRED_COLUMNS, LEDGER, PRE_LEDGER_BILLED_BYTES } from '../scripts/sources.mjs';
 
 const env = { GOOGLE_CLOUD_PROJECT: 'test-only-project', MAX_BYTES_BILLED: '100000000' };
 const response = data => ({ ok: true, status: 200, json: async () => data });
@@ -11,7 +11,7 @@ const sqlFor = tables => tables.map(t => `SELECT COUNT(*) AS n FROM \`bigquery-p
 async function project(override = {}) {
   const root = await mkdtemp(join(tmpdir(), 'bq-test-'));
   await mkdir(join(root, 'sql'));
-  for (const [name, tables] of Object.entries(QUERIES)) await writeFile(join(root, `sql/${name}.sql`), override[name] ?? sqlFor(tables));
+  for (const [name, tables] of Object.entries({ ...QUERIES, ...PLAN_ONLY_QUERIES })) await writeFile(join(root, `sql/${name}.sql`), override[name] ?? sqlFor(tables));
   return root;
 }
 function memoryStore(initial = {}) {
@@ -107,7 +107,9 @@ test('plan mode dry-runs only and never submits a billed job', async () => {
   try {
     const r = await pullBigQuery(env, memoryStore(), deps(fake, root, { mode: 'plan', force: true }));
     assert.equal(fake.jobs.length, 0);
-    assert.equal(r.estimate, 50000000);
+    assert.equal(r.estimate, 60000000);
+    assert.equal(r.plans.at(-1).name, 'signer_split');
+    assert.equal(fake.requests.filter(r => r.body?.configuration.dryRun).length, 6);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 test('live schema type mismatch stops before dry runs', async () => {
