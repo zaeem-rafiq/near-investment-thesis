@@ -40,7 +40,11 @@ WITH actions AS (
   FROM transfers
 ), expanded AS (
   SELECT *, wallet IS NULL AS audit,
-    CASE WHEN receiver = wallet THEN 'in' WHEN sender = wallet THEN 'out' END AS direction
+    -- Unwraps and protocol refunds return the wallet's own funds, not outside receipts.
+    -- Keep them visible, but Check 2's received numerator includes only direction 'in'.
+    CASE WHEN receiver = wallet AND asset = 'NEAR' AND sender IN ('wrap.near', 'system')
+      THEN 'not_received'
+      WHEN receiver = wallet THEN 'in' WHEN sender = wallet THEN 'out' END AS direction
   FROM classified CROSS JOIN UNNEST([
     CAST(NULL AS STRING), 'fefundsadmin.sputnik-dao.near',
     '1csfundsadmin.sputnik-dao.near', 'buybacks.multisignature.near'
