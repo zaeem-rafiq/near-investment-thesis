@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { gzipSync } from 'node:zlib';
-import { ROOT, hash } from '../scripts/sources.mjs';
+import { ROOT, hash, literalDateFilters } from '../scripts/sources.mjs';
 import { exportPublic } from '../scripts/public.mjs';
 import { assertNoWalletFields, CAL, parseSwapDays } from '../scripts/report.mjs';
 
@@ -66,7 +66,7 @@ test('public exporter checks raw hashes, refuses wallet fields and never reads p
     await assert.rejects(exportPublic(manifest, { root }), /Invalid raw/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
-test('rebuild CLI works without raw data, credentials or networking, preserves prose and fails on stale metrics', async () => {
+test('rebuild CLI works offline, preserves prose and rejects inconsistent signer splits and stale metrics', async () => {
   const root = await mkdtemp(join(tmpdir(), 'near-offline-test-'));
   try {
     for (const path of ['scripts', 'sql', 'web', 'data/public', 'THESIS.md', 'package.json']) {
@@ -91,6 +91,14 @@ test('rebuild CLI works without raw data, credentials or networking, preserves p
     result = build();
     assert.equal(result.status, 0, result.stdout + result.stderr);
     assert.deepEqual(await fileHashes(join(root, 'dashboard')), before);
+    const splitSql = await readFile(join(root, 'sql/signer_split.sql'), 'utf8');
+    const splitPath = join(root, 'data/public/bigquery/signer_split.json');
+    await writeFile(splitPath, JSON.stringify({ sql: splitSql, filters: literalDateFilters(splitSql), rows: [] }));
+    result = build();
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Signer split groups do not sum to signers.sql/);
+    assert.deepEqual(await fileHashes(join(root, 'dashboard')), before);
+    await rm(splitPath);
     const stale = thesis.replace('| t3.offset | 1.56% |', '| t3.offset | 99% |');
     assert.notEqual(stale, thesis, 'Fixture must change a real metric.');
     await writeFile(join(root, 'THESIS.md'), stale);
