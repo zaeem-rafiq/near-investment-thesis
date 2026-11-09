@@ -8,6 +8,7 @@ import { ROOT, EXPLORER, explorerParams, sleep } from './sources.mjs';
 export const SWAP_WINDOW = { start: '2025-03-01', end: '2026-11-02' };
 export const PACE_MS = 5200;
 const FIELDS = ['depositAddress', 'depositMemo', 'createdAt', 'status', 'originAsset', 'destinationAsset', 'amountInUsd'];
+const PARTICIPANT_FIELDS = ['recipient', 'senders', 'refundTo', 'referral', 'appFees'];
 
 export const swapDir = (window, root = ROOT) => resolve(root, 'data/raw/swaps', `${window.start}_${window.end}`);
 const pageName = n => `page-${String(n).padStart(6, '0')}.json.gz`;
@@ -32,13 +33,16 @@ export async function readPage(dir, name) {
   return JSON.parse(gunzipSync(await readFile(resolve(dir, 'pages', name))).toString('utf8'));
 }
 
-function cleanRows(rows, window, seen, boundary) {
+function cleanRows(rows, window, seen, boundary, tokenFilter, retainParticipants) {
   const start = Date.parse(window.start), end = Date.parse(window.end), clean = [];
   const pageKeys = new Set();
   let previous = boundary == null ? end : Date.parse(boundary);
   for (const row of rows) {
     if (!row.depositAddress || !row.createdAt || row.status !== 'SUCCESS' || !row.originAsset || !row.destinationAsset) {
       throw new Error('Invalid successful swap record.');
+    }
+    if (tokenFilter && !tokenFilter.ids.includes(row[tokenFilter.side === 'toTokenId' ? 'destinationAsset' : 'originAsset'])) {
+      throw new Error('Explorer returned a swap outside the requested token filter.');
     }
     const ts = Date.parse(row.createdAt);
     if (!Number.isFinite(ts)) throw new Error('Invalid swap timestamp.');
@@ -54,7 +58,11 @@ function cleanRows(rows, window, seen, boundary) {
       throw new Error('Duplicate swap away from page boundary.');
     }
     seen.add(key);
-    clean.push(Object.fromEntries(FIELDS.map(k => [k, row[k] ?? null])));
+    if (retainParticipants && (
+      (row.recipient != null && typeof row.recipient !== 'string') ||
+      (row.senders != null && (!Array.isArray(row.senders) || row.senders.some(s => typeof s !== 'string'))) ||
+      (row.appFees != null && !Array.isArray(row.appFees)))) throw new Error('Invalid private swap participant fields.');
+    clean.push(Object.fromEntries([...FIELDS, ...(retainParticipants ? PARTICIPANT_FIELDS : [])].map(k => [k, row[k] ?? null])));
   }
   return clean;
 }
@@ -89,11 +97,17 @@ async function fetchPage(url, jwt, request, pause, log) {
 export async function pullSwapsResumable(window, jwt, options = {}) {
   if (!jwt) throw new Error('NEAR_INTENTS_JWT missing; add the partner JWT to .env.');
   const { dir = swapDir(window), request = fetch, pause = sleep, log = () => {}, maxPages = Infinity } = options;
+  const { tokenFilter, retainParticipants = false } = options;
+  if (tokenFilter && (!['toTokenId', 'fromTokenId'].includes(tokenFilter.side) ||
+      !Array.isArray(tokenFilter.ids) || !tokenFilter.ids.length ||
+      tokenFilter.ids.some(id => typeof id !== 'string' || !id))) throw new Error('Invalid Explorer token filter.');
   await mkdir(resolve(dir, 'pages'), { recursive: true, mode: 0o700 });
   const base = explorerParams(window);
-  const meta = { window: { start: window.start, end: window.end }, params: base };
+  if (tokenFilter) base[tokenFilter.side] = tokenFilter.ids;
+  const meta = { window: { start: window.start, end: window.end }, params: base, ...(retainParticipants ? { retainParticipants: true } : {}) };
   const existing = await readJSON(resolve(dir, 'pull.json'));
-  if (existing && JSON.stringify(existing.params) !== JSON.stringify(base)) {
+  if (existing && (JSON.stringify(existing.params) !== JSON.stringify(base) ||
+      Boolean(existing.retainParticipants) !== retainParticipants)) {
     throw new Error('Saved swap pull used different parameters; use a new directory.');
   }
   if (!existing) await atomic(resolve(dir, 'pull.json'), JSON.stringify({ ...meta, startedAt: new Date().toISOString() }, null, 2) + '\n');
@@ -126,9 +140,11 @@ export async function pullSwapsResumable(window, jwt, options = {}) {
   };
   let n = pages.length, fetched = 0;
   while (fetched < maxPages) {
-    const raw = await fetchPage(`${EXPLORER}?${new URLSearchParams(params)}`, jwt, paced, pause, log);
+    const query = new URLSearchParams(Object.entries(params).flatMap(([key, value]) =>
+      Array.isArray(value) ? value.map(id => [key, id]) : [[key, value]]));
+    const raw = await fetchPage(`${EXPLORER}?${query}`, jwt, paced, pause, log);
     fetched++;
-    const clean = cleanRows(raw, window, seen, last);
+    const clean = cleanRows(raw, window, seen, last, tokenFilter, retainParticipants);
     if (clean.length === 0 && raw.length >= Number(base.numberOfTransactions)) {
       throw new Error('Explorer timestamp pagination stalled: full page with no new rows.');
     }
