@@ -71,5 +71,5 @@ Run over all 7,513 saved pages after `complete.json` was written (2026-11-09T12:
 
 ## Clean-clone rebuild
 
-- `git clone` of commit `7799824` into a temporary folder had no `.env` and no `data/raw/`. All generated dashboard files were deleted, then `npm run rebuild` ran with `NEAR_INTENTS_JWT` and `GOOGLE_CLOUD_PROJECT` unset. It printed T1 FAIL, T2 CAN'T TELL, T3 FAIL.
+- `git clone` of commit `0762b05` into a temporary folder had no `.env` and no `data/raw/`. All generated dashboard files were deleted, then `npm run rebuild` ran with `NEAR_INTENTS_JWT` and `GOOGLE_CLOUD_PROJECT` unset. It printed T1 FAIL, T2 CAN'T TELL, T3 FAIL.
 - `git status` in the clone was empty afterwards, so every regenerated file is byte-identical to the commit. SHA-256 of all 16 files in `dashboard/` (charts, `charts.json`, `NUMBERS.md`, `index.html`, `thesis.html`, `style.css`, `THESIS.md`) matched the working tree, with no extra or missing files. The untracked `dashboard/preview.png` was excluded.
