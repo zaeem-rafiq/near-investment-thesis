@@ -18,6 +18,11 @@ test('position section recomputes from public evidence and reconciles locked che
   assert.equal(metrics['position.check1.coverage'], '77.75%');
   assert.equal(metrics['position.oneClick.nearPercent'], '2.07%');
   assert.equal(metrics['position.call.result'], 'Not yet');
+  const queryRecord = await readFile(`${ROOT}/docs/query-changes.md`, 'utf8');
+  const positionRecord = await readFile(`${ROOT}/docs/position-results.md`, 'utf8');
+  assert.ok(queryRecord.includes(`${metrics['position.audit.sampleRows']} rows`));
+  assert.ok(queryRecord.includes(`${metrics['position.audit.sampleDifferences']} rows in one result`));
+  assert.ok(positionRecord.includes(`${metrics['position.audit.walletScanProjectedGb']} GB projection`));
 });
 
 test('position evidence rejects missing or changed registered sources', async () => {

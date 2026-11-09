@@ -33,6 +33,8 @@ try {
     manifest.files[name] = { path, sha256: hash(body) };
   };
   await save('position_inputs', 'position-inputs.json', { wallets, signerDays,
+    audit: { source: 'docs/query-changes.md; docs/position-results.md (owner-reviewed source-work records)',
+      sampleRows: 18503984, sampleDifferences: 0, sampleDays: 4, walletScanProjectedGb: 1053 },
     note: 'Successful external native TRANSFER outflows; internal moves and not_received excluded. No wNEAR transfers found. Frozen receiver means come only from signer-top10.json, not a new full receiver ranking.' });
   for (const [name, file] of [['staking', 'staking.json'], ['protocol_share', 'protocol-share.json']]) {
     await save(name, file, await read(`data/public/${file}`));

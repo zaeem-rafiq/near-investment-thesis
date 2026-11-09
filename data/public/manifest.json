@@ -53,7 +53,7 @@
     },
     "position_inputs": {
       "path": "data/public/position-inputs.json",
-      "sha256": "31dd633e9fcb8a06e939e53fc1b80663dff3780cc5afa768a7afb9812d0059dd"
+      "sha256": "e146e9c9911549ab9f2acd22d064d8040d3fced366d8e740ab384eb493ab93b5"
     },
     "staking": {
       "path": "data/public/staking.json",

@@ -4938,5 +4938,12 @@
       "everyone_else": "3484"
     }
   ],
+  "audit": {
+    "source": "docs/query-changes.md; docs/position-results.md (owner-reviewed source-work records)",
+    "sampleRows": 18503984,
+    "sampleDifferences": 0,
+    "sampleDays": 4,
+    "walletScanProjectedGb": 1053
+  },
   "note": "Successful external native TRANSFER outflows; internal moves and not_received excluded. No wNEAR transfers found. Frozen receiver means come only from signer-top10.json, not a new full receiver ranking."
 }

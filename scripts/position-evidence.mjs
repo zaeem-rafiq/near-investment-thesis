@@ -81,13 +81,13 @@ export async function loadPositionEvidence(manifest, root = ROOT) {
   }
   const totalVolume = data.near_flows.weeks.reduce((s, w) => s + Number(w.total_usd), 0);
   const nearVolume = p.check1.provisional.buysUsd + p.check1.provisional.sellsUsd;
-  return { section, results: p, top10: data.signer_top10, oneClick: {
+  return { section, results: p, top10: data.signer_top10, audit: extra.audit, oneClick: {
     totalUsd: totalVolume, nearUsd: nearVolume, nearShare: nearVolume / totalVolume
   } };
 }
 
 // Stable decimal formatting for tagged prose. Percentages are explicit extra keys.
-export function positionMetricValues({ section, results: p, oneClick }) {
+export function positionMetricValues({ section, results: p, oneClick, audit }) {
   const values = {}, fmt = n => n == null ? 'Unavailable'
     : new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(n);
   function walk(value, key) {
@@ -114,8 +114,21 @@ export function positionMetricValues({ section, results: p, oneClick }) {
   percent('position.sender.rowsPercent', p.check1.senderCoverage.share);
   percent('position.sender.usdPercent', p.check1.senderCoverage.usdShare);
   walk(oneClick, 'position.oneClick');
+  walk(audit, 'position.audit');
   percent('position.oneClick.nearPercent', oneClick.nearShare);
-  values['position.oneClick.nearMillions'] = fmt(oneClick.nearUsd / 1e6);
+  values['position.oneClick.nearMillions'] = new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(oneClick.nearUsd / 1e6);
+  values['position.latestClose'] = String(section.inputs.latestClose);
   values['position.oneClick.totalBillions'] = fmt(oneClick.totalUsd / 1e9);
+  for (const [name, scenario] of Object.entries(section.scenarios)) {
+    walk(scenario.inputs, `position.scenarios.${name}.inputs`);
+  }
+  for (const [name, result] of Object.entries(p.descriptive)) {
+    if (result?.shareOfIssuanceValue != null) percent(`position.descriptive.${name}.coverage`, result.shareOfIssuanceValue);
+  }
+  for (const [cut, group] of Object.entries(p.descriptive.concentration)) {
+    if (cut.startsWith('withoutTop')) for (const [n, row] of Object.entries(group)) {
+      percent(`position.concentration.${cut}.${n}.coverage`, row.share);
+    }
+  }
   return values;
 }

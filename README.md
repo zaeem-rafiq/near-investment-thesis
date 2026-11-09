@@ -1,6 +1,8 @@
 # NEAR / Evidence ledger
 
-We tested three reasons to own NEAR against public chain data and 7,509,299 real swaps, and none of them passed.
+**Position call through 2031: Not yet.** The later position rule does not support opening or adding on this evidence. Read `THESIS.md` for the holder ledger, concentration, review calendar and scenario inputs. General research opinion, not personal advice; no portfolio share is given.
+
+The original research tested three claims against public chain data and 7,509,299 real swaps, and none passed. Those claims and results remain unchanged:
 
 Mean daily signing accounts fell **73.1% year over year**. Fee burn offset **1.56% of new supply**, about **0.5 million NEAR burned versus 32.1 million issued**. Signers are accounts that signed a transaction, not people; burn is NEAR destroyed as fees.
 
@@ -24,11 +26,13 @@ The dashboard exposes every chart, value table and query. `THESIS.md` gives the 
 
 Requires Node.js 22 or newer. No npm dependencies, no install step.
 
-1. Run `npm test`. You should see 45 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
+1. Run `npm test`. You should see 158 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
 2. Run `npm run rebuild`. This rebuilds charts and number tables in `dashboard/` from `data/public/`, with no credentials or network access. It verifies, but never overwrites, `THESIS.md`. The last line prints the T1, T2 and T3 results.
 3. Run `open dashboard/index.html` on macOS, or open that file in any browser. You'll see the conclusion and two headline numbers; click **See the evidence** to reach the first chart, with its query and expandable values table. The thesis link opens `dashboard/thesis.html`, a readable page generated from `THESIS.md` during rebuild, with the metric tags removed.
 
 The committed BigQuery aggregates, price candles and daily 1Click totals reproduce all three results on a fresh clone: T1 FAIL, T2 CAN'T TELL, T3 FAIL. `data/raw/` and `.env` are not needed for rebuild.
+
+The thesis now also verifies the later position checks and recomputes the holder ledger and scenarios from hashed public inputs. These additions are separate from the original T1–T3 tests. Future review windows are not yet runnable: the thesis lists the dates, downgrade rules and parameters that must first be generalized. `node scripts/export-position-section.mjs` reproduces the current descriptive export from already completed local histories; it does not refresh sources. The public snapshot needs no private histories to rebuild.
 
 `dashboard/NUMBERS.md` is generated. `THESIS.md` is not. If the evidence table or a `<!-- metric:key -->value<!-- /metric -->` claim in the thesis differs from public data, rebuild exits nonzero. Review the generated table, update the thesis by hand, and rerun. Keep all computed claims in the evidence table or tagged spans; dates, source facts and rule thresholds are separate. This is structured metric verification, not natural-language fact checking.
 
@@ -64,6 +68,8 @@ Weekly fee burn stays small beside new supply, explaining the failed holder-valu
 
 The generated thesis page presents the hand-written argument and its unchanged results.
 
+These captures show the earlier thesis layout. The current thesis starts with the later position call and its disclosures; the dashboard first screen has not been redesigned.
+
 ## Reproduce from live sources
 
 1. Copy `.env.example` to `.env` and set `GOOGLE_CLOUD_PROJECT` (a project that can run BigQuery jobs) and `NEAR_INTENTS_JWT` (from the [partner dashboard](https://partners.near-intents.org/)). Never commit `.env`.
@@ -78,7 +84,7 @@ Refresh reuses a saved BigQuery result when its SQL text and literal date window
 
 ## Source-tool features used
 
-- **BigQuery literal `block_date` filters:** partition-scoped queries plus dry runs and cached results kept cumulative billed scans to **242.87 GB**.
+- **BigQuery literal `block_date` filters:** partition-scoped queries plus dry runs and cached results kept the original core-source scans to **242.87 GB**. Later position work has separate lower-budget guards and query-change disclosures.
 - **BigQuery `transactions` and `blocks` tables:** signer counts test account activity, while linked block `total_supply` changes measure fee burn against new issuance.
 - **1Click Explorer API status and timestamp filters:** `statuses=SUCCESS` selects successful swaps and bounded timestamp paging retrieves the **7,509,299** observed swaps without losing reused deposit addresses.
 

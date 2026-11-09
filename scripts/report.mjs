@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { ROOT, hash, QUERIES, EXPLORER, PRICE_SOURCE, explorerParams, literalDateFilters } from './sources.mjs';
 import { savedPages, readPage } from './swaps.mjs';
+import { loadPositionEvidence, positionMetricValues } from './position-evidence.mjs';
 
 export const escape = s => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 const fmt = (n, digits = 2) => n == null || !Number.isFinite(n) ? 'Unavailable' : new Intl.NumberFormat('en-US', { maximumFractionDigits: digits }).format(n);
@@ -432,6 +433,13 @@ export async function loadSources(root = ROOT) {
     const pub = await readPublic(root, files.swaps, 'swaps'), days = parseSwapDays(pub);
     sources.swaps = { data: { days, weeks: weeklyFromDaily(days), rows: pub.rows, pages: pub.pages, completedAt: pub.completedAt }, entry: files.swaps };
   } else sources.swaps = { reason: why('swaps') };
+  if (files.position_results) {
+    const evidence = await loadPositionEvidence(manifest, root);
+    const saved = await readPublic(root, files.position_section, 'position_section');
+    if (JSON.stringify(saved) !== JSON.stringify(evidence.section)) throw new Error('Position section differs from its public inputs.');
+    assertNoWalletFields(evidence);
+    sources.position = { data: evidence };
+  }
   return { manifest, sources };
 }
 
@@ -450,7 +458,7 @@ export function analyse(sources) {
   const t3 = t3Test(d('supply'), d('burn'));
   const coverage = d('coverage');
   const duplicates = coverage ? [...coverage.values()].filter(c => c.duplicates > 0) : [];
-  return { t1, t2, t2sens, series, t3, duplicates };
+  return { t1, t2, t2sens, series, t3, duplicates, position: d('position') };
 }
 // ---------- charts ----------
 // points: [{ x, v, v2?, excluded? }]; gaps (null) break the line.
@@ -574,6 +582,7 @@ export function metricValues(a) {
   }
   values['t3.atLeast10'] = String(a.t3.atLeast10 ?? 'Unavailable');
   values['t3.atMost5'] = String(a.t3.atMost5 ?? 'Unavailable');
+  if (a.position) Object.assign(values, positionMetricValues(a.position));
   return values;
 }
 export function numberTables(a) {
