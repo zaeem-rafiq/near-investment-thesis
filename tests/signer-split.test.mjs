@@ -15,8 +15,9 @@ test('signer split has one bounded table reference and freezes ranking before th
   const sql = await readFile(resolve(ROOT, 'sql/signer_split.sql'), 'utf8');
   assert.deepEqual(literalDateFilters(sql), [{ table: 'transactions', start: '2024-11-01', end: '2026-11-01' }]);
   assert.match(sql, /COUNTIF\(block_date < DATE '2025-11-01'\)/);
-  assert.match(sql, /DENSE_RANK\(\) OVER \(ORDER BY earlier_signer_days DESC, receiver_account_id\)/);
-  assert.match(sql, /LOGICAL_OR\(receiver_rank <= 10 AND earlier_signer_days > 0\)/);
+  assert.match(sql, /WHERE earlier_signer_days > 0\s+ORDER BY earlier_signer_days DESC, receiver_account_id LIMIT 10/);
+  assert.match(sql, /LOGICAL_OR\(is_top10\)/);
+  assert.doesNotMatch(sql.replace(/--[^\n]*/g, ''), /OVER \(ORDER BY/);
   assert.throws(() => literalDateFilters(sql.replace("'2026-11-01'", "'2027-11-01'")), /800 days/);
 });
 test('split check requires both exclusive groups to sum to signers on every day', () => {

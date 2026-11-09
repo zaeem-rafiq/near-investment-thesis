@@ -17,6 +17,10 @@ Expected: all tests pass; rebuild prints `T1 FAIL, T2 CAN'T TELL, T3 FAIL`;
 both diff commands produce no output and exit zero in a clean checkout.
 No final position-check results are claimed by this guide.
 
+Query change: on 2026-11-09 only the ranking step of `sql/signer_split.sql`
+changed, after its first job failed on memory with 0 bytes billed and no result
+seen. The cohort definition did not change; see `docs/query-changes.md`.
+
 ## Verify each timestamp against its actual file
 
 Install `uv` and use the OpenTimestamps client. Verification of Bitcoin
