@@ -60,3 +60,7 @@ footer { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 tr.excluded td { color: #6b7280; }
 .pass, .fail, .unclear { font-weight: 700; }
+.thesis h1 { margin-top: 0; }
+.thesis h2 { margin-top: 48px; }
+.thesis ul { max-width: 65ch; padding-left: 20px; }
+.thesis li { margin: 6px 0; }

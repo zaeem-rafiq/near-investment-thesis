@@ -1,4 +1,4 @@
-# NEAR: three tests, fixed before the data
+# NEAR: three tests, fixed before the results
 
 Track: Investment Thesis (`thesis`). All times UTC. This is not a valuation or investment advice.
 
@@ -14,6 +14,30 @@ The pass/fail thresholds below were fixed before metrics were computed. The T3 b
 
 None of the three claims passed. Two failed outright. The third could not be decided under its fixed rule because neither volume nor price showed a reliable lead. On this evidence, recent NEAR activity does not support a thesis of broadening usage that accrues to holders through burn. The tests cannot rule out other sources of value; they test only these three claims.
 
+## Claim
+
+NEAR usage is broadening (T1); 1Click swap volume leads that usage better than the NEAR price does (T2); and usage reaches holders through fee burn (T3). Together these would support holding NEAR as a bet on broad, growing activity that accrues to the token.
+
+## Evidence for
+
+- 1Click grew fast. In the latest 13 complete weeks (from 2026-08-03) it handled <!-- metric:oneClick.latest.swaps -->2,005,609<!-- /metric --> successful swaps and <!-- metric:oneClick.latest.volume -->3,804,396,974<!-- /metric --> USD of input volume. In the same 13 weeks a year earlier (from 2025-08-04) it handled <!-- metric:oneClick.previous.swaps -->489,406<!-- /metric --> swaps and <!-- metric:oneClick.previous.volume -->821,906,590<!-- /metric --> USD. That is <!-- metric:oneClick.swaps.change -->+309.8%<!-- /metric --> in swaps and <!-- metric:oneClick.volume.change -->+362.9%<!-- /metric --> in volume. This comparison is descriptive and is not one of the three tests.
+- Transaction concentration fell slightly. The top-10 signers' share moved from <!-- metric:t1.top10.previous -->80.47%<!-- /metric --> to <!-- metric:t1.top10.latest -->79.35%<!-- /metric --> (<!-- metric:t1.top10.changePp -->-1.12 pp<!-- /metric -->).
+- At an 8-week lag, the 90% interval for the volume advantage over price was above zero (<!-- metric:t2.lag8.ci.low -->0.02<!-- /metric --> to <!-- metric:t2.lag8.ci.high -->0.304<!-- /metric -->), although volume's own correlation was near zero.
+- Burn is real. Supply falls totalled <!-- metric:t3.burnt -->500,289.94<!-- /metric --> NEAR over the 52 T3 weeks.
+
+## Evidence against
+
+- Breadth contracted sharply. Mean daily signers changed by <!-- metric:t1.signers.change -->-73.1%<!-- /metric -->, receiver accounts by <!-- metric:t1.receivers.change -->-38.5%<!-- /metric -->, and accounts active on 2 or more days a month by <!-- metric:t1.accounts2.change -->-66%<!-- /metric -->.
+- The fall in top-10 share (<!-- metric:t1.top10.changePp -->-1.12 pp<!-- /metric -->) is far short of the 5 points the rule requires.
+- 1Click volume changes had near-zero correlation with later signer changes: <!-- metric:t2.lag1.rv -->0<!-- /metric -->, <!-- metric:t2.lag2.rv -->-0.065<!-- /metric -->, <!-- metric:t2.lag4.rv -->0.013<!-- /metric --> and <!-- metric:t2.lag8.rv -->-0.004<!-- /metric --> at lags of 1, 2, 4 and 8 weeks. 1Click grew while T1 signer counts fell, so its growth did not appear as broader NEAR account activity in these measures.
+- Burn offset only <!-- metric:t3.offset -->1.56%<!-- /metric --> of gross new supply. <!-- metric:t3.atLeast10 -->0<!-- /metric --> of 52 weeks reached 10%, and <!-- metric:t3.atMost5 -->52<!-- /metric --> were at or below 5%.
+
+## What would change my mind
+
+- **T1:** a later 12-month comparison in which mean daily signers, receiver accounts and accounts active on 2 or more days each rise by at least 20%, and the top-10 share falls by at least 5 points. Today those changes are <!-- metric:t1.signers.change -->-73.1%<!-- /metric -->, <!-- metric:t1.receivers.change -->-38.5%<!-- /metric -->, <!-- metric:t1.accounts2.change -->-66%<!-- /metric --> and <!-- metric:t1.top10.changePp -->-1.12 pp<!-- /metric -->.
+- **T2:** the same rule, run on a longer future window, finding at two or more lags a volume correlation of at least 0.30 that beats price by at least 0.15, wins in both halves and has a 90% interval above zero. Today the highest volume correlation is <!-- metric:t2.lag4.rv -->0.013<!-- /metric -->. Price winning at two lags under the same conditions would turn the result into a FAIL.
+- **T3:** a 52-week window in which burn offsets at least 20% of gross new supply and at least 39 weeks reach 10%. Today the offset is <!-- metric:t3.offset -->1.56%<!-- /metric -->, with <!-- metric:t3.atLeast10 -->0<!-- /metric --> weeks at 10% or more.
+
 ## T1. Usage is broadening
 
 **Rule.** Compare the latest 12 complete months (2025-11-01 to 2026-10-31) with the preceding 12 (2024-11-01 to 2025-10-31).
@@ -27,9 +51,11 @@ Top-10 share uses the largest signers across each full 12-month period, not an a
 
 **Rule.** Use Monday-start weekly percentage changes in 1Click input USD volume, weekly mean NEAR/USD daily closes, and usage (weekly mean of daily signers). At lags of 1, 2, 4 and 8 weeks, correlate this week's volume and price changes with later usage changes, pooling overlapping weeks. Start at the first complete week with at least 7,000 successful swaps. Show earlier weeks but exclude them from the test. Require at least 52 weekly changes.
 
+**When the start rule was set.** The 7,000-swap start rule was set after the Step 1 spot samples of the daily swap rate, and before any weekly volume was computed.
+
 Pass if, at two or more lags, volume correlation is at least 0.30, exceeds price correlation by at least 0.15, beats price in both chronological halves, and the 90% paired moving-block bootstrap interval for the advantage is above zero. Use 4-week blocks, 10,000 resamples and fixed seed 20261108 (plus the lag). Fail if price wins at two or more lags under the same conditions, without the 0.30 floor. Otherwise can't tell.
 
-**Result: <!-- metric:t2.verdict -->CAN'T TELL<!-- /metric -->.** The full 1Click pull is complete and aggregated. The first complete week with at least 7,000 successful swaps is <!-- metric:t2.start -->2025-04-14<!-- /metric -->. From there the test has <!-- metric:t2.changes -->78<!-- /metric --> weekly changes, above the 52 minimum, so this is a decided rule outcome, not missing data.
+**Result: <!-- metric:t2.verdict -->CAN'T TELL<!-- /metric -->.** The full 1Click pull is complete and aggregated. The first complete week with at least 7,000 successful swaps is <!-- metric:t2.start -->2025-04-14<!-- /metric -->. The test covers <!-- metric:t2.weeks -->81<!-- /metric --> weeks from there. Week <!-- metric:t2.volumeUnavailable.weeks -->2026-02-02<!-- /metric --> has <!-- metric:t2.volumeUnavailable.missingUsd -->2<!-- /metric --> swaps with no USD value out of <!-- metric:t2.volumeUnavailable.swaps -->182,281<!-- /metric -->. The rule therefore makes that week's volume unavailable, and the two weekly changes touching it drop out. That leaves <!-- metric:t2.changes -->78<!-- /metric --> weekly changes, above the 52 minimum, so this is a decided rule outcome, not missing data.
 
 Volume never reached the 0.30 correlation floor. Its correlation with later usage changes was <!-- metric:t2.lag1.rv -->0<!-- /metric -->, <!-- metric:t2.lag2.rv -->-0.065<!-- /metric -->, <!-- metric:t2.lag4.rv -->0.013<!-- /metric --> and <!-- metric:t2.lag8.rv -->-0.004<!-- /metric --> at lags of 1, 2, 4 and 8 weeks. No lag therefore favours volume, so the test cannot pass.
 
@@ -39,9 +65,9 @@ Price also did not win at two lags, so the test does not fail:
 - At lag 8, the advantage interval, <!-- metric:t2.lag8.ci.low -->0.02<!-- /metric --> to <!-- metric:t2.lag8.ci.high -->0.304<!-- /metric -->, sits above zero only because both correlations are near zero or negative (price <!-- metric:t2.lag8.rp -->-0.187<!-- /metric -->). Price beat volume in the second half (<!-- metric:t2.lag8.half2.rp -->-0.165<!-- /metric --> against <!-- metric:t2.lag8.half2.rv -->-0.177<!-- /metric -->).
 - Lags 2 and 4 favour neither, with advantages of <!-- metric:t2.lag2.advantage -->-0.104<!-- /metric --> and <!-- metric:t2.lag4.advantage -->0.004<!-- /metric -->.
 
-**Interpretation.** Weekly changes in 1Click volume carried almost no information about later changes in NEAR signers. The claim that 1Click activity is a leading indicator of chain usage is not supported. The rule's failure condition, price clearly leading instead, was not met either. For an investor, 1Click volume should be read as its own business metric, not as a proxy for NEAR usage or token demand.
+**Interpretation.** Weekly changes in 1Click volume had near-zero correlations with later changes in NEAR signers, from <!-- metric:t2.lag2.rv -->-0.065<!-- /metric --> to <!-- metric:t2.lag4.rv -->0.013<!-- /metric --> across the four lags. The claim that 1Click activity is a leading indicator of chain usage is not supported. The rule's failure condition, price clearly leading instead, was not met either. For an investor, 1Click volume should be read as its own business metric, not as a proxy for NEAR usage.
 
-**Disclosed feature of the fixed start.** The start week is an isolated early spike. The following 15 weeks fall below 7,000 swaps, and the next week at or above 7,000 is 2025-08-04. As the rule specifies, those weeks stay in the test. No alternative start was tested, and any later sensitivity check would not be pre-registered.
+**Disclosed feature of the fixed start.** The start week is an isolated early spike of <!-- metric:t2.startSwaps -->8,568<!-- /metric --> swaps. The following <!-- metric:t2.weeksBelowMinAfterStart -->15<!-- /metric --> weeks fall below 7,000 swaps, and the next week at or above 7,000 is <!-- metric:t2.nextWeekAtMin -->2025-08-04<!-- /metric -->. As the rule specifies, those weeks stay in the test. No alternative start was tested, and any later sensitivity check would not be pre-registered.
 
 The feed covers **1Click only**, not all NEAR Intents. The first successful swap observed in the feed is dated 2025-03-27. Weekly input USD volume is not protocol revenue and does not establish demand for the NEAR token.
 
@@ -81,6 +107,19 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | t1.top10.changePp | -1.12 pp |
 | t2.start | 2025-04-14 |
 | t2.changes | 78 |
+| t2.weeks | 81 |
+| t2.startSwaps | 8,568 |
+| t2.weeksBelowMinAfterStart | 15 |
+| t2.nextWeekAtMin | 2025-08-04 |
+| t2.volumeUnavailable.weeks | 2026-02-02 |
+| t2.volumeUnavailable.missingUsd | 2 |
+| t2.volumeUnavailable.swaps | 182,281 |
+| oneClick.previous.swaps | 489,406 |
+| oneClick.latest.swaps | 2,005,609 |
+| oneClick.swaps.change | +309.8% |
+| oneClick.previous.volume | 821,906,590 |
+| oneClick.latest.volume | 3,804,396,974 |
+| oneClick.volume.change | +362.9% |
 | t2.lag1.pairs | 77 |
 | t2.lag1.rv | 0 |
 | t2.lag1.rp | 0.284 |
@@ -138,7 +177,7 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | t3.atMost5 | 52 |
 <!-- evidence:end -->
 
-T1 account counts are period means; `change` is relative change, except `changePp`, which is percentage points. T3 quantities are NEAR; `fields` and `fieldOffset` are comparisons only, not the burn definition. `atLeast10` and `atMost5` count weeks meeting the corresponding percentage threshold. T2 `rv` and `rp` are Pearson correlations of weekly percentage changes with usage changes `lag` weeks later; `advantage` is `rv − rp`; `ci` is its 90% paired moving-block bootstrap interval; `half1` and `half2` are the chronological halves of the pairs; `favours` applies every pass or fail condition at that lag.
+T1 account counts are period means; `change` is relative change, except `changePp`, which is percentage points. T3 quantities are NEAR; `fields` and `fieldOffset` are comparisons only, not the burn definition. `atLeast10` and `atMost5` count weeks meeting the corresponding percentage threshold. T2 `rv` and `rp` are Pearson correlations of weekly percentage changes with usage changes `lag` weeks later; `advantage` is `rv − rp`; `ci` is its 90% paired moving-block bootstrap interval; `half1` and `half2` are the chronological halves of the pairs; `favours` applies every pass or fail condition at that lag. `t2.weeks` counts weeks in the test; `t2.volumeUnavailable` rows give in-test weeks whose volume is unavailable because some swaps lack USD values. `oneClick` rows compare the latest 13 complete weeks with the same 13 weeks a year earlier; they are descriptive, not a test.
 
 ## Definitions, quality and limits
 

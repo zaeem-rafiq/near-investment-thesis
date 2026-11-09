@@ -19,6 +19,19 @@
 | t1.top10.changePp | -1.12 pp |
 | t2.start | 2025-04-14 |
 | t2.changes | 78 |
+| t2.weeks | 81 |
+| t2.startSwaps | 8,568 |
+| t2.weeksBelowMinAfterStart | 15 |
+| t2.nextWeekAtMin | 2025-08-04 |
+| t2.volumeUnavailable.weeks | 2026-02-02 |
+| t2.volumeUnavailable.missingUsd | 2 |
+| t2.volumeUnavailable.swaps | 182,281 |
+| oneClick.previous.swaps | 489,406 |
+| oneClick.latest.swaps | 2,005,609 |
+| oneClick.swaps.change | +309.8% |
+| oneClick.previous.volume | 821,906,590 |
+| oneClick.latest.volume | 3,804,396,974 |
+| oneClick.volume.change | +362.9% |
 | t2.lag1.pairs | 77 |
 | t2.lag1.rv | 0 |
 | t2.lag1.rp | 0.284 |

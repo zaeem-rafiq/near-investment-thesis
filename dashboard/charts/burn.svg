@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" role="img" aria-label="Weekly burn vs gross new supply">
   <title>Weekly burn vs gross new supply</title><desc> Gaps represent missing values. Exact values are in the adjacent table.</desc>
   <g fill="none" stroke="#e5e5e5"><path d="M80 40H840 M80 130H840 M80 220H840"/></g>
-  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">673,568</text>
-  <text x="72" y="134" text-anchor="end">336,784</text><text x="72" y="224" text-anchor="end">0</text>
+  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">673.6K</text>
+  <text x="72" y="134" text-anchor="end">336.8K</text><text x="72" y="224" text-anchor="end">0</text>
   <text x="80" y="252">2025-11-03</text><text x="840" y="252" text-anchor="end">2026-10-26</text><text x="80" y="20">NEAR</text></g>
   <g font-family="system-ui,sans-serif"></g>
 <path d="M80.00,55.22 L94.90,54.68 L109.80,62.85 L124.71,55.96 L139.61,53.21 L154.51,61.71 L169.41,53.93 L184.31,55.20 L199.22,61.92 L214.12,55.70 L229.02,56.86 L243.92,55.16 L258.82,55.55 L273.73,56.47 L288.63,56.98 L303.53,48.98 L318.43,62.25 L333.33,48.57 L348.24,56.73 L363.14,56.85 L378.04,57.46 L392.94,50.89 L407.84,58.20 L422.75,56.22 L437.65,49.68 L452.55,58.77 L467.45,51.40 L482.35,54.13 L497.25,54.52 L512.16,55.50 L527.06,54.16 L541.96,58.69 L556.86,54.67 L571.76,55.19 L586.67,54.61 L601.57,53.84 L616.47,52.75 L631.37,52.78 L646.27,52.90 L661.18,53.07 L676.08,59.77 L690.98,52.42 L705.88,52.29 L720.78,49.53 L735.69,58.10 L750.59,52.08 L765.49,54.73 L780.39,49.12 L795.29,58.06 L810.20,52.53 L825.10,50.99 L840.00,51.64 " fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="6 3"/><text x="840" y="20" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#2563eb">dashed: gross new supply</text>

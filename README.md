@@ -15,9 +15,9 @@ The results are in `THESIS.md` and `dashboard/index.html`. The swap data is **1C
 
 Requires Node.js 22 or newer. No npm dependencies, no install step.
 
-1. Run `npm test`. You should see 39 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
+1. Run `npm test`. You should see 41 passing tests, including synthetic rule fixtures and checks of the committed public snapshot.
 2. Run `npm run rebuild`. This rebuilds charts and number tables in `dashboard/` from `data/public/`, with no credentials or network access. It verifies, but never overwrites, `THESIS.md`. The last line prints the T1, T2 and T3 results.
-3. Open `dashboard/index.html`. You'll see the three results, then every chart with its query and an expandable values table.
+3. Open `dashboard/index.html`. You'll see the three results, then every chart with its query and an expandable values table. The thesis link opens `dashboard/thesis.html`, a readable page generated from `THESIS.md` during rebuild, with the metric tags removed.
 
 The committed BigQuery aggregates, price candles and daily 1Click totals reproduce all three results on a fresh clone: T1 FAIL, T2 CAN'T TELL, T3 FAIL. `data/raw/` and `.env` are not needed for rebuild.
 
@@ -73,6 +73,6 @@ Raw swap pages contain deposit addresses for deduplication and stay in ignored `
 
 ## Hackathon notes
 
-Built during the hackathon window with Node.js standard libraries only. No third-party template or earlier project code. No deployment, transaction, repository publication or submission has been made. Before submitting, re-read the live `HACKATHON.md` and confirm the payload with the team.
+Built during the hackathon window with Node.js standard libraries only. No third-party template or earlier project code. AI code (Q-005): the code was written with Factory Droid and overseen by Claude Code. No deployment, transaction, repository publication or submission has been made. Before submitting, re-read the live `HACKATHON.md` and confirm the payload with the team.
 
 License: MIT. See `LICENSE`.

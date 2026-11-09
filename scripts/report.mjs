@@ -271,7 +271,7 @@ export function t2Series(swaps, signers, prices) {
     const s = swaps?.get(week) || (swaps ? { swaps: 0, volume: 0, volumeExact: '0', missingUsd: 0 } : null);
     const usageVals = days.map(d => signers?.days.get(d)?.signers);
     const priceVals = days.map(d => priceByDay.get(d));
-    return { week, swaps: s?.swaps ?? null, volume: s?.volume ?? null, volumeExact: s?.volumeExact ?? null,
+    return { week, swaps: s?.swaps ?? null, missingUsd: s?.missingUsd ?? null, volume: s?.volume ?? null, volumeExact: s?.volumeExact ?? null,
       usage: usageVals.every(v => v != null) ? usageVals.reduce((a, b) => a + b, 0) / 7 : null,
       price: priceVals.every(v => v != null) ? priceVals.reduce((a, b) => a + b, 0) / 7 : null };
   });
@@ -446,16 +446,18 @@ export function seriesSVG({ title, unit, points, lines = [], second, note }) {
   const max = unit === 'share' ? Math.max(0.3, ...vals) : Math.max(...vals, ...lines.map(l => l.value), 1) * 1.05;
   const x = i => 80 + i * 760 / Math.max(1, points.length - 1), y = v => 220 - Math.max(0, v) / max * 180;
   const label = n => unit === 'share' ? share(n, 0) : fmt(n, n >= 100 ? 0 : 2);
+  // Full digits overflow the 80px left margin; axis ticks use compact notation, tooltips and tables stay exact.
+  const tick = n => unit !== 'share' && max >= 1e5 ? new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(n) : label(n);
   const path = key => { let s = '', on = false; points.forEach((p, i) => { const v = p[key]; if (v == null) { on = false; return; } s += `${on ? 'L' : 'M'}${x(i).toFixed(2)},${y(v).toFixed(2)} `; on = true; }); return s; };
   const dots = points.map((p, i) => p.v == null ? '' : `<circle cx="${x(i).toFixed(2)}" cy="${y(p.v).toFixed(2)}" r="${p.excluded ? 3 : 2.5}" fill="${p.excluded ? '#ffffff' : '#171717'}" stroke="${p.excluded ? '#9ca3af' : '#171717'}"><title>${escape(p.x)}: ${escape(label(p.v))}${p.excluded ? ' (excluded from test)' : ''}</title></circle>`).join('');
   const excludedCount = points.filter(p => p.excluded).length;
-  const shade = excludedCount ? `<rect x="80" y="40" width="${(x(excludedCount - 1) - 80 + 380 / Math.max(1, points.length - 1)).toFixed(2)}" height="180" fill="#f3f4f6"/><text x="84" y="56" font-size="12" fill="#6b7280">Excluded from T2 test</text>` : '';
+  const shade = excludedCount ? `<rect x="80" y="40" width="${(x(excludedCount - 1) - 80 + 380 / Math.max(1, points.length - 1)).toFixed(2)}" height="180" fill="#f3f4f6"/><text x="84" y="34" font-family="system-ui,sans-serif" font-size="12" fill="#6b7280">Excluded from T2 test</text>` : '';
   const ref = lines.map(l => `<path d="M80 ${y(l.value).toFixed(2)}H840" stroke="#b91c1c" stroke-dasharray="4 4"/><text x="838" y="${(y(l.value) - 4).toFixed(2)}" text-anchor="end" font-size="12" fill="#b91c1c">${escape(l.label)}</text>`).join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" role="img" aria-label="${escape(title)}">
   <title>${escape(title)}</title><desc>${escape(note || '')} Gaps represent missing values. Exact values are in the adjacent table.</desc>
   ${shade}<g fill="none" stroke="#e5e5e5"><path d="M80 40H840 M80 130H840 M80 220H840"/></g>
-  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">${label(max)}</text>
-  <text x="72" y="134" text-anchor="end">${label(max / 2)}</text><text x="72" y="224" text-anchor="end">0</text>
+  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">${tick(max)}</text>
+  <text x="72" y="134" text-anchor="end">${tick(max / 2)}</text><text x="72" y="224" text-anchor="end">0</text>
   <text x="80" y="252">${escape(points[0].x)}</text><text x="840" y="252" text-anchor="end">${escape(points.at(-1).x)}</text><text x="80" y="20">${escape(unit)}</text></g>
   <g font-family="system-ui,sans-serif">${ref}</g>
 ${second ? `<path d="${path('v2')}" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="6 3"/><text x="840" y="20" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#2563eb">dashed: ${escape(second)}</text>` : ''}
@@ -516,6 +518,25 @@ export function metricValues(a) {
   }
   values['t2.start'] = a.t2.start || 'none';
   values['t2.changes'] = String(a.t2.changes);
+  const inTest = (a.series?.rows || []).filter(r => !r.excluded), sum = (rs, k) => rs.some(r => r[k] == null) ? null : rs.reduce((s, r) => s + r[k], 0);
+  values['t2.weeks'] = String(inTest.length);
+  values['t2.startSwaps'] = fmt(inTest[0]?.swaps, 0);
+  const next = inTest.slice(1).findIndex(r => r.swaps >= CAL.t2.minSwaps);
+  values['t2.weeksBelowMinAfterStart'] = inTest.length ? String(next < 0 ? inTest.length - 1 : next) : 'Unavailable';
+  values['t2.nextWeekAtMin'] = next < 0 ? 'none' : inTest[next + 1].week;
+  const noUsd = inTest.filter(r => r.volume == null);
+  values['t2.volumeUnavailable.weeks'] = noUsd.map(r => r.week).join(', ') || 'none';
+  values['t2.volumeUnavailable.missingUsd'] = fmt(sum(noUsd, 'missingUsd'), 0);
+  values['t2.volumeUnavailable.swaps'] = fmt(sum(noUsd, 'swaps'), 0);
+  // Descriptive 1Click growth, not a test: the latest 13 complete weeks against the same 13 weeks a year earlier.
+  const span = from => (a.series?.rows || []).filter(r => r.week >= from && r.week < addDays(from, 7 * 13));
+  const [prev, last] = [span('2025-08-04'), span('2026-08-03')];
+  for (const k of ['swaps', 'volume']) {
+    const p = prev.length === 13 ? sum(prev, k) : null, l = last.length === 13 ? sum(last, k) : null;
+    values[`oneClick.previous.${k}`] = fmt(p, 0);
+    values[`oneClick.latest.${k}`] = fmt(l, 0);
+    values[`oneClick.${k}.change`] = p > 0 && l != null ? pct(l / p - 1) : 'Unavailable';
+  }
   for (const l of a.t2.lags) {
     for (const k of ['pairs', 'rv', 'rp', 'advantage']) values[`t2.lag${l.lag}.${k}`] = fmt(l[k], k === 'pairs' ? 0 : 3);
     for (const [i, h] of l.halves.entries()) for (const k of ['rv', 'rp']) values[`t2.lag${l.lag}.half${i + 1}.${k}`] = fmt(h[k], 3);
@@ -532,6 +553,39 @@ export function metricValues(a) {
 }
 export function numberTables(a) {
   return '| Metric | Value |\n|---|---|\n' + Object.entries(metricValues(a)).map(([k, v]) => `| ${k} | ${v} |`).join('\n') + '\n';
+}
+const CSP = "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'";
+// Minimal Markdown for THESIS.md only: headings, paragraphs, "- " lists, pipe tables, `code` and **bold**. Everything is escaped.
+const inlineMd = s => escape(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+export function thesisHTML(md) {
+  const lines = md.replace(/<!--[\s\S]*?-->/g, '').split('\n'), out = [];
+  let para = [], list = [];
+  const flush = () => {
+    if (para.length) out.push(`<p>${inlineMd(para.join(' '))}</p>`);
+    if (list.length) out.push(`<ul>${list.map(i => `<li>${inlineMd(i)}</li>`).join('')}</ul>`);
+    para = []; list = [];
+  };
+  const cells = l => l.trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i], h = line.match(/^(#{1,3})\s+(.*)$/), li = line.match(/^- (.*)$/);
+    if (h) { flush(); out.push(`<h${h[1].length}>${inlineMd(h[2])}</h${h[1].length}>`); }
+    else if (line.startsWith('|') && /^\|[\s|:-]+\|$/.test(lines[i + 1] || '')) {
+      flush();
+      const head = cells(line), body = [];
+      for (i++; lines[i + 1]?.startsWith('|'); ) body.push(cells(lines[++i]));
+      out.push(`<div class="table-wrap"><table><thead><tr>${head.map(c => `<th scope="col">${inlineMd(c)}</th>`).join('')}</tr></thead><tbody>${body.map(r => `<tr>${r.map(c => `<td>${inlineMd(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
+    } else if (li) { if (para.length) { const l = list; list = []; flush(); list = l; } list.push(li[1]); }
+    else if (!line.trim()) flush();
+    else if (list.length && /^\s+/.test(line)) list[list.length - 1] += ' ' + line.trim();
+    else { if (list.length) flush(); para.push(line.trim()); }
+  }
+  flush();
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="${CSP}">
+    <title>NEAR / Thesis</title><link rel="stylesheet" href="style.css"></head><body>
+    <a class="skip" href="#main">Skip to thesis</a>
+    <nav aria-label="Research navigation"><a class="brand" href="index.html">NEAR / Evidence ledger</a><a href="index.html">Dashboard</a></nav>
+    <main id="main"><article class="thesis">${out.join('\n')}</article></main></body></html>\n`;
 }
 export const EVIDENCE_START = '<!-- evidence:begin -->';
 export const EVIDENCE_END = '<!-- evidence:end -->';
@@ -568,16 +622,16 @@ export async function render(manifest, sources, write, root = ROOT) {
   const statusRows = Object.entries(sources).map(([name, s]) => `<tr><th scope="row">${escape(name)}</th><td>${escape(s.reason || (s.entry?.reused ? 'Cached result reused' : 'Fetched'))}</td></tr>`).join('');
   await write('NUMBERS.md', report);
   await write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+    <meta http-equiv="Content-Security-Policy" content="${CSP}">
     <title>NEAR / Evidence ledger</title><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to evidence</a>
-    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="#status">Source status</a><a href="#signers">T1</a><a href="#swaps">T2</a><a href="#burn">T3</a><a href="THESIS.md">Read thesis ↗</a></nav>
-    <main id="main"><header class="intro"><p>Investment Thesis / NEAR Hackathon</p><h1>Three tests, fixed before the data.</h1><p>Each test can pass, fail or end as “can’t tell”. Rules are in the thesis.</p>
+    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="#status">Source status</a><a href="#signers">T1</a><a href="#swaps">T2</a><a href="#burn">T3</a><a href="thesis.html">Read thesis</a></nav>
+    <main id="main"><header class="intro"><p>Investment Thesis / NEAR Hackathon</p><h1>Three tests, fixed before the results.</h1><p>Each test can pass, fail or end as “can’t tell”. Rules are in the thesis.</p>
     <p class="window">Snapshot ${escape(manifest.id)}${manifest.fetchedAt ? ` · fetched ${escape(manifest.fetchedAt)}` : ' · no data fetched'}</p></header>
     <section class="hypotheses"><h2>Results</h2><dl>${verdictRow('T1', 'Usage is broadening', a.t1)}${verdictRow('T2', '1Click volume leads usage better than NEAR price', a.t2)}${verdictRow('T3', 'Usage reaches holders through burn', a.t3)}</dl>${lagTable}</section>
     <section id="status"><h2>Source status</h2><div class="table-wrap"><table><thead><tr><th>Source</th><th>Status</th></tr></thead><tbody>${statusRows}</tbody></table></div>${a.duplicates.length ? `<p>Duplicate block rows: ${escape(a.duplicates.map(d => `${d.date} (${d.duplicates})`).join(', '))}.</p>` : ''}</section>
     ${sections.join('')}
-    <section><h2>What this cannot tell you</h2><p>Accounts are not people. 1Click is not all of NEAR Intents. Correlation is not causation. None of this sets a fair NEAR price.</p><a href="THESIS.md">Rules, limits and sources ↗</a></section>
+    <section><h2>What this cannot tell you</h2><p>Accounts are not people. 1Click is not all of NEAR Intents. Correlation is not causation. None of this sets a fair NEAR price.</p><a href="thesis.html">Rules, limits and sources</a></section>
     <footer>Rebuild all charts offline: <code>npm run rebuild</code><br>Refresh sources and rebuild: <code>npm run refresh</code><br>No browser credentials. No external scripts. No fabricated data.</footer></main></body></html>`);
   await write('charts.json', JSON.stringify({ snapshot: manifest.id, files: artifact }, null, 2) + '\n');
   return { report, analysis: a };

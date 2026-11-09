@@ -3,7 +3,7 @@ import { resolve, relative } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { ROOT, QUERIES, environment, pullBigQuery, pullPrices } from './sources.mjs';
 import { SWAP_WINDOW, swapDir, savedPages, readJSON } from './swaps.mjs';
-import { CAL, loadSources, loadSwapDir, render, verifyThesis } from './report.mjs';
+import { CAL, loadSources, loadSwapDir, render, verifyThesis, thesisHTML } from './report.mjs';
 import { exportPublic } from './public.mjs';
 import { atomic, fileStore } from './store.mjs';
 
@@ -81,6 +81,7 @@ async function main() {
   verifyThesis(thesis, analysis);
   await copyFile(resolve(ROOT, 'web/style.css'), resolve(ROOT, 'dashboard/style.css'));
   await atomic(resolve(ROOT, 'dashboard/THESIS.md'), thesis);
+  await atomic(resolve(ROOT, 'dashboard/thesis.html'), thesisHTML(thesis));
   console.log(`Rebuilt dashboard/ and verified THESIS.md from public snapshot ${manifest.id}: T1 ${analysis.t1.verdict}, T2 ${analysis.t2.verdict}, T3 ${analysis.t3.verdict}.`);
   if (mode === 'refresh' && Object.keys(manifest.unavailable).length) {
     console.error('Refresh incomplete. Unavailable sources are shown in the dashboard; no data was substituted.');

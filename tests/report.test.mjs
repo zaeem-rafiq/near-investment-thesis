@@ -5,7 +5,7 @@ import { gzipSync } from 'node:zlib';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { CAL, addDays, dayRange, weeksBetween, weekStart, parseSigners, parseContracts, parseCoverage, t1Test, t2Series, t2Test, t3Test,
-  pearson, bootstrapAdvantage, newSwapAggregate, addSwapRows, swapDays, weeklyFromDaily, parseSwapDays, loadSwapDir, gapBand, analyse, numberTables, verifyThesis, usdUnits, usdString, seriesSVG, render, loadSources } from '../scripts/report.mjs';
+  pearson, bootstrapAdvantage, newSwapAggregate, addSwapRows, swapDays, weeklyFromDaily, parseSwapDays, loadSwapDir, gapBand, analyse, numberTables, verifyThesis, thesisHTML, usdUnits, usdString, seriesSVG, render, loadSources } from '../scripts/report.mjs';
 import { ROOT, hash, literalDateFilters } from '../scripts/sources.mjs';
 
 // Synthetic fixtures only; never research data.
@@ -248,4 +248,29 @@ test('thesis metrics are verified, not rewritten; prose and tagged claims surviv
   await render({ id: 'test' }, {}, async (n, body) => writes.set(n, body));
   assert.equal(writes.has('THESIS.md'), false);
   assert.equal(writes.has('NUMBERS.md'), true);
+});
+
+test('thesis.html renders the real thesis without metric tags, escapes markup and keeps the CSP', async () => {
+  const md = await readFile(join(ROOT, 'THESIS.md'), 'utf8');
+  const html = thesisHTML(md);
+  assert.doesNotMatch(html, /<!--|metric:|evidence:(begin|end)/);
+  assert.match(html, /<h1>NEAR: three tests, fixed before the results<\/h1>/);
+  assert.match(html, /<td>t2\.changes<\/td><td>78<\/td>/);
+  assert.match(html, /Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'"/);
+  assert.doesNotMatch(html, /<script/i);
+  const hostile = thesisHTML('# T <script>x</script>\n\nA **b** \`<img src=x>\` <!-- metric:t1.verdict -->FAIL<!-- /metric -->\n\n- one\n- two\n');
+  assert.match(hostile, /<h1>T &lt;script&gt;x&lt;\/script&gt;<\/h1>/);
+  assert.match(hostile, /<p>A <strong>b<\/strong> <code>&lt;img src=x&gt;<\/code> FAIL<\/p>/);
+  assert.match(hostile, /<ul><li>one<\/li><li>two<\/li><\/ul>/);
+});
+test('chart axis ticks fit the left margin and the excluded label sits above the plot', () => {
+  const points = [{ x: 'a', v: 106_298_020, excluded: true }, { x: 'b', v: 5e7 }, { x: 'c', v: 1e6 }];
+  const svg = seriesSVG({ title: 't', unit: 'USD', points });
+  const ticks = [...svg.matchAll(/<text x="72" y="(?:44|134)" text-anchor="end">([^<]+)<\/text>/g)].map(m => m[1]);
+  assert.deepEqual(ticks, ['111.6M', '55.8M']);
+  assert.match(svg, /<text x="84" y="34"[^>]*>Excluded from T2 test<\/text>/);
+  const mixed = seriesSVG({ title: 't', unit: 'blocks', points: [{ x: 'a', v: 150_000 }, { x: 'b', v: 70_000 }] });
+  assert.match(mixed, />157.5K<\/text>/);
+  assert.match(mixed, />78.8K<\/text>/);
+  assert.match(svg, /<title>a: 106,298,020 \(excluded from test\)<\/title>/);
 });

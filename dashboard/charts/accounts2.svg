@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" role="img" aria-label="Accounts signing on 2 or more days in a month">
   <title>Accounts signing on 2 or more days in a month</title><desc> Gaps represent missing values. Exact values are in the adjacent table.</desc>
   <g fill="none" stroke="#e5e5e5"><path d="M80 40H840 M80 130H840 M80 220H840"/></g>
-  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">1,069,965</text>
-  <text x="72" y="134" text-anchor="end">534,982</text><text x="72" y="224" text-anchor="end">0</text>
+  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">1.1M</text>
+  <text x="72" y="134" text-anchor="end">535K</text><text x="72" y="224" text-anchor="end">0</text>
   <text x="80" y="252">2024-11</text><text x="840" y="252" text-anchor="end">2026-10</text><text x="80" y="20">accounts</text></g>
   <g font-family="system-ui,sans-serif"></g>
 

@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" role="img" aria-label="Successful 1Click swaps per week">
   <title>Successful 1Click swaps per week</title><desc> Gaps represent missing values. Exact values are in the adjacent table.</desc>
-  <rect x="80" y="40" width="48.60" height="180" fill="#f3f4f6"/><text x="84" y="56" font-size="12" fill="#6b7280">Excluded from T2 test</text><g fill="none" stroke="#e5e5e5"><path d="M80 40H840 M80 130H840 M80 220H840"/></g>
-  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">241,145</text>
-  <text x="72" y="134" text-anchor="end">120,573</text><text x="72" y="224" text-anchor="end">0</text>
+  <rect x="80" y="40" width="48.60" height="180" fill="#f3f4f6"/><text x="84" y="34" font-family="system-ui,sans-serif" font-size="12" fill="#6b7280">Excluded from T2 test</text><g fill="none" stroke="#e5e5e5"><path d="M80 40H840 M80 130H840 M80 220H840"/></g>
+  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">241.1K</text>
+  <text x="72" y="134" text-anchor="end">120.6K</text><text x="72" y="224" text-anchor="end">0</text>
   <text x="80" y="252">2025-03-03</text><text x="840" y="252" text-anchor="end">2026-10-26</text><text x="80" y="20">swaps</text></g>
   <g font-family="system-ui,sans-serif"><path d="M80 214.77H840" stroke="#b91c1c" stroke-dasharray="4 4"/><text x="838" y="210.77" text-anchor="end" font-size="12" fill="#b91c1c">7,000 swaps</text></g>
 
