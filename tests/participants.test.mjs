@@ -55,3 +55,33 @@ test('filtered pulls refuse ignored token filters and malformed senders', async 
     } finally { await rm(dir, { recursive: true, force: true }); }
   }
 });
+
+test('participant retry cap stops a persistent HTTP 500 after six retries with every wait at most 60 s', async () => {
+  const dir = await mkdtemp(resolve(tmpdir(), 'participants-retry-'));
+  try {
+    let attempts = 0; const waits = [];
+    await assert.rejects(pullSwapsResumable(window, 'synthetic-token', {
+      dir, tokenFilter: { side: 'toTokenId', ids: ['near-a'] }, maxRetries: 6, maxBackoffMs: 60000,
+      request: async () => { attempts++; return { ok: false, status: 500, headers: new Headers({ 'retry-after': '600' }) }; },
+      pause: async ms => { waits.push(ms); }
+    }), /HTTP 500 repeatedly/);
+    assert.equal(attempts, 7);
+    assert.ok(Math.max(...waits) <= 60000);
+    assert.ok(waits.reduce((a, b) => a + b, 0) <= 8 * 60000);
+    assert.deepEqual(await savedPages(dir), []);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+test('a page shorter than the requested size ends its window without another request', async () => {
+  const dir = await mkdtemp(resolve(tmpdir(), 'participants-short-'));
+  try {
+    let requests = 0;
+    const done = await pullSwapsResumable(window, 'synthetic-token', {
+      dir, retainParticipants: true, tokenFilter: { side: 'toTokenId', ids: ['near-a'] }, shortPageEnds: true,
+      pause: async () => {}, request: async () => { requests++; return { ok: true, json: async () => [row] }; }
+    });
+    assert.equal(done.complete, true);
+    assert.equal(done.rows, 1);
+    assert.equal(done.pages, 1);
+    assert.equal(requests, 1);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});

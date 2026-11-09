@@ -1,12 +1,24 @@
 import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 import { ROOT } from './sources.mjs';
-import { usdUnits, usdString } from './report.mjs';
+import { usdUnits, usdString, addDays } from './report.mjs';
 import { readJSON, savedPages, readPage, swapDir, SWAP_WINDOW } from './swaps.mjs';
-import { NEAR_ASSET_IDS, POSITION_WINDOW, RECIPIENT_DIR } from './position-config.mjs';
+import { NEAR_ASSET_IDS, POSITION_WINDOW, RECIPIENT_DIR, PULL_WINDOW_DAYS, FULL_WINDOW_PULLS } from './position-config.mjs';
 
+export function pullWindows(window = POSITION_WINDOW, days = PULL_WINDOW_DAYS) {
+  const out = [];
+  for (let start = window.start; start < window.end; start = addDays(start, days)) {
+    const end = addDays(start, days) < window.end ? addDays(start, days) : window.end;
+    out.push({ start, end, directory: `window-${start}` });
+  }
+  return out;
+}
 export const participantPulls = (ids = NEAR_ASSET_IDS) => ['buys', 'sells'].flatMap(side =>
-  ids.map((asset, i) => ({ side, asset, filter: side === 'buys' ? 'toTokenId' : 'fromTokenId', directory: `${side}/asset-${i + 1}` })));
+  ids.map((asset, i) => ({
+    side, asset, filter: side === 'buys' ? 'toTokenId' : 'fromTokenId', directory: `${side}/asset-${i + 1}`,
+    windows: FULL_WINDOW_PULLS.some(f => f.side === side && f.asset === asset)
+      ? [{ ...POSITION_WINDOW, directory: 'full' }] : pullWindows()
+  })));
 
 // Keys never leave memory. Only counts and USD aggregates are returned.
 export function participantTotals(ids = NEAR_ASSET_IDS, window = POSITION_WINDOW) {
@@ -52,11 +64,14 @@ export function participantTotals(ids = NEAR_ASSET_IDS, window = POSITION_WINDOW
   };
 }
 
-async function scan(dir, aggregate, expected) {
+async function scan(dir, aggregate, expected, window) {
   const done = await readJSON(resolve(dir, 'complete.json'));
-  if (!done?.complete || Date.parse(done.window?.start) > Date.parse(POSITION_WINDOW.start) ||
-      Date.parse(done.window?.end) < Date.parse(POSITION_WINDOW.end) ||
-      !Number.isFinite(Date.parse(done.window?.start)) || !Number.isFinite(Date.parse(done.window?.end))) {
+  if (window) {
+    if (!done?.complete || done.window?.start !== window.start || done.window?.end !== window.end) {
+      throw new Error('Participant window completion record differs from its planned window.');
+    }
+  } else if (!done?.complete || !Number.isFinite(Date.parse(done.window?.start)) || !Number.isFinite(Date.parse(done.window?.end)) ||
+      Date.parse(done.window.start) > Date.parse(POSITION_WINDOW.start) || Date.parse(done.window.end) < Date.parse(POSITION_WINDOW.end)) {
     throw new Error('Participant reconciliation requires complete pages covering the locked window.');
   }
   if (expected && (JSON.stringify(done.params?.[expected.filter]) !== JSON.stringify([expected.asset]) ||
@@ -71,6 +86,8 @@ async function scan(dir, aggregate, expected) {
       row[expected.side === 'buys' ? 'destinationAsset' : 'originAsset'] !== expected.asset)) {
       throw new Error('Participant page violates its single-asset filter.');
     }
+    if (window && page.rows.some(row => Date.parse(row.createdAt) < Date.parse(window.start) ||
+      Date.parse(row.createdAt) >= Date.parse(window.end))) throw new Error('Participant page row lies outside its window.');
     aggregate.add(page.rows);
     rows += page.rows.length;
   }
@@ -101,6 +118,8 @@ export async function reconcileParticipants({
 } = {}) {
   const baseline = participantTotals(), filtered = participantTotals();
   await scan(baselineDir, baseline);
-  for (const pull of participantPulls()) await scan(resolve(participantDir, pull.directory), filtered, pull);
+  for (const pull of participantPulls()) {
+    for (const w of pull.windows) await scan(resolve(participantDir, pull.directory, w.directory), filtered, pull, w);
+  }
   return compareParticipantTotals(baseline.finish(), filtered.finish());
 }

@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { ROOT, environment, sleep } from './sources.mjs';
 import { atomic } from './store.mjs';
 import { pullSwapsResumable, PACE_MS, readJSON } from './swaps.mjs';
-import { NEAR_ASSET_IDS, POSITION_WINDOW, RECIPIENT_DIR } from './position-config.mjs';
+import { NEAR_ASSET_IDS, POSITION_WINDOW, RECIPIENT_DIR, PULL_WINDOW_DAYS, PARTICIPANT_RETRIES } from './position-config.mjs';
 import { participantPulls, reconcileParticipants } from './participants.mjs';
 
 // Private, resumable collection. Launch with a managed detached process.
@@ -17,7 +17,7 @@ let locked = false;
 try {
   const rule = await readFile(resolve(ROOT, 'docs/position-rule.md'), 'utf8');
   if (!rule.includes('## Addendum 1')) throw new Error('Addendum 1 must be locked before collection.');
-  await atomic(resolve(dir, 'runner.json'), JSON.stringify({ window: POSITION_WINDOW, assetIds: NEAR_ASSET_IDS }) + '\n');
+  await atomic(resolve(dir, 'runner.json'), JSON.stringify({ window: POSITION_WINDOW, assetIds: NEAR_ASSET_IDS, windowDays: PULL_WINDOW_DAYS, ...PARTICIPANT_RETRIES }) + '\n');
   try {
     const stale = await readJSON(lockPath);
     if (stale) {
@@ -39,13 +39,18 @@ try {
     return fetch(url, init);
   };
   for (const pull of participantPulls()) {
-    const name = pull.directory;
-    await log(`Starting ${name} single-asset filter; private fields are never logged.`);
-    const result = await pullSwapsResumable(POSITION_WINDOW, env.NEAR_INTENTS_JWT, {
-      dir: resolve(dir, name), tokenFilter: { side: pull.filter, ids: [pull.asset] }, retainParticipants: true,
-      request, log: message => { log(`${name}: ${message}`).catch(() => {}); }
-    });
-    await log(`${name} complete: ${result.pages} pages, ${result.rows} rows.`);
+    await log(`Starting ${pull.directory} single-asset filter in ${pull.windows.length} windows; private fields are never logged.`);
+    let pages = 0, rows = 0;
+    for (const w of pull.windows) {
+      const name = `${pull.directory}/${w.directory}`;
+      const result = await pullSwapsResumable({ start: w.start, end: w.end }, env.NEAR_INTENTS_JWT, {
+        dir: resolve(dir, name), tokenFilter: { side: pull.filter, ids: [pull.asset] }, retainParticipants: true,
+        shortPageEnds: true, ...PARTICIPANT_RETRIES, request,
+        log: message => { log(`${name}: ${message}`).catch(() => {}); }
+      });
+      pages += result.pages; rows += result.rows;
+    }
+    await log(`${pull.directory} complete: ${pages} pages, ${rows} rows.`);
   }
   await atomic(resolve(dir, 'complete.json'), JSON.stringify({ complete: true, completedAt: new Date().toISOString() }) + '\n');
   await log('All eight pulls complete; reconciling every asset and both totals against saved pages.');

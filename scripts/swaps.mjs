@@ -67,23 +67,24 @@ function cleanRows(rows, window, seen, boundary, tokenFilter, retainParticipants
   return clean;
 }
 
-async function fetchPage(url, jwt, request, pause, log) {
+async function fetchPage(url, jwt, request, pause, log, { maxRetries, maxBackoffMs }) {
+  const backoff = attempt => Math.min(maxBackoffMs, PACE_MS * 2 ** Math.min(attempt, 6));
   for (let attempt = 0; ; attempt++) {
     let res;
     try {
       res = await request(url, { headers: { Authorization: `Bearer ${jwt}` }, redirect: 'error', signal: AbortSignal.timeout(60000) });
     } catch {
-      if (attempt >= 20) throw new Error('Explorer network request failed repeatedly.');
+      if (attempt >= maxRetries) throw new Error('Explorer network request failed repeatedly.');
       log(`network error, retry ${attempt + 1}`);
-      await pause(Math.min(300000, PACE_MS * 2 ** Math.min(attempt, 6)));
+      await pause(backoff(attempt));
       continue;
     }
     if (res.status === 429 || res.status >= 500) {
-      if (attempt >= 20) throw new Error(`Explorer HTTP ${res.status} repeatedly.`);
+      if (attempt >= maxRetries) throw new Error(`Explorer HTTP ${res.status} repeatedly.`);
       const retry = Number(res.headers?.get?.('retry-after'));
-      const backoff = res.status === 429 ? PACE_MS : Math.min(300000, PACE_MS * 2 ** Math.min(attempt, 6));
+      const wait = res.status === 429 ? PACE_MS : backoff(attempt);
       log(`HTTP ${res.status}, retry ${attempt + 1}`);
-      await pause(Math.max(backoff, Number.isFinite(retry) ? retry * 1000 : 0));
+      await pause(Math.min(maxBackoffMs, Math.max(wait, Number.isFinite(retry) ? retry * 1000 : 0)));
       continue;
     }
     if (!res.ok) throw new Error(`Explorer HTTP ${res.status}; response body omitted.`);
@@ -97,7 +98,11 @@ async function fetchPage(url, jwt, request, pause, log) {
 export async function pullSwapsResumable(window, jwt, options = {}) {
   if (!jwt) throw new Error('NEAR_INTENTS_JWT missing; add the partner JWT to .env.');
   const { dir = swapDir(window), request = fetch, pause = sleep, log = () => {}, maxPages = Infinity } = options;
-  const { tokenFilter, retainParticipants = false } = options;
+  const { tokenFilter, retainParticipants = false, shortPageEnds = false } = options;
+  const { maxRetries = 20, maxBackoffMs = 300000 } = options;
+  if (!Number.isSafeInteger(maxRetries) || maxRetries < 0 || !Number.isSafeInteger(maxBackoffMs) || maxBackoffMs < PACE_MS) {
+    throw new Error('Invalid Explorer retry limits.');
+  }
   if (tokenFilter && Array.isArray(tokenFilter.ids) && tokenFilter.ids.length !== 1) {
     throw new Error('Explorer token filters require exactly one token ID per pull.');
   }
@@ -145,23 +150,26 @@ export async function pullSwapsResumable(window, jwt, options = {}) {
   while (fetched < maxPages) {
     const query = new URLSearchParams(Object.entries(params).flatMap(([key, value]) =>
       Array.isArray(value) ? value.map(id => [key, id]) : [[key, value]]));
-    const raw = await fetchPage(`${EXPLORER}?${query}`, jwt, paced, pause, log);
+    const raw = await fetchPage(`${EXPLORER}?${query}`, jwt, paced, pause, log, { maxRetries, maxBackoffMs });
     fetched++;
     const clean = cleanRows(raw, window, seen, last, tokenFilter, retainParticipants);
     if (clean.length === 0 && raw.length >= Number(base.numberOfTransactions)) {
       throw new Error('Explorer timestamp pagination stalled: full page with no new rows.');
     }
-    if (clean.length === 0) {
+    const exhausted = clean.length === 0 || (shortPageEnds && raw.length < Number(base.numberOfTransactions));
+    if (clean.length) {
+      const cursor = { createdAt: clean.at(-1).createdAt };
+      n++; rows += clean.length;
+      await atomic(resolve(dir, 'pages', pageName(n)), gzipSync(JSON.stringify({ page: n, fetchedAt: new Date().toISOString(), cursor, rows: clean })));
+      last = cursor.createdAt; setCursor(last);
+      log(`page ${n}: ${clean.length} rows, oldest ${clean.at(-1)?.createdAt ?? 'n/a'}, total ${rows}`);
+    }
+    if (exhausted) {
       const summary = { ...meta, pages: n, rows, complete: true, completedAt: new Date().toISOString() };
       await atomic(resolve(dir, 'complete.json'), JSON.stringify(summary, null, 2) + '\n');
       log(`complete: ${n} pages, ${rows} rows`);
       return summary;
     }
-    const cursor = { createdAt: clean.at(-1).createdAt };
-    n++; rows += clean.length;
-    await atomic(resolve(dir, 'pages', pageName(n)), gzipSync(JSON.stringify({ page: n, fetchedAt: new Date().toISOString(), cursor, rows: clean })));
-    last = cursor.createdAt; setCursor(last);
-    log(`page ${n}: ${clean.length} rows, oldest ${clean.at(-1)?.createdAt ?? 'n/a'}, total ${rows}`);
   }
   return { ...meta, pages: n, rows, complete: false };
 }

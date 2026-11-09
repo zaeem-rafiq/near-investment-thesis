@@ -59,19 +59,37 @@ test('all eight saved pull directories reconcile offline and refuse wrong metada
     const pulls = participantPulls();
     assert.equal(pulls.length, 8);
     assert.equal(new Set(pulls.map(p => p.directory)).size, 8);
-    for (const p of pulls) await save(resolve(root, RECIPIENT_DIR, p.directory),
-      rows.filter(r => r[p.side === 'buys' ? 'destinationAsset' : 'originAsset'] === p.asset),
-      { params: { [p.filter]: [p.asset] }, retainParticipants: true });
+    for (const p of pulls) for (const w of p.windows) await save(resolve(root, RECIPIENT_DIR, p.directory, w.directory),
+      rows.filter(r => r[p.side === 'buys' ? 'destinationAsset' : 'originAsset'] === p.asset &&
+        r.createdAt >= w.start && r.createdAt < w.end),
+      { window: { start: w.start, end: w.end }, params: { [p.filter]: [p.asset] }, retainParticipants: true });
     const report = await reconcileParticipants({ root, baselineDir });
     assert.equal(report.pass, true);
     assert.equal(report.comparisons.length, 10);
     assert.equal(report.filtered.duplicate_rows, 1);
     assert.equal(report.filtered.near_to_near, 1);
     assert.equal(JSON.stringify(report).includes('synthetic-'), false);
-    const first = pulls[0], dir = resolve(root, RECIPIENT_DIR, first.directory);
-    await save(dir, [], { params: { [first.filter]: [a, b] }, retainParticipants: true });
+    const first = pulls[0], w = first.windows[0], dir = resolve(root, RECIPIENT_DIR, first.directory, w.directory);
+    const own = { window: { start: w.start, end: w.end }, retainParticipants: true };
+    await save(dir, [], { ...own, params: { [first.filter]: [a, b] } });
     await assert.rejects(reconcileParticipants({ root, baselineDir }), /metadata/);
-    await save(dir, [], { params: { [first.filter]: [a] }, retainParticipants: true, pages: 2 });
+    await save(dir, [], { ...own, params: { [first.filter]: [a] }, pages: 2 });
     await assert.rejects(reconcileParticipants({ root, baselineDir }), /page count/);
+    await save(dir, [], { ...own, params: { [first.filter]: [a] }, window: POSITION_WINDOW });
+    await assert.rejects(reconcileParticipants({ root, baselineDir }), /window/);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('each pull runs as contiguous 7-day windows; only the probed full-window pull keeps one window', () => {
+  const pulls = participantPulls();
+  assert.equal(pulls.length, 8);
+  for (const p of pulls) {
+    assert.equal(p.windows[0].start, POSITION_WINDOW.start);
+    assert.equal(p.windows.at(-1).end, POSITION_WINDOW.end);
+    p.windows.forEach((w, i) => { if (i) assert.equal(w.start, p.windows[i - 1].end); });
+    assert.equal(new Set(p.windows.map(w => w.directory)).size, p.windows.length);
+    const full = p.side === 'buys' && p.asset === NEAR_ASSET_IDS[2];
+    assert.equal(p.windows.length, full ? 1 : 52);
+    if (!full) p.windows.forEach(w => assert.equal(Date.parse(w.end) - Date.parse(w.start), 7 * 86400000));
+  }
 });
