@@ -30,6 +30,10 @@
     "swaps": {
       "path": "data/public/swaps.json",
       "sha256": "7025973671275ba53f7b71a712b7d607813630590156e2bc9bf9dea5ea288e61"
+    },
+    "near_flows": {
+      "path": "data/public/near_flows.json",
+      "sha256": "8c23337eb5ea408d263e58edab044e7497a922b8065f1de4756df9aeb189d89b"
     }
   },
   "unavailable": {}
