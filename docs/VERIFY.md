@@ -94,3 +94,20 @@ and anchors it no later than the cited Bitcoin commitment. It does not separatel
 timestamp the original rule before the first flow data, nor prove when analysis
 was actually run. Addendum 2 remains pending at this check. Final-result commits
 will be added to this guide only after owner review.
+
+## Presentation and live-data commits
+
+These commits change presentation and add the daily live file. They do not
+change any locked rule, saved research input or T1–T3 and Check 1–3 result.
+
+| Step | Commit | Committer time (UTC) | What it adds |
+| --- | --- | --- | --- |
+| First-screen polish | `49eaf2a4972008197ed3524c596b0e16d0693d87` | 2026-11-10T00:12:31Z | Makes “Not yet.” the largest element, puts all three check bars on one 0–100% scale with the pass marker at 20%, and limits the rules sentence to T1–T3. Checks 1–3 are stated as written later. |
+| Daily live flow | `74e7fe9a1a8adb9304bd5cdb3933c40bb3d06501` | 2026-11-10T00:55:32Z | Adds net 1Click flow for each settled UTC day since 2026-11-02 under the Check 1 final rules, a fixed archival wallet and supply baseline at the T3 end, and provisional coverage, which is not a locked test. `dashboard/live.json` stores daily aggregates only. |
+
+The commit that adds this table comes after both and changes only this guide
+and its dashboard copy.
+
+```sh
+TZ=UTC git show --no-patch --date=iso-strict-local --format='%H %cd %s' 49eaf2a4972008197ed3524c596b0e16d0693d87 74e7fe9a1a8adb9304bd5cdb3933c40bb3d06501
+```
