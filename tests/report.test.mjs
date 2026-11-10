@@ -267,7 +267,8 @@ test('position thesis preserves the approved opening, section order and verified
   const md = await readFile(join(ROOT, 'THESIS.md'), 'utf8');
   const html = thesisHTML(md);
   assert.match(html, /Not yet: public data through November 1, 2026 does not support opening or adding to a NEAR position for a hold through 2031, because only one of three locked tests passed and three accounts made up 96\.6% of that pass\./);
-  const headings = ['Holder ledger', 'What you must believe (not official)', 'Review calendar', 'Why usage fell',
+  const headings = ['Five-line summary', 'Claim\n', 'Evidence for\n', 'Evidence against\n', 'What would change my mind\n',
+    'Holder ledger', 'What you must believe (not official)', 'Review calendar', 'Why usage fell',
     'What the price assumes', 'Scenarios, inputs', 'Check 1.', 'Check 2.', 'Check 3.', 'T1.', 'T3.', 'T2.'];
   let previous = -1;
   for (const heading of headings) {
@@ -281,6 +282,14 @@ test('position thesis preserves the approved opening, section order and verified
     '<!-- metric:position.top3Share -->96.6%', '<!-- metric:position.top3Share -->99%'), a), /metric mismatch/);
   assert.match(html, /Peer comparison is out of scope/);
   assert.match(html, /not identifiable, not measured zero/);
+  assert.doesNotMatch(html, /fell(?: only)? -/);
+  assert.match(html, /about 5\.52%/);
+  assert.match(html, /about 4\.97%/);
+  assert.match(html, /10\.13%/);
+  assert.match(html, /We do not choose between these proxies/);
+  const summary = html.split('<h2>Five-line summary</h2>')[1].split('<h2>Claim</h2>')[0];
+  assert.match(summary, /\$52\.1M/);
+  assert.match(summary, /\$46\.1M to \$154M/);
 });
 test('chart axis ticks fit the left margin and the excluded label sits above the plot', () => {
   const points = [{ x: 'a', v: 106_298_020, excluded: true }, { x: 'b', v: 5e7 }, { x: 'c', v: 1e6 }];

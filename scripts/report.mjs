@@ -538,6 +538,8 @@ export function metricValues(a) {
         : field === 'change' ? pct(value) : field === 'changePp' ? `${fmt(value, 2)} pp` : fmt(value, 0);
     }
   }
+  values['presentation.signersDecline'] = share(Math.abs(a.t1.measures?.signers?.change), 1);
+  values['presentation.top10Decline'] = `${fmt(Math.abs(a.t1.measures?.top10?.changePp), 2)} pp`;
   values['t2.start'] = a.t2.start || 'none';
   values['t2.changes'] = String(a.t2.changes);
   const inTest = (a.series?.rows || []).filter(r => !r.excluded), sum = (rs, k) => rs.some(r => r[k] == null) ? null : rs.reduce((s, r) => s + r[k], 0);

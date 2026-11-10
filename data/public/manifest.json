@@ -63,6 +63,10 @@
       "path": "data/public/protocol-share.json",
       "sha256": "1dfca99ff429ac09d2d87147b96e1d1e5fbec54ad55ef81852222ea4140d2985"
     },
+    "hsp_treasury": {
+      "path": "data/public/hsp-treasury.json",
+      "sha256": "bec93888788ce2acf80be920215b17918fc6fe26943a9074dd1b5acf2d03dae4"
+    },
     "position_section": {
       "path": "data/public/position-section.json",
       "sha256": "5ab7a56785da42bf71c9ec7b11d2f822471c45379ca96d6c05da635930ff2616"

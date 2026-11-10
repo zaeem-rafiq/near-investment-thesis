@@ -7,6 +7,7 @@ const paths = {
   position_results: 'position-results.json', signer_top10: 'signer-top10.json',
   wallet_controls: 'wallet-controls.json', position_inputs: 'position-inputs.json',
   staking: 'staking.json', protocol_share: 'protocol-share.json',
+  hsp_treasury: 'hsp-treasury.json',
   supply: 'bigquery/supply.json', prices: 'prices.json', near_flows: 'near_flows.json',
   signers: 'bigquery/signers.json'
 };
@@ -61,6 +62,11 @@ export async function loadPositionEvidence(manifest, root = ROOT) {
   const protocol = data.protocol_share, [n, d] = protocol.protocol_reward_rate;
   if (!Number.isInteger(n) || !Number.isInteger(d) || d <= 0 || n < 0 || n > d
     || protocol.block_height !== data.staking.block_height) throw new Error('Invalid pinned protocol share.');
+  const post = data.hsp_treasury;
+  for (const key of ['nominalStakerShare', 'nominalTreasuryShare', 'reportedMeasuredTreasuryShare']) {
+    if (!Number.isFinite(post[key]) || post[key] < 0 || post[key] > 1) throw new Error('Invalid attributed treasury share.');
+  }
+  close(post.nominalStakerShare + post.nominalTreasuryShare, 1);
   const section = positionSection({
     weeks, latestClose: data.prices.days.at(-1).close, modelStartMonth: 2026 * 12 + 10,
     check1Final: { netBuyingUsd: p.check1.final.netUsd,
@@ -81,13 +87,14 @@ export async function loadPositionEvidence(manifest, root = ROOT) {
   }
   const totalVolume = data.near_flows.weeks.reduce((s, w) => s + Number(w.total_usd), 0);
   const nearVolume = p.check1.provisional.buysUsd + p.check1.provisional.sellsUsd;
-  return { section, results: p, top10: data.signer_top10, audit: extra.audit, oneClick: {
+  return { section, results: p, top10: data.signer_top10, audit: extra.audit,
+    treasuryConflict: { protocolRate: protocol.protocol_reward_rate, post }, oneClick: {
     totalUsd: totalVolume, nearUsd: nearVolume, nearShare: nearVolume / totalVolume
   } };
 }
 
 // Stable decimal formatting for tagged prose. Percentages are explicit extra keys.
-export function positionMetricValues({ section, results: p, oneClick, audit }) {
+export function positionMetricValues({ section, results: p, oneClick, audit, treasuryConflict }) {
   const values = {}, fmt = n => n == null ? 'Unavailable'
     : new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(n);
   function walk(value, key) {
@@ -107,12 +114,36 @@ export function positionMetricValues({ section, results: p, oneClick, audit }) {
     values[key] = `${new Intl.NumberFormat('en-US', { maximumFractionDigits: digits }).format(n * 100)}%`;
   };
   percent('position.top3Share', 1 - p.descriptive.concentration.withoutTopNetBuyers['3'].netUsd / p.check1.final.netUsd, 1);
+  values['position.topBuyerCount'] = '3';
+  values['position.topBuyerCountWords'] = 'three';
+  values['position.call.total'] = '3';
+  values['position.call.totalWords'] = 'three';
+  values['position.call.passingWords'] = ['zero', 'One', 'Two', 'Three'][p.call.passing];
+  values['position.holdHorizon'] = '2031';
   percent('position.check1.coverage', p.check1.final.shareOfIssuanceValue);
   percent('position.check1.latestPriceCoverage', p.check1.final.netUsd / (p.issuance.issuedNear * section.inputs.latestClose));
   percent('position.check2.coveragePercent', p.check2.coverage);
   percent('position.check3.growthPercent', p.check3.growth);
   percent('position.sender.rowsPercent', p.check1.senderCoverage.share);
   percent('position.sender.usdPercent', p.check1.senderCoverage.usdShare);
+  const compactUsd = n => new Intl.NumberFormat('en-US', {
+    notation: 'compact', minimumSignificantDigits: 3, maximumSignificantDigits: 3
+  }).format(n);
+  values['position.check1.netUsdCompact'] = compactUsd(p.check1.final.netUsd);
+  values['position.whatYouMustBelieve.lowUsdCompact'] = compactUsd(section.whatYouMustBelieve.rules[1].prices[0].buyingNeededUsd.value);
+  values['position.whatYouMustBelieve.highUsdCompact'] = compactUsd(section.whatYouMustBelieve.rules[0].prices[1].buyingNeededUsd.value);
+  values['position.receiptsComparisonGap'] = `${fmt(Math.abs(p.check2.holdersRevenueComparison.gapPercent))}%`;
+  values['position.stakingConflict.rpcRate'] = JSON.stringify(treasuryConflict.protocolRate);
+  values['position.stakingConflict.postSplit'] = `${fmt(treasuryConflict.post.nominalStakerShare * 100)}/${fmt(treasuryConflict.post.nominalTreasuryShare * 100)}`;
+  percent('position.stakingConflict.postMeasuredShare', treasuryConflict.post.reportedMeasuredTreasuryShare);
+  percent('position.stakingConflict.postNominalShare', treasuryConflict.post.nominalTreasuryShare);
+  percent('position.stakingConflict.postYield', section.holderLedger.issued.near.value
+    * treasuryConflict.post.nominalStakerShare / section.holderLedger.staking.totalStakeNear.value);
+  const rules = section.inputs.assumptions;
+  percent('position.rules.passBar', rules.passThreshold, 0);
+  percent('position.rules.growthBar', rules.passThreshold, 0);
+  values['position.rules.signedGrowthBar'] = `+${values['position.rules.growthBar']}`;
+  values['position.check3.signedGrowth'] = `+${values['position.check3.growthPercent']}`;
   walk(oneClick, 'position.oneClick');
   walk(audit, 'position.audit');
   percent('position.oneClick.nearPercent', oneClick.nearShare);

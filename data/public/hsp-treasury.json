@@ -1,0 +1,9 @@
+{
+  "source": "https://gov.near.org/t/hsp-029-establish-a-24-month-issuance-ramp-to-a-1-6-target-rate-of-near-token-emissions/42644/1",
+  "section": "Context; issuance-split table; note for implementers",
+  "accessedDate": "2026-11-09",
+  "nominalStakerShare": 0.9,
+  "nominalTreasuryShare": 0.1,
+  "reportedMeasuredTreasuryShare": 0.1013,
+  "note": "The post reports a nominal 90/10 split and a measured 10.13% treasury share. It warns that protocol_reward_rate returns 0/1 after a network upgrade and is not a verification of the economic split. These are attributed source claims, not independently reproduced treasury-flow measurements."
+}

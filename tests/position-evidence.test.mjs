@@ -33,3 +33,21 @@ test('position evidence rejects missing or changed registered sources', async ()
   bad.files.staking = { ...manifest.files.staking, sha256: 'bad' };
   await assert.rejects(loadPositionEvidence(bad), /hash mismatch: staking/);
 });
+
+test('treasury conflict reports both sourced proxies without changing the saved on-chain calculation', async () => {
+  const manifest = JSON.parse(await readFile(`${ROOT}/data/public/manifest.json`, 'utf8'));
+  const evidence = await loadPositionEvidence(manifest), v = positionMetricValues(evidence);
+  assert.equal(v['position.stakingConflict.rpcRate'], '[0,1]');
+  assert.equal(v['position.stakingConflict.postSplit'], '90/10');
+  assert.equal(v['position.stakingConflict.postMeasuredShare'], '10.13%');
+  assert.equal(v['position.holderLedger.staking.grossYield'], '5.52%');
+  assert.equal(v['position.stakingConflict.postYield'], '4.97%');
+  const stake = Number(evidence.section.inputs.stakingSnapshot.total_stake_yocto) / 1e24;
+  const expected = evidence.results.issuance.issuedNear * .9 / stake;
+  assert.equal(v['position.stakingConflict.postYield'], `${(expected * 100).toFixed(2)}%`);
+  assert.match(evidence.treasuryConflict.post.source, /^https:\/\/gov\.near\.org\//);
+  assert.equal(v['position.check1.netUsdCompact'], '52.1M');
+  assert.equal(v['position.whatYouMustBelieve.lowUsdCompact'], '46.1M');
+  assert.equal(v['position.whatYouMustBelieve.highUsdCompact'], '154M');
+  assert.equal(v['position.receiptsComparisonGap'], '0.04%');
+});

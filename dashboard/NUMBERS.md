@@ -17,6 +17,8 @@
 | t1.top10.previous | 80.47% |
 | t1.top10.latest | 79.35% |
 | t1.top10.changePp | -1.12 pp |
+| presentation.signersDecline | 73.1% |
+| presentation.top10Decline | 1.12 pp |
 | t2.start | 2025-04-14 |
 | t2.changes | 78 |
 | t2.weeks | 81 |
@@ -453,12 +455,31 @@
 | position.descriptive.concentration.unattributedNetUsd | 0 |
 | position.descriptive.concentration.sellsWithMultipleSenders | 0 |
 | position.top3Share | 96.6% |
+| position.topBuyerCount | 3 |
+| position.topBuyerCountWords | three |
+| position.call.total | 3 |
+| position.call.totalWords | three |
+| position.call.passingWords | One |
+| position.holdHorizon | 2031 |
 | position.check1.coverage | 77.75% |
 | position.check1.latestPriceCoverage | 37.85% |
 | position.check2.coveragePercent | 15.08% |
 | position.check3.growthPercent | 14.58% |
 | position.sender.rowsPercent | 64.34% |
 | position.sender.usdPercent | 35.44% |
+| position.check1.netUsdCompact | 52.1M |
+| position.whatYouMustBelieve.lowUsdCompact | 46.1M |
+| position.whatYouMustBelieve.highUsdCompact | 154M |
+| position.receiptsComparisonGap | 0.04% |
+| position.stakingConflict.rpcRate | [0,1] |
+| position.stakingConflict.postSplit | 90/10 |
+| position.stakingConflict.postMeasuredShare | 10.13% |
+| position.stakingConflict.postNominalShare | 10% |
+| position.stakingConflict.postYield | 4.97% |
+| position.rules.passBar | 20% |
+| position.rules.growthBar | 20% |
+| position.rules.signedGrowthBar | +20% |
+| position.check3.signedGrowth | +14.58% |
 | position.oneClick.totalUsd | 12,335,739,697.24 |
 | position.oneClick.nearUsd | 254,945,237.53 |
 | position.oneClick.nearShare | 0.02 |

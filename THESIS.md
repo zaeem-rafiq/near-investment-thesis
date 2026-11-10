@@ -12,11 +12,29 @@ Here, the three locked position tests are Checks 1–3 below, not the original T
 
 ## Five-line summary
 
-- **Usage:** mean daily signers fell <!-- metric:t1.signers.change -->-73.1%<!-- /metric -->. Outside the frozen biggest receivers, mean signers rose <!-- metric:position.check3.growthPercent -->14.58%<!-- /metric -->, below the locked growth bar.
-- **Net buying:** final net buying was $<!-- metric:position.check1.final.netUsd -->52,082,185.45<!-- /metric -->, or <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> of issuance value; three net-buying accounts made up <!-- metric:position.top3Share -->96.6%<!-- /metric --> of that total.
+- **Usage:** mean daily signers fell <!-- metric:presentation.signersDecline -->73.1%<!-- /metric -->. Outside the frozen biggest receivers, mean signers rose <!-- metric:position.check3.growthPercent -->14.58%<!-- /metric -->, below the locked growth bar.
+- **Net buying:** final net buying was $<!-- metric:position.check1.netUsdCompact -->52.1M<!-- /metric -->, or <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> of issuance value; three net-buying accounts made up <!-- metric:position.top3Share -->96.6%<!-- /metric --> of that total.
 - **Buybacks and burn:** outside wallet receipts plus burn covered <!-- metric:position.check2.coveragePercent -->15.08%<!-- /metric --> of issuance in the wallet window, below the 20% bar. Receipts are not burns; held tokens remain under wallet control and can return to circulation.
-- **What you must believe:** balancing issuance after burn in 2031 needs annual total buying of $<!-- metric:position.whatYouMustBelieve.rules.1.prices.0.buyingNeededUsd -->46,141,799.89<!-- /metric --> to $<!-- metric:position.whatYouMustBelieve.rules.0.prices.1.buyingNeededUsd -->153,836,474.5<!-- /metric --> across the stated price and issuance-rule inputs, not a forecast.
+- **What you must believe:** balancing issuance after burn in 2031 needs annual total buying of $<!-- metric:position.whatYouMustBelieve.lowUsdCompact -->46.1M<!-- /metric --> to $<!-- metric:position.whatYouMustBelieve.highUsdCompact -->154M<!-- /metric --> across the stated price and issuance-rule inputs, not a forecast.
 - **What would change the call:** at least two position checks passing at a review gives Building; all three in a non-overlapping window can give Own, unless a Broken condition applies.
+
+## Claim
+
+Public evidence does not yet support opening or adding to a NEAR position for a hold through 2031. Only Check 1 passed, and its net buying was concentrated in three accounts. This is a neutral research call, not a recommendation to sell.
+
+## Evidence for
+
+Evidence for the Not yet claim: burn plus buybacks covered <!-- metric:position.check2.coveragePercent -->15.08%<!-- /metric --> of issuance, and everyone else's signers grew <!-- metric:position.check3.growthPercent -->14.58%<!-- /metric -->, so both checks failed their <!-- metric:position.rules.passBar -->20%<!-- /metric --> bars. Three accounts made up <!-- metric:position.top3Share -->96.6%<!-- /metric --> of net buying. Overall daily signers fell <!-- metric:presentation.signersDecline -->73.1%<!-- /metric -->, burn alone offset <!-- metric:t3.offset -->1.56%<!-- /metric --> of issuance, and NEAR appeared on one side of only <!-- metric:position.oneClick.nearPercent -->2.07%<!-- /metric --> of 1Click input volume.
+
+## Evidence against
+
+The case for NEAR: Check 1 passed at <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> of issuance value. The descriptive two-way cuts still leave <!-- metric:position.descriptive.twoWaySenders.coverage -->44.74%<!-- /metric --> and <!-- metric:position.descriptive.twoWayRefundTo.coverage -->50.47%<!-- /metric -->. Wallet receipts match DefiLlama's aggregate to about <!-- metric:position.receiptsComparisonGap -->0.04%<!-- /metric --> (rounded), although that does not verify every receipt's economic origin. Everyone else's signers rose <!-- metric:position.check3.growthPercent -->14.58%<!-- /metric -->, and 1Click volume grew <!-- metric:oneClick.volume.change -->+362.9%<!-- /metric --> in the latest complete-quarter comparison. The conditional HSP-029 issuance cut would reduce the buying needed to offset new supply; it is an assumption, not an observed future outcome. Descriptive cuts and growth comparisons are not official tests.
+
+## What would change my mind
+
+At the reviews on 2027-02-01, 2027-05-03, 2027-08-02 and 2027-11-01, rerun all position checks over the preceding 52 weeks; Check 2 uses only weeks from 2026-02-23 onward, and Check 3 compares with the preceding 52 weeks while retaining the original frozen top ten. Each check passes at <!-- metric:position.rules.passBar -->20%<!-- /metric --> or more. Missing data is not measurable and counts as not passing.
+
+Zero or one pass resets the call to Not yet, regardless of the previous call. Two or three gives Building. Own requires all three in a non-overlapping window, first eligible at the 2027-11-01 review. Broken overrides these calls if Check 1 final and Check 2 are both strictly below 10% at two consecutive reruns, or if the wallets receive no outside NEAR or wNEAR in the last 13 weeks of any rerun. Broken stays until a new rule is written and time-stamped. On or after 2026-11-16, record HSP-029 veto status only; no checks run on that date. The full calendar and required pipeline parameterization are below.
 
 ## Holder ledger (not official T1–T3)
 
@@ -32,9 +50,15 @@ Supply uses the 52 weeks from 2025-11-03 through 2026-11-01. Wallet transfers us
 
 The float proxy is issuance minus burn minus outside receipts plus external outflows. It combines the stated unequal windows. It is not a full circulating-supply estimate or proof that wallet receipts stay off-market.
 
-A non-staker's ownership share fell by <!-- metric:position.holderLedger.nonStakerLossOfShare -->2.41%<!-- /metric --> across the supply window. Current aggregate validator stake was <!-- metric:position.holderLedger.staking.totalStakeNear -->581,798,949.62<!-- /metric --> NEAR at the 2026-11-09 snapshot. Trailing issuance divided by that stake, after the snapshot treasury share of <!-- metric:position.holderLedger.staking.treasuryShare -->0%<!-- /metric -->, gives a gross staking-yield proxy of <!-- metric:position.holderLedger.staking.grossYield -->5.52%<!-- /metric --> before validator commission. This is not a measured delegator return, a real return after dilution, or a future yield promise.
+A non-staker's ownership share fell by <!-- metric:position.holderLedger.nonStakerLossOfShare -->2.41%<!-- /metric --> across the supply window. Current aggregate validator stake was <!-- metric:position.holderLedger.staking.totalStakeNear -->581,798,949.62<!-- /metric --> NEAR at the 2026-11-09 snapshot.
+
+**Staking-yield evidence conflicts.** The pinned on-chain `protocol_reward_rate` is <!-- metric:position.stakingConflict.rpcRate -->[0,1]<!-- /metric -->, implying a treasury share of <!-- metric:position.holderLedger.staking.treasuryShare -->0%<!-- /metric --> if used literally. The HSP-029 post instead states a <!-- metric:position.stakingConflict.postSplit -->90/10<!-- /metric --> staker/treasury split and a measured treasury share of <!-- metric:position.stakingConflict.postMeasuredShare -->10.13%<!-- /metric -->. It explicitly warns that the config field is not a reliable verification of the economic split.
+
+Using the same trailing issuance and snapshot stake, the literal-config yield proxy is about <!-- metric:position.holderLedger.staking.grossYield -->5.52%<!-- /metric -->; applying the post's nominal split gives about <!-- metric:position.stakingConflict.postYield -->4.97%<!-- /metric -->. The latter uses the nominal treasury share of <!-- metric:position.stakingConflict.postNominalShare -->10%<!-- /metric -->, not the post's slightly different measured share. We do not choose between these proxies or independently establish the economic split. Both are before validator commission, not measured delegator returns, real returns after dilution, or future yield promises.
 
 Sources: `data/public/staking.json` is the sum of current validator stakes, pinned to a finalized epoch. `data/public/protocol-share.json` reads `protocol_reward_rate` from `EXPERIMENTAL_protocol_config` at the same block on `https://rpc.mainnet.near.org`. This is a post-window protocol snapshot, not a claim that its reward split applied throughout the historical issuance window.
+
+The conflicting source is the HSP-029 post, Context and issuance-split table: https://gov.near.org/t/hsp-029-establish-a-24-month-issuance-ramp-to-a-1-6-target-rate-of-near-token-emissions/42644/1 . Its attributed shares and warning are recorded in `data/public/hsp-treasury.json`, not presented as our own treasury-flow measurement.
 
 ### Wallets: received, sent, retained and held
 
@@ -53,7 +77,7 @@ Total outside outflows were $<!-- metric:position.holderLedger.wallets.sent.usd 
 
 ## What you must believe (not official)
 
-**Headline:** annual total buying needed to balance modeled issuance after burn in 2031 ranges from $<!-- metric:position.whatYouMustBelieve.rules.1.prices.0.buyingNeededUsd -->46,141,799.89<!-- /metric --> to $<!-- metric:position.whatYouMustBelieve.rules.0.prices.1.buyingNeededUsd -->153,836,474.5<!-- /metric -->, or <!-- metric:position.whatYouMustBelieve.rules.1.prices.0.multipleOfMeasuredBuying -->0.89<!-- /metric -->× to <!-- metric:position.whatYouMustBelieve.rules.0.prices.1.multipleOfMeasuredBuying -->2.95<!-- /metric -->× final measured annual net buying, across these inputs.
+**Headline:** annual total buying needed to balance modeled issuance after burn in 2031 ranges from $<!-- metric:position.whatYouMustBelieve.lowUsdCompact -->46.1M<!-- /metric --> to $<!-- metric:position.whatYouMustBelieve.highUsdCompact -->154M<!-- /metric -->, or <!-- metric:position.whatYouMustBelieve.rules.1.prices.0.multipleOfMeasuredBuying -->0.89<!-- /metric -->× to <!-- metric:position.whatYouMustBelieve.rules.0.prices.1.multipleOfMeasuredBuying -->2.95<!-- /metric -->× final measured annual net buying, across these inputs.
 
 This is an equilibrium buying requirement, not a fair-price estimate. Total buying includes wallet buybacks; do not add the buybacks to the requirement again. Supply starts after the last T3 week, realized issuance share and annual burn stay fixed, and the model runs from November 2026. HSP-029 activation in March 2027 is an assumption, not an observed future event. The published monthly midpoint schedule is in `scripts/model.mjs`.
 
@@ -200,7 +224,7 @@ Only Check 1 passes. The locked position call is **<!-- metric:position.call.res
 
 1Click's latest 13 complete weeks handled <!-- metric:oneClick.latest.swaps -->2,005,609<!-- /metric --> successful swaps and $<!-- metric:oneClick.latest.volume -->3,804,396,974<!-- /metric --> input volume, compared with <!-- metric:oneClick.previous.swaps -->489,406<!-- /metric --> swaps and $<!-- metric:oneClick.previous.volume -->821,906,590<!-- /metric --> a year earlier. Growth was <!-- metric:oneClick.swaps.change -->+309.8%<!-- /metric --> and <!-- metric:oneClick.volume.change -->+362.9%<!-- /metric -->, respectively. This descriptive growth is not evidence of proportional NEAR-token demand.
 
-T1 breadth changes were <!-- metric:t1.signers.change -->-73.1%<!-- /metric --> in mean daily signers, <!-- metric:t1.receivers.change -->-38.5%<!-- /metric --> in sampled receiver accounts and <!-- metric:t1.accounts2.change -->-66%<!-- /metric --> in monthly accounts active on multiple days. Transaction concentration fell only <!-- metric:t1.top10.changePp -->-1.12 pp<!-- /metric -->, from <!-- metric:t1.top10.previous -->80.47%<!-- /metric --> to <!-- metric:t1.top10.latest -->79.35%<!-- /metric -->.
+T1 breadth changes were <!-- metric:t1.signers.change -->-73.1%<!-- /metric --> in mean daily signers, <!-- metric:t1.receivers.change -->-38.5%<!-- /metric --> in sampled receiver accounts and <!-- metric:t1.accounts2.change -->-66%<!-- /metric --> in monthly accounts active on multiple days. Transaction concentration fell only <!-- metric:presentation.top10Decline -->1.12 pp<!-- /metric -->, from <!-- metric:t1.top10.previous -->80.47%<!-- /metric --> to <!-- metric:t1.top10.latest -->79.35%<!-- /metric -->.
 
 ## T1. Usage is broadening
 
@@ -304,6 +328,8 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | t1.top10.previous | 80.47% |
 | t1.top10.latest | 79.35% |
 | t1.top10.changePp | -1.12 pp |
+| presentation.signersDecline | 73.1% |
+| presentation.top10Decline | 1.12 pp |
 | t2.start | 2025-04-14 |
 | t2.changes | 78 |
 | t2.weeks | 81 |
@@ -740,12 +766,31 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | position.descriptive.concentration.unattributedNetUsd | 0 |
 | position.descriptive.concentration.sellsWithMultipleSenders | 0 |
 | position.top3Share | 96.6% |
+| position.topBuyerCount | 3 |
+| position.topBuyerCountWords | three |
+| position.call.total | 3 |
+| position.call.totalWords | three |
+| position.call.passingWords | One |
+| position.holdHorizon | 2031 |
 | position.check1.coverage | 77.75% |
 | position.check1.latestPriceCoverage | 37.85% |
 | position.check2.coveragePercent | 15.08% |
 | position.check3.growthPercent | 14.58% |
 | position.sender.rowsPercent | 64.34% |
 | position.sender.usdPercent | 35.44% |
+| position.check1.netUsdCompact | 52.1M |
+| position.whatYouMustBelieve.lowUsdCompact | 46.1M |
+| position.whatYouMustBelieve.highUsdCompact | 154M |
+| position.receiptsComparisonGap | 0.04% |
+| position.stakingConflict.rpcRate | [0,1] |
+| position.stakingConflict.postSplit | 90/10 |
+| position.stakingConflict.postMeasuredShare | 10.13% |
+| position.stakingConflict.postNominalShare | 10% |
+| position.stakingConflict.postYield | 4.97% |
+| position.rules.passBar | 20% |
+| position.rules.growthBar | 20% |
+| position.rules.signedGrowthBar | +20% |
+| position.check3.signedGrowth | +14.58% |
 | position.oneClick.totalUsd | 12,335,739,697.24 |
 | position.oneClick.nearUsd | 254,945,237.53 |
 | position.oneClick.nearShare | 0.02 |
