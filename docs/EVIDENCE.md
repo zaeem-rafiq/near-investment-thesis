@@ -884,6 +884,8 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | position.barSensitivity.20.call | Not yet |
 | position.barSensitivity.25.passingWords | only Check 1 |
 | position.barSensitivity.25.call | Not yet |
+| position.issuance.issuedNearMillions | 32.12 |
+| position.issuance.valueUsdMillions | 66.99 |
 | position.check1.passWord | Pass |
 | position.check2.passWord | Fail |
 | position.check3.passWord | Fail |

@@ -645,6 +645,16 @@ export function verifyThesis(text, a) {
     if (!(m[1] in values) || m[2] !== values[m[1]]) throw new Error(`THESIS.md / docs/EVIDENCE.md metric mismatch: ${m[1]}.`);
   }
 }
+// Same wording as the bold rating line in THESIS.md; a test keeps the two identical.
+export const RATING_LINE = 'Rating: hold, do not buy, through 2031. "Not yet" is the rule\'s label for this call, as addenda 2 and 3 define it.';
+const STATUS_ICON = { Pass: '✓', Fail: '✕' };
+// Every data-metric element in a generated page must show exactly its published value.
+export function verifyPageMetrics(html, values) {
+  for (const m of html.matchAll(/data-metric="([a-zA-Z0-9.]+)"[^>]*>([^<]*)</g)) {
+    const shown = m[2].replaceAll('&#39;', "'").replaceAll('&quot;', '"').replaceAll('&amp;', '&');
+    if (!(m[1] in values) || shown !== values[m[1]]) throw new Error(`Page metric mismatch: ${m[1]}.`);
+  }
+}
 export async function render(manifest, sources, write, root = ROOT) {
   const a = analyse(sources), defs = chartDefs(sources, a), artifact = [], sections = [];
   const explorerMethod = `GET ${EXPLORER}\n${new URLSearchParams(explorerParams(CAL.swapWindow))}\nAuthorization: Bearer [read locally from .env, never included here]\n\nPaginate with endTimestamp = previous oldest createdAt + 1 ms; every HTTP attempt is at least 5.2 s apart.\nSkip known swaps only at the previous boundary timestamp; reject other duplicates or broken timestamp continuity.\nStop on an empty response or a short response with no new rows; a full 1,000-row response with no new rows is an error.\nIdentity is depositAddress+depositMemo+createdAt (addresses can repeat); sum amountInUsd once; group by Monday-start UTC week of createdAt.`;
@@ -671,10 +681,10 @@ export async function render(manifest, sources, write, root = ROOT) {
   const dataStatus = result => result ? (result.pass ? 'Pass' : 'Fail') : 'Unavailable';
   const checkCard = ({ id, title, value, description, result, valueNow, max, threshold, passLine = false }) => {
     const status = dataStatus(result);
-    return `<article class="check-card"><div class="check-card-head"><h2>${escape(title)}</h2><span class="status status-${status.toLowerCase()}" data-status="${status}">${status}</span></div>
+    return `<article class="check-card"><div class="check-card-head"><h2>${escape(title)}</h2><span class="status status-${status.toLowerCase()}" data-status="${status}">${STATUS_ICON[status] ? `<span class="status-icon" aria-hidden="true">${STATUS_ICON[status]}</span>` : ''}${status}</span></div>
       <p class="check-value"><strong data-metric="${id}">${escape(value)}</strong><span>${escape(description)}</span></p>
       <div class="measurebar measurebar--pass"><meter min="0" max="${max}" value="${valueNow ?? 0}" aria-label="${escape(title)} measure"></meter><span class="threshold" aria-hidden="true"></span></div>
-      <p class="measure-caption"><span data-metric="${passLine ? 'position.rules.passBar' : 'position.rules.signedGrowthBar'}">${escape(threshold)} pass bar</span></p>
+      <p class="measure-caption"><span><span data-metric="${passLine ? 'position.rules.passBar' : 'position.rules.signedGrowthBar'}">${escape(threshold)}</span> pass bar</span></p>
       ${id === 'position.check1.coverage' ? `<p class="check-note">Without three accounts: <strong data-metric="position.concentration.withoutTopNetBuyers.3.coverage">${escape(values['position.concentration.withoutTopNetBuyers.3.coverage'] || 'Unavailable')}</strong></p>` : ''}</article>`;
   };
   const checkCards = position ? `<div class="check-cards">
@@ -700,7 +710,7 @@ export async function render(manifest, sources, write, root = ROOT) {
   const sensTable = sens?.lags.length ? `<div class="table-wrap" tabindex="0"><table><caption>Sensitivity check, not official: T2 method from ${escape(sens.start)}, added after the official result was seen. It does not change the official T2 result, which stays ${escape(a.t2.verdict)}. Same lines on this window would give ${escape(sens.verdict)} (not official).</caption><thead><tr><th>Lag</th><th>Pairs</th><th>correlation with volume</th><th>correlation with price</th><th>Advantage</th><th>First half (correlation with volume / correlation with price)</th><th>Second half (correlation with volume / correlation with price)</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${sens.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td>${l.halves.map(h => `<td>${fmt(h.rv, 3)} / ${fmt(h.rp, 3)}</td>`).join('')}<td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
   const statusRows = Object.entries(sources).map(([name, s]) => `<tr><th scope="row">${escape(name)}</th><td>${escape(s.reason || (s.entry?.reused ? 'Cached result reused' : 'Fetched'))}</td></tr>`).join('');
   await write('NUMBERS.md', report);
-  await write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  const indexPage = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="${position ? INDEX_CSP : CSP}">
     <title>NEAR investment thesis · public data through November 1, 2026</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to evidence</a>
@@ -708,8 +718,10 @@ export async function render(manifest, sources, write, root = ROOT) {
     <main id="main"><header class="first-screen">
     <p class="edition">NEAR investment thesis · public data through <time datetime="2026-11-01" data-metric="presentation.publicDate">${escape(values['presentation.publicDate'])}</time></p>
     <h1>Does public data support holding NEAR through <span data-metric="position.holdHorizon">${escape(values['position.holdHorizon'] || '2031')}</span>?</h1>
-    ${position ? `<p class="answer">Not yet.</p><p class="summary-line"><span data-metric="position.call.passingWords">${escape(values['position.call.passingWords'])}</span> of <span data-metric="position.call.totalWords">${escape(values['position.call.totalWords'])}</span> locked tests passed, and <span data-metric="position.topBuyerCountWords">${escape(values['position.topBuyerCountWords'])}</span> accounts made up <span data-metric="position.top3Share">${escape(values['position.top3Share'])}</span> of that pass.</p>${checkCards}` : checkCards}
+    ${position ? `<p class="answer">Not yet.</p><p class="rating-line">${escape(RATING_LINE)}</p><p class="summary-line"><span data-metric="position.call.passingWords">${escape(values['position.call.passingWords'])}</span> of <span data-metric="position.call.totalWords">${escape(values['position.call.totalWords'])}</span> locked tests passed, and <span data-metric="position.topBuyerCountWords">${escape(values['position.topBuyerCountWords'])}</span> accounts made up <span data-metric="position.top3Share">${escape(values['position.top3Share'])}</span> of that pass.</p>
+    <p class="supply-line">New supply: <span data-metric="position.issuance.issuedNearMillions">${escape(values['position.issuance.issuedNearMillions'])}</span> million NEAR issued in the 52 weeks to November 1, 2026, worth $<span data-metric="position.issuance.valueUsdMillions">${escape(values['position.issuance.valueUsdMillions'])}</span> million at weekly prices.</p>` : ''}
     <div class="first-actions"><a class="evidence-button" href="model.html">Test the issuance cut</a><a href="thesis.html">Read the thesis</a><a href="VERIFY.md">How to verify</a></div>
+    ${checkCards}
     ${position ? '<p id="live-line" class="live-line" aria-live="polite" hidden></p><script src="live.js" defer></script>' : ''}
     <p class="advice-note">General research opinion, not personal advice.</p>
     </header><!-- first-screen:end -->
@@ -724,7 +736,9 @@ export async function render(manifest, sources, write, root = ROOT) {
     <section id="status"><h2>Source status</h2><div class="table-wrap" tabindex="0"><table><thead><tr><th>Source</th><th>Status</th></tr></thead><tbody>${statusRows}</tbody></table></div>${a.duplicates.length ? `<p>Duplicate block rows: ${escape(a.duplicates.map(d => `${d.date} (${d.duplicates})`).join(', '))}.</p>` : ''}</section>
     ${sections.join('')}
     <section><h2>What this cannot tell you</h2><p>Accounts are not people. 1Click is not all of NEAR Intents. Correlation is not causation. None of this sets a fair NEAR price.</p><a href="thesis.html">Rules, limits and sources</a></section>
-    <footer>Rebuild all charts offline: <code>npm run rebuild</code><br>Refresh sources and rebuild: <code>npm run refresh</code><br>No browser credentials. No external scripts. No fabricated data.</footer></main></body></html>`);
+    <footer>Rebuild all charts offline: <code>npm run rebuild</code><br>Refresh sources and rebuild: <code>npm run refresh</code><br>No browser credentials. No external scripts. No fabricated data.</footer></main></body></html>`;
+  if (position) verifyPageMetrics(indexPage, values);
+  await write('index.html', indexPage);
   await write('charts.json', JSON.stringify({ snapshot: manifest.id, files: artifact }, null, 2) + '\n');
   return { report, analysis: a };
 }

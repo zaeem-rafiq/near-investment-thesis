@@ -54,7 +54,7 @@ function barChart(years) {
   }).join('');
   return `<svg viewBox="0 0 640 260" role="img" aria-labelledby="bar-title bar-description">
     <title id="bar-title">Annual new NEAR against absorbed plus burned NEAR</title>
-    <desc id="bar-description">Paired bars share one NEAR scale. Exact values and coverage are in the preceding table.</desc>
+    <desc id="bar-description">Paired bars share one NEAR scale. Exact values and coverage are in the table under The path to 2031.</desc>
     <text x="8" y="18">${compact(high)} NEAR</text>
     <line x1="64" x2="620" y1="${zero}" y2="${zero}" class="chart-axis"/>
     ${bars}</svg>`;

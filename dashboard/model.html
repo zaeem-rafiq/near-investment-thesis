@@ -17,6 +17,7 @@
       <p class="muted">A supply and buying scenario through 2031. Change the assumptions, not the research results.</p>
     </header>
     <section class="hero" aria-label="2031 scenario">
+      <div class="hero-text">
       <p class="eyebrow">2031 · New NEAR absorbed by buying and burn</p>
       <p id="coverage" class="big-number" aria-live="polite" aria-atomic="true">Not calculated</p>
       <p id="explanation">Enable JavaScript to calculate a scenario.</p>
@@ -26,6 +27,14 @@
         <p id="multiple" class="muted">Compared with today's final annual net buying.</p>
       </div>
       <p class="muted">Starting net buying is Check 1 final. Starting buybacks are observed 36-week gross outside receipts at weekly prices, annualized by 52/36. Receipts are not burns or guaranteed retention.</p>
+      </div>
+      <div class="hero-chart">
+        <div class="chart-heading">
+          <p><span class="key new-key"></span>New NEAR</p>
+          <p><span class="key absorbed-key"></span>Absorbed + burned</p>
+        </div>
+        <div id="chart"></div>
+      </div>
     </section>
     <section aria-labelledby="assumptions-heading">
       <div class="section-heading">
@@ -79,11 +88,6 @@
         <thead><tr><th scope="col">Year</th><th scope="col">New NEAR</th><th scope="col">Burned</th><th scope="col">Absorbed</th><th scope="col">Coverage</th><th scope="col">Net float change</th><th scope="col">Break-even price</th></tr></thead>
         <tbody id="year-rows"></tbody>
       </table>
-      <div class="chart-heading">
-        <p><span class="key new-key"></span>New NEAR</p>
-        <p><span class="key absorbed-key"></span>Absorbed + burned</p>
-      </div>
-      <div id="chart"></div>
     </section>
     <section aria-labelledby="sources-heading">
       <h2 id="sources-heading">Where the starting values come from</h2>

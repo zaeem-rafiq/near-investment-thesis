@@ -151,6 +151,20 @@ test('scenario buttons preserve exact sourced inputs through render, URL sharing
   assert.doesNotMatch(html, /provisional|pending Check 2/);
 });
 
+test('model hero holds the chart beside its text and the year table stays in The path to 2031', async () => {
+  const html = await readFile(`${ROOT}/dashboard/model.html`, 'utf8');
+  const css = await readFile(`${ROOT}/dashboard/model.css`, 'utf8');
+  const hero = html.split('<section class="hero"')[1].split('</section>')[0];
+  const path = html.split('id="years-heading"')[1].split('</section>')[0];
+  assert.ok(hero.indexOf('class="hero-text"') < hero.indexOf('class="hero-chart"'));
+  for (const id of ['coverage', 'explanation', 'needed']) assert.ok(hero.split('class="hero-chart"')[0].includes(`id="${id}"`), id);
+  assert.match(hero.split('class="hero-chart"')[1], /class="chart-heading"[\s\S]*id="chart"/);
+  assert.equal((html.match(/id="chart"/g) || []).length, 1);
+  assert.match(path, /id="year-rows"/);
+  assert.doesNotMatch(path, /id="chart"/);
+  assert.match(css, /@media \(min-width: 1024px\) \{\s*\.hero \{ display: grid; grid-template-columns: minmax\(0, 1fr\) minmax\(0, 1fr\)/);
+});
+
 test('every page declares the local favicon and rebuild ships its exact source', async () => {
   const icon = await readFile(`${ROOT}/web/favicon.svg`, 'utf8');
   assert.equal(await readFile(`${ROOT}/dashboard/favicon.svg`, 'utf8'), icon);

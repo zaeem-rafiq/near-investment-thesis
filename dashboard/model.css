@@ -18,6 +18,13 @@ p { max-width: 65ch; margin: 8px 0; }
 .eyebrow { color: var(--muted); }
 section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border); }
 .hero { padding-bottom: 8px; }
+.hero-text, .hero-chart { min-width: 0; }
+.hero-chart { margin-top: 24px; }
+@media (min-width: 1024px) {
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .hero-chart { margin-top: 0; }
+  .hero-chart .chart-heading { margin-top: 8px; }
+}
 .big-number { margin: 8px 0; color: var(--heading); font-size: clamp(64px, 10vw, 96px); font-weight: 600; letter-spacing: -.05em; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .needed { margin: 32px 0 24px; }
 .needed strong { font-size: 24px; letter-spacing: -.02em; }

@@ -5,7 +5,7 @@ import { gzipSync } from 'node:zlib';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { CAL, addDays, dayRange, weeksBetween, weekStart, parseSigners, parseContracts, parseCoverage, t1Test, t2Series, t2Test, t3Test,
-  pearson, bootstrapAdvantage, newSwapAggregate, addSwapRows, swapDays, weeklyFromDaily, parseSwapDays, loadSwapDir, gapBand, analyse, numberTables, verifyThesis, thesisHTML, metricValues, t2SensitivitySeries, T2_SENSITIVITY_START, usdUnits, usdString, seriesSVG, render, loadSources } from '../scripts/report.mjs';
+  pearson, bootstrapAdvantage, newSwapAggregate, addSwapRows, swapDays, weeklyFromDaily, parseSwapDays, loadSwapDir, gapBand, analyse, numberTables, verifyThesis, verifyPageMetrics, RATING_LINE, escape, thesisHTML, metricValues, t2SensitivitySeries, T2_SENSITIVITY_START, usdUnits, usdString, seriesSVG, render, loadSources } from '../scripts/report.mjs';
 import { ROOT, hash, literalDateFilters } from '../scripts/sources.mjs';
 
 // Synthetic fixtures only; never research data.
@@ -430,6 +430,22 @@ test('first-screen numbers match the published public-snapshot metrics', async (
   assert.match(first, /href="thesis.html">Read the thesis<\/a>/);
   assert.match(first, /href="VERIFY.md">How to verify<\/a>/);
   assert.match(first, /General research opinion, not personal advice\./);
+  const thesisRating = (await readFile(join(ROOT, 'THESIS.md'), 'utf8')).split('\n')[4].replaceAll('**', '');
+  assert.equal(RATING_LINE, thesisRating, 'first-screen rating repeats the THESIS.md rating line');
+  assert.ok(first.includes(`<p class="answer">Not yet.</p><p class="rating-line">${escape(thesisRating)}</p>`));
+  assert.ok(first.includes('New supply: <span data-metric="position.issuance.issuedNearMillions">32.12</span> million NEAR issued in the 52 weeks to November 1, 2026, worth $<span data-metric="position.issuance.valueUsdMillions">66.99</span> million at weekly prices.'));
+  assert.equal(v['position.issuance.issuedNearMillions'], (a.position.results.issuance.issuedNear / 1e6).toFixed(2));
+  assert.equal(v['position.issuance.valueUsdMillions'], (a.position.results.issuance.issuanceValueUsd / 1e6).toFixed(2));
+  for (const key of ['position.issuance.issuedNearMillions', 'position.issuance.valueUsdMillions']) {
+    const stale = first.replace(new RegExp(`(data-metric="${key.replaceAll('.', '\\.')}">)[^<]+`), '$1WRONG');
+    assert.notEqual(stale, first);
+    assert.throws(() => verifyPageMetrics(stale, v), /Page metric mismatch/);
+  }
+  assert.doesNotThrow(() => verifyPageMetrics(files.get('index.html'), { ...v, 'presentation.publicDate': 'November 1, 2026' }));
+  const order = ['class="answer"', 'class="rating-line"', 'class="supply-line"', 'class="first-actions"', 'class="check-cards"'].map(s => first.indexOf(s));
+  assert.ok(order.every((at, i) => at >= 0 && (!i || at > order[i - 1])), 'actions come before the cards in source order');
+  assert.equal((first.match(/<span class="status-icon" aria-hidden="true">✓<\/span>Pass<\/span>/g) || []).length, 1);
+  assert.equal((first.match(/<span class="status-icon" aria-hidden="true">✕<\/span>Fail<\/span>/g) || []).length, 2);
   assert.match(first, /<\/div>\s*<p id="live-line" class="live-line" aria-live="polite" hidden><\/p><script src="live.js" defer><\/script>/);
   const csp = files.get('index.html').match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
   assert.equal(csp, "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; script-src 'self'; connect-src 'self'");
@@ -476,6 +492,12 @@ test('first screen uses plain labels and keeps technical results below it', asyn
   assert.match(css, /\.answer \{ font-size: 56px/);
   assert.match(css, /\.first-screen h1 \{[^}]*font-size: clamp\(24px, 3vw, 28px\)/);
   assert.match(css, /\.answer \{ font-size: 48px/);
+  assert.match(css, /\.rating-line \{ font-size: 20px;[^}]*font-weight: 600; color: var\(--heading\)/);
+  assert.match(css, /\.status-pass \{ background: #166534; color: #ffffff; \}/);
+  assert.match(css, /\.status-fail \{ background: #b91c1c; color: #ffffff; \}/);
+  assert.match(css, /\.status \{[^}]*font-size: 14px; font-weight: 600;/);
+  assert.match(css, /\.status-unavailable \{ border-color: var\(--secondary\)/);
+  assert.doesNotMatch(css, /\border:/, 'source order, not CSS order, sets reading order');
   assert.match(css, /\.hypotheses \.table-wrap \{ max-height: none; \}/, 'result tables must not clip behind an inner scrollbar');
   assert.match(css, /^\.table-wrap \{[^}]*max-height: 400px/m, 'long values tables keep their height limit');
   assert.doesNotMatch(css, /\.first-screen \{[^}]*min-height/, 'first screen must not force empty height');

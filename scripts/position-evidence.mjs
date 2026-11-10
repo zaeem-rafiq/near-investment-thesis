@@ -196,6 +196,8 @@ export function positionMetricValues({ section, results: p, oneClick, audit, tre
     values[`position.barSensitivity.${bar}.passingWords`] = ['none', 'only Check 1', 'two', 'all three'][n];
     values[`position.barSensitivity.${bar}.call`] = n >= 2 ? 'Building' : 'Not yet';
   }
+  values['position.issuance.issuedNearMillions'] = (p.issuance.issuedNear / 1e6).toFixed(2);
+  values['position.issuance.valueUsdMillions'] = (p.issuance.issuanceValueUsd / 1e6).toFixed(2);
   values['position.check1.passWord'] = p.check1.pass ? 'Pass' : 'Fail';
   values['position.check2.passWord'] = p.check2.pass ? 'Pass' : 'Fail';
   values['position.check3.passWord'] = p.check3.pass ? 'Pass' : 'Fail';

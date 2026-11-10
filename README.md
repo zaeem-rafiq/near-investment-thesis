@@ -13,11 +13,11 @@ Requires Node.js 22 or newer. The project uses standard libraries only; no insta
 1. Run `npm run check`. See syntax checks complete successfully.
 2. Run `npm test`. See the offline rule, evidence and model tests pass.
 3. Run `npm run rebuild`. See `dashboard/` rebuilt from committed public data and the verified results `T1 FAIL, T2 CAN'T TELL, T3 FAIL`. The rebuild does not rewrite `THESIS.md`.
-4. Open `dashboard/index.html` in a browser. See the position call, three checks, concentration comparison, and links to the thesis and model.
+4. Open `dashboard/index.html` in a browser. See the position call “Not yet.” with the rating line under it, the new supply issued in the 52 weeks, the links to the model, thesis and verification, then the three checks with Pass and Fail badges, followed by the concentration comparison.
 
 ## Model
 
-Open [`dashboard/model.html`](dashboard/model.html) from a local HTTP server; for example, run `python3 -m http.server 8765 --bind 127.0.0.1 --directory dashboard` and visit `http://127.0.0.1:8765/model.html`. Try Bear, Base and Bull, adjust the assumptions, then use Reset or share the URL. The model shows supply and float scenarios through <!-- metric:position.holdHorizon -->2031<!-- /metric -->; it is arithmetic under stated assumptions, not a forecast.
+Open [`dashboard/model.html`](dashboard/model.html) from a local HTTP server; for example, run `python3 -m http.server 8765 --bind 127.0.0.1 --directory dashboard` and visit `http://127.0.0.1:8765/model.html`. See the 2031 result and its chart side by side from 1024 px wide, stacked below that. Try Bear, Base and Bull, adjust the assumptions, then use Reset or share the URL. The model shows supply and float scenarios through <!-- metric:position.holdHorizon -->2031<!-- /metric -->; it is arithmetic under stated assumptions, not a forecast.
 
 ## Libraries and AI assistance
 
