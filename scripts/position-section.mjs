@@ -198,7 +198,7 @@ function holderLedger(c) {
     }
   };
 }
-function reviewCalendar(c) {
+export function reviewCalendar(c) {
   const today1 = absent(c.input.check1Final?.netBuyingUsd) ? metric(null, 'ratio', ['check1Final.netBuyingUsd'])
     : fraction(c.input.check1Final.netBuyingUsd, c.issuedUsd, 'ratio', ['check1Final.netBuyingUsd', 'weeks[].issuedNear', 'weeks[].meanClose']);
   const checks = [
