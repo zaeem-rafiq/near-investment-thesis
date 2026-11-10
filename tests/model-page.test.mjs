@@ -105,6 +105,19 @@ test('all 32 slider/toggle corners render finite rows and valid markup', () => {
     }
   }
 });
+test('model chart uses container pixels with a fixed 240px height at every requested width', async () => {
+  for (const width of [343, 689, 464, 703.75]) {
+    const view = renderModel(DEFAULT_STATE, undefined, width);
+    const pixels = Math.floor(width);
+    assert.match(view.chart, new RegExp(`viewBox="0 0 ${pixels} 240" width="${pixels}" height="240"`));
+    assert.equal((view.chart.match(/<rect /g) || []).length, 10);
+    assert.equal((view.chart.match(/<text /g) || []).length, 6);
+    assert.doesNotMatch(view.chart, /NaN|Infinity/);
+  }
+  const css = await readFile(`${ROOT}/dashboard/model.css`, 'utf8');
+  assert.match(css, /svg text \{[^}]*font: 14px system-ui/);
+});
+
 test('undefined values render explicit text, never NaN or Infinity', () => {
   const input = Object.fromEntries(Object.entries({
     startingSupply: 1_000_000, startMonth: 2027 * 12, realizedShare: 0,

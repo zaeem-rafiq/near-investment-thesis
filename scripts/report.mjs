@@ -475,16 +475,16 @@ export function seriesSVG({ title, unit, points, lines = [], second, note }) {
   const path = key => { let s = '', on = false; points.forEach((p, i) => { const v = p[key]; if (v == null) { on = false; return; } s += `${on ? 'L' : 'M'}${x(i).toFixed(2)},${y(v).toFixed(2)} `; on = true; }); return s; };
   const dots = points.map((p, i) => p.v == null ? '' : `<circle cx="${x(i).toFixed(2)}" cy="${y(p.v).toFixed(2)}" r="${p.excluded ? 3 : 2.5}" fill="${p.excluded ? '#ffffff' : '#171717'}" stroke="${p.excluded ? '#9ca3af' : '#171717'}"><title>${escape(p.x)}: ${escape(label(p.v))}${p.excluded ? ' (excluded from test)' : ''}</title></circle>`).join('');
   const excludedCount = points.filter(p => p.excluded).length;
-  const shade = excludedCount ? `<rect x="80" y="40" width="${(x(excludedCount - 1) - 80 + 380 / Math.max(1, points.length - 1)).toFixed(2)}" height="180" fill="#f3f4f6"/><text x="84" y="34" font-family="system-ui,sans-serif" font-size="12" fill="#6b7280">Excluded from T2 test</text>` : '';
-  const ref = lines.map(l => `<path d="M80 ${y(l.value).toFixed(2)}H840" stroke="#b91c1c" stroke-dasharray="4 4"/><text x="838" y="${(y(l.value) - 4).toFixed(2)}" text-anchor="end" font-size="12" fill="#b91c1c">${escape(l.label)}</text>`).join('');
+  const shade = excludedCount ? `<rect x="80" y="40" width="${(x(excludedCount - 1) - 80 + 380 / Math.max(1, points.length - 1)).toFixed(2)}" height="180" fill="#f3f4f6"/><text x="84" y="34" font-family="system-ui,sans-serif" font-size="14" fill="#6b7280">Excluded from T2 test</text>` : '';
+  const ref = lines.map(l => `<path d="M80 ${y(l.value).toFixed(2)}H840" stroke="#b91c1c" stroke-dasharray="4 4"/><text x="838" y="${(y(l.value) - 4).toFixed(2)}" text-anchor="end" font-size="14" fill="#b91c1c">${escape(l.label)}</text>`).join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" role="img" aria-label="${escape(title)}">
   <title>${escape(title)}</title><desc>${escape(note || '')} Gaps represent missing values. Exact values are in the adjacent table.</desc>
   ${shade}<g fill="none" stroke="#e5e5e5"><path d="M80 40H840 M80 130H840 M80 220H840"/></g>
-  <g fill="#374151" font-family="system-ui,sans-serif" font-size="13"><text x="72" y="44" text-anchor="end">${tick(max)}</text>
+  <g fill="#374151" font-family="system-ui,sans-serif" font-size="14"><text x="72" y="44" text-anchor="end">${tick(max)}</text>
   <text x="72" y="134" text-anchor="end">${tick(max / 2)}</text><text x="72" y="224" text-anchor="end">0</text>
   <text x="80" y="252">${escape(points[0].x)}</text><text x="840" y="252" text-anchor="end">${escape(points.at(-1).x)}</text><text x="80" y="20">${escape(unit)}</text></g>
   <g font-family="system-ui,sans-serif">${ref}</g>
-${second ? `<path d="${path('v2')}" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="6 3"/><text x="840" y="20" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#2563eb">dashed: ${escape(second)}</text>` : ''}
+${second ? `<path d="${path('v2')}" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="6 3"/><text x="840" y="20" text-anchor="end" font-family="system-ui,sans-serif" font-size="14" fill="#2563eb">dashed: ${escape(second)}</text>` : ''}
   <path d="${path('v')}" fill="none" stroke="#171717" stroke-width="2"/>${dots}</svg>`;
 }
 
@@ -668,7 +668,7 @@ export async function render(manifest, sources, write, root = ROOT) {
     const rows = def.points.map(p => `<tr${p.excluded ? ' class="excluded"' : ''}><td>${escape(p.x)}</td><td>${escape(p.exact ?? (p.v == null ? 'Unavailable' : def.unit === 'share' ? share(p.v, 2) : fmt(p.v)))}</td>${def.second ? `<td>${escape(p.v2 == null ? 'Unavailable' : fmt(p.v2))}</td>` : ''}${def.test === 'T2' ? `<td>${p.excluded ? 'Excluded' : 'In test'}</td>` : ''}</tr>`).join('');
     sections.push(`<section id="${def.id}" class="chart-section"><header><h2>${escape(def.title)}</h2><span class="source">${escape(def.test)}</span></header>
       <p>${escape(def.text)}</p>
-      ${svg ? `<img src="charts/${def.id}.svg" alt="${escape(def.title)}; exact values in the table below" width="880" height="280">` : `<div class="empty"><strong>Data unavailable</strong><p>${escape(reason || 'No observed values.')}</p><span>No synthetic series or zero-filled history.</span></div>`}
+      ${svg ? `<div class="chart-viewport" tabindex="0" role="region" aria-label="${escape(def.title)}; scroll horizontally on narrow screens"><img src="charts/${def.id}.svg" alt="${escape(def.title)}; exact values in the table below" width="880" height="280"></div>` : `<div class="empty"><strong>Data unavailable</strong><p>${escape(reason || 'No observed values.')}</p><span>No synthetic series or zero-filled history.</span></div>`}
       <details><summary>Query &amp; method</summary><pre><code>${escape(method)}</code></pre></details>
       <details><summary>Values &amp; gaps</summary><div class="table-wrap" tabindex="0"><table><caption>${escape(def.title)} (${escape(def.unit)})</caption><thead><tr><th scope="col">Period</th><th scope="col">Value</th>${def.second ? `<th scope="col">${escape(def.second)}</th>` : ''}${def.test === 'T2' ? '<th scope="col">T2 status</th>' : ''}</tr></thead><tbody>${rows}</tbody></table></div></details>
       </section>`);
@@ -718,7 +718,7 @@ export async function render(manifest, sources, write, root = ROOT) {
     <main id="main"><header class="first-screen">
     <p class="edition">NEAR investment thesis · public data through <time datetime="2026-11-01" data-metric="presentation.publicDate">${escape(values['presentation.publicDate'])}</time></p>
     <h1>Does public data support holding NEAR through <span data-metric="position.holdHorizon">${escape(values['position.holdHorizon'] || '2031')}</span>?</h1>
-    ${position ? `<p class="answer">Not yet.</p><p class="rating-line">${escape(RATING_LINE)}</p><p class="summary-line"><span data-metric="position.call.passingWords">${escape(values['position.call.passingWords'])}</span> of <span data-metric="position.call.totalWords">${escape(values['position.call.totalWords'])}</span> locked tests passed, and <span data-metric="position.topBuyerCountWords">${escape(values['position.topBuyerCountWords'])}</span> accounts made up <span data-metric="position.top3Share">${escape(values['position.top3Share'])}</span> of that pass.</p>
+    ${position ? `<p class="answer">Not yet.</p><p class="rating-line"><strong>${escape(RATING_LINE.slice(0, RATING_LINE.indexOf('.') + 1))}</strong>${escape(RATING_LINE.slice(RATING_LINE.indexOf('.') + 1))}</p><p class="summary-line"><span data-metric="position.call.passingWords">${escape(values['position.call.passingWords'])}</span> of <span data-metric="position.call.totalWords">${escape(values['position.call.totalWords'])}</span> locked tests passed, and <span data-metric="position.topBuyerCountWords">${escape(values['position.topBuyerCountWords'])}</span> accounts made up <span data-metric="position.top3Share">${escape(values['position.top3Share'])}</span> of that pass.</p>
     <p class="supply-line">New supply: <span data-metric="position.issuance.issuedNearMillions">${escape(values['position.issuance.issuedNearMillions'])}</span> million NEAR issued in the 52 weeks to November 1, 2026, worth $<span data-metric="position.issuance.valueUsdMillions">${escape(values['position.issuance.valueUsdMillions'])}</span> million at weekly prices.</p>` : ''}
     <div class="first-actions"><a class="evidence-button" href="model.html">Test the issuance cut</a><a href="thesis.html">Read the thesis</a><a href="VERIFY.md">How to verify</a></div>
     ${checkCards}

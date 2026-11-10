@@ -399,6 +399,23 @@ test('committee view covers round-three actions, valuation, bull gates and revie
   assert.match(mixed, />78.8K<\/text>/);
   assert.match(svg, /<title>a: 106,298,020 \(excluded from test\)<\/title>/);
 });
+test('static chart labels stay readable in keyboard-focusable narrow-screen viewports', async () => {
+  const { manifest, sources } = await loadSources(), files = new Map();
+  await render(manifest, sources, async (n, body) => files.set(n, body));
+  const html = files.get('index.html');
+  const images = [...html.matchAll(/<img src="charts\/[^"]+\.svg"/g)];
+  const viewports = [...html.matchAll(/class="chart-viewport" tabindex="0" role="region" aria-label="[^"]+">/g)];
+  assert.ok(images.length > 0);
+  assert.equal(viewports.length, images.length);
+  for (const [name, svg] of files) {
+    if (!name.endsWith('.svg')) continue;
+    const sizes = [...svg.matchAll(/font-size="(\d+)"/g)].map(m => Number(m[1]));
+    assert.ok(sizes.length > 0 && sizes.every(size => size >= 14), name);
+  }
+  const css = await readFile(join(ROOT, 'web/style.css'), 'utf8');
+  assert.match(css, /\.chart-viewport \{[^}]*overflow-x: auto;/);
+  assert.match(css, /\.chart-section img \{[^}]*min-width: 880px;/);
+});
 
 // Official T2 values as published before the sensitivity check existed (dashboard/NUMBERS.md at 16587a8).
 const OFFICIAL_T2 = `t2.verdict=CAN'T TELL|t2.start=2025-04-14|t2.changes=78|t2.weeks=81|t2.startSwaps=8,568|t2.weeksBelowMinAfterStart=15|t2.nextWeekAtMin=2025-08-04|t2.volumeUnavailable.weeks=2026-02-02|t2.volumeUnavailable.missingUsd=2|t2.volumeUnavailable.swaps=182,281|t2.lag1.pairs=77|t2.lag1.rv=0|t2.lag1.rp=0.284|t2.lag1.advantage=-0.284|t2.lag1.half1.rv=-0.003|t2.lag1.half1.rp=0.193|t2.lag1.half2.rv=0.121|t2.lag1.half2.rp=0.317|t2.lag1.ci.low=-0.613|t2.lag1.ci.high=0.179|t2.lag1.favours=neither|t2.lag2.pairs=76|t2.lag2.rv=-0.065|t2.lag2.rp=0.039|t2.lag2.advantage=-0.104|t2.lag2.half1.rv=-0.186|t2.lag2.half1.rp=-0.082|t2.lag2.half2.rv=0.151|t2.lag2.half2.rp=0.038|t2.lag2.ci.low=-0.385|t2.lag2.ci.high=0.263|t2.lag2.favours=neither|t2.lag4.pairs=74|t2.lag4.rv=0.013|t2.lag4.rp=0.009|t2.lag4.advantage=0.004|t2.lag4.half1.rv=0.091|t2.lag4.half1.rp=-0.012|t2.lag4.half2.rv=-0.005|t2.lag4.half2.rp=0.002|t2.lag4.ci.low=-0.241|t2.lag4.ci.high=0.201|t2.lag4.favours=neither|t2.lag8.pairs=70|t2.lag8.rv=-0.004|t2.lag8.rp=-0.187|t2.lag8.advantage=0.183|t2.lag8.half1.rv=-0.056|t2.lag8.half1.rp=-0.174|t2.lag8.half2.rv=-0.177|t2.lag8.half2.rp=-0.165|t2.lag8.ci.low=0.02|t2.lag8.ci.high=0.304|t2.lag8.favours=neither`;
@@ -432,7 +449,8 @@ test('first-screen numbers match the published public-snapshot metrics', async (
   assert.match(first, /General research opinion, not personal advice\./);
   const thesisRating = (await readFile(join(ROOT, 'THESIS.md'), 'utf8')).split('\n')[4].replaceAll('**', '');
   assert.equal(RATING_LINE, thesisRating, 'first-screen rating repeats the THESIS.md rating line');
-  assert.ok(first.includes(`<p class="answer">Not yet.</p><p class="rating-line">${escape(thesisRating)}</p>`));
+  const sentence = 'Rating: hold, do not buy, through 2031.';
+  assert.ok(first.includes(`<p class="answer">Not yet.</p><p class="rating-line"><strong>${sentence}</strong>${escape(thesisRating.slice(sentence.length))}</p>`));
   assert.ok(first.includes('New supply: <span data-metric="position.issuance.issuedNearMillions">32.12</span> million NEAR issued in the 52 weeks to November 1, 2026, worth $<span data-metric="position.issuance.valueUsdMillions">66.99</span> million at weekly prices.'));
   assert.equal(v['position.issuance.issuedNearMillions'], (a.position.results.issuance.issuedNear / 1e6).toFixed(2));
   assert.equal(v['position.issuance.valueUsdMillions'], (a.position.results.issuance.issuanceValueUsd / 1e6).toFixed(2));
@@ -492,7 +510,9 @@ test('first screen uses plain labels and keeps technical results below it', asyn
   assert.match(css, /\.answer \{ font-size: 56px/);
   assert.match(css, /\.first-screen h1 \{[^}]*font-size: clamp\(24px, 3vw, 28px\)/);
   assert.match(css, /\.answer \{ font-size: 48px/);
-  assert.match(css, /\.rating-line \{ font-size: 20px;[^}]*font-weight: 600; color: var\(--heading\)/);
+  assert.match(css, /\.rating-line \{ font-size: 20px;[^}]*font-weight: 400; color: var\(--heading\)/);
+  assert.match(css, /\.rating-line strong \{ font-weight: 600; \}/);
+  assert.match(css, /\.check-card-head \{[^}]*flex-wrap: wrap;/);
   assert.match(css, /\.status-pass \{ background: #166534; color: #ffffff; \}/);
   assert.match(css, /\.status-fail \{ background: #b91c1c; color: #ffffff; \}/);
   assert.match(css, /\.status \{[^}]*font-size: 14px; font-weight: 600;/);

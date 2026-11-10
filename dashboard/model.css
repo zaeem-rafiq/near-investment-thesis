@@ -55,7 +55,7 @@ th:first-child, td:first-child { text-align: left; padding-left: 0; width: 9%; }
 .key { display: inline-block; width: 12px; height: 12px; }
 .new-key { background: var(--ink); }
 .absorbed-key { background: var(--accent); }
-svg { display: block; width: 100%; height: auto; margin-top: 16px; overflow: visible; }
+svg { display: block; max-width: 100%; height: auto; margin-top: 16px; overflow: visible; }
 svg text { fill: var(--body); font: 14px system-ui, sans-serif; }
 .bar-new { fill: var(--ink); }
 .bar-absorbed { fill: var(--accent); }
