@@ -111,3 +111,11 @@ tr.excluded td { color: #6b7280; }
 .thesis h2 { margin-top: 48px; }
 .thesis ul { max-width: 65ch; padding-left: 20px; }
 .thesis li { margin: 6px 0; }
+@media print {
+  body:has(.thesis) { font-size: 11pt; line-height: 1.35; }
+  body:has(.thesis) nav, body:has(.thesis) .skip { display: none; }
+  body:has(.thesis) main { max-width: none; padding: 0; }
+  .thesis h1 { font-size: 20pt; margin: 0 0 12px; }
+  .thesis h2 { font-size: 12pt; margin: 12px 0 4px; break-after: avoid; }
+  .thesis p { max-width: none; margin: 6px 0; }
+}

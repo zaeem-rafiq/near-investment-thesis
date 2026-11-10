@@ -593,8 +593,9 @@ export function numberTables(a) {
 const CSP = "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'";
 // Only the index page loads live.js, which reads same-origin live.json.
 const INDEX_CSP = `${CSP}; script-src 'self'; connect-src 'self'`;
-// Minimal Markdown for THESIS.md only: headings, paragraphs, "- " lists, pipe tables, `code` and **bold**. Everything is escaped.
-const inlineMd = s => escape(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+// Minimal Markdown for THESIS.md only, including its one fixed evidence link. Everything is escaped.
+const inlineMd = s => escape(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+  .replace(/\[([^\]\n]+)\]\(docs\/EVIDENCE\.md\)/g, '<a href="docs/EVIDENCE.md">$1</a>');
 export function thesisHTML(md) {
   const lines = md.replace(/<!--[\s\S]*?-->/g, '').split('\n'), out = [];
   let para = [], list = [];
@@ -630,10 +631,10 @@ export const EVIDENCE_END = '<!-- evidence:end -->';
 export function verifyThesis(text, a) {
   const expected = `${EVIDENCE_START}\n${numberTables(a)}${EVIDENCE_END}`;
   if (text.split(EVIDENCE_START).length !== 2 || text.split(EVIDENCE_END).length !== 2 ||
-      !text.includes(expected)) throw new Error('THESIS.md evidence metrics differ from data/public/. Review dashboard/NUMBERS.md and update the thesis by hand.');
+      !text.includes(expected)) throw new Error('THESIS.md / docs/EVIDENCE.md evidence metrics differ from data/public/. Review dashboard/NUMBERS.md and update the reviewed files by hand.');
   const values = metricValues(a);
   for (const m of text.matchAll(/<!-- metric:([a-zA-Z0-9.]+) -->(.*?)<!-- \/metric -->/g)) {
-    if (!(m[1] in values) || m[2] !== values[m[1]]) throw new Error(`THESIS.md metric mismatch: ${m[1]}.`);
+    if (!(m[1] in values) || m[2] !== values[m[1]]) throw new Error(`THESIS.md / docs/EVIDENCE.md metric mismatch: ${m[1]}.`);
   }
 }
 export async function render(manifest, sources, write, root = ROOT) {

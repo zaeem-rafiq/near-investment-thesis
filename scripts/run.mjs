@@ -81,15 +81,17 @@ async function main() {
   const write = (name, body) => atomic(resolve(ROOT, 'dashboard', name), body);
   const { analysis } = await render(manifest, sources, write);
   const thesis = await readFile(resolve(ROOT, 'THESIS.md'), 'utf8');
-  verifyThesis(thesis, analysis);
+  const evidence = await readFile(resolve(ROOT, 'docs/EVIDENCE.md'), 'utf8');
+  verifyThesis(`${thesis}\n${evidence}`, analysis);
   await copyFile(resolve(ROOT, 'web/style.css'), resolve(ROOT, 'dashboard/style.css'));
   await copyFile(resolve(ROOT, 'web/favicon.svg'), resolve(ROOT, 'dashboard/favicon.svg'));
   await copyFile(resolve(ROOT, 'web/live.js'), resolve(ROOT, 'dashboard/live.js'));
   await copyFile(resolve(ROOT, 'docs/VERIFY.md'), resolve(ROOT, 'dashboard/VERIFY.md'));
   await atomic(resolve(ROOT, 'dashboard/THESIS.md'), thesis);
+  await atomic(resolve(ROOT, 'dashboard/docs/EVIDENCE.md'), evidence);
   await atomic(resolve(ROOT, 'dashboard/thesis.html'), thesisHTML(thesis));
   await writeModelAssets(write);
-  console.log(`Rebuilt dashboard/ and verified THESIS.md from public snapshot ${manifest.id}: T1 ${analysis.t1.verdict}, T2 ${analysis.t2.verdict}, T3 ${analysis.t3.verdict}.`);
+  console.log(`Rebuilt dashboard/ and verified THESIS.md + docs/EVIDENCE.md from public snapshot ${manifest.id}: T1 ${analysis.t1.verdict}, T2 ${analysis.t2.verdict}, T3 ${analysis.t3.verdict}.`);
   if (mode === 'refresh' && Object.keys(manifest.unavailable).length) {
     console.error('Refresh incomplete. Unavailable sources are shown in the dashboard; no data was substituted.');
     process.exitCode = 1;

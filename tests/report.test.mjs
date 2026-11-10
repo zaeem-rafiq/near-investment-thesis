@@ -255,30 +255,32 @@ test('thesis.html renders the real thesis without metric tags, escapes markup an
   const html = thesisHTML(md);
   assert.doesNotMatch(html, /<!--|metric:|evidence:(begin|end)/);
   assert.match(html, /<h1>NEAR through 2031: Not yet<\/h1>/);
-  assert.match(html, /<td>t2\.changes<\/td><td>78<\/td>/);
+  assert.match(html, /<a href="docs\/EVIDENCE.md">Supporting evidence, scenarios, review rules and verified tables<\/a>/);
   assert.match(html, /Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'"/);
   assert.doesNotMatch(html, /<script/i);
   const hostile = thesisHTML('# T <script>x</script>\n\nA **b** \`<img src=x>\` <!-- metric:t1.verdict -->FAIL<!-- /metric -->\n\n- one\n- two\n');
   assert.match(hostile, /<h1>T &lt;script&gt;x&lt;\/script&gt;<\/h1>/);
   assert.match(hostile, /<p>A <strong>b<\/strong> <code>&lt;img src=x&gt;<\/code> FAIL<\/p>/);
   assert.match(hostile, /<ul><li>one<\/li><li>two<\/li><\/ul>/);
+  assert.doesNotMatch(thesisHTML('[unsafe](javascript:alert(1))'), /href="javascript/);
 });
 test('position thesis preserves the approved opening, section order and verified descriptive claims', async () => {
   const md = await readFile(join(ROOT, 'THESIS.md'), 'utf8');
-  const html = thesisHTML(md);
+  const evidence = await readFile(join(ROOT, 'docs/EVIDENCE.md'), 'utf8');
+  const combined = `${md}\n${evidence}`, html = thesisHTML(combined);
   assert.match(html, /Not yet: public data through November 1, 2026 does not support opening or adding to a NEAR position for a hold through 2031, because only one of three locked tests passed and three accounts made up 96\.6% of that pass\./);
   const headings = ['Five-line summary', 'Claim\n', 'Evidence for\n', 'Evidence against\n', 'What would change my mind\n',
     'Holder ledger', 'What you must believe (not official)', 'Review calendar', 'Why usage fell',
     'What the price assumes', 'Scenarios, inputs', 'Check 1.', 'Check 2.', 'Check 3.', 'T1.', 'T3.', 'T2.'];
   let previous = -1;
   for (const heading of headings) {
-    const position = md.indexOf(`## ${heading}`);
+    const position = evidence.indexOf(`## ${heading}`);
     assert.ok(position > previous, `Missing or misordered section: ${heading}`);
     previous = position;
   }
   const { sources } = await loadSources(), a = analyse(sources);
-  verifyThesis(md, a);
-  assert.throws(() => verifyThesis(md.replace(
+  verifyThesis(combined, a);
+  assert.throws(() => verifyThesis(combined.replace(
     '<!-- metric:position.top3Share -->96.6%', '<!-- metric:position.top3Share -->99%'), a), /metric mismatch/);
   assert.match(html, /Peer comparison is out of scope/);
   assert.match(html, /not identifiable, not measured zero/);
@@ -290,6 +292,42 @@ test('position thesis preserves the approved opening, section order and verified
   const summary = html.split('<h2>Five-line summary</h2>')[1].split('<h2>Claim</h2>')[0];
   assert.match(summary, /\$52\.1M/);
   assert.match(summary, /\$46\.1M to \$154M/);
+  assert.match(html, /<td>t2\.changes<\/td><td>78<\/td>/);
+});
+test('committee view covers the actions, concentration, watch list and conditional issuance without new rules', async () => {
+  const md = await readFile(join(ROOT, 'THESIS.md'), 'utf8');
+  const evidence = await readFile(join(ROOT, 'docs/EVIDENCE.md'), 'utf8');
+  const plain = md.replace(/<!--[\s\S]*?-->/g, '');
+  assert.match(plain, /For new money: this evidence does not support buying NEAR now for a hold through 2031\./);
+  assert.match(plain, /For current holders: this evidence does not support adding, and by itself it does not say to sell\./);
+  assert.match(plain, /General research opinion on public data, not personal advice/);
+  assert.match(plain, /without three accounts, net buying falls from 77\.75% to 2\.66% of issuance value/);
+  assert.match(plain, /If HSP-029 is vetoed or not adopted, the call stays Not yet and the 2031 buying need moves from the HSP-029 rows to the 2\.5% cap rows/);
+  assert.match(plain, /dashboard's daily line.*net 1Click buying, revenue-wallet balances and supply since November 2, 2026/);
+  assert.match(plain, /veto status requires a separate manual review/);
+  assert.match(plain, /Only the locked review rules decide the call/);
+  assert.match(plain, /2026-11-16.*2027-02-01.*2027-05-03.*2027-08-02.*2027-11-01/s);
+  assert.match(evidence, /Base is the measured case and breaks even at \$<!-- metric:position\.scenarios\.base\.years\.4\.breakEvenPrice -->3\.23<!-- \/metric --> in 2031, against the latest close of \$<!-- metric:position\.latestClose -->4\.284<!-- \/metric -->/);
+  assert.match(evidence, /Bear and Bull annualize the weakest and strongest measured 13-week windows; no odds are given/);
+  assert.ok(plain.trim().split(/\s+/).length <= 500, 'committee view stays roughly one printed page');
+  assert.doesNotMatch(md, /^\|/m, 'long tables live in the supporting evidence');
+  const css = await readFile(join(ROOT, 'web/style.css'), 'utf8');
+  const print = css.split('@media print {')[1];
+  assert.match(print, /body:has\(\.thesis\) \{ font-size: 11pt; line-height: 1\.35; \}/);
+  assert.match(print, /\.thesis h2 \{ font-size: 12pt; margin: 12px 0 4px; break-after: avoid; \}/);
+  assert.match(print, /\.thesis p \{ max-width: none; margin: 6px 0; \}/);
+  const { sources } = await loadSources(), a = analyse(sources);
+  for (const [key, value] of [
+    ['position.check1.coverage', '77.75%'],
+    ['position.concentration.withoutTopNetBuyers.3.coverage', '2.66%'],
+    ['position.scenarios.base.years.4.breakEvenPrice', '3.23'],
+    ['position.latestClose', '4.284']
+  ]) {
+    const combined = `${md}\n${evidence}`;
+    const stale = combined.replace(`<!-- metric:${key} -->${value}`, `<!-- metric:${key} -->WRONG`);
+    assert.notEqual(stale, combined);
+    assert.throws(() => verifyThesis(stale, a), /metric mismatch/);
+  }
 });
 test('chart axis ticks fit the left margin and the excluded label sits above the plot', () => {
   const points = [{ x: 'a', v: 106_298_020, excluded: true }, { x: 'b', v: 5e7 }, { x: 'c', v: 1e6 }];

@@ -73,6 +73,7 @@ test('rebuild CLI works offline, preserves prose and rejects inconsistent signer
       await cp(join(ROOT, path), join(root, path), { recursive: true });
     }
     const thesis = await readFile(join(root, 'THESIS.md'), 'utf8');
+    const evidence = await readFile(join(root, 'docs/EVIDENCE.md'), 'utf8');
     // Any attempt to load .env would reject this syntax.
     await writeFile(join(root, '.env'), 'INVALID ENV SYNTAX MUST NOT BE READ');
     const guard = join(root, 'no-network.cjs');
@@ -84,11 +85,13 @@ test('rebuild CLI works offline, preserves prose and rejects inconsistent signer
     assert.equal(await readFile(join(root, 'THESIS.md'), 'utf8'), thesis);
     const before = await fileHashes(join(root, 'dashboard'));
     const chartManifest = JSON.parse(await readFile(join(ROOT, 'dashboard/charts.json'), 'utf8'));
-    const generated = ['index.html', 'style.css', 'THESIS.md', 'thesis.html', 'VERIFY.md', 'NUMBERS.md', 'charts.json',
+    const generated = ['index.html', 'style.css', 'THESIS.md', 'docs/EVIDENCE.md', 'thesis.html', 'VERIFY.md', 'NUMBERS.md', 'charts.json',
       ...chartManifest.files, 'model.mjs', 'model-inputs.js', 'favicon.svg', 'live.js'];
     const current = Object.fromEntries(await Promise.all(generated.map(async path => [path, hash(await readFile(join(ROOT, 'dashboard', path)))])));
     assert.deepEqual(before, current);
     assert.equal(await readFile(join(root, 'dashboard/VERIFY.md'), 'utf8'), await readFile(join(root, 'docs/VERIFY.md'), 'utf8'));
+    assert.equal(await readFile(join(root, 'dashboard/docs/EVIDENCE.md'), 'utf8'), evidence);
+    assert.equal(await readFile(join(root, 'docs/EVIDENCE.md'), 'utf8'), evidence);
     await rm(join(root, '.env'));
     result = build();
     assert.equal(result.status, 0, result.stdout + result.stderr);
@@ -101,12 +104,20 @@ test('rebuild CLI works offline, preserves prose and rejects inconsistent signer
     assert.match(result.stderr, /Signer split groups do not sum to signers.sql/);
     assert.deepEqual(await fileHashes(join(root, 'dashboard')), before);
     await rm(splitPath);
-    const stale = thesis.replace('| t3.offset | 1.56% |', '| t3.offset | 99% |');
-    assert.notEqual(stale, thesis, 'Fixture must change a real metric.');
-    await writeFile(join(root, 'THESIS.md'), stale);
+    const stale = evidence.replace('| t3.offset | 1.56% |', '| t3.offset | 99% |');
+    assert.notEqual(stale, evidence, 'Fixture must change a real metric.');
+    await writeFile(join(root, 'docs/EVIDENCE.md'), stale);
     result = build();
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /metrics differ/);
-    assert.equal(await readFile(join(root, 'THESIS.md'), 'utf8'), stale);
+    assert.equal(await readFile(join(root, 'docs/EVIDENCE.md'), 'utf8'), stale);
+    await writeFile(join(root, 'docs/EVIDENCE.md'), evidence);
+    const staleThesis = thesis.replace('<!-- metric:position.check1.coverage -->77.75%', '<!-- metric:position.check1.coverage -->99%');
+    assert.notEqual(staleThesis, thesis);
+    await writeFile(join(root, 'THESIS.md'), staleThesis);
+    result = build();
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /metric mismatch/);
+    assert.equal(await readFile(join(root, 'THESIS.md'), 'utf8'), staleThesis);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
