@@ -33,6 +33,7 @@
 | oneClick.swaps.change | +309.8% |
 | oneClick.previous.volume | 821,906,590 |
 | oneClick.latest.volume | 3,804,396,974 |
+| oneClick.latest.volumeCompact | 3.8B |
 | oneClick.volume.change | +362.9% |
 | t2.lag1.pairs | 77 |
 | t2.lag1.rv | 0 |
@@ -474,6 +475,8 @@
 | position.whatYouMustBelieve.capLatestUsdCompact | 154M |
 | position.whatYouMustBelieve.hspLatestUsdCompact | 94.8M |
 | position.holderLedger.wallets.received.nearCompact | 3.13M |
+| position.holderLedger.wallets.received.usdCompact | 7.5M |
+| position.priceAssumes.marketCapCompact | 5.61B |
 | position.holderLedger.wallets.retainedShare | 98% |
 | position.receiptsComparisonGap | 0.04% |
 | position.stakingConflict.rpcRate | [0,1] |

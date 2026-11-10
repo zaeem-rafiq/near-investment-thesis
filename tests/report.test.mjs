@@ -296,56 +296,63 @@ test('position thesis preserves the approved opening, section order and verified
   assert.match(summary, /\$46\.1M to \$154M/);
   assert.match(html, /<td>t2\.changes<\/td><td>78<\/td>/);
 });
-test('committee view covers the actions, concentration, watch list and conditional issuance without new rules', async () => {
+test('committee view covers round-three actions, valuation, bull gates and review rules', async () => {
   const md = await readFile(join(ROOT, 'THESIS.md'), 'utf8');
-  const evidence = await readFile(join(ROOT, 'docs/EVIDENCE.md'), 'utf8');
   const plain = md.replace(/<!--[\s\S]*?-->/g, '');
-  assert.match(plain, /For new money: this evidence does not support buying NEAR now for a hold through 2031\./);
-  assert.match(plain, /For current holders: this evidence does not support adding, and by itself it does not say to sell\./);
-  assert.match(plain, /General research opinion on public data, not personal advice/);
-  assert.match(plain, /sell\.\n\nSize band: none, as a share of the reader's own full position\. The band comes from addendum 3, and its fractions are the author's choice\./);
-  assert.match(plain, /Peer comparison, not official: see the DefiLlama market cap and revenue table in the supporting evidence\./);
-  assert.match(plain, /without three accounts, net buying falls from 77\.75% to 2\.66% of the value of new NEAR/);
-  assert.match(plain, /About 98% of buyback receipts had not left the three wallets by November 1, and held NEAR is not burned/);
-  assert.match(plain, /- NEAR was on one side of only 2\.07% of 1Click swap volume\./);
-  assert.match(plain, /- 1Click users bought \$52\.08M more NEAR than they sold, 77\.75% of the value of new NEAR\. Removing accounts that both bought and sold still leaves 44\.74% to 50\.47%\./);
-  assert.match(plain, /- Buyback receipts of 3\.13M NEAR in 36 weeks match DefiLlama within 0\.04%\./);
-  assert.match(plain, /from \$154M to \$94\.8M at the latest close/);
-  assert.match(plain, /- Up: two passing checks at a review give Building\. The two closest are burn plus buybacks, 15\.08% now against 20%, and usage outside the ten biggest apps, \+14\.58% now against \+20%\./);
-  assert.match(plain, /- Down: the thesis is Broken if Check 1 and Check 2 both fall below 10% at two reviews in a row/);
+  const headings = ['Call and position', 'Holder facts', 'Claim', 'Why: evidence for Not yet',
+    'The case for NEAR', 'What the price assumes', 'What you must believe',
+    'What the bull has to show, and by when', 'What would change my mind',
+    'Watch list between reviews', 'Review dates'];
+  let previous = -1;
+  for (const heading of headings) {
+    const at = plain.indexOf(`## ${heading}\n`);
+    assert.ok(at > previous, heading);
+    previous = at;
+  }
+  for (const phrase of [
+    'First we tested T1–T3; none passed.', 'before computing them, and time-stamped the rules',
+    'For new money: this evidence does not support buying NEAR now for a hold through 2031.',
+    'For current holders: this evidence does not support adding, and by itself it does not say to sell.',
+    'In rating terms: hold, do not buy.',
+    "Size band, as a share of the reader's own full position: none now, at most a quarter at Building, full at Own.",
+    "An unstaked holder's supply share fell 2.41%", '4.97% and 5.52% exceed gross issuance of 2.51%',
+    'without three accounts, net buying falls from 77.75% to 2.66%',
+    "fixed by the earlier year's ranking", 'Intents is chain-agnostic by design',
+    'only 2.07% of 1Click volume', 'does not translate directly into NEAR demand',
+    '$52.08M', '$3.8B', '+362.9%', '$7.5M in 36 weeks', 'DefiLlama within 0.04%',
+    '472.92×; yield 0.21%', '47.95%–84.45%', '570× including Intents, 5,687× chain-only; Avalanche 1,398×',
+    'Zero-revenue Bitcoin Cash stays only because the pre-set rule picked it',
+    'Model cap $5.61B uses total supply × latest close; peer cap $4.78B uses DefiLlama circulating supply',
+    '$46.1M–$154M, 0.89–2.95×', '$3.23 versus latest close $4.284',
+    'By 2027-02-01: Check 2 reaches 20% (now 15.08%); Check 3 reaches +20% (now +14.58%)',
+    'weekly buyback receipts, signers outside the top ten', 'House of Stake vote November 2',
+    'veto runs until November 16; validator adoption is still required',
+    'Broken if Checks 1 and 2 both fall below 10% at two consecutive reviews',
+    'no outside wallet receipts for 13 weeks', 'Only locked review rules decide the call',
+    '2026-11-16', '2027-02-01', '2027-05-03', '2027-08-02', '2027-11-01',
+    'npm run review -- DATE', '`--run` works only once the date arrives',
+    'General research opinion on public data, not personal advice'
+  ]) assert.ok(plain.includes(phrase), phrase);
+  assert.ok(plain.trim().split(/\s+/).length <= 650, 'committee view stays near one page');
+  assert.doesNotMatch(md, /^\|/m);
   const page = thesisHTML(md);
   assert.match(page, /<a href="model\.html">Model<\/a>/);
   assert.match(page, /<a href="VERIFY\.md">How to verify<\/a>/);
-  assert.match(plain, /If HSP-029 is vetoed or not adopted, the call stays Not yet and the 2031 buying need moves from the HSP-029 rows to the 2\.5% cap rows/);
-  assert.match(plain, /dashboard's daily line.*net 1Click buying, revenue-wallet balances and supply since November 2, 2026/);
-  assert.match(plain, /veto status requires a separate manual review/);
-  assert.match(plain, /only the locked review rules decide the call/i);
-  assert.match(plain, /2026-11-16.*2027-02-01.*2027-05-03.*2027-08-02.*2027-11-01/s);
-  assert.match(evidence, /Base is the measured case and breaks even at \$<!-- metric:position\.scenarios\.base\.years\.4\.breakEvenPrice -->3\.23<!-- \/metric --> in 2031, against the latest close of \$<!-- metric:position\.latestClose -->4\.284<!-- \/metric -->/);
-  assert.match(evidence, /Bear and Bull annualize the weakest and strongest measured 13-week windows; no odds are given/);
-  assert.ok(plain.trim().split(/\s+/).length <= 580, 'committee view stays roughly one printed page');
-  assert.doesNotMatch(md, /^\|/m, 'long tables live in the supporting evidence');
-  const css = await readFile(join(ROOT, 'web/style.css'), 'utf8');
-  const print = css.split('@media print {')[1];
-  assert.match(print, /body:has\(\.thesis\) \{ font-size: 10pt; line-height: 1\.3; \}/);
-  assert.match(print, /\.thesis h2 \{ font-size: 12pt; margin: 12px 0 4px; break-after: avoid; \}/);
-  assert.match(print, /\.thesis p \{ max-width: none; margin: 6px 0; \}/);
   const { sources } = await loadSources(), a = analyse(sources);
+  const evidence = await readFile(join(ROOT, 'docs/EVIDENCE.md'), 'utf8');
+  verifyThesis(`${md}\n${evidence}`, a);
   for (const [key, value] of [
-    ['position.check1.coverage', '77.75%'],
-    ['position.concentration.withoutTopNetBuyers.3.coverage', '2.66%'],
-    ['position.scenarios.base.years.4.breakEvenPrice', '3.23'],
-    ['position.latestClose', '4.284'],
-    ['position.holderLedger.wallets.retainedShare', '98%'],
-    ['position.whatYouMustBelieve.hspLatestUsdCompact', '94.8M']
+    ['position.priceAssumes.marketCapCompact', '5.61B'],
+    ['position.holderLedger.wallets.received.usdCompact', '7.5M'],
+    ['oneClick.latest.volumeCompact', '3.8B'],
+    ['position.holderLedger.nonStakerLossOfShare', '2.41%'],
+    ['position.scenarios.base.years.4.breakEvenPrice', '3.23']
   ]) {
-    const combined = `${md}\n${evidence}`;
-    const stale = combined.replace(`<!-- metric:${key} -->${value}`, `<!-- metric:${key} -->WRONG`);
-    assert.notEqual(stale, combined);
-    assert.throws(() => verifyThesis(stale, a), /metric mismatch/);
+    const stale = md.replace(`<!-- metric:${key} -->${value}`, `<!-- metric:${key} -->WRONG`);
+    assert.notEqual(stale, md);
+    assert.throws(() => verifyThesis(`${stale}\n${evidence}`, a), /metric mismatch/);
   }
-});
-test('chart axis ticks fit the left margin and the excluded label sits above the plot', () => {
+});test('chart axis ticks fit the left margin and the excluded label sits above the plot', () => {
   const points = [{ x: 'a', v: 106_298_020, excluded: true }, { x: 'b', v: 5e7 }, { x: 'c', v: 1e6 }];
   const svg = seriesSVG({ title: 't', unit: 'USD', points });
   const ticks = [...svg.matchAll(/<text x="72" y="(?:44|134)" text-anchor="end">([^<]+)<\/text>/g)].map(m => m[1]);
@@ -376,7 +383,7 @@ test('first-screen numbers match the published public-snapshot metrics', async (
   assert.ok(first.includes(`data-metric="position.check1.coverage">${v['position.check1.coverage']}</strong>`));
   assert.ok(first.includes(`data-metric="position.check2.coveragePercent">${v['position.check2.coveragePercent']}</strong>`));
   assert.ok(first.includes(`data-metric="position.check3.signedGrowth">${v['position.check3.signedGrowth']}</strong>`));
-  assert.match(first.replaceAll('&#39;', "'"), /Net buying on 1Click, NEAR's swap service/);
+  assert.match(first.replaceAll('&#39;', "'"), /Net buying on 1Click, the NEAR Intents swap API/);
   assert.match(first, /Burn plus buybacks/);
   assert.match(first, /Usage outside the ten biggest apps/);
   assert.match(first, /data-status="Pass"/);

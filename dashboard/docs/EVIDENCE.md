@@ -28,7 +28,7 @@ The case for NEAR: Check 1 passed at <!-- metric:position.check1.coverage -->77.
 
 At the reviews on 2027-02-01, 2027-05-03, 2027-08-02 and 2027-11-01, rerun all position checks over the preceding 52 weeks; Check 2 uses only weeks from 2026-02-23 onward, and Check 3 compares with the preceding 52 weeks while retaining the original frozen top ten. Each check passes at <!-- metric:position.rules.passBar -->20%<!-- /metric --> or more. Missing data is not measurable and counts as not passing.
 
-Zero or one pass resets the call to Not yet, regardless of the previous call. Two or three gives Building. Own requires all three in a non-overlapping window, first eligible at the 2027-11-01 review. Broken overrides these calls if Check 1 final and Check 2 are both strictly below 10% at two consecutive reruns, or if the wallets receive no outside NEAR or wNEAR in the last 13 weeks of any rerun. Broken stays until a new rule is written and time-stamped. On or after 2026-11-16, record HSP-029 veto status only; no checks run on that date. The full calendar and required pipeline parameterization are below.
+Zero or one pass resets the call to Not yet, regardless of the previous call. Two or three gives Building. Own requires all three in a non-overlapping window, first eligible at the 2027-11-01 review. Broken overrides these calls if Check 1 final and Check 2 are both strictly below 10% at two consecutive reruns, or if the wallets receive no outside NEAR or wNEAR in the last 13 weeks of any rerun. Broken stays until a new rule is written and time-stamped. On or after 2026-11-16, record HSP-029 veto status only; no checks run on that date. The full calendar and the `npm run review -- DATE` command are below.
 
 ## Holder ledger (not official T1–T3)
 
@@ -93,12 +93,12 @@ Broken overrides the ordinary call if Check 1 final and Check 2 are both strictl
 | Review date | Window, end excluded | Action and executable status |
 |---|---|---|
 | 2026-11-16 | No check window | Record whether HSP-029 was vetoed from its governance source. No automated veto-status command exists. Do not run checks on this date. |
-| 2027-02-01 | 2026-02-02 to 2027-02-01 | First parameterize the pipeline for these dates; Check 2 starts 2026-02-23. Preserve the original frozen receiver cohort. Own is not eligible. |
-| 2027-05-03 | 2026-05-04 to 2027-05-03 | First parameterize the pipeline for these dates and the preceding usage window. Own is not eligible. |
-| 2027-08-02 | 2026-08-03 to 2027-08-02 | First parameterize the pipeline for these dates and the preceding usage window. Own is not eligible. |
-| 2027-11-01 | 2026-11-02 to 2027-11-01 | First parameterize the pipeline for these dates and the preceding usage window. Own becomes eligible if all checks pass and no Broken condition applies. |
+| 2027-02-01 | 2026-02-02 to 2027-02-01 | Prepare sources with `npm run review -- 2027-02-01`; Check 2 starts 2026-02-23. The original frozen receiver cohort is kept. Own is not eligible. |
+| 2027-05-03 | 2026-05-04 to 2027-05-03 | Prepare sources with `npm run review -- DATE` for this date and the preceding usage window. Own is not eligible. |
+| 2027-08-02 | 2026-08-03 to 2027-08-02 | Prepare sources with `npm run review -- DATE` for this date and the preceding usage window. Own is not eligible. |
+| 2027-11-01 | 2026-11-02 to 2027-11-01 | Prepare sources with `npm run review -- 2027-11-01` for this date and the preceding usage window. Own becomes eligible if all checks pass and no Broken condition applies. |
 
-**Do not run today's export as a future rerun.** `CAL`, literal SQL dates, participant-pull windows, wallet-week aggregation, price coverage, position-section validation dates and the prior usage period are currently fixed to the original snapshot. They must be parameterized together, retaining the frozen cohort rather than ranking a new top ten. Source access and any billed work need fresh owner approval. `npm run rebuild` only verifies the saved snapshot. With the existing completed local histories, `node scripts/export-position-section.mjs` reproduces this descriptive section offline; it does not collect future evidence.
+**Do not run today's export as a future rerun.** `npm run review -- DATE` prints, offline, the date's check windows, the dated SQL, the 1Click and participant pulls, and the price and wallet-flow windows, keeping the frozen cohort rather than ranking a new top ten. `--plan` runs BigQuery dry runs only. `--run` refuses before the date arrives, then collects only the gated BigQuery results under the existing billing caps. Explorer collection, reconciliation, wallet and price pulls, final exclusions and the check calculations remain separate steps. Source access and any billed work need fresh owner approval. `npm run rebuild` only verifies the saved snapshot. With the existing completed local histories, `node scripts/export-position-section.mjs` reproduces this descriptive section offline; it does not collect future evidence.
 
 ## Why usage fell (not official attribution)
 
@@ -365,6 +365,7 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | oneClick.swaps.change | +309.8% |
 | oneClick.previous.volume | 821,906,590 |
 | oneClick.latest.volume | 3,804,396,974 |
+| oneClick.latest.volumeCompact | 3.8B |
 | oneClick.volume.change | +362.9% |
 | t2.lag1.pairs | 77 |
 | t2.lag1.rv | 0 |
@@ -806,6 +807,8 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | position.whatYouMustBelieve.capLatestUsdCompact | 154M |
 | position.whatYouMustBelieve.hspLatestUsdCompact | 94.8M |
 | position.holderLedger.wallets.received.nearCompact | 3.13M |
+| position.holderLedger.wallets.received.usdCompact | 7.5M |
+| position.priceAssumes.marketCapCompact | 5.61B |
 | position.holderLedger.wallets.retainedShare | 98% |
 | position.receiptsComparisonGap | 0.04% |
 | position.stakingConflict.rpcRate | [0,1] |

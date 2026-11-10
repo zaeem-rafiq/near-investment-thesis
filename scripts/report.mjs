@@ -561,6 +561,8 @@ export function metricValues(a) {
     const p = prev.length === 13 ? sum(prev, k) : null, l = last.length === 13 ? sum(last, k) : null;
     values[`oneClick.previous.${k}`] = fmt(p, 0);
     values[`oneClick.latest.${k}`] = fmt(l, 0);
+    if (k === 'volume') values['oneClick.latest.volumeCompact'] = l == null ? 'Unavailable'
+      : new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(l);
     values[`oneClick.${k}.change`] = p > 0 && l != null ? pct(l / p - 1) : 'Unavailable';
   }
   for (const l of a.t2.lags) {
@@ -676,7 +678,7 @@ export async function render(manifest, sources, write, root = ROOT) {
       ${id === 'position.check1.coverage' ? `<p class="check-note">Without three accounts: <strong data-metric="position.concentration.withoutTopNetBuyers.3.coverage">${escape(values['position.concentration.withoutTopNetBuyers.3.coverage'] || 'Unavailable')}</strong></p>` : ''}</article>`;
   };
   const checkCards = position ? `<div class="check-cards">
-      ${checkCard({ id: 'position.check1.coverage', title: "Net buying on 1Click, NEAR's swap service", value: values['position.check1.coverage'],
+      ${checkCard({ id: 'position.check1.coverage', title: "Net buying on 1Click, the NEAR Intents swap API", value: values['position.check1.coverage'],
         description: 'of the value of new NEAR', result: position.results.check1, valueNow: position.results.check1.final.shareOfIssuanceValue * 100,
         max: 100, threshold: '20%', passLine: true })}
       ${checkCard({ id: 'position.check2.coveragePercent', title: 'Burn plus buybacks', value: values['position.check2.coveragePercent'],

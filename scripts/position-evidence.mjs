@@ -139,6 +139,10 @@ export function positionMetricValues({ section, results: p, oneClick, audit, tre
   values['position.whatYouMustBelieve.hspLatestUsdCompact'] = compactUsd(section.whatYouMustBelieve.rules[1].prices[1].buyingNeededUsd.value);
   const wallets = section.holderLedger.wallets;
   values['position.holderLedger.wallets.received.nearCompact'] = compactUsd(wallets.received.near.value);
+  values['position.holderLedger.wallets.received.usdCompact'] = new Intl.NumberFormat('en-US', {
+    notation: 'compact', maximumFractionDigits: 1
+  }).format(wallets.received.usd.value);
+  values['position.priceAssumes.marketCapCompact'] = compactUsd(section.priceAssumes.marketCap.value);
   percent('position.holderLedger.wallets.retainedShare', wallets.netRetained.near.value / wallets.received.near.value, 0);
   values['position.receiptsComparisonGap'] = `${fmt(Math.abs(p.check2.holdersRevenueComparison.gapPercent))}%`;
   values['position.stakingConflict.rpcRate'] = JSON.stringify(treasuryConflict.protocolRate);

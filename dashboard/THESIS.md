@@ -1,47 +1,67 @@
 # NEAR through 2031: Not yet
 
+First we tested T1–T3; none passed. Then we wrote three position checks and their 20% bars before computing them, and time-stamped the rules. One passed. The evidence records the intervening provisional results and addenda.
+
+## Call and position
+
 Not yet: public data through November 1, 2026 does not support opening or adding to a NEAR position for a hold through 2031, because only one of three locked tests passed and three accounts made up <!-- metric:position.top3Share -->96.6%<!-- /metric --> of that pass.
 
 For new money: this evidence does not support buying NEAR now for a hold through 2031.
 
 For current holders: this evidence does not support adding, and by itself it does not say to sell.
 
-Size band: none, as a share of the reader's own full position. The band comes from addendum 3, and its fractions are the author's choice.
+In rating terms: hold, do not buy.
 
-General research opinion on public data, not personal advice. No portfolio share is given.
+Size band, as a share of the reader's own full position: none now, at most a quarter at Building, full at Own.
+
+## Holder facts
+
+An unstaked holder's supply share fell <!-- metric:position.holderLedger.nonStakerLossOfShare -->2.41%<!-- /metric -->. Gross staking-yield estimates of <!-- metric:position.stakingConflict.postYield -->4.97%<!-- /metric --> and <!-- metric:position.holderLedger.staking.grossYield -->5.52%<!-- /metric --> exceed gross issuance of <!-- metric:position.holderLedger.issued.shareOfOpeningSupply -->2.51%<!-- /metric -->, so staking offsets dilution before fees and tax.
 
 ## Claim
 
-Public data through November 1, 2026 does not yet support a NEAR hold through 2031. The one passing test does not show broad demand: without <!-- metric:position.topBuyerCountWords -->three<!-- /metric --> accounts, net buying falls from <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> to <!-- metric:position.concentration.withoutTopNetBuyers.3.coverage -->2.66%<!-- /metric --> of the value of new NEAR.
+Demand is concentrated: without <!-- metric:position.topBuyerCountWords -->three<!-- /metric --> accounts, net buying falls from <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> to <!-- metric:position.concentration.withoutTopNetBuyers.3.coverage -->2.66%<!-- /metric --> of the value of new NEAR.
 
-## Evidence for
+## Why: evidence for Not yet
 
-- Burn plus buybacks offset <!-- metric:position.check2.coveragePercent -->15.08%<!-- /metric --> of new NEAR, short of the <!-- metric:position.rules.passBar -->20%<!-- /metric --> bar. About <!-- metric:position.holderLedger.wallets.retainedShare -->98%<!-- /metric --> of buyback receipts had not left the three wallets by November 1, and held NEAR is not burned.
-- Signers outside the ten biggest apps grew <!-- metric:position.check3.growthPercent -->14.58%<!-- /metric -->, short of the <!-- metric:position.rules.growthBar -->20%<!-- /metric --> bar, while all daily signers fell <!-- metric:presentation.signersDecline -->73.1%<!-- /metric -->.
-- NEAR was on one side of only <!-- metric:position.oneClick.nearPercent -->2.07%<!-- /metric --> of 1Click swap volume.
+- Burn plus buybacks offset <!-- metric:position.check2.coveragePercent -->15.08%<!-- /metric --> of new NEAR, below <!-- metric:position.rules.passBar -->20%<!-- /metric -->. About <!-- metric:position.holderLedger.wallets.retainedShare -->98%<!-- /metric --> of receipts remained in the wallets by November 1; held is not burned.
+- Signers outside the ten biggest apps, fixed by the earlier year's ranking, grew <!-- metric:position.check3.growthPercent -->14.58%<!-- /metric -->, below <!-- metric:position.rules.growthBar -->20%<!-- /metric -->; all daily signers fell <!-- metric:presentation.signersDecline -->73.1%<!-- /metric -->.
+- Intents is chain-agnostic by design. NEAR was on one side of only <!-- metric:position.oneClick.nearPercent -->2.07%<!-- /metric --> of 1Click volume, so volume growth does not translate directly into NEAR demand.
 
-## Evidence against
+## The case for NEAR
 
-- 1Click users bought $<!-- metric:position.check1.netUsdCompactPrecise -->52.08M<!-- /metric --> more NEAR than they sold, <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> of the value of new NEAR. Removing accounts that both bought and sold still leaves <!-- metric:position.descriptive.twoWaySenders.coverage -->44.74%<!-- /metric --> to <!-- metric:position.descriptive.twoWayRefundTo.coverage -->50.47%<!-- /metric -->.
-- Buyback receipts of <!-- metric:position.holderLedger.wallets.received.nearCompact -->3.13M<!-- /metric --> NEAR in 36 weeks match DefiLlama within <!-- metric:position.receiptsComparisonGap -->0.04%<!-- /metric -->.
-- The usage drop is concentrated: the ten biggest apps explain all of it, and everyone else grew.
-- If adopted, HSP-029 lowers the yearly buying needed in 2031 from $<!-- metric:position.whatYouMustBelieve.capLatestUsdCompact -->154M<!-- /metric --> to $<!-- metric:position.whatYouMustBelieve.hspLatestUsdCompact -->94.8M<!-- /metric --> at the latest close.
+- Net buying was $<!-- metric:position.check1.netUsdCompactPrecise -->52.08M<!-- /metric -->, <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> of issuance value.
+- Latest 13-week 1Click volume was $<!-- metric:oneClick.latest.volumeCompact -->3.8B<!-- /metric -->, up <!-- metric:oneClick.volume.change -->+362.9%<!-- /metric -->.
+- Holders-revenue wallet receipts were $<!-- metric:position.holderLedger.wallets.received.usdCompact -->7.5M<!-- /metric --> in 36 weeks, matching DefiLlama within <!-- metric:position.receiptsComparisonGap -->0.04%<!-- /metric -->.
+- The ten biggest apps explain the usage decline; everyone else grew.
+
+## What the price assumes
+
+Capture multiple <!-- metric:position.priceAssumes.multiple -->472.92<!-- /metric -->×; yield <!-- metric:position.priceAssumes.yield -->0.21%<!-- /metric -->. Reaching <!-- metric:position.priceAssumes.targets.0.targetYield -->1.6%<!-- /metric -->–<!-- metric:position.priceAssumes.targets.2.targetYield -->5%<!-- /metric --> yield by 2031 requires <!-- metric:position.priceAssumes.targets.0.compoundYearlyGrowth -->47.95%<!-- /metric -->–<!-- metric:position.priceAssumes.targets.2.compoundYearlyGrowth -->84.45%<!-- /metric --> annual capture growth at constant market cap, not a forecast.
+
+Not-official peers: NEAR <!-- metric:peers.nearWithIntents.multiple -->570×<!-- /metric --> including Intents, <!-- metric:peers.near.multiple -->5,687×<!-- /metric --> chain-only; Avalanche <!-- metric:peers.below.multiple -->1,398×<!-- /metric -->. Zero-revenue Bitcoin Cash stays only because the pre-set rule picked it. Model cap $<!-- metric:position.priceAssumes.marketCapCompact -->5.61B<!-- /metric --> uses total supply × latest close; peer cap $<!-- metric:peers.near.mcapCompact -->4.78B<!-- /metric --> uses DefiLlama circulating supply.
+
+## What you must believe
+
+Annual buying needed in 2031: $<!-- metric:position.whatYouMustBelieve.lowUsdCompact -->46.1M<!-- /metric -->–$<!-- metric:position.whatYouMustBelieve.highUsdCompact -->154M<!-- /metric -->, <!-- metric:position.whatYouMustBelieve.rules.1.prices.0.multipleOfMeasuredBuying -->0.89<!-- /metric -->–<!-- metric:position.whatYouMustBelieve.rules.0.prices.1.multipleOfMeasuredBuying -->2.95<!-- /metric -->× measured buying. Base breaks even at $<!-- metric:position.scenarios.base.years.4.breakEvenPrice -->3.23<!-- /metric --> versus latest close $<!-- metric:position.latestClose -->4.284<!-- /metric -->. HSP-029, if adopted, lowers the latest-price requirement from $<!-- metric:position.whatYouMustBelieve.capLatestUsdCompact -->154M<!-- /metric --> to $<!-- metric:position.whatYouMustBelieve.hspLatestUsdCompact -->94.8M<!-- /metric -->.
+
+## What the bull has to show, and by when
+
+By 2027-02-01: Check 2 reaches <!-- metric:position.rules.passBar -->20%<!-- /metric --> (now <!-- metric:position.check2.coveragePercent -->15.08%<!-- /metric -->); Check 3 reaches <!-- metric:position.rules.signedGrowthBar -->+20%<!-- /metric --> (now <!-- metric:position.check3.signedGrowth -->+14.58%<!-- /metric -->).
 
 ## What would change my mind
 
-- Up: two passing checks at a review give Building. The two closest are burn plus buybacks, <!-- metric:position.check2.coveragePercent -->15.08%<!-- /metric --> now against <!-- metric:position.rules.passBar -->20%<!-- /metric -->, and usage outside the ten biggest apps, <!-- metric:position.check3.signedGrowth -->+14.58%<!-- /metric --> now against <!-- metric:position.rules.signedGrowthBar -->+20%<!-- /metric -->.
-- Down: the thesis is Broken if Check 1 and Check 2 both fall below 10% at two reviews in a row, or if the revenue wallets receive no NEAR from outside for 13 weeks.
-
-If HSP-029 is vetoed or not adopted, the call stays Not yet and the 2031 buying need moves from the HSP-029 rows to the 2.5% cap rows of the existing table. Veto status alone does not rerun the checks.
+- Up: two passing checks give Building; all three in an eligible non-overlapping window give Own.
+- Down: Broken if Checks 1 and 2 both fall below 10% at two consecutive reviews, or no outside wallet receipts for 13 weeks.
 
 ## Watch list between reviews
 
-Use the dashboard's daily line to watch net 1Click buying, revenue-wallet balances and supply since November 2, 2026; also track HSP-029 veto status from governance. These are a watch list, not new thresholds; only the locked review rules decide the call. The daily line hides when unavailable; veto status requires a separate manual review.
-
-Peer comparison, not official: see the DefiLlama market cap and revenue table in the supporting evidence.
+Watch weekly buyback receipts, signers outside the top ten, and the dashboard's daily net buying, wallet balances and supply. HSP-029 passed the House of Stake vote November 2 (governance source in supporting evidence); veto runs until November 16; validator adoption is still required. If vetoed or not adopted, use the 2.5% cap rows; the call stays Not yet. Only locked review rules decide the call.
 
 ## Review dates
 
-2026-11-16: record veto status only. Recompute checks on 2027-02-01, 2027-05-03, 2027-08-02 and 2027-11-01. Pipeline dates must first be parameterized; today's rebuild verifies only the saved snapshot.
+2026-11-16: veto status only. Recompute 2027-02-01, 2027-05-03, 2027-08-02, 2027-11-01. `npm run review -- DATE` prints each date's windows, dated SQL and pulls; `--plan` estimates cost; `--run` works only once the date arrives.
 
-[Supporting evidence, scenarios, review rules and verified tables](docs/EVIDENCE.md) · [Model](dashboard/model.html) · [How to verify](docs/VERIFY.md). Checks 1–3 were written after the original T1–T3 results were known; neither set's rules or results changes.
+General research opinion on public data, not personal advice. Bands are the author's choice, not portfolio shares.
+
+[Supporting evidence, scenarios, review rules and verified tables](docs/EVIDENCE.md) · [Model](dashboard/model.html) · [How to verify](docs/VERIFY.md).
