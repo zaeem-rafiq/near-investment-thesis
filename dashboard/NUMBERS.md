@@ -538,6 +538,26 @@
 | position.concentration.withoutTopNetBuyers.10.coverage | -17.87% |
 | position.concentration.withoutTopNetBuyersAndSellers.3.coverage | 12.87% |
 | position.concentration.withoutTopNetBuyersAndSellers.10.coverage | 6.93% |
+| position.scenarios.bear.breakEven2031 | 0.04 |
+| position.scenarios.bear.ruleLabel | 2.5% cap |
+| position.scenarios.base.breakEven2031 | 3.23 |
+| position.scenarios.base.ruleLabel | HSP-029 |
+| position.scenarios.bull.breakEven2031 | 7.40 |
+| position.scenarios.bull.ruleLabel | HSP-029 |
+| position.barSensitivity.10.passingWords | all three |
+| position.barSensitivity.10.call | Building |
+| position.barSensitivity.15.passingWords | two |
+| position.barSensitivity.15.call | Building |
+| position.barSensitivity.20.passingWords | only Check 1 |
+| position.barSensitivity.20.call | Not yet |
+| position.barSensitivity.25.passingWords | only Check 1 |
+| position.barSensitivity.25.call | Not yet |
+| position.control.daoCountWords | two |
+| position.control.multisigCountWords | one |
+| position.control.daoSpendApprovalsWords | two |
+| position.control.multisigConfirmationsWords | two |
+| position.control.fullAccessKeyWalletsWords | none |
+| position.control.singleVoteAdminDaosWords | one |
 | peers.pulledAt | 2026-11-10 01:28 UTC |
 | peers.withMarketCap | 83 |
 | peers.nearRank | 14 |

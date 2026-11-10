@@ -22,7 +22,7 @@ Evidence for the Not yet claim: burn plus buybacks covered <!-- metric:position.
 
 ## Evidence against
 
-The case for NEAR: Check 1 passed at <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> of issuance value. The descriptive two-way cuts still leave <!-- metric:position.descriptive.twoWaySenders.coverage -->44.74%<!-- /metric --> and <!-- metric:position.descriptive.twoWayRefundTo.coverage -->50.47%<!-- /metric -->. Wallet receipts match DefiLlama's aggregate to about <!-- metric:position.receiptsComparisonGap -->0.04%<!-- /metric --> (rounded), although that does not verify every receipt's economic origin. Everyone else's signers rose <!-- metric:position.check3.growthPercent -->14.58%<!-- /metric -->, and 1Click volume grew <!-- metric:oneClick.volume.change -->+362.9%<!-- /metric --> in the latest complete-quarter comparison. The conditional HSP-029 issuance cut would reduce the buying needed to offset new supply; it is an assumption, not an observed future outcome. Descriptive cuts and growth comparisons are not official tests.
+The case for NEAR: Check 1 passed at <!-- metric:position.check1.coverage -->77.75%<!-- /metric --> of issuance value. The descriptive two-way cuts still leave <!-- metric:position.descriptive.twoWaySenders.coverage -->44.74%<!-- /metric --> and <!-- metric:position.descriptive.twoWayRefundTo.coverage -->50.47%<!-- /metric -->. Wallet receipts match DefiLlama's aggregate to about <!-- metric:position.receiptsComparisonGap -->0.04%<!-- /metric --> (rounded). That is a consistency check, not independent confirmation, because DefiLlama measures revenue from the same wallets, and it does not verify every receipt's economic origin. Everyone else's signers rose <!-- metric:position.check3.growthPercent -->14.58%<!-- /metric -->, and 1Click volume grew <!-- metric:oneClick.volume.change -->+362.9%<!-- /metric --> in the latest complete-quarter comparison. The conditional HSP-029 issuance cut would reduce the buying needed to offset new supply; it is an assumption, not an observed future outcome. Descriptive cuts and growth comparisons are not official tests.
 
 ## What would change my mind
 
@@ -870,6 +870,26 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | position.concentration.withoutTopNetBuyers.10.coverage | -17.87% |
 | position.concentration.withoutTopNetBuyersAndSellers.3.coverage | 12.87% |
 | position.concentration.withoutTopNetBuyersAndSellers.10.coverage | 6.93% |
+| position.scenarios.bear.breakEven2031 | 0.04 |
+| position.scenarios.bear.ruleLabel | 2.5% cap |
+| position.scenarios.base.breakEven2031 | 3.23 |
+| position.scenarios.base.ruleLabel | HSP-029 |
+| position.scenarios.bull.breakEven2031 | 7.40 |
+| position.scenarios.bull.ruleLabel | HSP-029 |
+| position.barSensitivity.10.passingWords | all three |
+| position.barSensitivity.10.call | Building |
+| position.barSensitivity.15.passingWords | two |
+| position.barSensitivity.15.call | Building |
+| position.barSensitivity.20.passingWords | only Check 1 |
+| position.barSensitivity.20.call | Not yet |
+| position.barSensitivity.25.passingWords | only Check 1 |
+| position.barSensitivity.25.call | Not yet |
+| position.control.daoCountWords | two |
+| position.control.multisigCountWords | one |
+| position.control.daoSpendApprovalsWords | two |
+| position.control.multisigConfirmationsWords | two |
+| position.control.fullAccessKeyWalletsWords | none |
+| position.control.singleVoteAdminDaosWords | one |
 | peers.pulledAt | 2026-11-10 01:28 UTC |
 | peers.withMarketCap | 83 |
 | peers.nearRank | 14 |

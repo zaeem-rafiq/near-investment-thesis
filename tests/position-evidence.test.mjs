@@ -51,3 +51,23 @@ test('treasury conflict reports both sourced proxies without changing the saved 
   assert.equal(v['position.whatYouMustBelieve.highUsdCompact'], '154M');
   assert.equal(v['position.receiptsComparisonGap'], '0.04%');
 });
+
+test('control and bar-sensitivity metrics follow the saved wallet policies and results', async () => {
+  const manifest = JSON.parse(await readFile(`${ROOT}/data/public/manifest.json`, 'utf8'));
+  const evidence = await loadPositionEvidence(manifest), v = positionMetricValues(evidence);
+  assert.equal(v['position.control.daoSpendApprovalsWords'], 'two');
+  assert.equal(v['position.control.multisigConfirmationsWords'], 'two');
+  assert.equal(v['position.control.singleVoteAdminDaosWords'], 'one');
+  const controls = structuredClone(evidence.controls);
+  for (const w of controls.wallets) for (const r of w.policy?.value.roles ?? []) for (const o of r.votePolicyOverrides) o.threshold = '2';
+  controls.wallets[2].fullAccessKeys.value = 1;
+  const changed = positionMetricValues({ ...evidence, controls });
+  assert.equal(changed['position.control.singleVoteAdminDaosWords'], 'none');
+  assert.equal(changed['position.control.fullAccessKeyWalletsWords'], 'one');
+  const results = structuredClone(evidence.results);
+  results.check3.growth = 0.2;
+  const moved = positionMetricValues({ ...evidence, results });
+  assert.equal(moved['position.barSensitivity.20.call'], 'Building');
+  assert.equal(v['position.barSensitivity.20.call'], 'Not yet');
+  assert.equal(v['position.barSensitivity.10.passingWords'], 'all three');
+});

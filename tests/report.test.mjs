@@ -301,8 +301,8 @@ test('committee view covers round-three actions, valuation, bull gates and revie
   const plain = md.replace(/<!--[\s\S]*?-->/g, '');
   const headings = ['Call and position', 'Holder facts', 'Claim', 'Why: evidence for Not yet',
     'The case for NEAR', 'What the price assumes', 'What you must believe',
-    'What the bull has to show, and by when', 'What would change my mind',
-    'Watch list between reviews', 'Review dates'];
+    'What would change my mind', 'Review dates',
+    'What the bull has to show, and by when', 'Watch list between reviews'];
   let previous = -1;
   for (const heading of headings) {
     const at = plain.indexOf(`## ${heading}\n`);
@@ -319,23 +319,41 @@ test('committee view covers round-three actions, valuation, bull gates and revie
     'without three accounts, net buying falls from 77.75% to 2.66%',
     "fixed by the earlier year's ranking", 'Intents is chain-agnostic by design',
     'only 2.07% of 1Click volume', 'does not translate directly into NEAR demand',
-    '$52.08M', '$3.8B', '+362.9%', '$7.5M in 36 weeks', 'DefiLlama within 0.04%',
+    '$52.08M', '$3.8B', '+362.9%', '$7.5M in 36 weeks.',
+    'matches the wallet receipts within 0.04%. That is a consistency check, not independent confirmation, because DefiLlama measures revenue from the same wallets.',
+    'both estimates are before validator commission and tax',
+    '| Not yet | Zero or one check passing | None | Does not support adding, and by itself does not say to sell |',
+    '| Building | Two or three passing | At most a quarter of a full position | Supports a small position at most |',
+    '| Own | All three passing in a window that does not overlap the original; first possible 2027-11-01 | Full | Supports holding a full position through 2031 |',
+    '| Broken | Check 1 final and Check 2 both below 10% at two reviews in a row, or no outside receipts to the wallets for 13 weeks | None | Withdraws the case for holding NEAR on this thesis |',
+    'Not official, how the call moves with the bar, using the same results: at a 10% bar all three checks pass, giving Building, because Own needs a non-overlapping window; at 15%, two pass (Checks 1 and 2), giving Building; at 20% or 25%, only Check 1 passes, giving Not yet.',
+    'held by two Sputnik DAOs and one multisig. Spending needs two approvals in each DAO and two confirmations in the multisig; none of the three has a full-access key; one DAO\'s admin role can change its rules with a single vote.',
+    'Author\'s view: the author weighs Check 2 most, because burn and buybacks are the only channel where NEAR Intents revenue reaches holders, while Check 1\'s pass rests on three accounts.',
+    'compare them only within a row',
+    'measured inputs and no odds given',
+    'Bear covers 2.4% of 2031 issuance and breaks even at $0.04 under the 2.5% cap; Base 75.89% and $3.23 under HSP-029; Bull 171.09% and $7.40 under HSP-029.',
     '472.92×; yield 0.21%', '47.95%–84.45%', '570× including Intents, 5,687× chain-only; Avalanche 1,398×',
     'Zero-revenue Bitcoin Cash stays only because the pre-set rule picked it',
     'Model cap $5.61B uses total supply × latest close; peer cap $4.78B uses DefiLlama circulating supply',
-    '$46.1M–$154M, 0.89–2.95×', '$3.23 versus latest close $4.284',
+    '$46.1M–$154M, 0.89–2.95×', 'latest close of $4.284',
     'By 2027-02-01: Check 2 reaches 20% (now 15.08%); Check 3 reaches +20% (now +14.58%)',
     'weekly buyback receipts, signers outside the top ten', 'House of Stake vote November 2',
-    'veto runs until November 16; validator adoption is still required',
-    'Broken if Checks 1 and 2 both fall below 10% at two consecutive reviews',
-    'no outside wallet receipts for 13 weeks', 'Only locked review rules decide the call',
+    'veto runs until November 16, and validator adoption is still required',
+    '- Up: Building or Own on the call table\'s conditions', '- Down: Broken on the table\'s conditions.',
+    'Only locked review rules decide the call',
     '2026-11-16', '2027-02-01', '2027-05-03', '2027-08-02', '2027-11-01',
     'npm run review -- DATE', '`--run` works only once the date arrives',
     'General research opinion on public data, not personal advice'
   ]) assert.ok(plain.includes(phrase), phrase);
-  assert.ok(plain.trim().split(/\s+/).length <= 650, 'committee view stays near one page');
-  assert.doesNotMatch(md, /^\|/m);
+  assert.ok(plain.trim().split(/\s+/).length <= 1000, 'committee view stays short');
+  assert.equal((md.match(/^\|---/gm) || []).length, 1, 'only the call table lives on page one');
+  const firstPage = ['Call and position', 'Why: evidence for Not yet', 'What the price assumes', 'What you must believe', 'What would change my mind', 'Review dates']
+    .map(h => plain.indexOf(`## ${h}\n`));
+  assert.ok(firstPage.every(i => i >= 0 && i < plain.indexOf('## What the bull has to show')), 'core parts come before the supporting notes');
+  const casePart = plain.split('## The case for NEAR')[1].split('\n## ')[0];
+  assert.doesNotMatch(casePart, /DefiLlama/, 'the consistency check is not presented as support');
   const page = thesisHTML(md);
+  assert.match(page, /<th scope="col">Size band<\/th>/);
   assert.match(page, /<a href="model\.html">Model<\/a>/);
   assert.match(page, /<a href="VERIFY\.md">How to verify<\/a>/);
   const { sources } = await loadSources(), a = analyse(sources);
@@ -346,7 +364,10 @@ test('committee view covers round-three actions, valuation, bull gates and revie
     ['position.holderLedger.wallets.received.usdCompact', '7.5M'],
     ['oneClick.latest.volumeCompact', '3.8B'],
     ['position.holderLedger.nonStakerLossOfShare', '2.41%'],
-    ['position.scenarios.base.years.4.breakEvenPrice', '3.23']
+    ['position.scenarios.bull.breakEven2031', '7.40'],
+    ['position.barSensitivity.15.call', 'Building'],
+    ['position.control.singleVoteAdminDaosWords', 'one'],
+    ['position.control.fullAccessKeyWalletsWords', 'none']
   ]) {
     const stale = md.replace(`<!-- metric:${key} -->${value}`, `<!-- metric:${key} -->WRONG`);
     assert.notEqual(stale, md);

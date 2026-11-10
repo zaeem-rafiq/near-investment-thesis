@@ -87,14 +87,14 @@ export async function loadPositionEvidence(manifest, root = ROOT) {
   }
   const totalVolume = data.near_flows.weeks.reduce((s, w) => s + Number(w.total_usd), 0);
   const nearVolume = p.check1.provisional.buysUsd + p.check1.provisional.sellsUsd;
-  return { section, results: p, top10: data.signer_top10, audit: extra.audit,
+  return { section, results: p, top10: data.signer_top10, audit: extra.audit, controls: data.wallet_controls,
     treasuryConflict: { protocolRate: protocol.protocol_reward_rate, post }, oneClick: {
     totalUsd: totalVolume, nearUsd: nearVolume, nearShare: nearVolume / totalVolume
   } };
 }
 
 // Stable decimal formatting for tagged prose. Percentages are explicit extra keys.
-export function positionMetricValues({ section, results: p, oneClick, audit, treasuryConflict }) {
+export function positionMetricValues({ section, results: p, oneClick, audit, treasuryConflict, controls }) {
   const values = {}, fmt = n => n == null ? 'Unavailable'
     : new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(n);
   function walk(value, key) {
@@ -172,6 +172,36 @@ export function positionMetricValues({ section, results: p, oneClick, audit, tre
     if (cut.startsWith('withoutTop')) for (const [n, row] of Object.entries(group)) {
       percent(`position.concentration.${cut}.${n}.coverage`, row.share);
     }
+  }
+  for (const [name, scenario] of Object.entries(section.scenarios)) {
+    const y2031 = scenario.years.find(y => (y.year?.value ?? y.year) === 2031);
+    values[`position.scenarios.${name}.breakEven2031`] = y2031?.breakEvenPrice?.value == null ? 'Unavailable'
+      : y2031.breakEvenPrice.value.toFixed(2);
+    values[`position.scenarios.${name}.ruleLabel`] = (scenario.inputs.cut?.value ?? scenario.inputs.cut) ? 'HSP-029' : '2.5% cap';
+  }
+  // Not official: the same three saved results scored against other bars. The original
+  // window overlaps itself, so Own is never reachable here and two or more passes give Building.
+  const scores = [p.check1.final.shareOfIssuanceValue, p.check2.coverage, p.check3.growth];
+  for (const bar of [10, 15, 20, 25]) {
+    const n = scores.filter(s => s >= bar / 100).length;
+    values[`position.barSensitivity.${bar}.passingWords`] = ['none', 'only Check 1', 'two', 'all three'][n];
+    values[`position.barSensitivity.${bar}.call`] = n >= 2 ? 'Building' : 'Not yet';
+  }
+  if (controls) {
+    const words = ['none', 'one', 'two', 'three', 'four'];
+    const daos = controls.wallets.filter(w => w.policy?.status === 'ok');
+    const multisigs = controls.wallets.filter(w => w.requiredConfirmations?.status === 'ok');
+    const threshold = (w, role, kind) => Number(w.policy.value.roles.find(r => r.name === role)
+      ?.votePolicyOverrides.find(o => o.proposal === kind && o.weightKind === 'RoleWeight')?.threshold);
+    const one = list => new Set(list).size === 1 && Number.isInteger(list[0]) ? words[list[0]] : 'Unavailable';
+    values['position.control.daoCountWords'] = words[daos.length];
+    values['position.control.multisigCountWords'] = words[multisigs.length];
+    values['position.control.daoSpendApprovalsWords'] = one(daos.flatMap(w => ['transfer', 'call'].map(k => threshold(w, 'Approver', k))));
+    values['position.control.multisigConfirmationsWords'] = one(multisigs.map(w => w.requiredConfirmations.value));
+    values['position.control.fullAccessKeyWalletsWords'] = words[controls.wallets
+      .filter(w => w.fullAccessKeys?.status !== 'ok' || w.fullAccessKeys.value !== 0).length];
+    values['position.control.singleVoteAdminDaosWords'] = words[daos
+      .filter(w => ['policy', 'policy_update_default_vote_policy', 'policy_add_or_update_role'].some(k => threshold(w, 'Admin', k) === 1)).length];
   }
   return values;
 }
