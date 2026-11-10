@@ -33,7 +33,7 @@ export async function readPage(dir, name) {
   return JSON.parse(gunzipSync(await readFile(resolve(dir, 'pages', name))).toString('utf8'));
 }
 
-function cleanRows(rows, window, seen, boundary, tokenFilter, retainParticipants) {
+export function cleanRows(rows, window, seen, boundary, tokenFilter, retainParticipants) {
   const start = Date.parse(window.start), end = Date.parse(window.end), clean = [];
   const pageKeys = new Set();
   let previous = boundary == null ? end : Date.parse(boundary);
@@ -67,7 +67,7 @@ function cleanRows(rows, window, seen, boundary, tokenFilter, retainParticipants
   return clean;
 }
 
-async function fetchPage(url, jwt, request, pause, log, { maxRetries, maxBackoffMs }) {
+export async function fetchPage(url, jwt, request, pause, log, { maxRetries, maxBackoffMs }) {
   const backoff = attempt => Math.min(maxBackoffMs, PACE_MS * 2 ** Math.min(attempt, 6));
   for (let attempt = 0; ; attempt++) {
     let res;

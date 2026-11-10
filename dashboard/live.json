@@ -1,18 +1,18 @@
 {
   "version": 1,
-  "asOf": "2026-11-09T21:51:54.589Z",
+  "asOf": "2026-11-10T00:54:12.598Z",
   "finalBlock": {
     "status": "ok",
     "value": {
-      "height": 223825083,
-      "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-      "timeUtc": "2026-11-09T21:51:02.171Z"
+      "height": 223842929,
+      "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+      "timeUtc": "2026-11-10T00:46:36.291Z"
     },
-    "observedAt": "2026-11-09T21:51:02.171Z",
+    "observedAt": "2026-11-10T00:46:36.291Z",
     "block": {
-      "height": 223825083,
-      "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-      "timeUtc": "2026-11-09T21:51:02.171Z"
+      "height": 223842929,
+      "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+      "timeUtc": "2026-11-10T00:46:36.291Z"
     },
     "source": {
       "url": "https://rpc.mainnet.near.org",
@@ -23,12 +23,12 @@
   },
   "totalSupplyNear": {
     "status": "ok",
-    "value": "1311267073.148717504876340249942842",
-    "observedAt": "2026-11-09T21:51:02.171Z",
+    "value": "1311293140.733270703796166756769113",
+    "observedAt": "2026-11-10T00:46:36.291Z",
     "block": {
-      "height": 223825083,
-      "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-      "timeUtc": "2026-11-09T21:51:02.171Z"
+      "height": 223842929,
+      "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+      "timeUtc": "2026-11-10T00:46:36.291Z"
     },
     "source": {
       "url": "https://rpc.mainnet.near.org",
@@ -39,12 +39,12 @@
   },
   "supplyChangeSinceT3": {
     "status": "ok",
-    "value": "691046.795978904876340249942842",
-    "observedAt": "2026-11-09T21:51:02.171Z",
+    "value": "717114.380532103796166756769113",
+    "observedAt": "2026-11-10T00:46:36.291Z",
     "block": {
-      "height": 223825083,
-      "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-      "timeUtc": "2026-11-09T21:51:02.171Z"
+      "height": 223842929,
+      "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+      "timeUtc": "2026-11-10T00:46:36.291Z"
     },
     "source": {
       "current": "totalSupplyNear",
@@ -55,10 +55,10 @@
   "nearUsdClose": {
     "status": "ok",
     "value": {
-      "closeUsd": 3.5835,
-      "date": "2026-11-08"
+      "closeUsd": 3.6277,
+      "date": "2026-11-09"
     },
-    "observedAt": "2026-11-09T00:00:00.000Z",
+    "observedAt": "2026-11-10T00:00:00.000Z",
     "block": null,
     "source": {
       "url": "https://api.exchange.coinbase.com/products/NEAR-USD/candles",
@@ -78,11 +78,11 @@
           "intentsNear": "0",
           "totalNear": "1994812.252877263375139754343196"
         },
-        "observedAt": "2026-11-09T21:51:02.171Z",
+        "observedAt": "2026-11-10T00:46:36.291Z",
         "block": {
-          "height": 223825083,
-          "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-          "timeUtc": "2026-11-09T21:51:02.171Z"
+          "height": 223842929,
+          "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+          "timeUtc": "2026-11-10T00:46:36.291Z"
         },
         "source": {
           "url": "https://rpc.mainnet.near.org",
@@ -101,11 +101,11 @@
           "intentsNear": "0",
           "totalNear": "0"
         },
-        "observedAt": "2026-11-09T21:51:02.171Z",
+        "observedAt": "2026-11-10T00:46:36.291Z",
         "block": {
-          "height": 223825083,
-          "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-          "timeUtc": "2026-11-09T21:51:02.171Z"
+          "height": 223842929,
+          "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+          "timeUtc": "2026-11-10T00:46:36.291Z"
         },
         "source": {
           "current": "balances",
@@ -128,11 +128,11 @@
           "intentsNear": "0.00100010001000100010001",
           "totalNear": "270.876891512430849813411033"
         },
-        "observedAt": "2026-11-09T21:51:02.171Z",
+        "observedAt": "2026-11-10T00:46:36.291Z",
         "block": {
-          "height": 223825083,
-          "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-          "timeUtc": "2026-11-09T21:51:02.171Z"
+          "height": 223842929,
+          "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+          "timeUtc": "2026-11-10T00:46:36.291Z"
         },
         "source": {
           "url": "https://rpc.mainnet.near.org",
@@ -151,11 +151,11 @@
           "intentsNear": "0",
           "totalNear": "0"
         },
-        "observedAt": "2026-11-09T21:51:02.171Z",
+        "observedAt": "2026-11-10T00:46:36.291Z",
         "block": {
-          "height": 223825083,
-          "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-          "timeUtc": "2026-11-09T21:51:02.171Z"
+          "height": 223842929,
+          "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+          "timeUtc": "2026-11-10T00:46:36.291Z"
         },
         "source": {
           "current": "balances",
@@ -178,11 +178,11 @@
           "intentsNear": "0",
           "totalNear": "2229439.344194882091281972700843"
         },
-        "observedAt": "2026-11-09T21:51:02.171Z",
+        "observedAt": "2026-11-10T00:46:36.291Z",
         "block": {
-          "height": 223825083,
-          "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-          "timeUtc": "2026-11-09T21:51:02.171Z"
+          "height": 223842929,
+          "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+          "timeUtc": "2026-11-10T00:46:36.291Z"
         },
         "source": {
           "url": "https://rpc.mainnet.near.org",
@@ -201,11 +201,11 @@
           "intentsNear": "0",
           "totalNear": "0"
         },
-        "observedAt": "2026-11-09T21:51:02.171Z",
+        "observedAt": "2026-11-10T00:46:36.291Z",
         "block": {
-          "height": 223825083,
-          "hash": "8hkxGiMxa44dXVAxqWRok8Gq5JfEvSUR9Rt5dpKVwryn",
-          "timeUtc": "2026-11-09T21:51:02.171Z"
+          "height": 223842929,
+          "hash": "9w1hMfmTZkgaeNo6JYwxg7xRUvWGPGW2Ds9pUWLDz5Hx",
+          "timeUtc": "2026-11-10T00:46:36.291Z"
         },
         "source": {
           "current": "balances",
@@ -220,10 +220,165 @@
     }
   ],
   "net1ClickFlow": {
-    "value": null,
-    "status": "pending",
-    "reason": "pending",
-    "source": null
+    "start": "2026-11-02",
+    "method": "Check 1 final rules per UTC day: same NEAR asset IDs, one single-asset Explorer filter per asset and side, NEAR-to-NEAR and duplicate swaps dropped, buys excluded when the recipient is a revenue wallet, sells excluded when any sender is one. Swaps without a USD value are left out and counted. Only daily totals are stored.",
+    "value": "54418.420354494906",
+    "status": "ok",
+    "reason": null,
+    "through": "2026-11-08",
+    "source": {
+      "url": "https://explorer.near-intents.org/api/v0/transactions",
+      "paceMs": 5200,
+      "settleHours": 2
+    },
+    "days": [
+      {
+        "date": "2026-11-02",
+        "netUsd": "-62501.866573645778",
+        "buysUsd": "116083.294255089116",
+        "sellsUsd": "178585.160828734894",
+        "buyRows": 430,
+        "sellRows": 709,
+        "missingUsdRows": 0
+      },
+      {
+        "date": "2026-11-03",
+        "netUsd": "-11300.408959650099",
+        "buysUsd": "125842.015111194723",
+        "sellsUsd": "137142.424070844822",
+        "buyRows": 463,
+        "sellRows": 940,
+        "missingUsdRows": 0
+      },
+      {
+        "date": "2026-11-04",
+        "netUsd": "82511.669168897772",
+        "buysUsd": "234153.417206927876",
+        "sellsUsd": "151641.748038030104",
+        "buyRows": 406,
+        "sellRows": 710,
+        "missingUsdRows": 0
+      },
+      {
+        "date": "2026-11-05",
+        "netUsd": "74082.08277584094",
+        "buysUsd": "197783.020273211093",
+        "sellsUsd": "123700.937497370153",
+        "buyRows": 415,
+        "sellRows": 467,
+        "missingUsdRows": 0
+      },
+      {
+        "date": "2026-11-06",
+        "netUsd": "11733.819792237401",
+        "buysUsd": "75741.01602494048",
+        "sellsUsd": "64007.196232703079",
+        "buyRows": 352,
+        "sellRows": 355,
+        "missingUsdRows": 0
+      },
+      {
+        "date": "2026-11-07",
+        "netUsd": "-3224.48065179446",
+        "buysUsd": "54981.269625361267",
+        "sellsUsd": "58205.750277155727",
+        "buyRows": 273,
+        "sellRows": 266,
+        "missingUsdRows": 0
+      },
+      {
+        "date": "2026-11-08",
+        "netUsd": "-36882.39519739087",
+        "buysUsd": "61879.559061754309",
+        "sellsUsd": "98761.954259145179",
+        "buyRows": 291,
+        "sellRows": 594,
+        "missingUsdRows": 0
+      }
+    ]
+  },
+  "coverageSinceT3": {
+    "status": "unavailable",
+    "provisional": true,
+    "label": "Provisional, not a locked test.",
+    "closeDate": "2026-11-09",
+    "netFlowUsd": null,
+    "walletBalanceChangeNear": "108697.437804825261021394581659",
+    "supplyChangeNear": "717146.063276279187842392994426",
+    "nearUsdClose": 3.6277,
+    "coverage": null,
+    "reason": "Net 1Click flow is not recorded through 2026-11-09.",
+    "method": "Coverage = (net 1Click flow in USD + revenue-wallet NEAR change × latest close) ÷ (supply change × latest close). Wallet and supply changes run from the first block at or after the T3 end to the first block at or after the latest UTC midnight.",
+    "baseline": {
+      "status": "ok",
+      "block": {
+        "height": 222641210,
+        "hash": "Cm9x9M6CWDCxxXmvKwmR9iEVTfqVr1qyrfanjeyZ5fPY",
+        "timeUtc": "2026-11-02T00:00:00.260Z"
+      },
+      "totalSupplyNear": "1310576026.352291721504215863774687",
+      "wallets": [
+        {
+          "wallet": "fefundsadmin.sputnik-dao.near",
+          "nativeNear": "1965356.683093048747121045177375",
+          "wrappedNear": "0",
+          "intentsNear": "0",
+          "totalNear": "1965356.683093048747121045177375"
+        },
+        {
+          "wallet": "1csfundsadmin.sputnik-dao.near",
+          "nativeNear": "270.875891412420848813311023",
+          "wrappedNear": "0",
+          "intentsNear": "0.00100010001000100010001",
+          "totalNear": "270.876891512430849813411033"
+        },
+        {
+          "wallet": "buybacks.multisignature.near",
+          "nativeNear": "2150197.476174271458279287285005",
+          "wrappedNear": "0",
+          "intentsNear": "0",
+          "totalNear": "2150197.476174271458279287285005"
+        }
+      ],
+      "source": {
+        "url": "https://archival-rpc.mainnet.fastnear.com"
+      }
+    },
+    "close": {
+      "status": "ok",
+      "block": {
+        "height": 223838228,
+        "hash": "64N5osqyfpacEDYRwZzKEexT5EG1ifi41RX4piDENcR6",
+        "timeUtc": "2026-11-10T00:00:00.314Z"
+      },
+      "totalSupplyNear": "1311293172.415568000692058256769113",
+      "wallets": [
+        {
+          "wallet": "fefundsadmin.sputnik-dao.near",
+          "nativeNear": "1994812.252877263375139754343196",
+          "wrappedNear": "0",
+          "intentsNear": "0",
+          "totalNear": "1994812.252877263375139754343196"
+        },
+        {
+          "wallet": "1csfundsadmin.sputnik-dao.near",
+          "nativeNear": "270.875891412420848813311023",
+          "wrappedNear": "0",
+          "intentsNear": "0.00100010001000100010001",
+          "totalNear": "270.876891512430849813411033"
+        },
+        {
+          "wallet": "buybacks.multisignature.near",
+          "nativeNear": "2229439.344194882091281972700843",
+          "wrappedNear": "0",
+          "intentsNear": "0",
+          "totalNear": "2229439.344194882091281972700843"
+        }
+      ],
+      "source": {
+        "url": "https://rpc.mainnet.near.org"
+      }
+    }
   },
   "baselines": {
     "t3SupplyNear": "1310576026.3527386",
@@ -235,7 +390,8 @@
     }
   },
   "notes": [
-    "Changes describe balances and supply, not net buying or revenue. Net 1Click flow is pending.",
+    "Balance and supply changes describe holdings, not net buying or revenue.",
+    "Coverage since the T3 end is provisional and is not a locked test. Only daily aggregates are stored; swap addresses never leave memory.",
     "Native balances include storage reserve and exclude locked stake. Wallet totals add native, wrapped and Intents NEAR.",
     "All three wallet balance components must succeed together; otherwise the last complete wallet snapshot is stale.",
     "T3 closing supply comes from rounded FLOAT64 research data; its precision limits the reported supply change."

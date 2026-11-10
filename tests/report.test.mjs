@@ -333,6 +333,10 @@ test('first-screen numbers match the published public-snapshot metrics', async (
   assert.match(first, /href="thesis.html">Read the thesis<\/a>/);
   assert.match(first, /href="VERIFY.md">How to verify<\/a>/);
   assert.match(first, /General research opinion, not personal advice\./);
+  assert.match(first, /<\/div>\s*<p id="live-line" class="live-line" aria-live="polite" hidden><\/p><script src="live.js" defer><\/script>/);
+  const csp = files.get('index.html').match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
+  assert.equal(csp, "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; script-src 'self'; connect-src 'self'");
+  assert.doesNotMatch(files.get('index.html'), /<script(?![^>]*\bsrc="live\.js")/);
 });
 test('concentration chart immediately follows the first screen and detailed T2/status remain below', async () => {
   const { manifest, sources } = await loadSources(), files = new Map();

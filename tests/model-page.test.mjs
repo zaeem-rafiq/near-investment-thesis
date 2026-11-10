@@ -118,7 +118,7 @@ test('undefined values render explicit text, never NaN or Infinity', () => {
 });
 test('standalone page keeps the existing CSP with only self-hosted script permission added', async () => {
   const html = await readFile(`${ROOT}/dashboard/model.html`, 'utf8');
-  const oldHtml = await readFile(`${ROOT}/dashboard/index.html`, 'utf8');
+  const oldHtml = await readFile(`${ROOT}/dashboard/thesis.html`, 'utf8');
   const csp = text => text.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
   assert.equal(csp(html), `${csp(oldHtml)}; script-src 'self'`);
   assert.doesNotMatch(html, /<style\b|style=|\bon\w+=|<script(?![^>]*\bsrc=)/);

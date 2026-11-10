@@ -591,6 +591,8 @@ export function numberTables(a) {
   return '| Metric | Value |\n|---|---|\n' + Object.entries(metricValues(a)).map(([k, v]) => `| ${k} | ${v} |`).join('\n') + '\n';
 }
 const CSP = "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'";
+// Only the index page loads live.js, which reads same-origin live.json.
+const INDEX_CSP = `${CSP}; script-src 'self'; connect-src 'self'`;
 // Minimal Markdown for THESIS.md only: headings, paragraphs, "- " lists, pipe tables, `code` and **bold**. Everything is escaped.
 const inlineMd = s => escape(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 export function thesisHTML(md) {
@@ -690,7 +692,7 @@ export async function render(manifest, sources, write, root = ROOT) {
   const statusRows = Object.entries(sources).map(([name, s]) => `<tr><th scope="row">${escape(name)}</th><td>${escape(s.reason || (s.entry?.reused ? 'Cached result reused' : 'Fetched'))}</td></tr>`).join('');
   await write('NUMBERS.md', report);
   await write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="${CSP}">
+    <meta http-equiv="Content-Security-Policy" content="${position ? INDEX_CSP : CSP}">
     <title>NEAR investment thesis · public data through November 1, 2026</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to evidence</a>
     <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="model.html">Model</a><a href="thesis.html">Thesis</a><a href="VERIFY.md">Verify</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a></nav>
@@ -699,6 +701,7 @@ export async function render(manifest, sources, write, root = ROOT) {
     <h1>Does public data support holding NEAR through <span data-metric="position.holdHorizon">${escape(values['position.holdHorizon'] || '2031')}</span>?</h1>
     ${position ? `<p class="answer">Not yet.</p><p class="summary-line"><span data-metric="position.call.passingWords">${escape(values['position.call.passingWords'])}</span> of <span data-metric="position.call.totalWords">${escape(values['position.call.totalWords'])}</span> locked tests passed, and <span data-metric="position.topBuyerCountWords">${escape(values['position.topBuyerCountWords'])}</span> accounts made up <span data-metric="position.top3Share">${escape(values['position.top3Share'])}</span> of that pass.</p>${checkCards}` : checkCards}
     <div class="first-actions"><a class="evidence-button" href="model.html">Test the issuance cut</a><a href="thesis.html">Read the thesis</a><a href="VERIFY.md">How to verify</a></div>
+    ${position ? '<p id="live-line" class="live-line" aria-live="polite" hidden></p><script src="live.js" defer></script>' : ''}
     <p class="advice-note">General research opinion, not personal advice.</p>
     </header><!-- first-screen:end -->
     ${concentrationChart}

@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, PRICE_SOURCE, hash } from './sources.mjs';
+import { ROOT, PRICE_SOURCE, EXPLORER, hash, environment, sleep } from './sources.mjs';
+import { updateFlow } from './live-flow.mjs';
 import { NEAR_RPC } from './staking.mjs';
 import { fetchWalletControls, REVENUE_WALLETS } from './wallet-controls.mjs';
 import { atomic } from './store.mjs';
@@ -99,8 +100,145 @@ async function latestClose(request, asOf) {
     observedAt: new Date(today).toISOString() };
 }
 
+export const ARCHIVAL_RPC = 'https://archival-rpc.mainnet.fastnear.com';
+export const T3_END = '2026-11-02T00:00:00.000Z';
+const COVERAGE_METHOD = 'Coverage = (net 1Click flow in USD + revenue-wallet NEAR change × latest close) ÷ (supply change × latest close). ' +
+  'Wallet and supply changes run from the first block at or after the T3 end to the first block at or after the latest UTC midnight.';
+const T3_REASON = 'Archival read at the T3 end failed; the baseline is retried next run.';
+
+async function rpcBody(request, url, method, params) {
+  const response = await request(url, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ jsonrpc: '2.0', id: 'live', method, params }), redirect: 'error', signal: AbortSignal.timeout(30000) });
+  requireValue(response.ok);
+  return response.json();
+}
+async function headerAt(request, url, params) {
+  const body = await rpcBody(request, url, 'block', params);
+  if (body?.error) {
+    requireValue(JSON.stringify(body.error).includes('UNKNOWN_BLOCK'));
+    return null;
+  }
+  const h = body?.result?.header;
+  requireValue(h && Number.isSafeInteger(h.height) && h.height > 0 &&
+    typeof h.hash === 'string' && /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(h.hash));
+  const timeMs = Number(unsigned(h.timestamp_nanosec) / 1000000n);
+  requireValue(Number.isSafeInteger(timeMs));
+  return { height: h.height, hash: h.hash, timeMs, totalSupply: unsigned(h.total_supply) };
+}
+// Heights can be skipped; returns the first produced block in [height, limit).
+async function firstBlock(request, url, height, limit) {
+  for (let h = height; h < limit; h++) {
+    requireValue(h < height + 50);
+    const found = await headerAt(request, url, { block_id: h });
+    if (found) return found;
+  }
+  return null;
+}
+export async function blockAtOrAfter(request, url, targetMs) {
+  const final = await headerAt(request, url, { finality: 'final' });
+  requireValue(final && final.timeMs >= targetMs);
+  let low = null;
+  for (let span = Math.ceil((final.timeMs - targetMs) / 1000 * 3) + 100, i = 0; i < 6 && !low; i++, span *= 2) {
+    const found = await firstBlock(request, url, Math.max(1, final.height - span), final.height);
+    if (found && found.timeMs < targetMs) low = found;
+  }
+  requireValue(low);
+  // Invariant: no produced block lies in [limit, best.height).
+  let best = final, limit = final.height;
+  while (limit - low.height > 1) {
+    const mid = Math.floor((low.height + limit) / 2);
+    const found = await firstBlock(request, url, mid, limit);
+    if (!found) limit = mid;
+    else if (found.timeMs >= targetMs) { best = found; limit = mid; }
+    else low = found;
+  }
+  return best;
+}
+async function walletBalancesAt(request, url, hash) {
+  const query = async params => {
+    const body = await rpcBody(request, url, 'query', { ...params, block_id: hash });
+    requireValue(!body?.error && body?.result && body.result.block_hash === hash && !body.result.error);
+    return body.result;
+  };
+  const view = async (account_id, method_name, args) => {
+    const result = await query({ request_type: 'call_function', account_id, method_name,
+      args_base64: Buffer.from(JSON.stringify(args)).toString('base64') });
+    requireValue(Array.isArray(result.result) && result.result.every(b => Number.isInteger(b) && b >= 0 && b <= 255));
+    return near(unsigned(JSON.parse(Buffer.from(result.result).toString('utf8'))));
+  };
+  const out = [];
+  for (const wallet of REVENUE_WALLETS) {
+    const account = await query({ request_type: 'view_account', account_id: wallet });
+    out.push({ wallet, ...balances({ nativeNear: near(unsigned(account.amount)),
+      wrappedNear: await view('wrap.near', 'ft_balance_of', { account_id: wallet }),
+      intentsNear: await view('intents.near', 'mt_balance_of', { account_id: wallet, token_id: 'nep141:wrap.near' }) }) });
+  }
+  return out;
+}
+async function snapshotAt(request, url, targetMs) {
+  const found = await blockAtOrAfter(request, url, targetMs);
+  return { block: { height: found.height, hash: found.hash, timeUtc: new Date(found.timeMs).toISOString() },
+    totalSupplyNear: near(found.totalSupply), wallets: await walletBalancesAt(request, url, found.hash), source: { url } };
+}
+// Rebuilds a saved snapshot from validated fields only.
+function savedSnapshot(value, url, targetMs) {
+  requireValue(value?.status === 'ok' && value.source?.url === url);
+  const b = block(value.block);
+  requireValue(Date.parse(b.timeUtc) >= targetMs && units(value.totalSupplyNear) > 0n &&
+    Array.isArray(value.wallets) && value.wallets.length === REVENUE_WALLETS.length);
+  return { status: 'ok', block: b, totalSupplyNear: near(units(value.totalSupplyNear)),
+    wallets: REVENUE_WALLETS.map((wallet, i) => {
+      requireValue(value.wallets[i]?.wallet === wallet);
+      return { wallet, ...balances(value.wallets[i]) };
+    }), source: { url } };
+}
+const walletTotal = snapshot => snapshot.wallets.reduce((sum, w) => sum + units(w.totalNear), 0n);
+const nearNumber = value => Number(units(value.replace(/^-/, ''))) / 1e24 * (value.startsWith('-') ? -1 : 1);
+
+async function coverageSinceT3({ previous, request, asOf, flow, price }) {
+  const old = previous?.coverageSinceT3;
+  const t3Ms = Date.parse(T3_END), today = asOf.slice(0, 10), closeMs = Date.parse(today);
+  const closeDate = new Date(closeMs - 86400000).toISOString().slice(0, 10);
+  let baseline;
+  try { baseline = savedSnapshot(old?.baseline, ARCHIVAL_RPC, t3Ms); }
+  catch {
+    try { baseline = { status: 'ok', ...await snapshotAt(request, ARCHIVAL_RPC, t3Ms) }; }
+    catch { baseline = { status: 'unavailable', reason: T3_REASON }; }
+  }
+  let close;
+  try {
+    close = savedSnapshot(old?.close, old?.close?.source?.url === ARCHIVAL_RPC ? ARCHIVAL_RPC : NEAR_RPC, closeMs);
+    requireValue(old.closeDate === closeDate && Date.parse(close.block.timeUtc) < closeMs + 3600000);
+  } catch {
+    close = null;
+    for (const url of [NEAR_RPC, ARCHIVAL_RPC]) {
+      try { close = { status: 'ok', ...await snapshotAt(request, url, closeMs) }; break; } catch { /* try the next host */ }
+    }
+    close ??= { status: 'unavailable', reason: 'Block reads at the latest close failed; retried next run.' };
+  }
+  const both = baseline.status === 'ok' && close.status === 'ok';
+  const walletChange = both ? near(walletTotal(close) - walletTotal(baseline)) : null;
+  const supplyChange = both ? near(units(close.totalSupplyNear) - units(baseline.totalSupplyNear)) : null;
+  const priceOk = price.status === 'ok' && price.value?.date === closeDate;
+  const flowOk = flow.value !== null && flow.through === closeDate;
+  let coverage = null, reason = null;
+  if (baseline.status !== 'ok') reason = baseline.reason;
+  else if (close.status !== 'ok') reason = close.reason;
+  else if (!flowOk) reason = flow.reason === 'pending' ? 'pending' : `Net 1Click flow is not recorded through ${closeDate}.`;
+  else if (!priceOk) reason = `No NEAR-USD close for ${closeDate}.`;
+  else if (units(supplyChange.replace(/^-/, '')) === 0n || supplyChange.startsWith('-')) reason = 'Supply did not rise; coverage is undefined.';
+  else {
+    const closeUsd = price.value.closeUsd;
+    coverage = (Number(flow.value) + nearNumber(walletChange) * closeUsd) / (nearNumber(supplyChange) * closeUsd);
+  }
+  return { status: coverage === null ? 'unavailable' : 'ok', provisional: true, label: 'Provisional, not a locked test.',
+    closeDate, netFlowUsd: flowOk ? flow.value : null, walletBalanceChangeNear: walletChange, supplyChangeNear: supplyChange,
+    nearUsdClose: priceOk ? price.value.closeUsd : null, coverage, reason, method: COVERAGE_METHOD, baseline, close };
+}
+
 export function assertLivePrivacy(data) {
-  const body = JSON.stringify(data).replaceAll(NEAR_RPC, '').replaceAll(PRICE_SOURCE, '');
+  const body = JSON.stringify(data).replaceAll(NEAR_RPC, '').replaceAll(PRICE_SOURCE, '')
+    .replaceAll(ARCHIVAL_RPC, '').replaceAll(EXPLORER, '');
   requireValue(!/ed25519:|secp256k1:|public_key|account_id|args_base64/.test(body));
   requireValue(!/\b(?:0x[a-fA-F0-9]{40}|[a-fA-F0-9]{64})\b/.test(body));
   for (const account of body.match(/\b[a-z0-9][a-z0-9._-]*\.near\b/g) || []) {
@@ -109,7 +247,7 @@ export function assertLivePrivacy(data) {
 }
 
 export async function buildLive({ baselineSupply, baselineWallets, previous = null,
-  request = fetch, now = () => new Date() }) {
+  request = fetch, now = () => new Date(), jwt = null, pause = sleep, clock = Date.now }) {
   const asOf = now().toISOString();
   requireValue(Array.isArray(baselineSupply?.rows) && baselineSupply.rows.length === 52);
   const rows = [...baselineSupply.rows].sort((a, b) => a.week_start.localeCompare(b.week_start));
@@ -166,13 +304,16 @@ export async function buildLive({ baselineSupply, baselineWallets, previous = nu
       new Date(value.date).toISOString().slice(0, 10) === value.date);
     return { closeUsd: value.closeUsd, date: value.date };
   });
+  const net1ClickFlow = await updateFlow({ previous: previous?.net1ClickFlow, jwt, request, now, pause, clock });
+  const coverage = await coverageSinceT3({ previous, request, asOf, flow: net1ClickFlow, price });
   const data = { version: 1, asOf: now().toISOString(), finalBlock, totalSupplyNear,
     supplyChangeSinceT3: difference(totalSupplyNear, t3Supply,
       { current: 'totalSupplyNear', baseline: 'data/public/bigquery/supply.json', endExclusive: '2026-11-02' }),
-    nearUsdClose: price, wallets, net1ClickFlow: { value: null, status: 'pending', reason: 'pending', source: null },
+    nearUsdClose: price, wallets, net1ClickFlow, coverageSinceT3: coverage,
     baselines: { t3SupplyNear: t3Supply, t3EndExclusive: '2026-11-02', walletBlock: baselineBlock },
     notes: [
-      'Changes describe balances and supply, not net buying or revenue. Net 1Click flow is pending.',
+      'Balance and supply changes describe holdings, not net buying or revenue.',
+      'Coverage since the T3 end is provisional and is not a locked test. Only daily aggregates are stored; swap addresses never leave memory.',
       'Native balances include storage reserve and exclude locked stake. Wallet totals add native, wrapped and Intents NEAR.',
       'All three wallet balance components must succeed together; otherwise the last complete wallet snapshot is stale.',
       'T3 closing supply comes from rounded FLOAT64 research data; its precision limits the reported supply change.'
@@ -181,7 +322,7 @@ export async function buildLive({ baselineSupply, baselineWallets, previous = nu
   return data;
 }
 
-export async function writeLive({ root = ROOT, request = fetch, now = () => new Date() } = {}) {
+export async function writeLive({ root = ROOT, request = fetch, now = () => new Date(), jwt = null, pause, clock } = {}) {
   const manifest = JSON.parse(await readFile(resolve(root, 'data/public/manifest.json'), 'utf8'));
   const verified = async (name, path) => {
     const body = await readFile(resolve(root, path), 'utf8');
@@ -194,12 +335,13 @@ export async function writeLive({ root = ROOT, request = fetch, now = () => new 
   let previous = null;
   try { previous = JSON.parse(await readFile(path, 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw new Error('Existing live snapshot is unreadable; refusing to overwrite it.'); }
-  const data = await buildLive({ baselineSupply, baselineWallets, previous, request, now });
+  const data = await buildLive({ baselineSupply, baselineWallets, previous, request, now, jwt, pause, clock });
   await atomic(path, JSON.stringify(data, null, 2) + '\n');
   return data;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  writeLive().then(() => console.log('Updated dashboard/live.json from public sources.'))
+  environment().then(env => writeLive({ jwt: env.NEAR_INTENTS_JWT || null }))
+    .then(data => console.log(`Updated dashboard/live.json: flow ${data.net1ClickFlow.status}, coverage ${data.coverageSinceT3.status}.`))
     .catch(() => { console.error('Live update stopped; existing file preserved.'); process.exitCode = 1; });
 }

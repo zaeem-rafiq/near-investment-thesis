@@ -54,6 +54,7 @@ p { max-width: 65ch; margin: 12px 0; }
 .first-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 24px; }
 .evidence-button { display: inline-flex; align-items: center; min-height: 40px; padding: 8px 16px; border-radius: 6px; background: var(--accent); color: var(--surface); text-decoration: none; }
 .evidence-button:hover { background: var(--body); }
+.live-line { color: var(--secondary); font-size: 13px; font-variant-numeric: tabular-nums; margin: 16px 0 0; }
 .advice-note, .unavailable-note { color: var(--secondary); font-size: 13px; margin: 16px 0 0; }
 .concentration-chart { padding-top: 24px; }
 .concentration-chart > p { max-width: 70ch; }
