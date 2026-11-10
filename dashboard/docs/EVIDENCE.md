@@ -777,6 +777,11 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | position.check1.netUsdCompact | 52.1M |
 | position.whatYouMustBelieve.lowUsdCompact | 46.1M |
 | position.whatYouMustBelieve.highUsdCompact | 154M |
+| position.check1.netUsdCompactPrecise | 52.08M |
+| position.whatYouMustBelieve.capLatestUsdCompact | 154M |
+| position.whatYouMustBelieve.hspLatestUsdCompact | 94.8M |
+| position.holderLedger.wallets.received.nearCompact | 3.13M |
+| position.holderLedger.wallets.retainedShare | 98% |
 | position.receiptsComparisonGap | 0.04% |
 | position.stakingConflict.rpcRate | [0,1] |
 | position.stakingConflict.postSplit | 90/10 |

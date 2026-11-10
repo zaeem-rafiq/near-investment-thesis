@@ -301,19 +301,29 @@ test('committee view covers the actions, concentration, watch list and condition
   assert.match(plain, /For new money: this evidence does not support buying NEAR now for a hold through 2031\./);
   assert.match(plain, /For current holders: this evidence does not support adding, and by itself it does not say to sell\./);
   assert.match(plain, /General research opinion on public data, not personal advice/);
-  assert.match(plain, /without three accounts, net buying falls from 77\.75% to 2\.66% of issuance value/);
+  assert.match(plain, /without three accounts, net buying falls from 77\.75% to 2\.66% of the value of new NEAR/);
+  assert.match(plain, /About 98% of buyback receipts had not left the three wallets by November 1, and held NEAR is not burned/);
+  assert.match(plain, /- NEAR was on one side of only 2\.07% of 1Click swap volume\./);
+  assert.match(plain, /- 1Click users bought \$52\.08M more NEAR than they sold, 77\.75% of the value of new NEAR\. Removing accounts that both bought and sold still leaves 44\.74% to 50\.47%\./);
+  assert.match(plain, /- Buyback receipts of 3\.13M NEAR in 36 weeks match DefiLlama within 0\.04%\./);
+  assert.match(plain, /from \$154M to \$94\.8M at the latest close/);
+  assert.match(plain, /- Up: two passing checks at a review give Building\. The two closest are burn plus buybacks, 15\.08% now against 20%, and usage outside the ten biggest apps, \+14\.58% now against \+20%\./);
+  assert.match(plain, /- Down: the thesis is Broken if Check 1 and Check 2 both fall below 10% at two reviews in a row/);
+  const page = thesisHTML(md);
+  assert.match(page, /<a href="model\.html">Model<\/a>/);
+  assert.match(page, /<a href="VERIFY\.md">How to verify<\/a>/);
   assert.match(plain, /If HSP-029 is vetoed or not adopted, the call stays Not yet and the 2031 buying need moves from the HSP-029 rows to the 2\.5% cap rows/);
   assert.match(plain, /dashboard's daily line.*net 1Click buying, revenue-wallet balances and supply since November 2, 2026/);
   assert.match(plain, /veto status requires a separate manual review/);
-  assert.match(plain, /Only the locked review rules decide the call/);
+  assert.match(plain, /only the locked review rules decide the call/i);
   assert.match(plain, /2026-11-16.*2027-02-01.*2027-05-03.*2027-08-02.*2027-11-01/s);
   assert.match(evidence, /Base is the measured case and breaks even at \$<!-- metric:position\.scenarios\.base\.years\.4\.breakEvenPrice -->3\.23<!-- \/metric --> in 2031, against the latest close of \$<!-- metric:position\.latestClose -->4\.284<!-- \/metric -->/);
   assert.match(evidence, /Bear and Bull annualize the weakest and strongest measured 13-week windows; no odds are given/);
-  assert.ok(plain.trim().split(/\s+/).length <= 500, 'committee view stays roughly one printed page');
+  assert.ok(plain.trim().split(/\s+/).length <= 560, 'committee view stays roughly one printed page');
   assert.doesNotMatch(md, /^\|/m, 'long tables live in the supporting evidence');
   const css = await readFile(join(ROOT, 'web/style.css'), 'utf8');
   const print = css.split('@media print {')[1];
-  assert.match(print, /body:has\(\.thesis\) \{ font-size: 11pt; line-height: 1\.35; \}/);
+  assert.match(print, /body:has\(\.thesis\) \{ font-size: 10pt; line-height: 1\.3; \}/);
   assert.match(print, /\.thesis h2 \{ font-size: 12pt; margin: 12px 0 4px; break-after: avoid; \}/);
   assert.match(print, /\.thesis p \{ max-width: none; margin: 6px 0; \}/);
   const { sources } = await loadSources(), a = analyse(sources);
@@ -321,7 +331,9 @@ test('committee view covers the actions, concentration, watch list and condition
     ['position.check1.coverage', '77.75%'],
     ['position.concentration.withoutTopNetBuyers.3.coverage', '2.66%'],
     ['position.scenarios.base.years.4.breakEvenPrice', '3.23'],
-    ['position.latestClose', '4.284']
+    ['position.latestClose', '4.284'],
+    ['position.holderLedger.wallets.retainedShare', '98%'],
+    ['position.whatYouMustBelieve.hspLatestUsdCompact', '94.8M']
   ]) {
     const combined = `${md}\n${evidence}`;
     const stale = combined.replace(`<!-- metric:${key} -->${value}`, `<!-- metric:${key} -->WRONG`);

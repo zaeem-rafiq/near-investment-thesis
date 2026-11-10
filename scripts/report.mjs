@@ -593,9 +593,12 @@ export function numberTables(a) {
 const CSP = "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'";
 // Only the index page loads live.js, which reads same-origin live.json.
 const INDEX_CSP = `${CSP}; script-src 'self'; connect-src 'self'`;
-// Minimal Markdown for THESIS.md only, including its one fixed evidence link. Everything is escaped.
+// Repository paths in THESIS.md, mapped to their copies beside dashboard/thesis.html.
+const THESIS_LINKS = { 'docs/EVIDENCE.md': 'docs/EVIDENCE.md', 'dashboard/model.html': 'model.html', 'docs/VERIFY.md': 'VERIFY.md' };
+// Minimal Markdown for THESIS.md only, including its fixed links. Everything is escaped.
 const inlineMd = s => escape(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-  .replace(/\[([^\]\n]+)\]\(docs\/EVIDENCE\.md\)/g, '<a href="docs/EVIDENCE.md">$1</a>');
+  .replace(/\[([^\]\n]+)\]\((docs\/EVIDENCE\.md|dashboard\/model\.html|docs\/VERIFY\.md)\)/g,
+    (_, label, href) => `<a href="${THESIS_LINKS[href]}">${label}</a>`);
 export function thesisHTML(md) {
   const lines = md.replace(/<!--[\s\S]*?-->/g, '').split('\n'), out = [];
   let para = [], list = [];

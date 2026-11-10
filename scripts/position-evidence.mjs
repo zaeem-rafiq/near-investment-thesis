@@ -132,6 +132,14 @@ export function positionMetricValues({ section, results: p, oneClick, audit, tre
   values['position.check1.netUsdCompact'] = compactUsd(p.check1.final.netUsd);
   values['position.whatYouMustBelieve.lowUsdCompact'] = compactUsd(section.whatYouMustBelieve.rules[1].prices[0].buyingNeededUsd.value);
   values['position.whatYouMustBelieve.highUsdCompact'] = compactUsd(section.whatYouMustBelieve.rules[0].prices[1].buyingNeededUsd.value);
+  values['position.check1.netUsdCompactPrecise'] = new Intl.NumberFormat('en-US', {
+    notation: 'compact', minimumSignificantDigits: 4, maximumSignificantDigits: 4
+  }).format(p.check1.final.netUsd);
+  values['position.whatYouMustBelieve.capLatestUsdCompact'] = compactUsd(section.whatYouMustBelieve.rules[0].prices[1].buyingNeededUsd.value);
+  values['position.whatYouMustBelieve.hspLatestUsdCompact'] = compactUsd(section.whatYouMustBelieve.rules[1].prices[1].buyingNeededUsd.value);
+  const wallets = section.holderLedger.wallets;
+  values['position.holderLedger.wallets.received.nearCompact'] = compactUsd(wallets.received.near.value);
+  percent('position.holderLedger.wallets.retainedShare', wallets.netRetained.near.value / wallets.received.near.value, 0);
   values['position.receiptsComparisonGap'] = `${fmt(Math.abs(p.check2.holdersRevenueComparison.gapPercent))}%`;
   values['position.stakingConflict.rpcRate'] = JSON.stringify(treasuryConflict.protocolRate);
   values['position.stakingConflict.postSplit'] = `${fmt(treasuryConflict.post.nominalStakerShare * 100)}/${fmt(treasuryConflict.post.nominalTreasuryShare * 100)}`;
