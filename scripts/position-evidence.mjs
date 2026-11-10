@@ -7,7 +7,7 @@ const paths = {
   position_results: 'position-results.json', signer_top10: 'signer-top10.json',
   wallet_controls: 'wallet-controls.json', position_inputs: 'position-inputs.json',
   staking: 'staking.json', protocol_share: 'protocol-share.json',
-  hsp_treasury: 'hsp-treasury.json',
+  hsp_treasury: 'hsp-treasury.json', buyer_profiles: 'buyer-profiles.json',
   supply: 'bigquery/supply.json', prices: 'prices.json', near_flows: 'near_flows.json',
   signers: 'bigquery/signers.json'
 };
@@ -85,16 +85,25 @@ export async function loadPositionEvidence(manifest, root = ROOT) {
   for (const [i, comparison] of data.signer_top10.comparisons.entries()) {
     close(section.usageDecline.top10[i ? 'later' : 'earlier'].value, comparison.dayLevelTop10Mean);
   }
+  const buyers = data.buyer_profiles, c = p.descriptive.concentration;
+  if (/\b[0-9a-f]{64}\b|0x[0-9a-fA-F]{40}/.test(JSON.stringify(buyers)) || buyers.profiles?.length !== 3) throw new Error('Invalid buyer profiles.');
+  for (const [i, b] of buyers.profiles.entries()) {
+    if (b.rank !== i + 1 || !['named', '64-hex implicit', '0x'].includes(b.kind)
+      || ![b.zecPaidUsdShare, b.may22Through27UsdShare].every(s => s >= 0 && s <= 1)
+      || !['ok', 'unknown_account'].includes(b.nativeBalance?.status)) throw new Error('Invalid buyer profiles.');
+    close(b.boughtUsd - b.soldUsd, b.netUsd);
+  }
+  close(buyers.profiles.reduce((s, b) => s + b.netUsd, 0), c.netUsd - c.withoutTopNetBuyers['3'].netUsd);
   const totalVolume = data.near_flows.weeks.reduce((s, w) => s + Number(w.total_usd), 0);
   const nearVolume = p.check1.provisional.buysUsd + p.check1.provisional.sellsUsd;
-  return { section, results: p, top10: data.signer_top10, audit: extra.audit, controls: data.wallet_controls,
+  return { section, results: p, buyers, top10: data.signer_top10, audit: extra.audit, controls: data.wallet_controls,
     treasuryConflict: { protocolRate: protocol.protocol_reward_rate, post }, oneClick: {
     totalUsd: totalVolume, nearUsd: nearVolume, nearShare: nearVolume / totalVolume
   } };
 }
 
 // Stable decimal formatting for tagged prose. Percentages are explicit extra keys.
-export function positionMetricValues({ section, results: p, oneClick, audit, treasuryConflict, controls }) {
+export function positionMetricValues({ section, results: p, oneClick, audit, treasuryConflict, controls, buyers }) {
   const values = {}, fmt = n => n == null ? 'Unavailable'
     : new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(n);
   function walk(value, key) {
@@ -186,6 +195,29 @@ export function positionMetricValues({ section, results: p, oneClick, audit, tre
     const n = scores.filter(s => s >= bar / 100).length;
     values[`position.barSensitivity.${bar}.passingWords`] = ['none', 'only Check 1', 'two', 'all three'][n];
     values[`position.barSensitivity.${bar}.call`] = n >= 2 ? 'Building' : 'Not yet';
+  }
+  values['position.check1.passWord'] = p.check1.pass ? 'Pass' : 'Fail';
+  values['position.check2.passWord'] = p.check2.pass ? 'Pass' : 'Fail';
+  values['position.check3.passWord'] = p.check3.pass ? 'Pass' : 'Fail';
+  const bands = [...new Set([10, 15, 20, 25].map(bar => values[`position.barSensitivity.${bar}.call`]))];
+  values['position.barSensitivity.rangeBands'] = ['Not yet', 'Building'].filter(c => bands.includes(c))
+    .map(c => c === 'Building' ? 'at most a quarter' : 'none').join(' or ');
+  const base2031 = section.scenarios.base.years.find(y => (y.year?.value ?? y.year) === 2031).breakEvenPrice.value;
+  percent('position.latestCloseAboveBaseBreakEven', section.inputs.latestClose / base2031 - 1, 1);
+  if (buyers) {
+    const words = ['none', 'one', 'two', 'three'];
+    values['position.buyers.implicitCountWords'] = words[buyers.profiles.filter(b => b.kind === '64-hex implicit').length];
+    values['position.buyers.balanceDate'] = buyers.observedAt.slice(0, 10);
+    for (const b of buyers.profiles) {
+      const k = `position.buyers.${b.rank}`;
+      values[`${k}.boughtUsdCompact`] = compactUsd(b.boughtUsd);
+      values[`${k}.soldUsdCompact`] = b.soldUsd ? compactUsd(b.soldUsd) : '0';
+      values[`${k}.buySwaps`] = fmt(b.buySwaps);
+      values[`${k}.activeBuyWeeks`] = fmt(b.activeBuyWeeks);
+      percent(`${k}.zecShare`, b.zecPaidUsdShare, 0);
+      percent(`${k}.may22Through27Share`, b.may22Through27UsdShare, 0);
+      values[`${k}.nativeNear`] = b.nativeBalance.status === 'ok' ? b.nativeBalance.near.toFixed(2) : 'no';
+    }
   }
   if (controls) {
     const words = ['none', 'one', 'two', 'three', 'four'];

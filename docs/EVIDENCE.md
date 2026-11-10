@@ -884,6 +884,34 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | position.barSensitivity.20.call | Not yet |
 | position.barSensitivity.25.passingWords | only Check 1 |
 | position.barSensitivity.25.call | Not yet |
+| position.check1.passWord | Pass |
+| position.check2.passWord | Fail |
+| position.check3.passWord | Fail |
+| position.barSensitivity.rangeBands | none or at most a quarter |
+| position.latestCloseAboveBaseBreakEven | 32.7% |
+| position.buyers.implicitCountWords | three |
+| position.buyers.balanceDate | 2026-11-10 |
+| position.buyers.1.boughtUsdCompact | 27.2M |
+| position.buyers.1.soldUsdCompact | 0 |
+| position.buyers.1.buySwaps | 374 |
+| position.buyers.1.activeBuyWeeks | 3 |
+| position.buyers.1.zecShare | 100% |
+| position.buyers.1.may22Through27Share | 90% |
+| position.buyers.1.nativeNear | no |
+| position.buyers.2.boughtUsdCompact | 16.9M |
+| position.buyers.2.soldUsdCompact | 1.98M |
+| position.buyers.2.buySwaps | 2,095 |
+| position.buyers.2.activeBuyWeeks | 26 |
+| position.buyers.2.zecShare | 0% |
+| position.buyers.2.may22Through27Share | 17% |
+| position.buyers.2.nativeNear | 3.05 |
+| position.buyers.3.boughtUsdCompact | 8.26M |
+| position.buyers.3.soldUsdCompact | 77.3K |
+| position.buyers.3.buySwaps | 599 |
+| position.buyers.3.activeBuyWeeks | 7 |
+| position.buyers.3.zecShare | 0% |
+| position.buyers.3.may22Through27Share | 0% |
+| position.buyers.3.nativeNear | 3.05 |
 | position.control.daoCountWords | two |
 | position.control.multisigCountWords | one |
 | position.control.daoSpendApprovalsWords | two |

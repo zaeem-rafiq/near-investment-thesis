@@ -74,6 +74,10 @@
     "peers": {
       "path": "data/public/peers.json",
       "sha256": "cd41179b9c7e9d5d545c0748945fa3d53f5f4a949a9eca9b0b2f10be5261fb86"
+    },
+    "buyer_profiles": {
+      "path": "data/public/buyer-profiles.json",
+      "sha256": "ab5ea780bc0dd88952442c9100c365c237a77f49561b888838749b918a2eea4c"
     }
   },
   "unavailable": {}

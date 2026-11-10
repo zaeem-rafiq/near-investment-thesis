@@ -311,17 +311,25 @@ test('committee view covers round-three actions, valuation, bull gates and revie
   }
   for (const phrase of [
     'First we tested T1–T3; none passed.', 'before computing them, and time-stamped the rules',
-    'For new money: this evidence does not support buying NEAR now for a hold through 2031.',
-    'For current holders: this evidence does not support adding, and by itself it does not say to sell.',
-    'In rating terms: hold, do not buy.',
+    '**Rating: hold, do not buy, through 2031.** "Not yet" is the rule\'s label for this call, as addenda 2 and 3 define it.',
+    '- New money: does not support buying now.',
+    '- Staked holder: does not say to sell; yields 4.97% and 5.52%, before validator commission and tax, are above gross issuance 2.51%.',
+    '- Unstaked holder: does not say to sell, but unstaked holding lost 2.41% of its supply share over the year.',
+    '| 1 | Net 1Click buying of NEAR as a share of new NEAR\'s value, 52 weeks | ≥20% | 77.75% | Pass |',
+    '| 2 | Burn plus outside receipts to the three revenue wallets as a share of new NEAR, 36 weeks | ≥20% | 15.08% | Fail |',
+    '| 3 | Growth in mean daily signers outside the ten biggest apps, fixed by the earlier year\'s ranking | ≥+20% | +14.58% | Fail |',
+    "T1 usage broadening, FAIL; T2 1Click volume leads usage better than price, CAN'T TELL; T3 burn offsets supply, FAIL.",
+    'At any bar from 10% to 25%, the size band is none or at most a quarter; no bar gives a full position before 2027-11-01.',
+    'Scenarios have no odds because the data cannot estimate them without inventing assumptions.',
+    'The latest close is about 32.7% above the Base break-even.',
+    'All three are 64-hex implicit accounts. The largest bought $27.2M in 374 swaps over 3 weeks, paid 100% in ZEC, 90% of it from May 22 to 27, 2026, sold $0 through 1Click and holds no native NEAR',
+    'The data cannot tell whether they are exchanges, market makers or long-term buyers.',
     "Size band, as a share of the reader's own full position: none now, at most a quarter at Building, full at Own.",
-    "An unstaked holder's supply share fell 2.41%", '4.97% and 5.52% exceed gross issuance of 2.51%',
     'without three accounts, net buying falls from 77.75% to 2.66%',
     "fixed by the earlier year's ranking", 'Intents is chain-agnostic by design',
     'only 2.07% of 1Click volume', 'does not translate directly into NEAR demand',
     '$52.08M', '$3.8B', '+362.9%', '$7.5M in 36 weeks.',
     'matches the wallet receipts within 0.04%. That is a consistency check, not independent confirmation, because DefiLlama measures revenue from the same wallets.',
-    'both estimates are before validator commission and tax',
     '| Not yet | Zero or one check passing | None | Does not support adding, and by itself does not say to sell |',
     '| Building | Two or three passing | At most a quarter of a full position | Supports a small position at most |',
     '| Own | All three passing in a window that does not overlap the original; first possible 2027-11-01 | Full | Supports holding a full position through 2031 |',
@@ -330,7 +338,6 @@ test('committee view covers round-three actions, valuation, bull gates and revie
     'held by two Sputnik DAOs and one multisig. Spending needs two approvals in each DAO and two confirmations in the multisig; none of the three has a full-access key; one DAO\'s admin role can change its rules with a single vote.',
     'Author\'s view: the author weighs Check 2 most, because burn and buybacks are the only channel where NEAR Intents revenue reaches holders, while Check 1\'s pass rests on three accounts.',
     'compare them only within a row',
-    'measured inputs and no odds given',
     'Bear covers 2.4% of 2031 issuance and breaks even at $0.04 under the 2.5% cap; Base 75.89% and $3.23 under HSP-029; Bull 171.09% and $7.40 under HSP-029.',
     '472.92×; yield 0.21%', '47.95%–84.45%', '570× including Intents, 5,687× chain-only; Avalanche 1,398×',
     'Zero-revenue Bitcoin Cash stays only because the pre-set rule picked it',
@@ -345,8 +352,9 @@ test('committee view covers round-three actions, valuation, bull gates and revie
     'npm run review -- DATE', '`--run` works only once the date arrives',
     'General research opinion on public data, not personal advice'
   ]) assert.ok(plain.includes(phrase), phrase);
-  assert.ok(plain.trim().split(/\s+/).length <= 1000, 'committee view stays short');
-  assert.equal((md.match(/^\|---/gm) || []).length, 1, 'only the call table lives on page one');
+  assert.ok(plain.trim().split(/\s+/).length <= 1200, 'committee view stays short');
+  assert.equal((md.match(/^\|---/gm) || []).length, 2, 'only the checks and call tables live on page one');
+  assert.ok(plain.indexOf('**Rating:') < plain.indexOf('## Call and position'), 'the rating opens the page');
   const firstPage = ['Call and position', 'Why: evidence for Not yet', 'What the price assumes', 'What you must believe', 'What would change my mind', 'Review dates']
     .map(h => plain.indexOf(`## ${h}\n`));
   assert.ok(firstPage.every(i => i >= 0 && i < plain.indexOf('## What the bull has to show')), 'core parts come before the supporting notes');
@@ -367,7 +375,14 @@ test('committee view covers round-three actions, valuation, bull gates and revie
     ['position.scenarios.bull.breakEven2031', '7.40'],
     ['position.barSensitivity.15.call', 'Building'],
     ['position.control.singleVoteAdminDaosWords', 'one'],
-    ['position.control.fullAccessKeyWalletsWords', 'none']
+    ['position.control.fullAccessKeyWalletsWords', 'none'],
+    ['position.latestCloseAboveBaseBreakEven', '32.7%'],
+    ['position.check2.passWord', 'Fail'],
+    ['t2.verdict', "CAN'T TELL"],
+    ['position.barSensitivity.rangeBands', 'none or at most a quarter'],
+    ['position.buyers.implicitCountWords', 'three'],
+    ['position.buyers.1.zecShare', '100%'],
+    ['position.buyers.2.nativeNear', '3.05']
   ]) {
     const stale = md.replace(`<!-- metric:${key} -->${value}`, `<!-- metric:${key} -->WRONG`);
     assert.notEqual(stale, md);

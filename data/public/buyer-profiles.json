@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "observedAt": "2026-11-10T02:16:16.422Z",
+  "balanceSource": "https://rpc.mainnet.near.org",
+  "balanceMethod": "view_account, final",
+  "window": {
+    "start": "2025-11-03",
+    "endExclusive": "2026-11-02"
+  },
+  "notes": [
+    "After-the-fact description; changes no check. Rank by Check 1 final net USD.",
+    "Buyer = recipient; seller = first sender, else refundTo. Missing USD excluded.",
+    "Payment and May 22 through May 27 shares are USD-weighted buys; active weeks are UTC Monday buy weeks.",
+    "ZEC origin asset is the public ZEC bridged-token contract. Balances are native NEAR only, not token balances or proof of retention.",
+    "Account identifiers remain private. These data cannot identify exchanges, market makers or long-term buyers."
+  ],
+  "profiles": [
+    {
+      "rank": 1,
+      "kind": "64-hex implicit",
+      "boughtUsd": 27212537.7002,
+      "soldUsd": 0,
+      "netUsd": 27212537.7002,
+      "buySwaps": 374,
+      "activeBuyWeeks": 3,
+      "zecPaidUsdShare": 1,
+      "may22Through27UsdShare": 0.8963929428610666,
+      "nativeBalance": {
+        "status": "unknown_account",
+        "near": null
+      }
+    },
+    {
+      "rank": 2,
+      "kind": "64-hex implicit",
+      "boughtUsd": 16891347.991820294,
+      "soldUsd": 1978701.672423747,
+      "netUsd": 14912646.319396548,
+      "buySwaps": 2095,
+      "activeBuyWeeks": 26,
+      "zecPaidUsdShare": 0,
+      "may22Through27UsdShare": 0.16982531932259765,
+      "nativeBalance": {
+        "status": "ok",
+        "near": 3.049463361789434,
+        "blockHeight": 223852078
+      }
+    },
+    {
+      "rank": 3,
+      "kind": "64-hex implicit",
+      "boughtUsd": 8255448.183659801,
+      "soldUsd": 77315.45731289001,
+      "netUsd": 8178132.726346911,
+      "buySwaps": 599,
+      "activeBuyWeeks": 7,
+      "zecPaidUsdShare": 0,
+      "may22Through27UsdShare": 0,
+      "nativeBalance": {
+        "status": "ok",
+        "near": 3.0509581924315836,
+        "blockHeight": 223852083
+      }
+    }
+  ]
+}

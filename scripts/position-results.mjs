@@ -32,7 +32,7 @@ export function normalizeSwaps(rawRows, ids = NEAR_ASSET_IDS, window = POSITION_
     const units = missing ? null : usdUnits(row.amountInUsd);
     if (!missing && units == null) throw new Error('Invalid swap USD amount.');
     const day = new Date(ts).toISOString().slice(0, 10), dow = (new Date(day).getUTCDay() + 6) % 7;
-    rows.push({ side: destination ? 'buy' : 'sell', week: addDays(day, -dow), units, recipient: row.recipient ?? null,
+    rows.push({ side: destination ? 'buy' : 'sell', day, originAsset: row.originAsset, week: addDays(day, -dow), units, recipient: row.recipient ?? null,
       senders: Array.isArray(row.senders) ? row.senders : [], refundTo: row.refundTo ?? null });
   }
   return { rows, nearToNear, duplicates };
@@ -329,7 +329,8 @@ export function assertAggregateOnly(value) {
   const { assertNoWalletFields } = REPORT;
   assertNoWalletFields(value);
   const allowed = new Set([...REVENUE_WALLETS, 'wrap.near', 'api.nearblocks.io', 'api.llama.fi']);
-  const text = JSON.stringify(value).replace(/"\w*Sha256":"[0-9a-f]{64}"/g, '');
+  const text = JSON.stringify(value).replace(/"\w*Sha256":"[0-9a-f]{64}"/g, '')
+    .replaceAll('https://rpc.mainnet.near.org', '');
   for (const m of text.match(ACCOUNT) || []) if (!allowed.has(m)) throw new Error('Account-like string in public results.');
 }
 
