@@ -32,6 +32,8 @@ uvx --from opentimestamps-client ots info docs/position-rule.md.ots
 uvx --from opentimestamps-client ots verify -f docs/position-rule.md docs/position-rule.md.ots
 uvx --from opentimestamps-client ots info docs/position-rule-addendum-2.md.ots
 uvx --from opentimestamps-client ots verify -f docs/position-rule-addendum-2.md docs/position-rule-addendum-2.md.ots
+uvx --from opentimestamps-client ots info docs/position-rule-addendum-3.md.ots
+uvx --from opentimestamps-client ots verify -f docs/position-rule-addendum-3.md docs/position-rule-addendum-3.md.ots
 ```
 
 If a proof is still pending, upgrade it and run verification again:
@@ -39,18 +41,24 @@ If a proof is still pending, upgrade it and run verification again:
 ```sh
 uvx --from opentimestamps-client ots upgrade docs/position-rule.md.ots
 uvx --from opentimestamps-client ots upgrade docs/position-rule-addendum-2.md.ots
+uvx --from opentimestamps-client ots upgrade docs/position-rule-addendum-3.md.ots
 ```
 
 Upgrading changes proof files, not rule text, and may create `.ots.bak` files.
 A pending proof or a missing Bitcoin node is not successful Bitcoin verification.
 The client can exit nonzero while a timestamp waits for confirmations.
 
-### Proof status checked on 2026-11-09
+### Proof status checked on 2026-11-10 (UTC)
+
+Plainly: the `docs/position-rule.md` proof has Bitcoin attestations in blocks
+975204 and 975212. The addendum 2 and addendum 3 proofs are still pending; each
+holds only calendar `PendingAttestation` entries, read offline with `ots info`.
 
 | Proof target | SHA-256 of the target file | Bitcoin attestation |
 |---|---|---|
 | `docs/position-rule.md` (including addendum 1) | `8ff52110226d8d00abeed330b25389e6d034eabef806f12ceb06564e76c03ce9` | Blocks 975204 and 975212 |
 | `docs/position-rule-addendum-2.md` | `804a5924916162d58db4c9a03d6d7792de62a0dd292634dbf6edd96832a65345` | Pending; no Bitcoin attestation in the proof at this check |
+| `docs/position-rule-addendum-3.md` | `086f92ad20481a4224bfcc833f38e9657bfc63613722732e05de9c9d8bdcbbe4` | Pending; no Bitcoin attestation in the proof at this check |
 
 | Bitcoin height | Reported mined time (UTC, block-header timestamp) | Public explorer |
 |---|---|---|
@@ -76,15 +84,18 @@ are successive ancestors in this repository, with other work between some rows.
 | First flow data | `096bfa1ceecccffa902bd47322bd626e3cb61cd8` | 2026-11-09T17:24:55Z | Adds 52 weekly NEAR-flow aggregates and their manifest hash. Recipient exclusions were not applied, so Check 1 was provisional. |
 | Addendum 1 | `f87045a348d966e1ba858963b6236c5ac83a812b` | 2026-11-09T17:41:21Z | Adds participant reconciliation, final exclusions and descriptive cuts after the provisional totals. The text records that ordering explicitly. |
 | Addendum 2 | `58f5d9444d16e0b5befa634faa9c9964fd744e79` | 2026-11-09T20:18:39Z | Adds call meanings, review dates, non-overlapping Own eligibility and downgrade/Broken rules. It states that final checks and descriptive cuts had not been computed. |
+| Addendum 3 | `aeb2f40a00743fb883dbcaec695e1bdb4cfc3a0b` | 2026-11-10T01:26:43Z | Adds the size bands and the not-official peer-table rule, before any peer data was pulled. |
+| Addendum 3 proof | `9a7a579cbfb79370cb9b581796375ede22dbec29` | 2026-11-10T01:27:03Z | Adds the OpenTimestamps proof for addendum 3 alone. |
 
 Inspect the recorded times and the actual changes:
 
 ```sh
-TZ=UTC git show --no-patch --date=iso-strict-local --format='%H %cd %s' 9afd9c8cbcdf15121410e88d162f3257e44e2324 096bfa1ceecccffa902bd47322bd626e3cb61cd8 f87045a348d966e1ba858963b6236c5ac83a812b 58f5d9444d16e0b5befa634faa9c9964fd744e79
+TZ=UTC git show --no-patch --date=iso-strict-local --format='%H %cd %s' 9afd9c8cbcdf15121410e88d162f3257e44e2324 096bfa1ceecccffa902bd47322bd626e3cb61cd8 f87045a348d966e1ba858963b6236c5ac83a812b 58f5d9444d16e0b5befa634faa9c9964fd744e79 aeb2f40a00743fb883dbcaec695e1bdb4cfc3a0b 9a7a579cbfb79370cb9b581796375ede22dbec29
 git show 9afd9c8cbcdf15121410e88d162f3257e44e2324 -- docs/position-rule.md
 git show 096bfa1ceecccffa902bd47322bd626e3cb61cd8 -- data/public/near_flows.json data/public/manifest.json
 git show f87045a348d966e1ba858963b6236c5ac83a812b -- docs/position-rule.md
 git show 58f5d9444d16e0b5befa634faa9c9964fd744e79 -- docs/position-rule-addendum-2.md
+git show aeb2f40a00743fb883dbcaec695e1bdb4cfc3a0b -- docs/position-rule-addendum-3.md
 ```
 
 **Git times alone can be changed. Only completed Bitcoin proofs provide outside
@@ -92,7 +103,7 @@ timestamp evidence here.** Commit ancestry records content order, not independen
 certified execution times. The completed proof covers the rule *with addendum 1*,
 and anchors it no later than the cited Bitcoin commitment. It does not separately
 timestamp the original rule before the first flow data, nor prove when analysis
-was actually run. Addendum 2 remains pending at this check. Final-result commits
+was actually run. Addendum 2 and addendum 3 remain pending at this check. Final-result commits
 will be added to this guide only after owner review.
 
 ## Presentation and live-data commits
