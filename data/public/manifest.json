@@ -70,6 +70,10 @@
     "position_section": {
       "path": "data/public/position-section.json",
       "sha256": "5ab7a56785da42bf71c9ec7b11d2f822471c45379ca96d6c05da635930ff2616"
+    },
+    "peers": {
+      "path": "data/public/peers.json",
+      "sha256": "cd41179b9c7e9d5d545c0748945fa3d53f5f4a949a9eca9b0b2f10be5261fb86"
     }
   },
   "unavailable": {}

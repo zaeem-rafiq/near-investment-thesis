@@ -282,7 +282,9 @@ test('position thesis preserves the approved opening, section order and verified
   verifyThesis(combined, a);
   assert.throws(() => verifyThesis(combined.replace(
     '<!-- metric:position.top3Share -->96.6%', '<!-- metric:position.top3Share -->99%'), a), /metric mismatch/);
-  assert.match(html, /Peer comparison is out of scope/);
+  assert.match(html, /Peer comparison is limited\..*no relative-value claim is made/);
+  assert.match(html, /<h2>Peer comparison \(not official, addendum 3\)<\/h2>/);
+  assert.match(html, /<h2>Size bands \(addendum 3\)<\/h2>/);
   assert.match(html, /not identifiable, not measured zero/);
   assert.doesNotMatch(html, /fell(?: only)? -/);
   assert.match(html, /about 5\.52%/);
@@ -301,6 +303,8 @@ test('committee view covers the actions, concentration, watch list and condition
   assert.match(plain, /For new money: this evidence does not support buying NEAR now for a hold through 2031\./);
   assert.match(plain, /For current holders: this evidence does not support adding, and by itself it does not say to sell\./);
   assert.match(plain, /General research opinion on public data, not personal advice/);
+  assert.match(plain, /sell\.\n\nSize band: none, as a share of the reader's own full position\. The band comes from addendum 3, and its fractions are the author's choice\./);
+  assert.match(plain, /Peer comparison, not official: see the DefiLlama market cap and revenue table in the supporting evidence\./);
   assert.match(plain, /without three accounts, net buying falls from 77\.75% to 2\.66% of the value of new NEAR/);
   assert.match(plain, /About 98% of buyback receipts had not left the three wallets by November 1, and held NEAR is not burned/);
   assert.match(plain, /- NEAR was on one side of only 2\.07% of 1Click swap volume\./);
@@ -319,7 +323,7 @@ test('committee view covers the actions, concentration, watch list and condition
   assert.match(plain, /2026-11-16.*2027-02-01.*2027-05-03.*2027-08-02.*2027-11-01/s);
   assert.match(evidence, /Base is the measured case and breaks even at \$<!-- metric:position\.scenarios\.base\.years\.4\.breakEvenPrice -->3\.23<!-- \/metric --> in 2031, against the latest close of \$<!-- metric:position\.latestClose -->4\.284<!-- \/metric -->/);
   assert.match(evidence, /Bear and Bull annualize the weakest and strongest measured 13-week windows; no odds are given/);
-  assert.ok(plain.trim().split(/\s+/).length <= 560, 'committee view stays roughly one printed page');
+  assert.ok(plain.trim().split(/\s+/).length <= 580, 'committee view stays roughly one printed page');
   assert.doesNotMatch(md, /^\|/m, 'long tables live in the supporting evidence');
   const css = await readFile(join(ROOT, 'web/style.css'), 'utf8');
   const print = css.split('@media print {')[1];

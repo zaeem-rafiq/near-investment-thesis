@@ -535,3 +535,25 @@
 | position.concentration.withoutTopNetBuyers.10.coverage | -17.87% |
 | position.concentration.withoutTopNetBuyersAndSellers.3.coverage | 12.87% |
 | position.concentration.withoutTopNetBuyersAndSellers.10.coverage | 6.93% |
+| peers.pulledAt | 2026-11-10 01:28 UTC |
+| peers.withMarketCap | 83 |
+| peers.nearRank | 14 |
+| peers.skipped | 0 |
+| peers.above.name | Bitcoincash |
+| peers.above.rank | 13 |
+| peers.above.mcapCompact | 4.80B |
+| peers.above.revenueUsd | 0 |
+| peers.above.multiple | Not defined, zero revenue |
+| peers.near.name | Near |
+| peers.near.rank | 14 |
+| peers.near.mcapCompact | 4.78B |
+| peers.near.revenueUsd | 840,152 |
+| peers.near.multiple | 5,687× |
+| peers.below.name | Avalanche |
+| peers.below.rank | 15 |
+| peers.below.mcapCompact | 3.89B |
+| peers.below.revenueUsd | 2,780,434 |
+| peers.below.multiple | 1,398× |
+| peers.nearIntents.revenueUsd | 7,544,164 |
+| peers.nearWithIntents.revenueUsd | 8,384,316 |
+| peers.nearWithIntents.multiple | 570× |

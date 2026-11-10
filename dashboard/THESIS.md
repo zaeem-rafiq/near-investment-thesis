@@ -6,6 +6,8 @@ For new money: this evidence does not support buying NEAR now for a hold through
 
 For current holders: this evidence does not support adding, and by itself it does not say to sell.
 
+Size band: none, as a share of the reader's own full position. The band comes from addendum 3, and its fractions are the author's choice.
+
 General research opinion on public data, not personal advice. No portfolio share is given.
 
 ## Claim
@@ -35,6 +37,8 @@ If HSP-029 is vetoed or not adopted, the call stays Not yet and the 2031 buying 
 ## Watch list between reviews
 
 Use the dashboard's daily line to watch net 1Click buying, revenue-wallet balances and supply since November 2, 2026; also track HSP-029 veto status from governance. These are a watch list, not new thresholds; only the locked review rules decide the call. The daily line hides when unavailable; veto status requires a separate manual review.
+
+Peer comparison, not official: see the DefiLlama market cap and revenue table in the supporting evidence.
 
 ## Review dates
 

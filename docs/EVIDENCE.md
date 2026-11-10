@@ -154,8 +154,33 @@ Scenario receipts are annualized NEAR valued at the latest close. This differs f
 
 The Bear input is net selling, not a zero-demand placeholder. The model counts buying and buybacks as float absorption, not token destruction. HSP-029 is conditional; review its veto status before treating the cut as operative.
 
-**Peer comparison is out of scope.** A defensible comparison requires matched supply, revenue, staking, activity and valuation sources not used here. No relative-value claim is made.
+**Peer comparison is limited.** Addendum 3 adds one not-official DefiLlama table below. Matched supply, staking, activity and valuation sources are still not used, and no relative-value claim is made.
 
+## Peer comparison (not official, addendum 3)
+
+The rule is `docs/position-rule-addendum-3.md`, committed and timestamped before any peer data was pulled. Every figure below comes from one DefiLlama public API pull, with market caps taken at <!-- metric:peers.pulledAt -->2026-11-10 01:28 UTC<!-- /metric -->. `data/public/peers.json` holds the aggregates, every request URL, its retrieval time and the SHA-256 hash of each saved response; the raw responses stay in `data/raw/peers/`. Rebuild verifies the public file's hash and its table values, not the raw responses, which are not published.
+
+Candidates are DefiLlama Chain-category revenue entries whose chain record has `geckoId` equal to `gasTokenGeckoId`. Of these, <!-- metric:peers.withMarketCap -->83<!-- /metric --> had a DefiLlama coins market cap, and NEAR ranked <!-- metric:peers.nearRank -->14<!-- /metric -->. The nearest chain above and below each had a complete 364-day revenue series, so <!-- metric:peers.skipped -->0<!-- /metric --> candidates were skipped.
+
+| Chain (DefiLlama name) | Pick | Market cap | Yearly revenue, 2025-11-03 to 2026-11-01 | Market cap ÷ yearly revenue |
+|---|---|---|---|---|
+| Bitcoin Cash (<!-- metric:peers.above.name -->Bitcoincash<!-- /metric -->) | Nearest above, rank <!-- metric:peers.above.rank -->13<!-- /metric --> | $<!-- metric:peers.above.mcapCompact -->4.80B<!-- /metric --> | $<!-- metric:peers.above.revenueUsd -->0<!-- /metric --> | <!-- metric:peers.above.multiple -->Not defined, zero revenue<!-- /metric --> |
+| NEAR (<!-- metric:peers.near.name -->Near<!-- /metric -->) | Rank <!-- metric:peers.near.rank -->14<!-- /metric --> | $<!-- metric:peers.near.mcapCompact -->4.78B<!-- /metric --> | $<!-- metric:peers.near.revenueUsd -->840,152<!-- /metric --> | <!-- metric:peers.near.multiple -->5,687×<!-- /metric --> |
+| NEAR plus NEAR Intents holders revenue | Labeled second NEAR row | $<!-- metric:peers.near.mcapCompact -->4.78B<!-- /metric --> | $<!-- metric:peers.nearWithIntents.revenueUsd -->8,384,316<!-- /metric --> | <!-- metric:peers.nearWithIntents.multiple -->570×<!-- /metric --> |
+| Avalanche (<!-- metric:peers.below.name -->Avalanche<!-- /metric -->) | Nearest below, rank <!-- metric:peers.below.rank -->15<!-- /metric --> | $<!-- metric:peers.below.mcapCompact -->3.89B<!-- /metric --> | $<!-- metric:peers.below.revenueUsd -->2,780,434<!-- /metric --> | <!-- metric:peers.below.multiple -->1,398×<!-- /metric --> |
+
+These definitions are DefiLlama's, not this thesis's. DefiLlama counts NEAR chain revenue as the 70% of gas fees that is burned; this thesis measures burn from supply falls instead. The second NEAR row adds DefiLlama's NEAR Intents holders revenue of $<!-- metric:peers.nearIntents.revenueUsd -->7,544,164<!-- /metric --> over the same 52 weeks. That is DefiLlama's label, not the 36-week wallet receipts that Check 2 credits. DefiLlama defines Bitcoin Cash revenue as burned coins, which is zero across the window. A zero series is still complete, so the rule keeps Bitcoin Cash as the pick above.
+
+Each market cap is a single snapshot, and one year of revenue is a narrow measure of value. The table makes no relative-value claim and changes no check, threshold, result or call.
+
+## Size bands (addendum 3)
+
+Each call carries a size band from `docs/position-rule-addendum-3.md`. The band is a share of the reader's own full position, meaning the most the reader would hold in NEAR under this thesis. It is never a share of a portfolio. The fractions are the author's choice, not derived from data, and they are general research language, not personal advice.
+
+- Not yet: none, so no new money and no adding. This is the current band.
+- Building: at most a quarter of a full position.
+- Own: a full position.
+- Broken: none, and the case for holding NEAR on this thesis is withdrawn.
 ## Check 1. Final net NEAR buying
 
 **Locked rule:** over the 52 T3 weeks, buys are successful 1Click input USD into the defined NEAR/wNEAR assets from other assets; sells are input USD out of them. Exclude NEAR-to-NEAR swaps. Leave missing USD out and count it. Exclude buys to the three revenue wallets and sells whose senders include one. Divide final net buying by weekly-price issuance value. Pass at 20% or more. Asset definitions and exclusions are in `docs/position-rule.md` and addendum 1.
@@ -842,6 +867,28 @@ This table is reviewed and maintained by hand. Rebuild checks it against `data/p
 | position.concentration.withoutTopNetBuyers.10.coverage | -17.87% |
 | position.concentration.withoutTopNetBuyersAndSellers.3.coverage | 12.87% |
 | position.concentration.withoutTopNetBuyersAndSellers.10.coverage | 6.93% |
+| peers.pulledAt | 2026-11-10 01:28 UTC |
+| peers.withMarketCap | 83 |
+| peers.nearRank | 14 |
+| peers.skipped | 0 |
+| peers.above.name | Bitcoincash |
+| peers.above.rank | 13 |
+| peers.above.mcapCompact | 4.80B |
+| peers.above.revenueUsd | 0 |
+| peers.above.multiple | Not defined, zero revenue |
+| peers.near.name | Near |
+| peers.near.rank | 14 |
+| peers.near.mcapCompact | 4.78B |
+| peers.near.revenueUsd | 840,152 |
+| peers.near.multiple | 5,687× |
+| peers.below.name | Avalanche |
+| peers.below.rank | 15 |
+| peers.below.mcapCompact | 3.89B |
+| peers.below.revenueUsd | 2,780,434 |
+| peers.below.multiple | 1,398× |
+| peers.nearIntents.revenueUsd | 7,544,164 |
+| peers.nearWithIntents.revenueUsd | 8,384,316 |
+| peers.nearWithIntents.multiple | 570× |
 <!-- evidence:end -->
 
 T1 account counts are period means; `change` is relative change, except `changePp`, which is percentage points. T3 quantities are NEAR; `fields` and `fieldOffset` are comparisons only, not the burn definition. `atLeast10` and `atMost5` count weeks meeting the corresponding percentage threshold. T2 `rv` and `rp` are Pearson correlations of weekly percentage changes with usage changes `lag` weeks later; `advantage` is `rv − rp`; `ci` is its 90% paired moving-block bootstrap interval; `half1` and `half2` are the chronological halves of the pairs; `favours` applies every pass or fail condition at that lag. `t2.weeks` counts weeks in the test; `t2.volumeUnavailable` rows give in-test weeks whose volume is unavailable because some swaps lack USD values. `oneClick` rows compare the latest 13 complete weeks with the same 13 weeks a year earlier; they are descriptive, not a test.

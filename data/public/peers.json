@@ -1,0 +1,246 @@
+{
+  "rule": "docs/position-rule-addendum-3.md",
+  "window": {
+    "start": "2025-11-03",
+    "end": "2026-11-01"
+  },
+  "official": false,
+  "requests": [
+    {
+      "name": "config",
+      "url": "https://api.llama.fi/config",
+      "method": "GET",
+      "requestBody": null,
+      "retrievedAt": "2026-11-10T01:28:22.143Z",
+      "status": 200,
+      "sha256": "51b8f9c76ac37d58d602e28ef61fd7e6f0c2d61bc0f563549e6cd40febee1072"
+    },
+    {
+      "name": "intents",
+      "url": "https://api.llama.fi/summary/fees/near-intents?dataType=dailyHoldersRevenue",
+      "method": "GET",
+      "requestBody": null,
+      "retrievedAt": "2026-11-10T01:28:49.318Z",
+      "status": 200,
+      "sha256": "52f1bfeefd8d55690b289de408dcb2bfe941db03f94ef2117e6b943954aaa62b"
+    },
+    {
+      "name": "mcaps",
+      "url": "https://coins.llama.fi/mcaps",
+      "method": "POST",
+      "requestBody": {
+        "coins": [
+          "coingecko:bitcoin",
+          "coingecko:bitcoin-cash",
+          "coingecko:dogecoin",
+          "coingecko:injective-protocol",
+          "coingecko:flow",
+          "coingecko:avalanche-2",
+          "coingecko:polygon-ecosystem-token",
+          "coingecko:solana",
+          "coingecko:ethereum",
+          "coingecko:ronin",
+          "coingecko:cardano",
+          "coingecko:aelf",
+          "coingecko:aptos",
+          "coingecko:frax-share",
+          "coingecko:hedera-hashgraph",
+          "coingecko:movement",
+          "coingecko:near",
+          "coingecko:hash-2",
+          "coingecko:starknet",
+          "coingecko:stellar",
+          "coingecko:sui",
+          "coingecko:tezos",
+          "coingecko:the-open-network",
+          "coingecko:algorand",
+          "coingecko:dash",
+          "coingecko:ripple",
+          "coingecko:internet-computer",
+          "coingecko:zcash",
+          "coingecko:tron",
+          "coingecko:binancecoin",
+          "coingecko:sonic-3",
+          "coingecko:berachain-bera",
+          "coingecko:monad",
+          "coingecko:sei-network",
+          "coingecko:coredaoorg",
+          "coingecko:plasma",
+          "coingecko:astar",
+          "coingecko:celo",
+          "coingecko:energy-web-token",
+          "coingecko:filecoin",
+          "coingecko:somnia",
+          "coingecko:dexalot",
+          "coingecko:mantle",
+          "coingecko:polkadot",
+          "coingecko:peaq-2",
+          "coingecko:mythos",
+          "coingecko:moonbeam",
+          "coingecko:kusama",
+          "coingecko:darwinia-network-native-token",
+          "coingecko:bifrost",
+          "coingecko:crypto-com-chain",
+          "coingecko:hyperliquid",
+          "coingecko:kaia",
+          "coingecko:bitget-token",
+          "coingecko:akash-network",
+          "coingecko:xend-finance",
+          "coingecko:babylon",
+          "coingecko:bifrost-native-coin",
+          "coingecko:celestia",
+          "coingecko:chia",
+          "coingecko:cosmos",
+          "coingecko:fluence-2",
+          "coingecko:fuel-network",
+          "coingecko:g-token",
+          "coingecko:immutable-x",
+          "coingecko:iotex",
+          "coingecko:karura",
+          "coingecko:elrond-erd-2",
+          "coingecko:neutron-3",
+          "coingecko:osmosis",
+          "coingecko:pulsechain",
+          "coingecko:quai-network",
+          "coingecko:robonomics-network",
+          "coingecko:dream-machine-token",
+          "coingecko:seda-2",
+          "coingecko:skale",
+          "coingecko:blockstack",
+          "coingecko:thorchain",
+          "coingecko:tomochain",
+          "coingecko:vinuchain",
+          "coingecko:acala",
+          "coingecko:okb",
+          "coingecko:fantom",
+          "coingecko:xdce-crowd-sale",
+          "coingecko:monero",
+          "coingecko:coinex-token"
+        ]
+      },
+      "retrievedAt": "2026-11-10T01:28:46.388Z",
+      "status": 200,
+      "sha256": "d8163ee75a9774323a5e9bfec031b2b2934d4ea35005f9de540c76ea2ccd2e19"
+    },
+    {
+      "name": "overview",
+      "url": "https://api.llama.fi/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true&dataType=dailyRevenue",
+      "method": "GET",
+      "requestBody": null,
+      "retrievedAt": "2026-11-10T01:28:22.356Z",
+      "status": 200,
+      "sha256": "20bd5be487b51c7c736534c8bf3d7da2f9dd9b1becfe94b711db5aed7d04668b"
+    },
+    {
+      "name": "revenue-avalanche",
+      "url": "https://api.llama.fi/summary/fees/avalanche?dataType=dailyRevenue",
+      "method": "GET",
+      "requestBody": null,
+      "retrievedAt": "2026-11-10T01:28:48.683Z",
+      "status": 200,
+      "sha256": "c2aaead99d01b76e1a7b9c6b70bf9814310482f69de5377c0f5c8cb6208c7b8e"
+    },
+    {
+      "name": "revenue-bitcoincash",
+      "url": "https://api.llama.fi/summary/fees/bitcoincash?dataType=dailyRevenue",
+      "method": "GET",
+      "requestBody": null,
+      "retrievedAt": "2026-11-10T01:28:47.901Z",
+      "status": 200,
+      "sha256": "7d0d147b3ca34979c31a11c17a04261b22360f8021b9bdbe912a316ebe103544"
+    },
+    {
+      "name": "revenue-near",
+      "url": "https://api.llama.fi/summary/fees/near?dataType=dailyRevenue",
+      "method": "GET",
+      "requestBody": null,
+      "retrievedAt": "2026-11-10T01:28:47.234Z",
+      "status": 200,
+      "sha256": "c136510594e4f94dfd00b0ee6b7aff6e2dcdb68984f70c918eb28bb29fa3c5a4"
+    }
+  ],
+  "candidates": {
+    "chainEntries": 119,
+    "unmatchedChainEntries": [
+      "Berachain Incentive Buys"
+    ],
+    "nativeGasCandidates": 86,
+    "withMarketCap": 83,
+    "nearRank": 14
+  },
+  "neighbourhood": [
+    {
+      "name": "Stellar",
+      "rank": 12,
+      "mcapUsd": 5221417616.078321
+    },
+    {
+      "name": "Bitcoincash",
+      "rank": 13,
+      "mcapUsd": 4800314106.4007435
+    },
+    {
+      "name": "Near",
+      "rank": 14,
+      "mcapUsd": 4777773915.793183
+    },
+    {
+      "name": "Avalanche",
+      "rank": 15,
+      "mcapUsd": 3887997526.37701
+    },
+    {
+      "name": "Sui",
+      "rank": 16,
+      "mcapUsd": 3488528096.6936684
+    }
+  ],
+  "rows": [
+    {
+      "role": "nearest above",
+      "name": "Bitcoincash",
+      "displayName": "Bitcoincash",
+      "slug": "bitcoincash",
+      "geckoId": "bitcoin-cash",
+      "rank": 13,
+      "mcapUsd": 4800314106.4007435,
+      "mcapAt": "2026-11-10T01:28:03.000Z",
+      "yearlyRevenueUsd": 0,
+      "revenueDays": 364
+    },
+    {
+      "role": "NEAR",
+      "name": "Near",
+      "displayName": "Near",
+      "slug": "near",
+      "geckoId": "near",
+      "rank": 14,
+      "mcapUsd": 4777773915.793183,
+      "mcapAt": "2026-11-10T01:28:03.000Z",
+      "yearlyRevenueUsd": 840152,
+      "revenueDays": 364
+    },
+    {
+      "role": "nearest below",
+      "name": "Avalanche",
+      "displayName": "Avalanche",
+      "slug": "avalanche",
+      "geckoId": "avalanche-2",
+      "rank": 15,
+      "mcapUsd": 3887997526.37701,
+      "mcapAt": "2026-11-10T01:28:03.000Z",
+      "yearlyRevenueUsd": 2780434,
+      "revenueDays": 364
+    }
+  ],
+  "skipped": {
+    "above": [],
+    "below": []
+  },
+  "nearIntentsHoldersRevenue": {
+    "slug": "near-intents",
+    "dataType": "dailyHoldersRevenue",
+    "yearlyUsd": 7544164.05,
+    "days": 364
+  }
+}
