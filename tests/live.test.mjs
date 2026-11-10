@@ -186,7 +186,7 @@ test('live writer uses verified public baselines only, writes complete JSON atom
 test('real offline rebuild neither reads, creates nor deletes live.json', async () => {
   const root = await mkdtemp(join(tmpdir(), 'near-live-rebuild-'));
   try {
-    for (const path of ['scripts', 'sql', 'web', 'data/public', 'THESIS.md', 'package.json']) {
+    for (const path of ['scripts', 'sql', 'web', 'data/public', 'docs', 'THESIS.md', 'package.json']) {
       await cp(join(ROOT, path), join(root, path), { recursive: true });
     }
     const guard = join(root, 'no-network.cjs');

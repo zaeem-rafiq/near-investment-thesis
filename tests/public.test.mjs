@@ -69,7 +69,7 @@ test('public exporter checks raw hashes, refuses wallet fields and never reads p
 test('rebuild CLI works offline, preserves prose and rejects inconsistent signer splits and stale metrics', async () => {
   const root = await mkdtemp(join(tmpdir(), 'near-offline-test-'));
   try {
-    for (const path of ['scripts', 'sql', 'web', 'data/public', 'THESIS.md', 'package.json']) {
+    for (const path of ['scripts', 'sql', 'web', 'data/public', 'docs', 'THESIS.md', 'package.json']) {
       await cp(join(ROOT, path), join(root, path), { recursive: true });
     }
     const thesis = await readFile(join(root, 'THESIS.md'), 'utf8');
@@ -84,10 +84,11 @@ test('rebuild CLI works offline, preserves prose and rejects inconsistent signer
     assert.equal(await readFile(join(root, 'THESIS.md'), 'utf8'), thesis);
     const before = await fileHashes(join(root, 'dashboard'));
     const chartManifest = JSON.parse(await readFile(join(ROOT, 'dashboard/charts.json'), 'utf8'));
-    const generated = ['index.html', 'style.css', 'THESIS.md', 'thesis.html', 'NUMBERS.md', 'charts.json',
+    const generated = ['index.html', 'style.css', 'THESIS.md', 'thesis.html', 'VERIFY.md', 'NUMBERS.md', 'charts.json',
       ...chartManifest.files, 'model.mjs', 'model-inputs.js', 'favicon.svg'];
     const current = Object.fromEntries(await Promise.all(generated.map(async path => [path, hash(await readFile(join(ROOT, 'dashboard', path)))])));
     assert.deepEqual(before, current);
+    assert.equal(await readFile(join(root, 'dashboard/VERIFY.md'), 'utf8'), await readFile(join(root, 'docs/VERIFY.md'), 'utf8'));
     await rm(join(root, '.env'));
     result = build();
     assert.equal(result.status, 0, result.stdout + result.stderr);

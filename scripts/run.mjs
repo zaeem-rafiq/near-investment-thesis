@@ -84,6 +84,7 @@ async function main() {
   verifyThesis(thesis, analysis);
   await copyFile(resolve(ROOT, 'web/style.css'), resolve(ROOT, 'dashboard/style.css'));
   await copyFile(resolve(ROOT, 'web/favicon.svg'), resolve(ROOT, 'dashboard/favicon.svg'));
+  await copyFile(resolve(ROOT, 'docs/VERIFY.md'), resolve(ROOT, 'dashboard/VERIFY.md'));
   await atomic(resolve(ROOT, 'dashboard/THESIS.md'), thesis);
   await atomic(resolve(ROOT, 'dashboard/thesis.html'), thesisHTML(thesis));
   await writeModelAssets(write);

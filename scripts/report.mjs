@@ -655,9 +655,35 @@ export async function render(manifest, sources, write, root = ROOT) {
   const report = '# Generated evidence tables\n\n' + numberTables(a);
   const verdictRow = (id, label, r) => `<dt>${escape(id)}. ${escape(label)}</dt><dd><strong class="${VERDICT_CLASS[r.verdict]}">${escape(r.verdict)}</strong>${r.reasons.length ? `<p>${escape(r.reasons.join(' '))}</p>` : ''}</dd>`;
   const values = metricValues(a);
-  const passed = [a.t1, a.t2, a.t3].filter(r => r.verdict === 'PASS').length;
-  const headline = passed ? `${passed} of three claims passed.` : 'Not on this evidence. None of three claims passed.';
-  const millions = n => n == null ? 'Unavailable' : fmt(n / 1e6, 1);
+  const position = a.position;
+  values['presentation.publicDate'] = 'November 1, 2026';
+  const dataStatus = result => result ? (result.pass ? 'Pass' : 'Fail') : 'Unavailable';
+  const checkCard = ({ id, title, value, description, result, valueNow, max, threshold, passLine = false }) => {
+    const status = dataStatus(result);
+    return `<article class="check-card"><div class="check-card-head"><h2>${escape(title)}</h2><span class="status status-${status.toLowerCase()}" data-status="${status}">${status}</span></div>
+      <p class="check-value"><strong data-metric="${id}">${escape(value)}</strong><span>${escape(description)}</span></p>
+      <div class="measurebar${passLine ? ' measurebar--pass' : ' measurebar--growth'}"><meter min="0" max="${max}" value="${valueNow ?? 0}" aria-label="${escape(title)} measure"></meter><span class="threshold" aria-hidden="true"></span></div>
+      <p class="measure-caption"><span data-metric="${passLine ? 'position.rules.passBar' : 'position.rules.signedGrowthBar'}">${escape(threshold)} pass bar</span></p>
+      ${id === 'position.check1.coverage' ? `<p class="check-note">Without three accounts: <strong data-metric="position.concentration.withoutTopNetBuyers.3.coverage">${escape(values['position.concentration.withoutTopNetBuyers.3.coverage'] || 'Unavailable')}</strong></p>` : ''}</article>`;
+  };
+  const checkCards = position ? `<div class="check-cards">
+      ${checkCard({ id: 'position.check1.coverage', title: "Net buying on 1Click, NEAR's swap service", value: values['position.check1.coverage'],
+        description: 'of value of new NEAR', result: position.results.check1, valueNow: position.results.check1.final.shareOfIssuanceValue * 100,
+        max: 100, threshold: '20%', passLine: true })}
+      ${checkCard({ id: 'position.check2.coveragePercent', title: 'Burn plus buybacks', value: values['position.check2.coveragePercent'],
+        description: 'of new NEAR', result: position.results.check2, valueNow: position.results.check2.coverage * 100,
+        max: 100, threshold: '20%', passLine: true })}
+      ${checkCard({ id: 'position.check3.signedGrowth', title: 'Usage outside the ten biggest apps', value: values['position.check3.signedGrowth'],
+        description: 'in a year', result: position.results.check3, valueNow: Math.max(0, position.results.check3.growth * 100),
+        max: 20, threshold: '+20%' })}</div>` : '<p class="unavailable-note">Position evidence unavailable. No position verdict or check results are shown.</p>';
+  const concentrationChart = position ? `<section id="concentration" class="concentration-chart" aria-labelledby="concentration-title"><h2 id="concentration-title">How much net buying remains?</h2>
+      <p>Share of issuance value covered by observed net buying. The <span data-metric="position.rules.passBar">${escape(values['position.rules.passBar'])}</span> line is the locked pass bar. Removing accounts is a descriptive cut, not a revised test.</p>
+      <div class="concentration-list">
+        <div class="concentration-row"><span>All accounts</span><div><div class="measurebar measurebar--pass"><meter min="0" max="100" value="${position.results.check1.final.shareOfIssuanceValue * 100}" aria-label="All accounts net-buying coverage"></meter><span class="threshold" aria-hidden="true"></span></div><strong data-metric="position.check1.coverage">${escape(values['position.check1.coverage'])}</strong></div></div>
+        <div class="concentration-row"><span>Top buyer removed</span><div><div class="measurebar measurebar--pass"><meter min="0" max="100" value="${position.results.descriptive.concentration.withoutTopNetBuyers['1'].share * 100}" aria-label="Coverage after removing the top buyer"></meter><span class="threshold" aria-hidden="true"></span></div><strong data-metric="position.concentration.withoutTopNetBuyers.1.coverage">${escape(values['position.concentration.withoutTopNetBuyers.1.coverage'])}</strong></div></div>
+        <div class="concentration-row"><span>Top <span data-metric="position.topBuyerCount">${escape(values['position.topBuyerCount'])}</span> removed</span><div><div class="measurebar measurebar--pass"><meter min="0" max="100" value="${position.results.descriptive.concentration.withoutTopNetBuyers['3'].share * 100}" aria-label="Coverage after removing the top three buyers"></meter><span class="threshold" aria-hidden="true"></span></div><strong data-metric="position.concentration.withoutTopNetBuyers.3.coverage">${escape(values['position.concentration.withoutTopNetBuyers.3.coverage'])}</strong></div></div>
+      </div><p class="source">The first three accounts supplied <span data-metric="position.top3Share">${escape(values['position.top3Share'])}</span> of net buying in the passing check. Concentration is measured after the fact.</p></section>` :
+      '<section id="concentration" class="concentration-chart"><h2>Net-buying concentration</h2><p>Position evidence unavailable.</p></section>';
   const lagTable = a.t2.lags.length ? `<div class="table-wrap" tabindex="0"><table><caption>T2 correlations by lag (weekly % changes, from ${escape(a.t2.start)})</caption><thead><tr><th>Lag</th><th>Pairs</th><th>correlation with volume</th><th>correlation with price</th><th>Advantage</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${a.t2.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td><td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
   const sens = a.t2sens;
   const sensTable = sens?.lags.length ? `<div class="table-wrap" tabindex="0"><table><caption>Sensitivity check, not official: T2 method from ${escape(sens.start)}, added after the official result was seen. It does not change the official T2 result, which stays ${escape(a.t2.verdict)}. Same lines on this window would give ${escape(sens.verdict)} (not official).</caption><thead><tr><th>Lag</th><th>Pairs</th><th>correlation with volume</th><th>correlation with price</th><th>Advantage</th><th>First half (correlation with volume / correlation with price)</th><th>Second half (correlation with volume / correlation with price)</th><th>90% interval</th><th>Favours</th></tr></thead><tbody>${sens.lags.map(l => `<tr><td>${l.lag}</td><td>${l.pairs}</td><td>${fmt(l.rv, 3)}</td><td>${fmt(l.rp, 3)}</td><td>${fmt(l.advantage, 3)}</td>${l.halves.map(h => `<td>${fmt(h.rv, 3)} / ${fmt(h.rp, 3)}</td>`).join('')}<td>${l.ci ? `${fmt(l.ci.low, 3)} to ${fmt(l.ci.high, 3)}` : 'Unavailable'}</td><td>${l.volumeWins ? 'volume' : l.priceWins ? 'price' : 'neither'}</td></tr>`).join('')}</tbody></table></div>` : '';
@@ -665,19 +691,17 @@ export async function render(manifest, sources, write, root = ROOT) {
   await write('NUMBERS.md', report);
   await write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="${CSP}">
-    <title>NEAR / Evidence ledger</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
+    <title>NEAR investment thesis · public data through November 1, 2026</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to evidence</a>
-    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a><a href="thesis.html">Read thesis</a></nav>
+    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="model.html">Model</a><a href="thesis.html">Thesis</a><a href="VERIFY.md">Verify</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a></nav>
     <main id="main"><header class="first-screen">
-    <h1>Does on-chain evidence support a long-term case for NEAR?</h1>
-    <p class="answer">${escape(headline)}</p>
-    <div class="headline-metrics">
-      <div><strong data-metric="signers-change">${escape(values['t1.signers.change'])}</strong><p>Mean daily signing accounts, year over year.</p><p class="source">Signers = accounts that signed a transaction, not people.</p></div>
-      <div><strong data-metric="burn-offset">${escape(values['t3.offset'])}</strong><p>Fee burn offset of new supply.</p><p class="source">~${millions(a.t3.totals?.burnt)} million NEAR burned vs ${millions(a.t3.totals?.issued)} million issued.<br>Burn = NEAR destroyed as fees.</p></div>
-    </div>
-    <a class="evidence-button" href="#signers">See the evidence</a>
-    <p class="rebuild-note">Every chart rebuilds from public data with one command.</p>
+    <p class="edition">NEAR investment thesis · public data through <time datetime="2026-11-01" data-metric="presentation.publicDate">${escape(values['presentation.publicDate'])}</time></p>
+    <h1>Does public data support holding NEAR through <span data-metric="position.holdHorizon">${escape(values['position.holdHorizon'] || '2031')}</span>?</h1>
+    ${position ? `<p class="answer">Not yet.</p><p class="summary-line"><span data-metric="position.call.passingWords">${escape(values['position.call.passingWords'])}</span> of <span data-metric="position.call.totalWords">${escape(values['position.call.totalWords'])}</span> locked tests passed, and <span data-metric="position.topBuyerCountWords">${escape(values['position.topBuyerCountWords'])}</span> accounts made up <span data-metric="position.top3Share">${escape(values['position.top3Share'])}</span> of that pass.</p>${checkCards}` : checkCards}
+    <div class="first-actions"><a class="evidence-button" href="model.html">Test the issuance cut</a><a href="thesis.html">Read the thesis</a><a href="VERIFY.md">How to verify</a></div>
+    <p class="advice-note">General research opinion, not personal advice.</p>
     </header><!-- first-screen:end -->
+    ${concentrationChart}
     <section class="plain-claims"><h2>Three claims, three results</h2><p>1Click is the NEAR Intents swap service; this sample is not all Intents activity.</p>
     <ul><li><span>More accounts are using NEAR, across more apps.</span><strong>${escape(a.t1.verdict)}</strong></li>
     <li><span>1Click swap volume leads account activity better than NEAR’s price does.</span><strong>${escape(a.t2.verdict)}</strong></li>

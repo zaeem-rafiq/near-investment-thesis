@@ -1,18 +1,37 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
-    <title>NEAR / Evidence ledger</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
+    <title>NEAR investment thesis · public data through November 1, 2026</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to evidence</a>
-    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a><a href="thesis.html">Read thesis</a></nav>
+    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="model.html">Model</a><a href="thesis.html">Thesis</a><a href="VERIFY.md">Verify</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a></nav>
     <main id="main"><header class="first-screen">
-    <h1>Does on-chain evidence support a long-term case for NEAR?</h1>
-    <p class="answer">Not on this evidence. None of three claims passed.</p>
-    <div class="headline-metrics">
-      <div><strong data-metric="signers-change">-73.1%</strong><p>Mean daily signing accounts, year over year.</p><p class="source">Signers = accounts that signed a transaction, not people.</p></div>
-      <div><strong data-metric="burn-offset">1.56%</strong><p>Fee burn offset of new supply.</p><p class="source">~0.5 million NEAR burned vs 32.1 million issued.<br>Burn = NEAR destroyed as fees.</p></div>
-    </div>
-    <a class="evidence-button" href="#signers">See the evidence</a>
-    <p class="rebuild-note">Every chart rebuilds from public data with one command.</p>
+    <p class="edition">NEAR investment thesis · public data through <time datetime="2026-11-01" data-metric="presentation.publicDate">November 1, 2026</time></p>
+    <h1>Does public data support holding NEAR through <span data-metric="position.holdHorizon">2031</span>?</h1>
+    <p class="answer">Not yet.</p><p class="summary-line"><span data-metric="position.call.passingWords">One</span> of <span data-metric="position.call.totalWords">three</span> locked tests passed, and <span data-metric="position.topBuyerCountWords">three</span> accounts made up <span data-metric="position.top3Share">96.6%</span> of that pass.</p><div class="check-cards">
+      <article class="check-card"><div class="check-card-head"><h2>Net buying on 1Click, NEAR&#39;s swap service</h2><span class="status status-pass" data-status="Pass">Pass</span></div>
+      <p class="check-value"><strong data-metric="position.check1.coverage">77.75%</strong><span>of value of new NEAR</span></p>
+      <div class="measurebar measurebar--pass"><meter min="0" max="100" value="77.74919091723062" aria-label="Net buying on 1Click, NEAR&#39;s swap service measure"></meter><span class="threshold" aria-hidden="true"></span></div>
+      <p class="measure-caption"><span data-metric="position.rules.passBar">20% pass bar</span></p>
+      <p class="check-note">Without three accounts: <strong data-metric="position.concentration.withoutTopNetBuyers.3.coverage">2.66%</strong></p></article>
+      <article class="check-card"><div class="check-card-head"><h2>Burn plus buybacks</h2><span class="status status-fail" data-status="Fail">Fail</span></div>
+      <p class="check-value"><strong data-metric="position.check2.coveragePercent">15.08%</strong><span>of new NEAR</span></p>
+      <div class="measurebar measurebar--pass"><meter min="0" max="100" value="15.077412545696273" aria-label="Burn plus buybacks measure"></meter><span class="threshold" aria-hidden="true"></span></div>
+      <p class="measure-caption"><span data-metric="position.rules.passBar">20% pass bar</span></p>
+      </article>
+      <article class="check-card"><div class="check-card-head"><h2>Usage outside the ten biggest apps</h2><span class="status status-fail" data-status="Fail">Fail</span></div>
+      <p class="check-value"><strong data-metric="position.check3.signedGrowth">+14.58%</strong><span>in a year</span></p>
+      <div class="measurebar measurebar--growth"><meter min="0" max="20" value="14.578239155119753" aria-label="Usage outside the ten biggest apps measure"></meter><span class="threshold" aria-hidden="true"></span></div>
+      <p class="measure-caption"><span data-metric="position.rules.signedGrowthBar">+20% pass bar</span></p>
+      </article></div>
+    <div class="first-actions"><a class="evidence-button" href="model.html">Test the issuance cut</a><a href="thesis.html">Read the thesis</a><a href="VERIFY.md">How to verify</a></div>
+    <p class="advice-note">General research opinion, not personal advice.</p>
     </header><!-- first-screen:end -->
+    <section id="concentration" class="concentration-chart" aria-labelledby="concentration-title"><h2 id="concentration-title">How much net buying remains?</h2>
+      <p>Share of issuance value covered by observed net buying. The <span data-metric="position.rules.passBar">20%</span> line is the locked pass bar. Removing accounts is a descriptive cut, not a revised test.</p>
+      <div class="concentration-list">
+        <div class="concentration-row"><span>All accounts</span><div><div class="measurebar measurebar--pass"><meter min="0" max="100" value="77.74919091723062" aria-label="All accounts net-buying coverage"></meter><span class="threshold" aria-hidden="true"></span></div><strong data-metric="position.check1.coverage">77.75%</strong></div></div>
+        <div class="concentration-row"><span>Top buyer removed</span><div><div class="measurebar measurebar--pass"><meter min="0" max="100" value="37.12584205439394" aria-label="Coverage after removing the top buyer"></meter><span class="threshold" aria-hidden="true"></span></div><strong data-metric="position.concentration.withoutTopNetBuyers.1.coverage">37.13%</strong></div></div>
+        <div class="concentration-row"><span>Top <span data-metric="position.topBuyerCount">3</span> removed</span><div><div class="measurebar measurebar--pass"><meter min="0" max="100" value="2.6555260910642215" aria-label="Coverage after removing the top three buyers"></meter><span class="threshold" aria-hidden="true"></span></div><strong data-metric="position.concentration.withoutTopNetBuyers.3.coverage">2.66%</strong></div></div>
+      </div><p class="source">The first three accounts supplied <span data-metric="position.top3Share">96.6%</span> of net buying in the passing check. Concentration is measured after the fact.</p></section>
     <section class="plain-claims"><h2>Three claims, three results</h2><p>1Click is the NEAR Intents swap service; this sample is not all Intents activity.</p>
     <ul><li><span>More accounts are using NEAR, across more apps.</span><strong>FAIL</strong></li>
     <li><span>1Click swap volume leads account activity better than NEAR’s price does.</span><strong>CAN&#39;T TELL</strong></li>

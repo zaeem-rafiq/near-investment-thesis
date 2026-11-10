@@ -310,13 +310,49 @@ test('first-screen numbers match the published public-snapshot metrics', async (
   const files = new Map(), a = analyse(sources), v = metricValues(a);
   await render(manifest, sources, async (n, body) => files.set(n, body));
   const first = files.get('index.html').split('<!-- first-screen:end -->')[0];
-  assert.match(first, /Does on-chain evidence support a long-term case for NEAR\?/);
-  assert.match(first, /Not on this evidence\. None of three claims passed\./);
-  assert.ok(first.includes(`data-metric="signers-change">${v['t1.signers.change']}</strong>`));
-  assert.ok(first.includes(`data-metric="burn-offset">${v['t3.offset']}</strong>`));
-  assert.ok(first.includes(`${(a.t3.totals.burnt / 1e6).toFixed(1)} million NEAR burned`));
-  assert.ok(first.includes(`${(a.t3.totals.issued / 1e6).toFixed(1)} million issued`));
-  assert.match(first, /href="#signers">See the evidence<\/a>\s*<p class="rebuild-note">Every chart rebuilds from public data with one command\.<\/p>/);
+  assert.match(first, /NEAR investment thesis · public data through November 1, 2026/);
+  assert.match(first.replace(/<[^>]+>/g, ''), /Does public data support holding NEAR through 2031\?/);
+  assert.match(first, /class="answer">Not yet\./);
+  assert.ok(first.includes(`data-metric="position.call.passingWords">${v['position.call.passingWords']}</span>`));
+  assert.ok(first.includes(`data-metric="position.topBuyerCountWords">${v['position.topBuyerCountWords']}</span>`));
+  assert.ok(first.includes(`data-metric="position.top3Share">${v['position.top3Share']}</span>`));
+  assert.ok(first.includes(`data-metric="position.check1.coverage">${v['position.check1.coverage']}</strong>`));
+  assert.ok(first.includes(`data-metric="position.check2.coveragePercent">${v['position.check2.coveragePercent']}</strong>`));
+  assert.ok(first.includes(`data-metric="position.check3.signedGrowth">${v['position.check3.signedGrowth']}</strong>`));
+  assert.match(first.replaceAll('&#39;', "'"), /Net buying on 1Click, NEAR's swap service/);
+  assert.match(first, /Burn plus buybacks/);
+  assert.match(first, /Usage outside the ten biggest apps/);
+  assert.match(first, /data-status="Pass"/);
+  assert.equal((first.match(/data-status="Fail"/g) || []).length, 2);
+  assert.match(first, /data-metric="position.rules.passBar">20%/);
+  assert.match(first, /data-metric="position.rules.signedGrowthBar">\+20%/);
+  assert.match(first, /href="model.html">Test the issuance cut<\/a>/);
+  assert.match(first, /href="thesis.html">Read the thesis<\/a>/);
+  assert.match(first, /href="VERIFY.md">How to verify<\/a>/);
+  assert.match(first, /General research opinion, not personal advice\./);
+});
+test('concentration chart immediately follows the first screen and detailed T2/status remain below', async () => {
+  const { manifest, sources } = await loadSources(), files = new Map();
+  await render(manifest, sources, async (n, body) => files.set(n, body));
+  const html = files.get('index.html');
+  const [, after] = html.split('<!-- first-screen:end -->');
+  const chart = after.indexOf('id="concentration"');
+  assert.ok(chart >= 0 && chart < after.indexOf('class="hypotheses"'));
+  const chartHtml = after.slice(chart, after.indexOf('</section>', chart));
+  const chartText = chartHtml.replace(/<[^>]+>/g, '');
+  for (const label of ['All accounts', 'Top buyer removed', 'Top 3 removed']) assert.ok(chartText.includes(label));
+  assert.match(chartHtml, /data-metric="position\.concentration\.withoutTopNetBuyers\.1\.coverage"/);
+  assert.match(chartHtml, /data-metric="position\.concentration\.withoutTopNetBuyers\.3\.coverage"/);
+  assert.match(after, /id="status"/);
+  assert.match(after, /correlations by lag/);
+  assert.match(html, /<a href="model\.html">Model<\/a>/);
+});
+test('missing position evidence never fabricates an investment call or check cards', async () => {
+  const files = new Map();
+  await render({ id: 'test-only', fetchedAt: null, sources: {} }, {}, async (n, body) => files.set(n, body));
+  const first = files.get('index.html').split('<!-- first-screen:end -->')[0];
+  assert.match(first, /Position evidence unavailable/);
+  assert.doesNotMatch(first, /class="answer">Not yet|data-status="Pass"|data-status="Fail"/);
 });
 test('first screen uses plain labels and keeps technical results below it', async () => {
   const { manifest, sources } = await loadSources(), files = new Map();
@@ -332,6 +368,8 @@ test('first screen uses plain labels and keeps technical results below it', asyn
   assert.match(css, /\.hypotheses \.table-wrap \{ max-height: none; \}/, 'result tables must not clip behind an inner scrollbar');
   assert.match(css, /^\.table-wrap \{[^}]*max-height: 400px/m, 'long values tables keep their height limit');
   assert.doesNotMatch(css, /\.first-screen \{[^}]*min-height/, 'first screen must not force empty height');
+  assert.match(css, /nav a\[href="#signers"\], nav a\[href="#swaps"\], nav a\[href="#burn"\] \{ display: none; \}/,
+    'mobile navigation keeps only the primary destinations visible');
 });
 test('the sensitivity check leaves the official T2 verdict, start rule and every published number unchanged', async () => {
   const { sources } = await loadSources();
