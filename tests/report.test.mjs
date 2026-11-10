@@ -313,7 +313,7 @@ test('committee view covers round-three actions, valuation, bull gates and revie
     'First we tested T1–T3; none passed.', 'before computing them, and time-stamped the rules',
     '**Rating: hold, do not buy, through 2031.** "Not yet" is the rule\'s label for this call, as addenda 2 and 3 define it.',
     '- New money: does not support buying now.',
-    '- Staked holder: does not say to sell; yields 4.97% and 5.52%, before validator commission and tax, are above gross issuance 2.51%.',
+    '- Staked holder: does not say to sell; yields 4.97% and 5.52% (two estimates, because the on-chain `protocol_reward_rate` and the HSP-029 post disagree on the treasury share), before validator commission and tax, are above gross issuance 2.51%.',
     '- Unstaked holder: does not say to sell, but unstaked holding lost 2.41% of its supply share over the year.',
     '| 1 | Net 1Click buying of NEAR as a share of new NEAR\'s value, 52 weeks | ≥20% | 77.75% | Pass |',
     '| 2 | Burn plus outside receipts to the three revenue wallets as a share of new NEAR, 36 weeks | ≥20% | 15.08% | Fail |',

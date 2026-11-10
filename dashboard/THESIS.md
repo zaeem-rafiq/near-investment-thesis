@@ -5,7 +5,7 @@ First we tested T1–T3; none passed. Then we wrote three position checks and th
 **Rating: hold, do not buy, through 2031.** "Not yet" is the rule's label for this call, as addenda 2 and 3 define it.
 
 - New money: does not support buying now.
-- Staked holder: does not say to sell; yields <!-- metric:position.stakingConflict.postYield -->4.97%<!-- /metric --> and <!-- metric:position.holderLedger.staking.grossYield -->5.52%<!-- /metric -->, before validator commission and tax, are above gross issuance <!-- metric:position.holderLedger.issued.shareOfOpeningSupply -->2.51%<!-- /metric -->.
+- Staked holder: does not say to sell; yields <!-- metric:position.stakingConflict.postYield -->4.97%<!-- /metric --> and <!-- metric:position.holderLedger.staking.grossYield -->5.52%<!-- /metric --> (two estimates, because the on-chain `protocol_reward_rate` and the HSP-029 post disagree on the treasury share), before validator commission and tax, are above gross issuance <!-- metric:position.holderLedger.issued.shareOfOpeningSupply -->2.51%<!-- /metric -->.
 - Unstaked holder: does not say to sell, but unstaked holding lost <!-- metric:position.holderLedger.nonStakerLossOfShare -->2.41%<!-- /metric --> of its supply share over the year.
 
 ## Call and position
