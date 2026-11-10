@@ -313,6 +313,9 @@ test('first-screen numbers match the published public-snapshot metrics', async (
   assert.match(first, /NEAR investment thesis · public data through November 1, 2026/);
   assert.match(first.replace(/<[^>]+>/g, ''), /Does public data support holding NEAR through 2031\?/);
   assert.match(first, /class="answer">Not yet\./);
+  assert.equal((first.match(/<meter min="0" max="100"/g) || []).length, 3);
+  assert.equal((first.match(/class="measurebar measurebar--pass"/g) || []).length, 3);
+  assert.match(first, /of the value of new NEAR/);
   assert.ok(first.includes(`data-metric="position.call.passingWords">${v['position.call.passingWords']}</span>`));
   assert.ok(first.includes(`data-metric="position.topBuyerCountWords">${v['position.topBuyerCountWords']}</span>`));
   assert.ok(first.includes(`data-metric="position.top3Share">${v['position.top3Share']}</span>`));
@@ -345,6 +348,10 @@ test('concentration chart immediately follows the first screen and detailed T2/s
   assert.match(chartHtml, /data-metric="position\.concentration\.withoutTopNetBuyers\.3\.coverage"/);
   assert.match(after, /id="status"/);
   assert.match(after, /correlations by lag/);
+  assert.match(after, /The original three claims, separate from the call above/);
+  assert.match(after, /These are the T1 to T3 tests/);
+  assert.match(after, /Checks 1–3 were written later, as disclosed in the thesis/);
+  assert.doesNotMatch(after, /Investment pass\/fail rules were fixed/);
   assert.match(html, /<a href="model\.html">Model<\/a>/);
 });
 test('missing position evidence never fabricates an investment call or check cards', async () => {
@@ -365,6 +372,9 @@ test('first screen uses plain labels and keeps technical results below it', asyn
   assert.doesNotMatch(rest, />r volume<|>r price</);
   assert.ok(!rest.includes('<div class="table-wrap">'), 'wide result tables must be keyboard-focusable');
   const css = await readFile(join(ROOT, 'web/style.css'), 'utf8');
+  assert.match(css, /\.answer \{ font-size: 56px/);
+  assert.match(css, /\.first-screen h1 \{[^}]*font-size: clamp\(24px, 3vw, 28px\)/);
+  assert.match(css, /\.answer \{ font-size: 48px/);
   assert.match(css, /\.hypotheses \.table-wrap \{ max-height: none; \}/, 'result tables must not clip behind an inner scrollbar');
   assert.match(css, /^\.table-wrap \{[^}]*max-height: 400px/m, 'long values tables keep their height limit');
   assert.doesNotMatch(css, /\.first-screen \{[^}]*min-height/, 'first screen must not force empty height');
