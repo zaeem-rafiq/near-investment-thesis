@@ -314,7 +314,9 @@ test('committee view covers round-three actions, valuation, bull gates and revie
     previous = at;
   }
   for (const phrase of [
-    'First we tested T1–T3; none passed.', 'before computing them, and time-stamped the rules',
+    'First we tested T1–T3; none passed.',
+    'Limit: Check 1 counts 1Click swaps only, not trading on exchanges or other venues, so it does not measure total demand for NEAR.',
+    'No locked check tests whether this price is fair.', 'before computing them, and time-stamped the rules',
     '**Rating: hold, do not buy, through 2031.** "Not yet" is the rule\'s label for this call, as addenda 2 and 3 define it.',
     '- New money: does not support buying now.',
     '- Staked holder: does not say to sell; yields 4.97% and 5.52% (two estimates, because the on-chain `protocol_reward_rate` and the HSP-029 post disagree on the treasury share), before validator commission and tax, are above gross issuance 2.51%.',
