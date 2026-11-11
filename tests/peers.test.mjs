@@ -64,3 +64,23 @@ test('saved peer table is unofficial, pinned and changes no position result', as
   const results = JSON.parse(await readFile(join(ROOT, 'data/public/position-results.json'), 'utf8'));
   assert.equal(JSON.stringify(results).includes('peers'), false);
 });
+
+test('a failed DefiLlama response is never cached, and remote names cannot leave the peer folder', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'peers-fail-'));
+  try {
+    const failing = async () => ({ ok: false, status: 503, text: async () => '{"error":"busy"}' });
+    await assert.rejects(pull('revenue-x', 'https://example.invalid/x', { root, request: failing }), /HTTP 503/);
+    await assert.rejects(readFile(join(root, PEER_RAW, 'revenue-x.json')), { code: 'ENOENT' });
+    let calls = 0;
+    const ok = async () => { calls++; return { ok: true, status: 200, text: async () => '{}' }; };
+    assert.equal((await pull('revenue-x', 'https://example.invalid/x', { root, request: ok })).status, 200);
+    assert.equal(calls, 1);
+    // A failure saved by an older version is refetched, not reused.
+    await writeFile(join(root, PEER_RAW, 'revenue-y.json'), JSON.stringify({ ...record('https://example.invalid/y', {}), status: 429 }));
+    assert.equal((await pull('revenue-y', 'https://example.invalid/y', { root, request: ok })).status, 200);
+    assert.equal(calls, 2);
+    await writeFile(join(root, PEER_RAW, 'revenue-z.json'), JSON.stringify({ ...record('https://example.invalid/z', {}), status: 500 }));
+    await assert.rejects(buildPeers(root), /revenue-z is a failed request/);
+    await assert.rejects(pull('revenue-/../../x', 'https://example.invalid/z', { root, request: ok }), /Invalid peer source name/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

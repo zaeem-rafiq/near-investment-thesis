@@ -66,6 +66,30 @@ test('public exporter checks raw hashes, refuses wallet fields and never reads p
     await assert.rejects(exportPublic(manifest, { root }), /Invalid raw/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+test('public exporter keeps manifest entries written by the other exporters', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'near-export-merge-'));
+  try {
+    await mkdir(join(root, 'data/raw'), { recursive: true });
+    await mkdir(join(root, 'data/public'), { recursive: true });
+    const other = { path: 'data/public/peers.json', sha256: 'a'.repeat(64) };
+    await writeFile(join(root, 'data/public/manifest.json'), JSON.stringify({ version: 1, id: 'old', files: {
+      peers: other, signers: { path: 'data/public/bigquery/signers.json', sha256: 'b'.repeat(64) } }, unavailable: {} }));
+    const path = 'data/raw/prices.json', body = JSON.stringify({ days: [{ date: '2025-03-01', close: 2 }] });
+    await writeFile(join(root, path), body);
+    const pub = await exportPublic({ id: 'new', sources: { prices: { status: 'ok', path, sha256: hash(body) } } }, { root });
+    const saved = JSON.parse(await readFile(join(root, 'data/public/manifest.json'), 'utf8'));
+    assert.deepEqual(saved.files, pub.files);
+    assert.deepEqual(pub.files.peers, other);
+    assert.ok(pub.files.prices);
+    // A source this exporter owns and could not export this run is unavailable, not left pointing at old data.
+    assert.equal(pub.files.signers, undefined);
+    assert.ok(pub.unavailable.signers);
+    for (const bad of ['', 'null', '{"files":"abc"}']) {
+      await writeFile(join(root, 'data/public/manifest.json'), bad);
+      await assert.rejects(exportPublic({ id: 'new', sources: {} }, { root }), /malformed|JSON/);
+    }
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
 test('rebuild CLI works offline, preserves prose and rejects inconsistent signer splits and stale metrics', async () => {
   const root = await mkdtemp(join(tmpdir(), 'near-offline-test-'));
   try {

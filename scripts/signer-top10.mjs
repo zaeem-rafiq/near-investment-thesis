@@ -28,6 +28,8 @@ ORDER BY r.receiver_account_id, r.period_start`;
 
 // appEvidence maps only independently verified public app contracts to evidence.
 // Any unverified receiver is deliberately unnamed in the public output.
+// BigQuery sends numbers as strings; null, blank, booleans and arrays must not coerce to 0.
+const numeric = v => typeof v === 'number' || (typeof v === 'string' && v.trim() !== '');
 export function summarizeSignerTop10(rows, dayRows, appEvidence = new Map()) {
   if (rows.length !== 20) throw new Error('Expected exactly twenty receiver-period rows.');
   const accounts = new Map();
@@ -35,6 +37,7 @@ export function summarizeSignerTop10(rows, dayRows, appEvidence = new Map()) {
     const mean = Number(r.mean_daily_signers);
     if (r.grain !== 'receiver_period' || !PERIODS.includes(r.period_start)
       || typeof r.receiver_account_id !== 'string' || !r.receiver_account_id
+      || !numeric(r.mean_daily_signers)
       || !Number.isFinite(mean) || mean < 0) throw new Error('Invalid receiver-period row.');
     if (!accounts.has(r.receiver_account_id)) accounts.set(r.receiver_account_id, {});
     const pair = accounts.get(r.receiver_account_id);
@@ -53,7 +56,7 @@ export function summarizeSignerTop10(rows, dayRows, appEvidence = new Map()) {
   }));
   const days = new Map();
   for (const r of dayRows) {
-    if (r.grain !== 'day' || days.has(r.period_start) || !Number.isSafeInteger(Number(r.top10)) || Number(r.top10) < 0) {
+    if (r.grain !== 'day' || days.has(r.period_start) || !numeric(r.top10) || !Number.isSafeInteger(Number(r.top10)) || Number(r.top10) < 0) {
       throw new Error('Invalid or duplicate signer day.');
     }
     days.set(r.period_start, Number(r.top10));

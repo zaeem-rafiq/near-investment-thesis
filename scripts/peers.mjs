@@ -16,7 +16,11 @@ export const URLS = {
 };
 
 export async function saved(name, root = ROOT) {
-  try { return JSON.parse(await readFile(resolve(root, PEER_RAW, `${name}.json`), 'utf8')); } catch (e) { if (e.code === 'ENOENT') return null; throw e; }
+  if (!/^[A-Za-z0-9._-]+$/.test(name)) throw new Error('Invalid peer source name.');
+  let record;
+  try { record = JSON.parse(await readFile(resolve(root, PEER_RAW, `${name}.json`), 'utf8')); } catch (e) { if (e.code === 'ENOENT') return null; throw e; }
+  // A saved failure is not data; refetch it.
+  return record.status >= 200 && record.status < 300 ? record : null;
 }
 export async function pull(name, url, { body, root = ROOT, request = fetch } = {}) {
   const prior = await saved(name, root);
@@ -25,9 +29,9 @@ export async function pull(name, url, { body, root = ROOT, request = fetch } = {
     ...(body ? { headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) } : {}) });
   const text = await response.text();
   const record = { url, method: body ? 'POST' : 'GET', requestBody: body ?? null, retrievedAt: new Date().toISOString(), status: response.status, body: text };
+  if (!response.ok) throw new Error(`DefiLlama HTTP ${response.status} for ${name}.`);
   await mkdir(resolve(root, PEER_RAW), { recursive: true });
   await atomic(resolve(root, PEER_RAW, `${name}.json`), JSON.stringify(record) + '\n');
-  if (!response.ok) throw new Error(`DefiLlama HTTP ${response.status} for ${name}.`);
   return record;
 }
 
@@ -108,6 +112,7 @@ const PEER_PUBLIC = 'data/public/peers.json';
 export async function buildPeers(root = ROOT) {
   const names = (await readdir(resolve(root, PEER_RAW))).filter(n => n.endsWith('.json')).map(n => n.slice(0, -5)).sort();
   const records = Object.fromEntries(await Promise.all(names.map(async n => [n, await saved(n, root)])));
+  for (const n of names) if (!records[n]) throw new Error(`Saved peer response ${n} is a failed request; re-run the peer pull.`);
   const config = json(records.config), overview = json(records.overview), mcaps = json(records.mcaps);
   const c = candidates(config, overview), order = ranked(c.list, mcaps), at = order.findIndex(x => x.slug === 'near');
   const series = x => records[`revenue-${x.slug}`] ? windowSum(json(records[`revenue-${x.slug}`])) : null;

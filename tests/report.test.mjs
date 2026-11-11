@@ -5,7 +5,7 @@ import { gzipSync } from 'node:zlib';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { CAL, addDays, dayRange, weeksBetween, weekStart, parseSigners, parseContracts, parseCoverage, t1Test, t2Series, t2Test, t3Test,
-  pearson, bootstrapAdvantage, newSwapAggregate, addSwapRows, swapDays, weeklyFromDaily, parseSwapDays, loadSwapDir, gapBand, analyse, numberTables, verifyThesis, verifyPageMetrics, RATING_LINE, escape, thesisHTML, metricValues, t2SensitivitySeries, T2_SENSITIVITY_START, usdUnits, usdString, seriesSVG, render, loadSources } from '../scripts/report.mjs';
+  pearson, bootstrapAdvantage, newSwapAggregate, addSwapRows, swapDays, weeklyFromDaily, parseSwapDays, loadSwapDir, gapBand, analyse, numberTables, verifyThesis, verifyPageMetrics, RATING_LINE, escape, thesisHTML, metricValues, t2SensitivitySeries, T2_SENSITIVITY_START, usdUnits, usdString, seriesSVG, render, loadSources, parsePrices } from '../scripts/report.mjs';
 import { ROOT, hash, literalDateFilters } from '../scripts/sources.mjs';
 
 // Synthetic fixtures only; never research data.
@@ -31,6 +31,10 @@ test('T1 pass, fail and can\'t-tell follow the fixed thresholds', () => {
   assert.equal(run({ top10Latest: 0.46 }, [50, 65]).verdict, "CAN'T TELL");
   const short = parseContracts(contractRows().slice(1));
   assert.equal(t1Test(parseSigners(signerRows()), short, parseCoverage(coverageRows())).verdict, "CAN'T TELL");
+  // A gap in the latest period must not read as a 100% fall.
+  const latestGap = t1Test(parseSigners(signerRows()), parseContracts(contractRows().slice(0, -1)), parseCoverage(coverageRows()));
+  assert.equal(latestGap.verdict, "CAN'T TELL");
+  assert.equal(latestGap.measures.receivers.change, null);
   const truncated = coverageRows(); truncated[3].first_block_utc = truncated[3].block_date + 'T05:00:00Z';
   assert.equal(t1Test(parseSigners(signerRows()), parseContracts(contractRows()), parseCoverage(truncated)).verdict, "CAN'T TELL");
 });
@@ -549,4 +553,11 @@ test('sensitivity series starts at its fixed week with the official change metho
   for (const [j, r] of sens.rows.entries()) if (j > i) assert.equal(r.dv, series.rows[j].dv);
   assert.equal(t2Test(sens).changes, series.rows.length - i - 1);
   assert.equal(t2SensitivitySeries(t2Series(null, null, null)).start, null);
+});
+
+test('price files accept only finite positive numeric closes', () => {
+  assert.equal(parsePrices({ days: [{ date: '2026-11-01', close: 4.284 }] }).days.length, 1);
+  for (const close of ['5', true, Infinity, 0, -1, null]) {
+    assert.throws(() => parsePrices({ days: [{ date: '2026-11-01', close }] }), /Invalid or unordered price day/);
+  }
 });

@@ -246,7 +246,7 @@ export function t1Test(signers, contracts, coverage) {
   const top = start => { const p = signers.periods.get(start); return p && p.transactions ? p.top10 / p.transactions : null; };
   for (const [key, fn] of [['signers', dailySigners], ['receivers', sample], ['accounts2', monthly]]) {
     const previous = fn(CAL.t1.previous), latest = fn(CAL.t1.latest);
-    measures[key] = { previous, latest, change: previous ? latest / previous - 1 : null };
+    measures[key] = { previous, latest, change: previous && latest != null ? latest / previous - 1 : null };
   }
   const tp = top(CAL.t1.previous[0]), tl = top(CAL.t1.latest[0]);
   measures.top10 = { previous: tp, latest: tl, changePp: tp != null && tl != null ? (tl - tp) * 100 : null };
@@ -409,7 +409,7 @@ async function readPublic(root, entry, name) {
 export function parsePrices(p) {
   if (!Array.isArray(p.days)) throw new Error('Invalid price file.');
   p.days.forEach((d, i) => {
-    if (!validDay(d.date) || !(d.close > 0) || (i && d.date <= p.days[i - 1].date)) throw new Error('Invalid or unordered price day.');
+    if (!validDay(d.date) || typeof d.close !== 'number' || !Number.isFinite(d.close) || !(d.close > 0) || (i && d.date <= p.days[i - 1].date)) throw new Error('Invalid or unordered price day.');
   });
   return p;
 }
@@ -540,8 +540,9 @@ export function metricValues(a) {
         : field === 'change' ? pct(value) : field === 'changePp' ? `${fmt(value, 2)} pp` : fmt(value, 0);
     }
   }
-  values['presentation.signersDecline'] = share(Math.abs(a.t1.measures?.signers?.change), 1);
-  values['presentation.top10Decline'] = `${fmt(Math.abs(a.t1.measures?.top10?.changePp), 2)} pp`;
+  const size = v => v == null ? null : Math.abs(v);
+  values['presentation.signersDecline'] = share(size(a.t1.measures?.signers?.change), 1);
+  values['presentation.top10Decline'] = `${fmt(size(a.t1.measures?.top10?.changePp), 2)} pp`;
   values['t2.start'] = a.t2.start || 'none';
   values['t2.changes'] = String(a.t2.changes);
   const inTest = (a.series?.rows || []).filter(r => !r.excluded), sum = (rs, k) => rs.some(r => r[k] == null) ? null : rs.reduce((s, r) => s + r[k], 0);

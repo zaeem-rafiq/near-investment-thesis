@@ -37,3 +37,14 @@ test('collector refuses a full page without a cursor rather than silently trunca
     await assert.rejects(collectNearblocks({ root, now: () => 20000, pause: async () => {}, request: async () => ({ ok: true, text: async () => JSON.stringify({ txns: Array.from({ length: 100 }, (_, i) => ({ id: String(i), block_timestamp: String(i) })) }) }) }), /no new cursor/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+test('server errors without Retry-After back off exponentially', async () => {
+  const root = await mkdtemp(resolve(tmpdir(), 'nearblocks-backoff-'));
+  const waits = [];
+  try {
+    await assert.rejects(collectNearblocks({ root, now: () => 0, pause: async ms => { if (ms > 0) waits.push(ms); },
+      request: async () => ({ ok: false, status: 503, headers: new Headers() }) }), /HTTP 503/);
+    // Five retries wait 12.5 s, then double, capped at two minutes.
+    for (const ms of [25000, 50000, 100000, 120000]) assert.ok(waits.includes(ms), `missing ${ms} ms wait`);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

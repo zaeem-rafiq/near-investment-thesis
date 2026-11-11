@@ -10,7 +10,12 @@ export const PACE_MS = 5200;
 const FIELDS = ['depositAddress', 'depositMemo', 'createdAt', 'status', 'originAsset', 'destinationAsset', 'amountInUsd'];
 const PARTICIPANT_FIELDS = ['recipient', 'senders', 'refundTo', 'referral', 'appFees'];
 
-export const swapDir = (window, root = ROOT) => resolve(root, 'data/raw/swaps', `${window.start}_${window.end}`);
+export const swapDir = (window, root = ROOT) => {
+  if (![window.start, window.end].every(d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d))) {
+    throw new Error('Swap window dates must be YYYY-MM-DD.');
+  }
+  return resolve(root, 'data/raw/swaps', `${window.start}_${window.end}`);
+};
 const pageName = n => `page-${String(n).padStart(6, '0')}.json.gz`;
 const swapKey = row => createHash('sha256').update(JSON.stringify([row.depositAddress, row.depositMemo ?? null, row.createdAt])).digest('base64').slice(0, 22);
 

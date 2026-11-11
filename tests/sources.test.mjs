@@ -58,4 +58,6 @@ test('prices come from daily candles in the window and reject malformed candles'
   assert.deepEqual(p.days, [{ date: '2026-01-01', close: 1.7 }, { date: '2026-01-02', close: 1.8 }]);
   assert.equal(urls[0].searchParams.get('granularity'), '86400');
   await assert.rejects(pullPrices({ start: '2026-01-01', end: '2026-01-03' }, async () => ({ ok: true, json: async () => [[1, 2]] }), async () => {}), /Invalid price/);
+  await assert.rejects(pullPrices({ start: '2026-01-01', end: '2026-01-03' },
+    async () => ({ ok: true, json: async () => [[1767225600, 1, 2, 1, '1.5', 9]] }), async () => {}), /Invalid price/);
 });

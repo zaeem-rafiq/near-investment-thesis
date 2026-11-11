@@ -21,6 +21,11 @@ test('top-ten extraction freezes the earlier ranking, reports overlap and hides 
     grain: 'day', period_start, top10: period_start < '2025-11-01' ? '10' : '5'
   }));
   const p = summarizeSignerTop10(rows, days, new Map([['users.kaiching', 'public app evidence']]));
+  // Null or empty values must be refused, not read as zero.
+  for (const bad of [null, '', ' ', false, []]) {
+    assert.throws(() => summarizeSignerTop10(rows.map((r, i) => i ? r : { ...r, mean_daily_signers: bad }), days), /Invalid receiver-period row/);
+    assert.throws(() => summarizeSignerTop10(rows, days.map((d, i) => i ? d : { ...d, top10: bad })), /Invalid or duplicate signer day/);
+  }
   assert.equal(p.receivers[0].receiver, 'unnamed account');
   assert.equal(p.receivers[9].receiver, 'users.kaiching');
   assert.equal(p.receivers[9].change, -5);

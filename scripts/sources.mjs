@@ -117,7 +117,7 @@ export async function pullPrices(window, fetcher = fetch, pause = sleep) {
     const rows = await jsonRequest(`${PRICE_SOURCE}?${p}`, { headers: { 'User-Agent': 'near-evidence-thesis' } }, fetcher);
     if (!Array.isArray(rows)) throw new Error('Price source schema changed: expected an array.');
     for (const r of rows) {
-      if (!Array.isArray(r) || r.length < 5 || !Number.isFinite(r[0]) || !(r[4] > 0)) throw new Error('Invalid price candle.');
+      if (!Array.isArray(r) || r.length < 5 || !Number.isFinite(r[0]) || typeof r[4] !== 'number' || !Number.isFinite(r[4]) || !(r[4] > 0)) throw new Error('Invalid price candle.');
       const day = new Date(r[0] * 1000).toISOString().slice(0, 10);
       if (day >= window.start && day < window.end) days.push({ date: day, close: r[4] });
     }

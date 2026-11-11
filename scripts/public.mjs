@@ -6,7 +6,18 @@ import { atomic } from './store.mjs';
 
 // Export is separate from rebuild: only this path may read private raw files.
 export async function exportPublic(manifest, { root = ROOT, swaps = false } = {}) {
-  const pub = { version: 1, id: manifest.id, fetchedAt: manifest.fetchedAt, files: {}, unavailable: {} };
+  // Other exporters (positions, peers, wallet controls, ...) register their own files here; keep those entries.
+  const owned = new Set([...Object.keys(QUERIES), 'prices', 'swaps']);
+  let previous = { files: {}, unavailable: {} };
+  try { previous = JSON.parse(await readFile(resolve(root, 'data/public/manifest.json'), 'utf8')); }
+  catch (e) { if (e.code !== 'ENOENT') throw e; }
+  const plain = v => v !== null && typeof v === 'object' && !Array.isArray(v);
+  if (!plain(previous) || !plain(previous.files) || !plain(previous.unavailable ?? {})) {
+    throw new Error('data/public/manifest.json is malformed; restore it from Git before exporting.');
+  }
+  const others = entries => Object.fromEntries(Object.entries(entries ?? {}).filter(([name]) => !owned.has(name)));
+  const pub = { version: 1, id: manifest.id, fetchedAt: manifest.fetchedAt,
+    files: others(previous.files), unavailable: others(previous.unavailable) };
   const save = async (name, data, path) => {
     assertNoWalletFields(data);
     const body = JSON.stringify(data, null, 2) + '\n';

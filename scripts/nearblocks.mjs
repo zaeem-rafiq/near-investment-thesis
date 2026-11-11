@@ -28,7 +28,7 @@ export async function collectNearblocks({ root = ROOT, request = fetch, pause = 
       if (!response.ok) {
         if ((response.status === 429 || response.status >= 500) && attempt < 5) {
           const retry = Number(response.headers?.get('retry-after'));
-          await pause(Math.max(12500, Math.min(120000, Number.isFinite(retry) ? retry * 1000 : 12500 * 2 ** attempt)));
+          await pause(Math.max(12500, Math.min(120000, Number.isFinite(retry) && retry > 0 ? retry * 1000 : 12500 * 2 ** attempt)));
           continue;
         }
         throw new Error(`NEARBlocks HTTP ${response.status}; private response omitted.`);

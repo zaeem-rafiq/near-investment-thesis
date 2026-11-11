@@ -4,7 +4,7 @@ import { mkdtemp, rm, readdir, writeFile } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { pullSwapsResumable, savedPages, readPage, PACE_MS } from '../scripts/swaps.mjs';
+import { pullSwapsResumable, savedPages, readPage, PACE_MS, swapDir } from '../scripts/swaps.mjs';
 
 // Synthetic protocol fixtures only.
 const window = { start: '2026-10-01', end: '2026-10-02' };
@@ -170,5 +170,12 @@ test('rows newer than the previous oldest and ascending pages fail continuity ch
       const rows = resume ? [swap('b')] : [swap('a', null, '2026-10-01T11:00:00Z'), swap('b')];
       await assert.rejects(pullSwapsResumable(window, 'test-only', { dir, request: async () => ok(rows) }), /continuity|order/i);
     } finally { await rm(dir, { recursive: true, force: true }); }
+  }
+});
+
+test('swap window dates must be plain dates before they name a folder', () => {
+  assert.match(swapDir({ start: '2026-10-01', end: '2026-10-02' }, '/r'), /data\/raw\/swaps\/2026-10-01_2026-10-02$/);
+  for (const bad of [{ start: '../../x', end: '2026-10-02' }, { start: '2026-10-01', end: undefined }]) {
+    assert.throws(() => swapDir(bad, '/r'), /YYYY-MM-DD/);
   }
 });
