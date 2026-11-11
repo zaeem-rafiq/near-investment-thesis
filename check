@@ -1,0 +1,37 @@
+#!/bin/bash
+# Runs every local check. Stops at the first failure. CI runs this same script.
+set -euo pipefail
+cd "$(dirname "$0")"
+
+# Scan history, staged edits, working edits and new files for secrets. Redact every value.
+gitleaks git -v --no-banner --redact --log-level warn .
+gitleaks git -v --pre-commit --staged --no-banner --redact --log-level warn .
+gitleaks git -v --pre-commit --no-banner --redact --log-level warn .
+git ls-files --others --exclude-standard -z | xargs -0 -r -n1 gitleaks dir -v --no-banner --redact --log-level warn --
+
+npm run check
+
+# npm test and the feature checker both read exactly tests/*.test.mjs; a test file anywhere else is invisible to both.
+stray=$(git ls-files --cached --others --exclude-standard | grep -E '\.test\.[cm]?js$' | grep -v -E '^tests/[^/]+\.test\.mjs$' || true)
+if [[ -n "$stray" ]]; then
+  echo "Test files outside tests/*.test.mjs are not run or mapped: $stray" >&2
+  exit 1
+fi
+
+# These two lines are also run alone by factory-gate, without shell expansion.
+scripts/check-features --self-test
+scripts/check-features --node-tests tests
+
+npm test
+
+# The rebuild is offline and deterministic, so the committed files must already match it.
+snapshot() { git ls-files -z --cached --others --exclude-standard | xargs -0 shasum -a 256 2>&1 || true; }
+before=$(snapshot)
+npm run rebuild
+after=$(snapshot)
+if [[ "$before" != "$after" ]]; then
+  diff <(echo "$before") <(echo "$after") >&2 || true
+  echo "npm run rebuild changed files. Commit the rebuilt files." >&2
+  exit 1
+fi
+echo "All checks passed."

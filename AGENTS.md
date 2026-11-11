@@ -2,7 +2,7 @@
 
 ## Project
 
-Node.js 22+, standard libraries only, no dependencies. Run `npm run check`, `npm test`, and `npm run rebuild` after changes. Rebuild reads `data/public/` offline and verifies, never rewrites, `THESIS.md`. Keep results, fixed rules, research data, SQL and thesis reasoning unchanged unless the owner explicitly approves a research change.
+Node.js 22+, standard libraries only, no dependencies. Run `./check` after changes: it runs the gitleaks secret scan, `npm run check`, the FEATURES.md checker (`scripts/check-features`, Python 3.9+ standard library), `npm test` and `npm run rebuild`, and fails if the rebuild changes `dashboard/`. Add or change a FEATURES.md row, with an end-to-end test in `tests/*.e2e.test.mjs`, in the same change as a user-visible feature. Rebuild reads `data/public/` offline and verifies, never rewrites, `THESIS.md`. Keep results, fixed rules, research data, SQL and thesis reasoning unchanged unless the owner explicitly approves a research change.
 
 Never print `.env` values, tokens or deposit addresses. Never commit secrets or raw swap pages. Leave `.agents/`, `skills-lock.json` and `dashboard/preview.png` untouched; they belong to another session. Treat other existing changes as user work.
 

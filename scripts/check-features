@@ -1,0 +1,523 @@
+#!/usr/bin/env python3
+"""Check FEATURES.md against the tests Node lists, never by reading a test file.
+
+Usage: scripts/check-features --self-test
+       scripts/check-features --node-tests tests
+
+Node runs the flat *.test.mjs files in the named folder from the nearest package.json
+folder, once, through node-test-reporter.mjs. *.e2e.test.mjs files are end-to-end: they
+drive the project's real commands and the pages they build. Skipped and todo tests prove
+nothing; ordinary failures still count as listed, because npm test reports those.
+Load failures and incomplete reports fail the listing. The runner has four minutes;
+a timeout or cancellation kills its process group.
+
+Proofs are backtick entries: `tests/file.e2e.test.mjs#group > title`.
+A unique bare title also works. Each row starts with an end-to-end proof.
+Every running end-to-end test needs a row, as does every end-to-end file.
+Adapted from TrainMatch's Node and Xcode checker, which takes its map parser and proof
+rules from the owner's standard checker. Standard library only; Python 3.9 or newer.
+"""
+import contextlib
+import functools
+import io
+import json
+import os
+import re
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+from pathlib import Path
+from typing import NamedTuple
+
+QUIET = {"NO_COLOR": "1", "FORCE_COLOR": "0"}
+RUNNER_TIMEOUT = 240  # seconds a runner may take to list; ./check must stay under about five minutes
+ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
+E2E_SUFFIX = ".e2e.test.mjs"
+
+
+class Test(NamedTuple):
+    file: str  # relative to the project root, with forward slashes
+    chain: tuple  # the groups around it, outermost first: describe blocks, classes
+    title: str
+    running: bool  # False when the runner reports it as skipped or expected to fail
+    e2e: bool  # tests in *.e2e.test.mjs files
+
+    @property
+    def full_name(self):
+        return " > ".join(self.chain + (self.title,))
+
+
+class RunnerError(Exception):
+    """A runner is missing, refused to list, or wrote something the checker cannot read."""
+
+
+# --- The feature map ---
+
+def cells_of(line):
+    return [c.strip() for c in line.strip().strip("|").split("|")]
+
+
+def is_separator(line):
+    """The |---|---| line under a table header: every cell has a dash, and nothing but
+    dashes, colons and spaces. A row of empty cells is a row, not a separator."""
+    stripped = line.strip()
+    return stripped.startswith("|") and all("-" in c and set(c) <= set("-: ") for c in cells_of(stripped))
+
+
+def looks_like_row(stripped):
+    """A line written as a row without a leading pipe: it has a pipe outside backticks.
+    Prose that mentions a pipe in backticks is not a row."""
+    return "|" in re.sub(r"`[^`]*`", "", stripped)
+
+
+def parse(text):
+    """Returns (problems, features). Each feature is (line number, name, proofs)."""
+    problems, features = [], []
+    lines = text.splitlines()
+    header, proof_column = None, None
+    for index, line in enumerate(lines):
+        number = index + 1
+        stripped = line.strip()
+        starts_with_pipe = stripped.startswith("|")
+        if header is None:
+            if not starts_with_pipe:
+                if looks_like_row(stripped):
+                    problems.append(f"line {number}: a table row outside any table (no table header above it). Is there a blank line inside the table, or pipes in prose?")
+                continue
+            following = lines[index + 1] if index + 1 < len(lines) else ""
+            if not is_separator(following):
+                problems.append(f"line {number}: a table row outside any table. Is there a blank line inside the table?")
+                continue
+            header = cells_of(stripped)
+            names = [c.lower() for c in header]
+            proof_column = names.index("proof") if "proof" in names else None
+            if proof_column is None and names[0] == "feature":
+                problems.append(f"line {number}: the Feature table has no Proof column.")
+            continue
+        if "|" not in stripped:
+            header = None  # the table ended: a blank line or prose
+            continue
+        if is_separator(stripped):
+            continue
+        if proof_column is None:
+            continue  # some other table
+        cells = cells_of(stripped)
+        if len(cells) != len(header):
+            problems.append(f"line {number}: the row has {len(cells)} columns and the header has {len(header)}.")
+            continue
+        proofs = re.findall(r"`([^`]+)`", cells[proof_column])
+        features.append((number, cells[0], proofs))
+    return problems, features
+
+
+# --- The runners ---
+
+def kill_group(process):
+    """Kills the runner and every process it started (they share its process group), then reaps it.
+    A descendant that left the group could still hold the output pipes, so the wait is bounded."""
+    with contextlib.suppress(ProcessLookupError, PermissionError):
+        os.killpg(process.pid, signal.SIGKILL)
+    with contextlib.suppress(subprocess.TimeoutExpired):
+        process.communicate(timeout=5)
+    process.wait()
+
+
+def run(command, cwd, env=None):
+    """Runs a runner in its own process group, so a timeout (or an interrupt) kills it and every
+    child it started."""
+    try:
+        process = subprocess.Popen(command, cwd=str(cwd), stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                   text=True, env={**os.environ, **QUIET, **(env or {})}, start_new_session=True)
+    except OSError as error:
+        raise RunnerError(f"cannot run {command[0]}: {error.strerror or error}")
+    try:
+        out, err = process.communicate(timeout=RUNNER_TIMEOUT)
+    except subprocess.TimeoutExpired:
+        kill_group(process)
+        raise RunnerError(f"{command[0]} took longer than {RUNNER_TIMEOUT} seconds to list the tests, so the check gave up. Does listing start a server or a database?")
+    except BaseException:  # an interrupt: leave no runner behind
+        kill_group(process)
+        raise
+    return subprocess.CompletedProcess(command, process.returncode, out, err)
+
+
+def output_tail(result, lines=12):
+    text = [ANSI.sub("", line) for line in (result.stdout + "\n" + result.stderr).splitlines() if line.strip()]
+    return "\n      ".join(text[-lines:]) or "no output"
+
+
+def read_json(path):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def relative(root, path):
+    try:
+        return Path(path).resolve().relative_to(root).as_posix()
+    except ValueError:
+        raise RunnerError(f"{path} is outside the project")
+
+
+def once(adapter):
+    """Asks a runner once per config (or project) for the whole check, whether it listed or failed,
+    so a failing runner is not run again for every row that names one of its tests."""
+    results = {}
+
+    @functools.wraps(adapter)
+    def remembered(*arguments):
+        key = (adapter.__name__,) + arguments
+        if key not in results:
+            try:
+                results[key] = (adapter(*arguments), None)
+            except RunnerError as error:
+                results[key] = (None, error)
+        tests, error = results[key]
+        if error is not None:
+            raise error
+        return tests
+    return remembered
+
+
+@once
+def node_tests(root, folder):
+    """Run the flat *.test.mjs files npm test runs, without relying on Node glob expansion."""
+    folder = (root / folder).resolve()
+    label = relative(root, folder)
+    if not folder.is_dir():
+        raise RunnerError(f"Node tests folder {label} does not exist inside the project.")
+    files = sorted(p.resolve() for p in folder.glob("*.test.mjs") if p.is_file())
+    if not files:
+        raise RunnerError(f"Node tests folder {label} holds no test file (*.test.mjs).")
+    for file in files:
+        relative(root, file)
+    cwd = folder
+    while not (cwd / "package.json").is_file():
+        if cwd == root:
+            raise RunnerError(f"Node tests folder {label} has no package.json above it inside the project.")
+        cwd = cwd.parent
+    reporter = Path(__file__).resolve().with_name("node-test-reporter.mjs")
+    with tempfile.TemporaryDirectory() as tmp:
+        report_file = Path(tmp) / "node.jsonl"
+        result = run(["node", "--test", "--test-reporter=" + str(reporter),
+                      "--test-reporter-destination=" + str(report_file)] + [str(p) for p in files], cwd)
+        try:
+            events = [json.loads(line) for line in report_file.read_text(encoding="utf-8").splitlines()]
+        except (OSError, ValueError):
+            raise RunnerError(f"Node could not list {label}: it wrote no list the checker can read.")
+    if not events:
+        raise RunnerError(f"Node could not list {label}: it wrote no list the checker can read.")
+    tests, seen, failures = [], set(), []
+    try:
+        for entry in events:
+            file = Path(entry["file"]).resolve()
+            if file not in files:
+                raise ValueError("report names a file outside the selection")
+            seen.add(file)
+            if entry["fileFailure"]:
+                failures.append(relative(root, file))
+            elif not entry["suite"]:
+                chain = entry["chain"]
+                if (not isinstance(chain, list) or not all(isinstance(x, str) for x in chain)
+                        or len(chain) != entry["nesting"] or not isinstance(entry["name"], str)):
+                    raise ValueError("invalid test name or nesting")
+                tests.append(Test(relative(root, file), tuple(chain), entry["name"],
+                                  not (entry["skip"] or entry["todo"]), file.name.endswith(E2E_SUFFIX)))
+    except (KeyError, TypeError, ValueError) as error:
+        raise RunnerError(f"Node's list for {label} has a shape the checker does not understand ({error}).")
+    missing = set(files) - seen
+    if failures or missing:
+        names = sorted(set(failures) | {relative(root, p) for p in missing})
+        raise RunnerError("Node could not list test files (failed to load or missing from report): " + ", ".join(names))
+    if result.returncode != 0 and not any(e["type"] == "test:fail" for e in events):
+        raise RunnerError(f"Node could not list {label} (exit {result.returncode}).")
+    return tests
+
+
+def add(catalog, tests):
+    """Merge repeated listings. A test runs when any listing says it runs."""
+    for test in tests:
+        by_name = catalog.setdefault(test.file, {})
+        known = by_name.get((test.chain, test.title))
+        if known:
+            test = test._replace(running=known.running or test.running, e2e=known.e2e or test.e2e)
+        by_name[(test.chain, test.title)] = test
+
+
+def list_end_to_end(root, node_dir):
+    if not node_dir:
+        raise RunnerError("no test runner found: name --node-tests.")
+    catalog = {}
+    add(catalog, node_tests(root, node_dir))
+    return catalog
+
+# --- The check ---
+
+def fail(problems):
+    print("check-features: FEATURES.md does not match the tests.", file=sys.stderr)
+    for problem in problems:
+        print(f"  - {problem}", file=sys.stderr)
+    print("  Fix the map or the tests. A feature without a row and a passing proof is not done.", file=sys.stderr)
+    return 1
+
+
+def main(root=None, node_dir=None):
+    root = Path(root or Path.cwd()).resolve()
+    feature_map = root / "FEATURES.md"
+    if not feature_map.is_file():
+        return fail(["FEATURES.md is missing. Every project keeps its feature map at the root."])
+    problems, features = parse(feature_map.read_text(encoding="utf-8"))
+    if not features and not problems:
+        problems.append("FEATURES.md has no feature rows under a table with a Proof column.")
+    try:
+        catalog = list_end_to_end(root, node_dir)
+    except RunnerError as error:
+        return fail(problems + [str(error)])
+    named_files = set()  # every file a proof names
+    named = set()  # every (file, chain, title) a proof names
+    for number, name, proofs in features:
+        if not proofs:
+            problems.append(f"line {number}, {name!r}: no Proof. Name the test that proves it, in backticks.")
+        for position, proof in enumerate(proofs):
+            path, _, title = proof.partition("#")
+            path, title = path.strip(), title.strip()
+            file = (root / path).resolve()
+            if not file.is_file() or not file.is_relative_to(root):
+                problems.append(f"line {number}, {name!r}: the proof file {path} does not exist inside the project.")
+                continue
+            file = file.relative_to(root).as_posix()
+            named_files.add(file)
+            if not title:
+                problems.append(f"line {number}, {name!r}: the proof {path} names no test. Write `{path}#<test name>`; a file alone is not a proof.")
+                continue
+            if file not in catalog:
+                problems.append(f"line {number}, {name!r}: no test runner lists {path}.")
+                continue
+            tests = list(catalog[file].values())
+            matches = [test for test in tests if test.full_name == title] or [test for test in tests if test.title == title]
+            running = [test for test in matches if test.running]
+            if not matches:
+                problems.append(f"line {number}, {name!r}: the runner lists no running test named {title!r} in {path}.")
+            elif not running:
+                problems.append(f"line {number}, {name!r}: the runner lists {title!r} in {path} as skipped or expected to fail, so it proves nothing.")
+            elif len(running) > 1:
+                choices = " or ".join(f"`{path}#{test.full_name}`" for test in running)
+                problems.append(f"line {number}, {name!r}: {title!r} names {len(running)} tests in {path}. Name the group too: {choices}.")
+            else:
+                test = running[0]
+                if position == 0 and not test.e2e:
+                    problems.append(f"line {number}, {name!r}: the first proof {proof} is not an end-to-end test. The first proof in a row is its end-to-end test; unit tests may follow it.")
+                named.add((test.file, test.chain, test.title))
+    end_to_end = [test for file in sorted(catalog) for test in catalog[file].values() if test.e2e]
+    running_end_to_end = [test for test in end_to_end if test.running]
+    if not running_end_to_end:
+        problems.append("the runners list no running end-to-end test. Every feature needs one.")
+    for file in sorted({test.file for test in end_to_end}):
+        if file not in named_files:
+            problems.append(f"{file}: an end-to-end test file with no row in FEATURES.md.")
+    for test in running_end_to_end:
+        if test.file in named_files and (test.file, test.chain, test.title) not in named:
+            problems.append(f"{test.file}: the test {test.full_name!r} has no row in FEATURES.md.")
+    if problems:
+        return fail(problems)
+    print(f"FEATURES.md: {len(features)} features, every proof found, {len(running_end_to_end)} end-to-end tests in {len({test.file for test in end_to_end})} files mapped.")
+    return 0
+
+
+# --- Self-test: real Node fixtures; never reads the project's tests. ---
+
+HEADER = "| Feature | What it does | How to reach it | Proof | Broken looks like |\n|---|---|---|---|---|\n"
+
+
+def row(proof):
+    return f"| X | y | z | {proof} | w |\n"
+
+
+class Case(NamedTuple):
+    name: str
+    exit_code: int
+    text: str
+    feature_map: object
+    files: object = None
+    options: object = None
+    timeout: object = None
+    dead: object = None
+
+
+NODE_SPEC = """import {test, describe, it} from 'node:test';
+// test('comment only', () => {});
+test('plain test', () => {});
+describe('group', () => {
+  it('inside', () => {});
+  it('shared', () => {});
+});
+describe('other group', () => { it('shared', () => {}); });
+it.skip('skip method', () => {});
+test('skip option', {skip: true}, () => {});
+test('runtime skip', t => {t.skip('later');});
+test.todo('todo');
+test('expected failure', {todo: true}, () => {throw Error('expected');});
+test('fails but listed', () => {throw Error('fixture failure');});
+"""
+NODE_PROOFS = ["plain test", "group > inside", "group > shared", "other group > shared", "fails but listed"]
+E2E_FILE = "tests/a.e2e.test.mjs"
+
+
+def fixture_files():
+    return {"package.json": '{"type":"module"}',
+            E2E_FILE: NODE_SPEC,
+            "tests/b.e2e.test.mjs": "import {test} from 'node:test'; test('other', () => {});",
+            "tests/unit.test.mjs": "import {test} from 'node:test'; test('unit', () => {});",
+            "tests/nested/hidden.test.mjs": "import {test} from 'node:test'; test('hidden', () => {});",
+            "tests/helper.mjs": "export const x = 1;",
+            "../outside.test.mjs": ""}
+
+
+def node_cases():
+    proofs = [f"`{E2E_FILE}#{title}`" for title in NODE_PROOFS] + ["`tests/b.e2e.test.mjs#other`"]
+    good = "".join(row(p) for p in proofs)
+    extra = lambda proof: HEADER + good + row(proof)
+    missing = lambda proof: HEADER + "".join(row(p) for p in proofs if p != proof)
+    p = proofs[0]
+    yield Case("FEATURES.md missing", 1, "is missing", None)
+    yield Case("FEATURES.md empty", 1, "no feature rows", "")
+    yield Case("row with no proof", 1, "no Proof", extra(""))
+    yield Case("proof names no test", 1, "names no test", extra(f"`{E2E_FILE}`"))
+    yield Case("proof file missing", 1, "does not exist", extra("`gone.test.mjs#x`"))
+    yield Case("proof file outside project", 1, "inside the project", extra("`../outside.test.mjs#x`"))
+    yield Case("blank line inside table", 1, "outside any table", HEADER + good + "\n" + row(p))
+    yield Case("row without leading pipe outside table", 1, "outside any table", HEADER + good + "\nX | y | z | " + p + " | w\n")
+    yield Case("wrong column count", 1, "columns", HEADER + good + "| X | y | z |\n")
+    yield Case("empty cells not separator", 1, "no Proof", HEADER + good + "| | | | | |\n")
+    yield Case("Feature table without Proof", 1, "no Proof column", "| Feature | What |\n|---|---|\n| X | y |\n")
+    yield Case("good map and end-to-end first proof", 0, "6 end-to-end tests", HEADER + good)
+    yield Case("second table ignored", 0, "every proof found", HEADER + good + "\n| Layer | Meaning |\n|---|---|\n| unit | logic |\n")
+    yield Case("backtick pipe prose ignored", 0, "every proof found", "Use `|` in code.\n\n" + HEADER + good)
+    yield Case("unit second", 0, "every proof found", extra(p + ", `tests/unit.test.mjs#unit`"))
+    yield Case("unit first", 1, "is not an end-to-end test", extra("`tests/unit.test.mjs#unit`"))
+    yield Case("grouped title matches", 0, "every proof found", extra(f"`{E2E_FILE}#group > inside`"))
+    yield Case("ambiguous title", 1, "Name the group too", extra(f"`{E2E_FILE}#shared`"))
+    for title in ["skip method", "skip option", "runtime skip", "todo", "expected failure"]:
+        yield Case(title + " proves nothing", 1, "as skipped or expected to fail", extra(f"`{E2E_FILE}#{title}`"))
+    for title in ["comment only", "plain", "group"]:
+        yield Case(title + " not a test", 1, "no running test", extra(f"`{E2E_FILE}#{title}`"))
+    yield Case("failing test listed", 0, "every proof found", HEADER + good)
+    for name, source in [("syntax", "test('unclosed"), ("throws", "throw Error('load failure');")]:
+        yield Case(name + " fails listing", 1, "a.e2e.test.mjs", HEADER + good, {**fixture_files(), E2E_FILE: source})
+    yield Case("missing test row", 1, "the test 'group > inside' has no row", missing(proofs[1]))
+    yield Case("missing end-to-end file row", 1, "b.e2e.test.mjs: an end-to-end test file with no row", missing(proofs[-1]))
+    yield Case("all skipped file needs row", 1, "later.e2e.test.mjs", HEADER + good,
+               {**fixture_files(), "tests/later.e2e.test.mjs": "import {test} from 'node:test';test.skip('later',()=>{});"})
+    yield Case("subfolder excluded", 1, "no test runner lists", extra("`tests/nested/hidden.test.mjs#hidden`"))
+    yield Case("missing tests folder", 1, "does not exist", HEADER + good, options={"node_dir": "gone"})
+    yield Case("empty tests folder", 1, "no test file", HEADER + good,
+               {"package.json": "{}", "tests/helper.mjs": ""})
+    yield Case("runner writes nothing", 1, "no list the checker can read", HEADER + good,
+               {**fixture_files(), "bin/node": "#!/bin/sh\nexit 0\n"})
+    yield Case("runner hangs", 1, "took longer than", HEADER + good,
+               {**fixture_files(), "bin/node": "#!/bin/sh\nsleep 60 &\necho $! > \"$0.pid\"\nwait\n"},
+               timeout=1, dead="bin/node.pid")
+
+
+def write_files(root, files):
+    for path, content in files.items():
+        target = root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+        if path.startswith("bin/"):
+            target.chmod(0o755)
+
+
+def alive(pid, patience=3):
+    deadline = time.monotonic() + patience
+    while True:
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            return False
+        if time.monotonic() > deadline:
+            return True
+        time.sleep(.1)
+
+
+@contextlib.contextmanager
+def runner_timeout(seconds):
+    global RUNNER_TIMEOUT
+    previous, RUNNER_TIMEOUT = RUNNER_TIMEOUT, seconds
+    try:
+        yield
+    finally:
+        RUNNER_TIMEOUT = previous
+
+
+def self_test():
+    version = subprocess.run(["node", "--version"], capture_output=True, text=True, check=True).stdout.strip()
+    failures, ran = 0, 0
+    with tempfile.TemporaryDirectory(prefix="feature-self-test-") as tmp:
+        for index, case in enumerate(node_cases()):
+            ran += 1
+            root = Path(tmp) / f"case {index} (x)" / "project"
+            root.mkdir(parents=True)
+            write_files(root, fixture_files() if case.files is None else case.files)
+            if case.feature_map is not None:
+                (root / "FEATURES.md").write_text(case.feature_map, encoding="utf-8")
+            out = io.StringIO()
+            old_path = os.environ.get("PATH", "")
+            os.environ["PATH"] = str(root / "bin") + os.pathsep + old_path
+            try:
+                with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out), runner_timeout(case.timeout or 240):
+                    code = main(root, **(case.options or {"node_dir": "tests"}))
+                message = out.getvalue()
+                ok = code == case.exit_code and case.text in message
+                if case.dead:
+                    ok = ok and (root / case.dead).is_file() and not alive(int((root / case.dead).read_text()))
+            except Exception as error:
+                ok, message = False, repr(error)
+            finally:
+                os.environ["PATH"] = old_path
+            if not ok:
+                failures += 1
+                print(f"FAILED {case.name}: expected exit {case.exit_code}, {case.text!r}; {message}", file=sys.stderr)
+        ran += 1
+        result = subprocess.run([sys.executable, __file__, "--unknown"], capture_output=True, text=True)
+        if result.returncode != 2 or "usage:" not in result.stderr:
+            failures += 1
+            print("FAILED unknown option: expected exit 2 and usage", file=sys.stderr)
+        # Cancellation must remove the runner's child, not other sessions' processes.
+        stopped = Path(tmp) / "stopped (x)"
+        stopped.mkdir()
+        write_files(stopped, {**fixture_files(), "bin/node": "#!/bin/sh\nsleep 60 &\necho $! > \"$0.pid\"\nwait\n"})
+        (stopped / "FEATURES.md").write_text(HEADER + row(f"`{E2E_FILE}#plain test`"), encoding="utf-8")
+        checker = subprocess.Popen([sys.executable, __file__, "--node-tests", "tests"], cwd=str(stopped),
+                                   env={**os.environ, "PATH": str(stopped / "bin") + os.pathsep + os.environ["PATH"]},
+                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        pid_file = stopped / "bin/node.pid"
+        for _ in range(100):
+            if pid_file.is_file() or checker.poll() is not None:
+                break
+            time.sleep(.05)
+        checker.terminate()
+        checker.wait(timeout=10)
+        ran += 1
+        if not pid_file.is_file() or alive(int(pid_file.read_text())):
+            failures += 1
+            print("FAILED SIGTERM leaves no child", file=sys.stderr)
+    print(f"check-features: {failures} of {ran} self-test cases failed." if failures else
+          f"check-features: self-test passed, {ran} cases against Node {version}.")
+    return 1 if failures else 0
+
+
+if __name__ == "__main__":
+    for stop in (signal.SIGTERM, signal.SIGHUP):
+        signal.signal(stop, lambda number, frame: sys.exit(128 + number))
+    arguments = sys.argv[1:]
+    if arguments == ["--self-test"]:
+        sys.exit(self_test())
+    import argparse
+    parser = argparse.ArgumentParser(description="Check FEATURES.md against the tests Node lists.")
+    parser.add_argument("--node-tests", dest="node_dir", required=True)
+    options = parser.parse_args(arguments)
+    sys.exit(main(**vars(options)))

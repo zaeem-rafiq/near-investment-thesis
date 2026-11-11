@@ -14,16 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          fetch-depth: 0 # the secret scan reads every commit
           persist-credentials: false
+      - name: Install gitleaks 8.30.1 (secret scanner)
+        run: |
+          curl -sSfL --retry 3 -o /tmp/gitleaks.tar.gz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  /tmp/gitleaks.tar.gz" | sha256sum -c -
+          sudo tar -xzf /tmp/gitleaks.tar.gz -C /usr/local/bin gitleaks
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
-      - run: npm run check
-      - run: npm test
-      # The rebuild is offline and deterministic: committed output must match it exactly.
-      - run: npm run rebuild
-      - name: Rebuild changed no file
-        run: |
-          git status --porcelain
-          git --no-pager diff --stat
-          test -z "$(git status --porcelain)"
+      # Secret scan, syntax checks, feature map, tests, and a rebuild that must change no file.
+      - run: ./check
