@@ -90,7 +90,11 @@ export async function loadPositionEvidence(manifest, root = ROOT) {
   for (const [i, b] of buyers.profiles.entries()) {
     if (b.rank !== i + 1 || !['named', '64-hex implicit', '0x'].includes(b.kind)
       || ![b.zecPaidUsdShare, b.may22Through27UsdShare].every(s => s >= 0 && s <= 1)
-      || !['ok', 'unknown_account'].includes(b.nativeBalance?.status)) throw new Error('Invalid buyer profiles.');
+      || !['ok', 'unknown_account'].includes(b.nativeBalance?.status)
+      || Object.keys(b.nativeBalance).join() !== 'status,near'
+      || (b.nativeBalance.status === 'ok' ? Math.round(b.nativeBalance.near * 100) / 100 !== b.nativeBalance.near : b.nativeBalance.near !== null)) {
+      throw new Error('Invalid buyer profiles.');
+    }
     close(b.boughtUsd - b.soldUsd, b.netUsd);
   }
   close(buyers.profiles.reduce((s, b) => s + b.netUsd, 0), c.netUsd - c.withoutTopNetBuyers['3'].netUsd);

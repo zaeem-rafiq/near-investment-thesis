@@ -77,7 +77,7 @@
     },
     "buyer_profiles": {
       "path": "data/public/buyer-profiles.json",
-      "sha256": "ab5ea780bc0dd88952442c9100c365c237a77f49561b888838749b918a2eea4c"
+      "sha256": "88569a3ec919a2a012420d48d4984c45028d682e5f34fb26da757a09c619df0e"
     }
   },
   "unavailable": {}

@@ -5,6 +5,10 @@ import { ROOT, hash } from './sources.mjs';
 import { atomic } from './store.mjs';
 import { loadParticipantSwaps, finalKeep, usd, assertAggregateOnly } from './position-results.mjs';
 
+// An exact balance at a known block could single out an account: publish 0.01 NEAR and no block height.
+export const publicBalance = b => b.status === 'ok' && Number.isFinite(b.near)
+  ? { status: 'ok', near: Math.round(b.near * 100) / 100 } : { status: b.status, near: null };
+
 // Identifiers exist only in this private in-memory map, never in the returned object.
 export async function buyerProfiles(rows, balanceOf) {
   const accounts = new Map();
@@ -30,7 +34,7 @@ export async function buyerProfiles(rows, balanceOf) {
     buySwaps: a.swaps, activeBuyWeeks: a.weeks.size,
     zecPaidUsdShare: Number(a.zec) / Number(a.bought),
     may22Through27UsdShare: Number(a.rally) / Number(a.bought),
-    nativeBalance: await balanceOf(id)
+    nativeBalance: publicBalance(await balanceOf(id))
   });
   assertAggregateOnly(profiles);
   return profiles;
@@ -62,7 +66,7 @@ export async function exportBuyerProfiles({ root = ROOT, rows, balanceOf = rpcBa
       'After-the-fact description; changes no check. Rank by Check 1 final net USD.',
       'Buyer = recipient; seller = first sender, else refundTo. Missing USD excluded.',
       'Payment and May 22 through May 27 shares are USD-weighted buys; active weeks are UTC Monday buy weeks.',
-      'ZEC origin asset is the public ZEC bridged-token contract. Balances are native NEAR only, not token balances or proof of retention.',
+      'ZEC origin asset is the public ZEC bridged-token contract. Balances are native NEAR only, rounded to 0.01 NEAR, not token balances or proof of retention.',
       'Account identifiers remain private. These data cannot identify exchanges, market makers or long-term buyers.'
     ], profiles };
   assertAggregateOnly(data);

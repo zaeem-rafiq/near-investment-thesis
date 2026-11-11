@@ -31,7 +31,7 @@ const rows = () => normalizeSwaps([
 
 test('buyer profiles rank Check 1 final net buyers and publish only rank-level aggregates', async () => {
   const seen = [];
-  const p = await buyerProfiles(rows(), async id => { seen.push(id); return { status: 'ok', near: 3, blockHeight: 1 }; });
+  const p = await buyerProfiles(rows(), async id => { seen.push(id); return { status: 'ok', near: 3.0471, blockHeight: 1 }; });
   assert.deepEqual(seen, [A, B, C], 'revenue wallets are excluded and ranking is by net USD');
   assert.deepEqual(p.map(x => x.kind), ['64-hex implicit', '0x', 'named']);
   assert.deepEqual(p.map(x => x.netUsd), [100, 60, 5]);
@@ -40,6 +40,8 @@ test('buyer profiles rank Check 1 final net buyers and publish only rank-level a
   assert.equal(p[0].activeBuyWeeks, 2);
   assert.equal(p[1].soldUsd, 20);
   assert.equal(p[2].soldUsd, 5, 'refundTo stands in when a sell has no sender');
+  // An exact balance with its block height could single out the account; publish 0.01 NEAR and no height.
+  assert.deepEqual(p[0].nativeBalance, { status: 'ok', near: 3.05 });
   const text = JSON.stringify(p);
   for (const id of [A, B, C]) assert.ok(!text.includes(id));
 });
@@ -70,5 +72,9 @@ test('buyer export registers its hash and the evidence loader verifies it', asyn
   const evidence = await loadPositionEvidence(real);
   const c = evidence.results.descriptive.concentration;
   const top3 = evidence.buyers.profiles.reduce((s, b) => s + b.netUsd, 0);
+  for (const b of evidence.buyers.profiles) {
+    assert.ok(!Object.hasOwn(b.nativeBalance, 'blockHeight'), 'no block height is published');
+    if (b.nativeBalance.near != null) assert.equal(b.nativeBalance.near, Math.round(b.nativeBalance.near * 100) / 100);
+  }
   assert.ok(Math.abs(top3 - (c.netUsd - c.withoutTopNetBuyers['3'].netUsd)) < 0.01, 'top three match the concentration cut');
 });

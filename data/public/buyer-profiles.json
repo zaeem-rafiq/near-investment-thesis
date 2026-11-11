@@ -11,7 +11,7 @@
     "After-the-fact description; changes no check. Rank by Check 1 final net USD.",
     "Buyer = recipient; seller = first sender, else refundTo. Missing USD excluded.",
     "Payment and May 22 through May 27 shares are USD-weighted buys; active weeks are UTC Monday buy weeks.",
-    "ZEC origin asset is the public ZEC bridged-token contract. Balances are native NEAR only, not token balances or proof of retention.",
+    "ZEC origin asset is the public ZEC bridged-token contract. Balances are native NEAR only, rounded to 0.01 NEAR, not token balances or proof of retention.",
     "Account identifiers remain private. These data cannot identify exchanges, market makers or long-term buyers."
   ],
   "profiles": [
@@ -42,8 +42,7 @@
       "may22Through27UsdShare": 0.16982531932259765,
       "nativeBalance": {
         "status": "ok",
-        "near": 3.049463361789434,
-        "blockHeight": 223852078
+        "near": 3.05
       }
     },
     {
@@ -58,8 +57,7 @@
       "may22Through27UsdShare": 0,
       "nativeBalance": {
         "status": "ok",
-        "near": 3.0509581924315836,
-        "blockHeight": 223852083
+        "near": 3.05
       }
     }
   ]
