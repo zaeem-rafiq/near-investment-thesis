@@ -5,3 +5,6 @@ data/raw/
 node_modules/
 __pycache__/
 .DS_Store
+# Another session's local agent skills; never part of the entry.
+.agents/
+skills-lock.json
