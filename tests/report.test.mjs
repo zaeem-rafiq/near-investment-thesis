@@ -260,7 +260,7 @@ test('thesis.html renders the real thesis without metric tags, escapes markup an
   assert.doesNotMatch(html, /<!--|metric:|evidence:(begin|end)/);
   assert.match(html, /<h1>NEAR through 2031: Not yet<\/h1>/);
   assert.match(html, /<a href="docs\/EVIDENCE.md">Supporting evidence, scenarios, review rules and verified tables<\/a>/);
-  assert.match(html, /Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'"/);
+  assert.match(html, /Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'"/);
   assert.doesNotMatch(html, /<script/i);
   const hostile = thesisHTML('# T <script>x</script>\n\nA **b** \`<img src=x>\` <!-- metric:t1.verdict -->FAIL<!-- /metric -->\n\n- one\n- two\n');
   assert.match(hostile, /<h1>T &lt;script&gt;x&lt;\/script&gt;<\/h1>/);
@@ -472,7 +472,7 @@ test('first-screen numbers match the published public-snapshot metrics', async (
   assert.equal((first.match(/<span class="status-icon" aria-hidden="true">✕<\/span>Fail<\/span>/g) || []).length, 2);
   assert.match(first, /<\/div>\s*<p id="live-line" class="live-line" aria-live="polite" hidden><\/p><script src="live.js" defer><\/script>/);
   const csp = files.get('index.html').match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
-  assert.equal(csp, "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; script-src 'self'; connect-src 'self'");
+  assert.equal(csp, "default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; script-src 'self'; connect-src 'self'");
   assert.doesNotMatch(files.get('index.html'), /<script(?![^>]*\bsrc="live\.js")/);
 });
 test('concentration chart immediately follows the first screen and detailed T2/status remain below', async () => {
@@ -521,8 +521,8 @@ test('first screen uses plain labels and keeps technical results below it', asyn
   assert.match(css, /\.rating-line \{ font-size: 20px;[^}]*font-weight: 400; color: var\(--heading\)/);
   assert.match(css, /\.rating-line strong \{ font-weight: 600; \}/);
   assert.match(css, /\.check-card-head \{[^}]*flex-wrap: wrap;/);
-  assert.match(css, /\.status-pass \{ background: #166534; color: #ffffff; \}/);
-  assert.match(css, /\.status-fail \{ background: #b91c1c; color: #ffffff; \}/);
+  assert.match(css, /\.status-pass \{ background: #1F6B3A; color: #FFFDF8; \}/);
+  assert.match(css, /\.status-fail \{ background: #A3271F; color: #FFFDF8; \}/);
   assert.match(css, /\.status \{[^}]*font-size: 14px; font-weight: 600;/);
   assert.match(css, /\.status-unavailable \{ border-color: var\(--secondary\)/);
   assert.doesNotMatch(css, /\border:/, 'source order, not CSS order, sets reading order');

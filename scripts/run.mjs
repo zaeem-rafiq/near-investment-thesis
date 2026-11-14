@@ -1,4 +1,4 @@
-import { copyFile, readFile } from 'node:fs/promises';
+import { copyFile, cp, readFile } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { ROOT, QUERIES, environment, pullBigQuery, pullPrices } from './sources.mjs';
@@ -85,6 +85,8 @@ async function main() {
   verifyThesis(`${thesis}\n${evidence}`, analysis);
   await copyFile(resolve(ROOT, 'web/style.css'), resolve(ROOT, 'dashboard/style.css'));
   await copyFile(resolve(ROOT, 'web/favicon.svg'), resolve(ROOT, 'dashboard/favicon.svg'));
+  await copyFile(resolve(ROOT, 'web/mark.svg'), resolve(ROOT, 'dashboard/mark.svg'));
+  await cp(resolve(ROOT, 'web/fonts'), resolve(ROOT, 'dashboard/fonts'), { recursive: true });
   await copyFile(resolve(ROOT, 'web/live.js'), resolve(ROOT, 'dashboard/live.js'));
   await copyFile(resolve(ROOT, 'docs/VERIFY.md'), resolve(ROOT, 'dashboard/VERIFY.md'));
   await atomic(resolve(ROOT, 'dashboard/THESIS.md'), thesis);

@@ -1,18 +1,23 @@
+@font-face { font-family: "Newsreader"; src: url("fonts/newsreader-roman.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("fonts/newsreader-italic.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/ibm-plex-sans.woff2") format("woff2"); font-weight: 100 700; font-style: normal; font-display: swap; }
 :root {
-  --background: #fafafa;
-  --surface: #ffffff;
-  --border: #dedede;
-  --heading: #0a0a0a;
-  --body: #374151;
-  --muted: #606976;
-  --accent: #14756a;
-  --ink: #263238;
+  --background: #F5F0E6;
+  --surface: #FFFDF8;
+  --border: #D9D1C1;
+  --heading: #1E1B2E;
+  --body: #3A3546;
+  --muted: #5E5868;
+  --accent: #3B2F73;
+  --ink: #1E1B2E;
+  --absorbed: #7566C2;
+  --serif: Newsreader, Georgia, "Times New Roman", serif;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--background); color: var(--body); font: 15px/1.6 Inter, system-ui, -apple-system, sans-serif; }
+body { margin: 0; background: var(--background); color: var(--body); font: 15px/1.6 "IBM Plex Sans", system-ui, -apple-system, sans-serif; }
 main { max-width: 1040px; margin: auto; padding: 48px 32px; min-width: 0; }
 h1, h2, strong, dt, output { color: var(--heading); font-weight: 600; }
-h1, h2 { margin: 0 0 16px; font-size: 24px; line-height: 1.3; letter-spacing: -.02em; }
+h1, h2 { margin: 0 0 16px; font-family: var(--serif); font-size: 24px; line-height: 1.3; letter-spacing: -.02em; }
 p { max-width: 65ch; margin: 8px 0; }
 .muted, caption, footer { color: var(--muted); }
 .eyebrow { color: var(--muted); }
@@ -32,7 +37,7 @@ section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--borde
 .scenarios [aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
 .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 button { min-height: 40px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--heading); font: inherit; cursor: pointer; }
-button:hover { background: #f0f0f0; }
+button:hover { background: #EFE9DC; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 .skip { position: absolute; top: -80px; left: 16px; padding: 8px; background: var(--surface); color: var(--ink); }
 .skip:focus { top: 8px; z-index: 1; }
@@ -54,11 +59,11 @@ th:first-child, td:first-child { text-align: left; padding-left: 0; width: 9%; }
 .chart-heading p { display: flex; align-items: center; gap: 8px; }
 .key { display: inline-block; width: 12px; height: 12px; }
 .new-key { background: var(--ink); }
-.absorbed-key { background: var(--accent); }
+.absorbed-key { background: var(--absorbed); }
 svg { display: block; max-width: 100%; height: auto; margin-top: 16px; overflow: visible; }
 svg text { fill: var(--body); font: 14px system-ui, sans-serif; }
 .bar-new { fill: var(--ink); }
-.bar-absorbed { fill: var(--accent); }
+.bar-absorbed { fill: var(--absorbed); }
 .chart-axis { stroke: var(--border); stroke-width: 1; }
 dt { margin: 24px 0 4px; }
 dd { margin: 0; max-width: 65ch; overflow-wrap: anywhere; color: var(--muted); }

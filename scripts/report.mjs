@@ -596,7 +596,7 @@ export function metricValues(a) {
 export function numberTables(a) {
   return '| Metric | Value |\n|---|---|\n' + Object.entries(metricValues(a)).map(([k, v]) => `| ${k} | ${v} |`).join('\n') + '\n';
 }
-const CSP = "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'";
+const CSP = "default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'";
 // Only the index page loads live.js, which reads same-origin live.json.
 const INDEX_CSP = `${CSP}; script-src 'self'; connect-src 'self'`;
 // Repository paths in THESIS.md, mapped to their copies beside dashboard/thesis.html.
@@ -630,9 +630,9 @@ export function thesisHTML(md) {
   flush();
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="${CSP}">
-    <title>NEAR / Thesis</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
+    <title>Beforehand · NEAR thesis</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to thesis</a>
-    <nav aria-label="Research navigation"><a class="brand" href="index.html">NEAR / Evidence ledger</a><a href="index.html">Dashboard</a></nav>
+    <nav aria-label="Research navigation"><a class="brand" href="index.html"><img src="mark.svg" alt="" width="22" height="22">Beforehand</a><a href="index.html">Dashboard</a></nav>
     <main id="main"><article class="thesis">${out.join('\n')}</article></main></body></html>\n`;
 }
 export const EVIDENCE_START = '<!-- evidence:begin -->';
@@ -713,9 +713,9 @@ export async function render(manifest, sources, write, root = ROOT) {
   await write('NUMBERS.md', report);
   const indexPage = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="${position ? INDEX_CSP : CSP}">
-    <title>NEAR investment thesis · public data through November 1, 2026</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
+    <title>Beforehand · NEAR investment thesis · public data through November 1, 2026</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
     <a class="skip" href="#main">Skip to evidence</a>
-    <nav aria-label="Research navigation"><a class="brand" href="#main">NEAR / Evidence ledger</a><a href="model.html">Model</a><a href="thesis.html">Thesis</a><a href="VERIFY.md">Verify</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a></nav>
+    <nav aria-label="Research navigation"><a class="brand" href="#main"><img src="mark.svg" alt="" width="22" height="22">Beforehand</a><a href="model.html">Model</a><a href="thesis.html">Thesis</a><a href="VERIFY.md">Verify</a><a href="#signers">Usage</a><a href="#swaps">Swaps</a><a href="#burn">Fee burn</a></nav>
     <main id="main"><header class="first-screen">
     <p class="edition">NEAR investment thesis · public data through <time datetime="2026-11-01" data-metric="presentation.publicDate">${escape(values['presentation.publicDate'])}</time></p>
     <h1>Does public data support holding NEAR through <span data-metric="position.holdHorizon">${escape(values['position.holdHorizon'] || '2031')}</span>?</h1>
