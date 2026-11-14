@@ -60,7 +60,7 @@ test('T2 starts at the first complete week with 7,000 swaps and marks earlier we
   assert.equal(series.rows.filter(r => r.excluded).length, 5);
   assert.ok(series.rows.slice(0, 6).every(r => r.dv == null));
   const svg = seriesSVG({ title: 'swaps', unit: 'swaps', points: series.rows.map(r => ({ x: r.week, v: r.swaps, excluded: r.excluded })) });
-  assert.match(svg, /Excluded from T2 test/);
+  assert.match(svg, /Shaded: excluded from T2 test/);
   assert.equal((svg.match(/\(excluded from test\)/g) || []).length, 5);
 });
 test('T2 passes when volume leads, fails when price leads, and reports every lag', () => {
@@ -394,12 +394,13 @@ test('committee view covers round-three actions, valuation, bull gates and revie
     assert.notEqual(stale, md);
     assert.throws(() => verifyThesis(`${stale}\n${evidence}`, a), /metric mismatch/);
   }
-});test('chart axis ticks fit the left margin and the excluded label sits above the plot', () => {
+});test('chart axis ticks fit the left margin and the excluded label sits top right, clear of the unit label', () => {
   const points = [{ x: 'a', v: 106_298_020, excluded: true }, { x: 'b', v: 5e7 }, { x: 'c', v: 1e6 }];
   const svg = seriesSVG({ title: 't', unit: 'USD', points });
   const ticks = [...svg.matchAll(/<text x="72" y="(?:44|134)" text-anchor="end">([^<]+)<\/text>/g)].map(m => m[1]);
   assert.deepEqual(ticks, ['111.6M', '55.8M']);
-  assert.match(svg, /<text x="84" y="34"[^>]*>Excluded from T2 test<\/text>/);
+  assert.match(svg, /<text x="840" y="20" text-anchor="end"[^>]*>Shaded: excluded from T2 test<\/text>/);
+  assert.match(svg, /<text x="80" y="20">USD<\/text>/);
   const mixed = seriesSVG({ title: 't', unit: 'blocks', points: [{ x: 'a', v: 150_000 }, { x: 'b', v: 70_000 }] });
   assert.match(mixed, />157.5K<\/text>/);
   assert.match(mixed, />78.8K<\/text>/);
