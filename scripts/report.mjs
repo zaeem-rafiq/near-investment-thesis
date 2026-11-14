@@ -621,7 +621,7 @@ export function thesisHTML(md) {
       flush();
       const head = cells(line), body = [];
       for (i++; lines[i + 1]?.startsWith('|'); ) body.push(cells(lines[++i]));
-      out.push(`<div class="table-wrap" tabindex="0"><table><thead><tr>${head.map(c => `<th scope="col">${inlineMd(c)}</th>`).join('')}</tr></thead><tbody>${body.map(r => `<tr>${r.map(c => `<td>${inlineMd(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
+      out.push(`<div class="table-wrap" tabindex="0"><table class="stacked"><thead><tr>${head.map(c => `<th scope="col">${inlineMd(c)}</th>`).join('')}</tr></thead><tbody>${body.map(r => `<tr>${r.map((c, j) => `<td data-label="${escape((head[j] || '').replace(/[`*]/g, ''))}">${inlineMd(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
     } else if (li) { if (para.length) { const l = list; list = []; flush(); list = l; } list.push(li[1]); }
     else if (!line.trim()) flush();
     else if (list.length && /^\s+/.test(line)) list[list.length - 1] += ' ' + line.trim();

@@ -120,6 +120,11 @@ footer { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border
   .check-cards { grid-template-columns: 1fr; }
   .concentration-row { grid-template-columns: minmax(112px, 132px) minmax(0, 1fr); gap: 12px; }
   .plain-claims li { flex-direction: column; gap: 8px; }
+  .stacked thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .stacked, .stacked tbody, .stacked tr, .stacked td { display: block; }
+  .stacked tr { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .stacked td { padding: 4px 0; border-bottom: 0; }
+  .stacked td::before { content: attr(data-label); display: block; font-size: 13px; font-weight: 600; color: var(--secondary); }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 tr.excluded td { color: var(--secondary); }

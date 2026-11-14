@@ -267,6 +267,11 @@ test('thesis.html renders the real thesis without metric tags, escapes markup an
   assert.match(hostile, /<p>A <strong>b<\/strong> <code>&lt;img src=x&gt;<\/code> FAIL<\/p>/);
   assert.match(hostile, /<ul><li>one<\/li><li>two<\/li><\/ul>/);
   assert.doesNotMatch(thesisHTML('[unsafe](javascript:alert(1))'), /href="javascript/);
+  const table = thesisHTML('| Call | `Size` band |\n|---|---|\n| Building | At most a quarter |\n');
+  assert.match(table, /<table class="stacked">/);
+  assert.match(table, /<td data-label="Call">Building<\/td><td data-label="Size band">At most a quarter<\/td>/, 'phone layout labels each cell with its plain column name');
+  const css = await readFile(join(ROOT, 'web/style.css'), 'utf8');
+  assert.match(css, /@media \(max-width: 600px\) \{[^@]*\.stacked td::before \{ content: attr\(data-label\);/, 'thesis tables stack into labelled rows on phones');
 });
 test('position thesis preserves the approved opening, section order and verified descriptive claims', async () => {
   const md = await readFile(join(ROOT, 'THESIS.md'), 'utf8');
@@ -298,7 +303,7 @@ test('position thesis preserves the approved opening, section order and verified
   const summary = html.split('<h2>Five-line summary</h2>')[1].split('<h2>Claim</h2>')[0];
   assert.match(summary, /\$52\.1M/);
   assert.match(summary, /\$46\.1M to \$154M/);
-  assert.match(html, /<td>t2\.changes<\/td><td>78<\/td>/);
+  assert.match(html, /<td data-label="[^"]*">t2\.changes<\/td><td data-label="[^"]*">78<\/td>/);
 });
 test('committee view covers round-three actions, valuation, bull gates and review rules', async () => {
   const md = await readFile(join(ROOT, 'THESIS.md'), 'utf8');
