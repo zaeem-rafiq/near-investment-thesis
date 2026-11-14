@@ -1,3 +1,63 @@
-{"colors":{"paper":"#F4F4F0","ink":"#111111","muted":"#4A4A4A","ice":"#7CCBEA","ice_deep":"#0E5A7A","pass":"#0F7B3F","fail":"#C8102E"},
- "pairs":[["ink","paper"],["ink","ice"],["muted","paper"],["paper","ink"],["ice","ink"],["paper","pass"],["paper","fail"],["ice_deep","paper"],["pass","paper"],["fail","paper"]],
- "large_pairs":[["ice","ink"],["ink","ice"]]}
+{
+ "colors": {
+  "paper": "#F4F4F0",
+  "ink": "#111111",
+  "muted": "#4A4A4A",
+  "ice": "#7CCBEA",
+  "ice_deep": "#0E5A7A",
+  "pass": "#0F7B3F",
+  "fail": "#C8102E"
+ },
+ "pairs": [
+  [
+   "ink",
+   "paper"
+  ],
+  [
+   "ink",
+   "ice"
+  ],
+  [
+   "muted",
+   "paper"
+  ],
+  [
+   "paper",
+   "ink"
+  ],
+  [
+   "ice",
+   "ink"
+  ],
+  [
+   "paper",
+   "pass"
+  ],
+  [
+   "paper",
+   "fail"
+  ],
+  [
+   "ice_deep",
+   "paper"
+  ],
+  [
+   "pass",
+   "paper"
+  ],
+  [
+   "fail",
+   "paper"
+  ]
+ ],
+ "large_pairs": [
+  [
+   "ice",
+   "ink"
+  ],
+  [
+   "ink",
+   "ice"
+  ]
+ ]
+}

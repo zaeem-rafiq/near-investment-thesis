@@ -1,3 +1,85 @@
-{"colors":{"paper":"#F5F0E6","surface":"#FFFDF8","ink":"#1E1B2E","muted":"#5E5868","violet":"#3B2F73","violet_tint":"#E7E3F3","rule":"#D9D1C1","pass":"#1F6B3A","fail":"#A3271F"},
- "pairs":[["ink","paper"],["ink","surface"],["muted","paper"],["muted","surface"],["surface","violet"],["violet","paper"],["violet","surface"],["ink","violet_tint"],["surface","pass"],["surface","fail"],["pass","surface"],["fail","surface"]],
- "large_pairs":[["violet","paper"],["pass","paper"],["fail","paper"]]}
+{
+ "colors": {
+  "paper": "#F5F0E6",
+  "surface": "#FFFDF8",
+  "ink": "#1E1B2E",
+  "muted": "#5E5868",
+  "violet": "#3B2F73",
+  "violet_tint": "#E7E3F3",
+  "rule": "#D9D1C1",
+  "pass": "#1F6B3A",
+  "fail": "#A3271F"
+ },
+ "pairs": [
+  [
+   "ink",
+   "paper"
+  ],
+  [
+   "ink",
+   "surface"
+  ],
+  [
+   "muted",
+   "paper"
+  ],
+  [
+   "muted",
+   "surface"
+  ],
+  [
+   "surface",
+   "violet"
+  ],
+  [
+   "violet",
+   "paper"
+  ],
+  [
+   "violet",
+   "surface"
+  ],
+  [
+   "ink",
+   "violet_tint"
+  ],
+  [
+   "surface",
+   "pass"
+  ],
+  [
+   "surface",
+   "fail"
+  ],
+  [
+   "pass",
+   "surface"
+  ],
+  [
+   "fail",
+   "surface"
+  ],
+  [
+   "surface",
+   "ink"
+  ],
+  [
+   "violet_tint",
+   "ink"
+  ]
+ ],
+ "large_pairs": [
+  [
+   "violet",
+   "paper"
+  ],
+  [
+   "pass",
+   "paper"
+  ],
+  [
+   "fail",
+   "paper"
+  ]
+ ]
+}

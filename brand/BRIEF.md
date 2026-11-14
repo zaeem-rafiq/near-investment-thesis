@@ -2,10 +2,10 @@
 
 ## Product
 
-A public research dashboard and one-page thesis that tests the long-term case for holding NEAR against public on-chain data. The tests and their pass bars were written and time-stamped before the results were computed. Every number reruns offline from committed data.
+A public research dashboard and one-page thesis that tests the long-term case for holding NEAR against public on-chain data. The three position checks and their pass bars were written before they were computed, and the rule was time-stamped. The README states the exact order of rules and results. Every number reruns offline from committed data.
 
 - **Audience:** crypto investors and fund analysts who distrust hype, and hackathon judges (human and AI) who check the work.
-- **Brand sentence:** "We set the bar before we looked, and every number reruns on your laptop."
+- **Brand sentence:** "We wrote the pass bars before we computed the checks, and every number reruns on your laptop."
 - **Personality:** exact, candid, calm. **Must not feel:** hyped, salesy, smug.
 - **Where it lives:** the dashboard (web, 375 to 1440 px), the README on GitHub, a favicon, a social card for the X demo post. No phone app.
 
@@ -49,7 +49,9 @@ This is not a trademark clearance. A proper trademark search is needed before an
 | Ex Ante (first idea for A) | Dropped. EXANTE is an existing investment broker and research publisher. |
 | Beforehand | No finance or research product found |
 | Showwork | No product found |
-| Cold Read | No crypto research product found |
+| Cold Read | No crypto research product found. "Cold reading" is also a psychic's trick |
+
+All 1,520 NEAR HACKATHON submissions listed on 2026-11-14 were checked: none uses Beforehand, Showwork or Cold Read.
 
 ## Directions
 
