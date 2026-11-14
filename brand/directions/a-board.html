@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>A Beforehand board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--board:#EFE9DC;--panel:#F5F0E6;--b-ink:#1E1B2E;--b-muted:#5E5868;--b-line:#D9D1C1;--illo-bg:#F5F0E6;
+--display-font:'Newsreader',Georgia,serif;--body-font:'IBM Plex Sans',system-ui,sans-serif}
+</style>
+<link rel="stylesheet" href="board.css">
+<style>
+.wordmark{font:600 30px/1 'Newsreader',serif;letter-spacing:-.01em;color:#1E1B2E}
+.type .t1{font-size:30px;font-weight:600;line-height:1.15}
+.copy{background:#FFFDF8;border:1px solid #D9D1C1}
+.copy p{font:500 italic 21px/1.35 'Newsreader',serif}
+.copy small{display:block;font:400 12px/1.4 'IBM Plex Sans',sans-serif;color:#5E5868;margin-top:8px}
+/* key screen */
+.s{background:#F5F0E6;height:100%;font-family:'IBM Plex Sans',sans-serif;color:#1E1B2E}
+.s nav{display:flex;align-items:center;gap:8px;padding:16px 20px;border-bottom:1px solid #D9D1C1}
+.s nav img{width:24px;height:24px}.s nav b{font:600 17px/1 'Newsreader',serif}
+.s nav span{margin-left:auto;font-size:12px;color:#5E5868}
+.s .rec{padding:18px 20px 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#5E5868}
+.s h1{font:400 23px/1.25 'Newsreader',serif;padding:8px 20px 0}
+.s .call{font:500 italic 54px/1 'Newsreader',serif;color:#3B2F73;padding:14px 20px 4px}
+.s .rating{font-size:15px;line-height:1.45;padding:0 20px}
+.s .rating strong{font-weight:600}
+.s .why{font-size:13px;line-height:1.5;color:#5E5868;padding:8px 20px 0}
+.s table{margin:16px 20px 0;width:350px;border-collapse:collapse;font-size:12.5px;background:#FFFDF8;border:1px solid #D9D1C1}
+.s th{font-weight:500;text-align:left;color:#5E5868;font-size:12px;padding:8px 8px;border-bottom:1px solid #1E1B2E}
+.s td{padding:10px 8px;border-bottom:1px solid #D9D1C1;vertical-align:top;line-height:1.35}
+.s td.n{font:600 15px/1.2 'IBM Plex Sans';font-variant-numeric:tabular-nums;white-space:nowrap}
+.s .met{display:inline-block;margin-top:3px;padding:2px 8px;border-radius:3px;font-size:12px;font-weight:600;color:#FFFDF8}
+.s .ok{background:#1F6B3A}.s .no{background:#A3271F}
+.s .foot{display:flex;gap:10px;align-items:center;margin:16px 20px 0;padding:12px;border:1px dashed #3B2F73;border-radius:4px;font-size:12px;line-height:1.4}
+.s .foot img{width:34px;height:34px;flex:none}
+.s .btn{display:block;margin:16px 20px 0;padding:12px;text-align:center;background:#3B2F73;color:#FFFDF8;border-radius:4px;font-weight:500;font-size:14px}
+.s .rerun{margin:14px 20px 0;padding:12px;background:#1E1B2E;color:#F5F0E6;border-radius:4px;font-size:12px}.s .rerun span{display:block;color:#C9C0D9;margin-bottom:4px}.s .rerun code{font:500 14px 'IBM Plex Mono',monospace}
+.s .note{padding:12px 20px;font-size:11px;color:#5E5868}
+</style></head>
+<body><div class="board">
+<div class="head"><span class="letter">A</span><span class="name">Beforehand · The sealed record</span><span class="idea">Sealed the rules before the results came in, then wrote down what was found.</span></div>
+<div class="col">
+  <div class="panel"><div class="label">Mark and lockup</div>
+    <div class="markbox"><img src="a-mark.svg" alt=""></div>
+    <div class="lockup"><img src="a-mark.svg" alt=""><span class="wordmark">Beforehand</span></div></div>
+  <div class="panel"><div class="label">Palette</div><div class="swatches">
+    <div class="sw" style="background:#3B2F73;color:#FFFDF8">Stamp violet<br>#3B2F73</div>
+    <div class="sw" style="background:#1E1B2E;color:#FFFDF8">Ink<br>#1E1B2E</div>
+    <div class="sw" style="background:#F5F0E6">Paper<br>#F5F0E6</div>
+    <div class="sw" style="background:#E7E3F3">Violet tint<br>#E7E3F3</div>
+    <div class="sw" style="background:#5E5868;color:#FFFDF8">Muted<br>#5E5868</div>
+    <div class="sw" style="background:#1F6B3A;color:#FFFDF8">Met<br>#1F6B3A</div>
+    <div class="sw" style="background:#A3271F;color:#FFFDF8">Not met<br>#A3271F</div>
+    <div class="sw" style="background:#D9D1C1">Rule<br>#D9D1C1</div></div></div>
+  <div class="panel type"><div class="label">Type</div>
+    <div class="t1">Recorded before. Found after.</div>
+    <div class="t2">Three conditions and their 20% bars were written and time-stamped before any result was computed. One condition was met.</div>
+    <div class="meta">Newsreader (display) · IBM Plex Sans (text and figures) · both SIL OFL</div></div>
+</div>
+<div class="col">
+  <div class="illo"><img src="a-illustration.svg" alt=""></div>
+  <div class="copy"><div class="label">Voice · X post</div>
+    <p>“Entry for November 1, 2026: one of three conditions met. The call is not yet: hold, do not buy.”</p>
+    <small>Formal, dated, third person. States what was set, then what was found.</small></div>
+</div>
+<div class="col phonewrap"><div class="phone"><div class="s">
+  <nav><img src="a-mark.svg" alt=""><b>Beforehand</b><span>Record · Thesis · Verify</span></nav>
+  <div class="rec">Record · public data through Nov 1, 2026</div>
+  <h1>Does public data support holding NEAR through 2031?</h1>
+  <div class="call">Not yet.</div>
+  <p class="rating"><strong>Rating:</strong> hold, do not buy, through 2031.</p>
+  <p class="why">One of three locked tests passed, and three accounts made up 96.6% of that pass.</p>
+  <table><tr><th>No.</th><th>Condition</th><th>Bar</th><th>Found</th></tr>
+   <tr><td>1</td><td>Net buying on 1Click<br><span class="met ok">Met</span></td><td>20%</td><td class="n">77.75%</td></tr>
+   <tr><td>2</td><td>Burn plus buybacks<br><span class="met no">Not met</span></td><td>20%</td><td class="n">15.08%</td></tr>
+   <tr><td>3</td><td>Usage outside the ten biggest apps<br><span class="met no">Not met</span></td><td>+20%</td><td class="n">+14.58%</td></tr></table>
+  <div class="foot"><img src="a-mark.svg" alt="">Bars written and time-stamped before the results were computed. Proofs in Verify.</div>
+  <a class="btn">Read the record</a>
+  <div class="rerun"><span>Check it yourself, offline:</span><code>npm run rebuild</code></div>
+  <p class="note">General research opinion, not personal advice.</p>
+</div></div></div>
+</div></body></html>

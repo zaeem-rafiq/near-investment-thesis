@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180"><title>Showwork: the working is done and the answer is circled</title>
+<g id="page"><rect x="30" y="14" width="160" height="152" rx="4" fill="#FFFFFF"/>
+<path d="M30 34h160M30 54h160M30 74h160M30 94h160M30 114h160M30 134h160M30 154h160M50 14v152M70 14v152M90 14v152M110 14v152M130 14v152M150 14v152M170 14v152" stroke="#D8E3EE" stroke-width="1.5"/></g>
+<g id="working"><rect x="50" y="40" width="58" height="8" rx="4" fill="#5B6068"/><rect x="116" y="40" width="34" height="8" rx="4" fill="#5B6068"/>
+<rect x="50" y="60" width="78" height="8" rx="4" fill="#5B6068"/><rect x="50" y="80" width="46" height="8" rx="4" fill="#5B6068"/><rect x="104" y="80" width="26" height="8" rx="4" fill="#5B6068"/>
+<rect x="50" y="102" width="100" height="3" fill="#24262A"/><rect x="50" y="108" width="100" height="3" fill="#24262A"/></g>
+<g id="answer"><rect x="62" y="118" width="80" height="22" rx="3" fill="#FFF1A8"/><rect x="70" y="125" width="64" height="8" rx="4" fill="#24262A"/>
+<ellipse cx="102" cy="129" rx="50" ry="20" fill="none" stroke="#1F4FD8" stroke-width="4" transform="rotate(-4 102 129)"/></g>
+<g id="pencil" transform="rotate(-38 186 110)"><rect x="150" y="104" width="64" height="14" rx="2" fill="#24262A"/><rect x="206" y="104" width="12" height="14" fill="#1F4FD8"/><path d="M150 104l-14 7 14 7z" fill="#D8E3EE"/><path d="M140 109l-4 2 4 2z" fill="#24262A"/></g>
+</svg>

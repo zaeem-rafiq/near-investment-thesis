@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180"><title>Cold Read: the umpire holds up the card, one of three</title>
+<g id="backdrop"><rect x="16" y="150" width="208" height="22" rx="4" fill="#7CCBEA"/></g>
+<g id="paddle"><rect x="112" y="112" width="16" height="44" rx="3" fill="#111111"/><rect x="30" y="18" width="180" height="96" rx="10" fill="#111111"/>
+<circle cx="68" cy="64" r="22" fill="#0F7B3F"/><path fill="#F4F4F0" fill-rule="evenodd" d="M98 64a22 22 0 1 0 44 0a22 22 0 1 0 -44 0ZM106 64a14 14 0 1 1 28 0a14 14 0 1 1 -28 0Z"/><path fill="#F4F4F0" fill-rule="evenodd" d="M150 64a22 22 0 1 0 44 0a22 22 0 1 0 -44 0ZM158 64a14 14 0 1 1 28 0a14 14 0 1 1 -28 0Z"/></g>
+
+</svg>

@@ -1,0 +1,3 @@
+{"colors":{"page":"#FBFBF7","surface":"#FFFFFF","graphite":"#24262A","muted":"#5B6068","ballpoint":"#1F4FD8","grid":"#D8E3EE","highlight":"#FFF1A8","pass":"#1E6B45","fail":"#B3261E"},
+ "pairs":[["graphite","page"],["graphite","surface"],["graphite","highlight"],["muted","page"],["muted","surface"],["surface","ballpoint"],["ballpoint","page"],["ballpoint","surface"],["pass","page"],["fail","page"],["surface","pass"],["surface","fail"]],
+ "large_pairs":[["ballpoint","page"],["ballpoint","grid"]]}

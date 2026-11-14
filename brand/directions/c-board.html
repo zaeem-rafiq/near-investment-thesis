@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>C Cold Read board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--board:#E6E6E0;--panel:#F4F4F0;--b-ink:#111111;--b-muted:#4A4A4A;--b-line:#111111;--illo-bg:#F4F4F0;
+--display-font:'Anton',Impact,sans-serif;--body-font:'Archivo',system-ui,sans-serif}
+</style>
+<link rel="stylesheet" href="board.css">
+<style>
+.head .letter{font-weight:400}
+.wordmark{font:400 34px/1 'Anton',sans-serif;text-transform:uppercase;letter-spacing:.01em;color:#111}
+.wordmark i{font-style:normal;color:#7CCBEA;-webkit-text-stroke:1px #111}
+.type .t1{font-size:40px;line-height:1;text-transform:uppercase;font-weight:400}
+.copy{background:#111;color:#F4F4F0}
+.copy .label{color:#7CCBEA}
+.copy p{font:800 24px/1.2 'Archivo',sans-serif;letter-spacing:-.01em}
+.copy small{display:block;font-size:12px;color:#CFCFC8;margin-top:10px}
+/* key screen */
+.s{height:100%;font-family:'Archivo',sans-serif;color:#111;background:#F4F4F0}
+.s nav{display:flex;align-items:center;gap:8px;padding:12px 18px;background:#111;color:#F4F4F0}
+.s nav img{width:24px;height:24px}.s nav b{font:400 18px/1 'Anton';text-transform:uppercase;letter-spacing:.02em}.s nav b i{font-style:normal;color:#7CCBEA}
+.s nav span{margin-left:auto;font-size:11px;font-weight:500}
+.s .q{padding:14px 18px 0;font:700 14px/1.35 'Archivo'}
+.s .big{margin:8px 0 0;padding:6px 18px 2px;background:#7CCBEA;font:400 92px/0.95 'Anton';text-transform:uppercase;letter-spacing:-.01em}
+.s .r{padding:10px 18px 0;font:800 19px/1.2 'Archivo';text-transform:uppercase}
+.s .rows{margin:14px 18px 0;border-top:3px solid #111}
+.s .row{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #111}
+.s .row .i{font:400 26px/1 'Anton'}
+.s .row .l{font-size:13px;line-height:1.3;font-weight:500}.s .row .l small{display:block;color:#4A4A4A;font-size:12px}
+.s .row .v{text-align:right;font:400 30px/1 'Anton';font-variant-numeric:tabular-nums}
+.s .tag{display:inline-block;margin-top:4px;padding:2px 6px;font:800 11px/1 'Archivo';color:#F4F4F0;letter-spacing:.04em}
+.s .ok{background:#0F7B3F}.s .no{background:#C8102E}
+.s .dry{margin:12px 18px 0;font:500 14px/1.4 'Archivo'}
+.s .btn{display:block;margin:14px 18px 0;padding:13px;text-align:center;background:#111;color:#F4F4F0;font:800 14px/1 'Archivo';text-transform:uppercase;letter-spacing:.04em}
+.s .note{padding:10px 18px;font-size:11px;color:#4A4A4A}
+</style></head>
+<body><div class="board">
+<div class="head"><span class="letter">C</span><span class="name">Cold Read · The umpire</span><span class="idea">A sober umpire who makes the call in two words in a loud market, then shows the score.</span></div>
+<div class="col">
+  <div class="panel"><div class="label">Mark and lockup</div>
+    <div class="markbox"><img src="c-mark.svg" alt=""></div>
+    <div class="lockup"><img src="c-mark.svg" alt=""><span class="wordmark">Cold Read<i>.</i></span></div></div>
+  <div class="panel"><div class="label">Palette</div><div class="swatches">
+    <div class="sw" style="background:#111111;color:#F4F4F0">Ink<br>#111111</div>
+    <div class="sw" style="background:#7CCBEA">Ice<br>#7CCBEA</div>
+    <div class="sw" style="background:#F4F4F0">Paper<br>#F4F4F0</div>
+    <div class="sw" style="background:#0E5A7A;color:#F4F4F0">Deep ice<br>#0E5A7A</div>
+    <div class="sw" style="background:#4A4A4A;color:#F4F4F0">Muted<br>#4A4A4A</div>
+    <div class="sw" style="background:#0F7B3F;color:#F4F4F0">Pass<br>#0F7B3F</div>
+    <div class="sw" style="background:#C8102E;color:#F4F4F0">Fail<br>#C8102E</div></div></div>
+  <div class="panel type"><div class="label">Type</div>
+    <div class="t1">One pass. Two fails.</div>
+    <div class="t2">Three accounts supplied 96.6% of the one pass. Take them out and net buying covers 2.66% of new NEAR.</div>
+    <div class="meta">Anton (display and big figures) · Archivo (text) · both SIL OFL</div></div>
+</div>
+<div class="col">
+  <div class="illo"><img src="c-illustration.svg" alt=""></div>
+  <div class="copy"><div class="label">Voice · X post</div>
+    <p>Loud market. Cold read: hold, don't buy. One check of three passed, and three accounts did 96.6% of it.</p>
+    <small>Short, dry, blunt about the data. Never mocks the reader or other projects.</small></div>
+</div>
+<div class="col phonewrap"><div class="phone"><div class="s">
+  <nav><img src="c-mark-reversed.svg" alt=""><b>Cold Read<i>.</i></b><span>Model · Thesis · Receipts</span></nav>
+  <p class="q">Does public data support holding NEAR through 2031?</p>
+  <div class="big">Not yet.</div>
+  <p class="r">Hold. Don't buy. Through 2031.</p>
+  <div class="rows">
+    <div class="row"><span class="i">1</span><span class="l">Net buying on 1Click<small>bar 20%</small><span class="tag ok">PASS</span></span><span class="v">77.75%</span></div>
+    <div class="row"><span class="i">2</span><span class="l">Burn plus buybacks<small>bar 20%</small><span class="tag no">FAIL</span></span><span class="v">15.08%</span></div>
+    <div class="row"><span class="i">3</span><span class="l">Usage outside the ten biggest apps<small>bar +20%</small><span class="tag no">FAIL</span></span><span class="v">+14.58%</span></div>
+  </div>
+  <p class="dry">The one pass leans on three accounts: 96.6% of it. Without them, 2.66%.</p>
+  <a class="btn">Show me the receipts</a>
+  <p class="note">General research opinion, not personal advice.</p>
+</div></div></div>
+</div></body></html>

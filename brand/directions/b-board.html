@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>B Showwork board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--board:#EEF2F6;--panel:#FBFBF7;--b-ink:#24262A;--b-muted:#5B6068;--b-line:#D8E3EE;--illo-bg:#FBFBF7;
+--display-font:'JetBrains Mono',monospace;--body-font:'Public Sans',system-ui,sans-serif}
+</style>
+<link rel="stylesheet" href="board.css">
+<style>
+.wordmark{font:700 26px/1 'JetBrains Mono',monospace;letter-spacing:-.03em;color:#24262A}
+.wordmark i{font-style:normal;color:#1F4FD8}
+.type .t1{font-size:24px;font-weight:600;line-height:1.25;letter-spacing:-.02em}
+.illo{background-color:#FBFBF7;background-image:linear-gradient(#D8E3EE 1px,transparent 1px),linear-gradient(90deg,#D8E3EE 1px,transparent 1px);background-size:20px 20px}
+.copy{background:#FFFFFF;border:1px solid #D8E3EE}
+.copy p{font:500 18px/1.45 'Public Sans',sans-serif}
+.copy code{font:600 16px 'JetBrains Mono',monospace;background:#FFF1A8;padding:1px 5px}
+.copy small{display:block;font-size:12px;color:#5B6068;margin-top:8px}
+/* key screen */
+.s{height:100%;font-family:'Public Sans',sans-serif;color:#24262A;background-color:#FBFBF7;background-image:linear-gradient(#EEF2F6 1px,transparent 1px),linear-gradient(90deg,#EEF2F6 1px,transparent 1px);background-size:16px 16px}
+.s nav{display:flex;align-items:center;gap:8px;padding:14px 18px;background:#FBFBF7;border-bottom:2px solid #24262A}
+.s nav img{width:22px;height:22px}.s nav b{font:700 16px/1 'JetBrains Mono';letter-spacing:-.03em}.s nav b i{font-style:normal;color:#1F4FD8}
+.s nav span{margin-left:auto;font:400 11px 'JetBrains Mono';color:#5B6068}
+.s .step{margin:14px 18px 0;font:600 11px/1 'JetBrains Mono';color:#1F4FD8;letter-spacing:.02em}
+.s h1{font:600 20px/1.3 'Public Sans';padding:6px 18px 0;letter-spacing:-.01em}
+.s .row{margin:8px 18px 0;padding:10px 12px;background:#FFFFFF;border:1px solid #D8E3EE;border-radius:4px}
+.s .row .t{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;gap:8px}
+.s .row .v{font:700 17px 'JetBrains Mono';font-variant-numeric:tabular-nums}
+.s .bar{position:relative;height:8px;background:#EEF2F6;margin-top:8px}
+.s .bar i{position:absolute;left:0;top:0;bottom:0;background:#24262A}
+.s .bar b{position:absolute;top:-4px;bottom:-4px;width:2px;background:#1F4FD8}
+.s .row .k{display:flex;justify-content:space-between;font:400 12px 'JetBrains Mono';color:#5B6068;margin-top:6px}
+.s .ok{color:#1E6B45;font-weight:700;font-size:13px}.s .no{color:#B3261E;font-weight:700;font-size:13px}
+.s .ans{margin:10px 18px 0;font:700 40px/1 'JetBrains Mono';letter-spacing:-.03em;display:inline-block;border-bottom:3px double #24262A;padding-bottom:4px}
+.s .rating{margin:10px 18px 0;font-size:14px;line-height:1.45}
+.s .rating mark{background:#FFF1A8;padding:0 3px;font-weight:600;color:#24262A}
+.s .run{margin:12px 18px 0;padding:10px 12px;background:#24262A;color:#FBFBF7;border-radius:4px;font:400 12px/1.5 'JetBrains Mono'}
+.s .run span{color:#9DB6F5}
+.s .note{padding:10px 18px;font-size:11px;color:#5B6068}
+</style></head>
+<body><div class="board">
+<div class="head"><span class="letter">B</span><span class="name">Showwork · The lab notebook</span><span class="idea">A patient lab partner who shows every step and hands you the notebook to rerun.</span></div>
+<div class="col">
+  <div class="panel"><div class="label">Mark and lockup</div>
+    <div class="markbox"><img src="b-mark.svg" alt=""></div>
+    <div class="lockup"><img src="b-mark.svg" alt=""><span class="wordmark">show<i>work</i></span></div></div>
+  <div class="panel"><div class="label">Palette</div><div class="swatches">
+    <div class="sw" style="background:#1F4FD8;color:#FFFFFF">Ballpoint<br>#1F4FD8</div>
+    <div class="sw" style="background:#24262A;color:#FFFFFF">Graphite<br>#24262A</div>
+    <div class="sw" style="background:#FBFBF7">Page<br>#FBFBF7</div>
+    <div class="sw" style="background:#FFF1A8">Highlighter<br>#FFF1A8</div>
+    <div class="sw" style="background:#5B6068;color:#FFFFFF">Muted<br>#5B6068</div>
+    <div class="sw" style="background:#1E6B45;color:#FFFFFF">Pass<br>#1E6B45</div>
+    <div class="sw" style="background:#B3261E;color:#FFFFFF">Fail<br>#B3261E</div>
+    <div class="sw" style="background:#D8E3EE">Grid<br>#D8E3EE</div></div></div>
+  <div class="panel type"><div class="label">Type</div>
+    <div class="t1">77.75% ≥ 20% bar → pass</div>
+    <div class="t2">Every number on the page comes with the command that makes it. Run it and compare.</div>
+    <div class="meta">JetBrains Mono (display and figures) · Public Sans (text) · both SIL OFL</div></div>
+</div>
+<div class="col">
+  <div class="illo"><img src="b-illustration.svg" alt=""></div>
+  <div class="copy"><div class="label">Voice · X post</div>
+    <p>Don't take our word for it. Clone the repo, run <code>npm run rebuild</code>, and you'll get the same 77.75%.</p>
+    <small>Plain, first person plural, step by step. Invites the reader to check.</small></div>
+</div>
+<div class="col phonewrap"><div class="phone"><div class="s">
+  <nav><img src="b-mark.svg" alt=""><b>show<i>work</i></b><span>model · thesis · verify</span></nav>
+  <div class="step">THE QUESTION</div>
+  <h1>Does public data support holding NEAR through 2031?</h1>
+  <div class="step">THE ANSWER</div>
+  <div class="ans">= Not yet.</div>
+  <p class="rating"><mark>Hold, do not buy, through 2031.</mark> One of three passed; three accounts made up 96.6% of that pass.</p>
+  <div class="step">THE WORKING: BARS SET FIRST, THEN RESULTS</div>
+  <div class="row"><div class="t"><span>Net buying on 1Click</span><span class="v">77.75%</span></div><div class="bar"><i style="width:78%"></i><b style="left:20%"></b></div><div class="k"><span>bar 20%</span><span class="ok">✓ pass</span></div></div>
+  <div class="row"><div class="t"><span>Burn plus buybacks</span><span class="v">15.08%</span></div><div class="bar"><i style="width:15%"></i><b style="left:20%"></b></div><div class="k"><span>bar 20%</span><span class="no">✕ fail</span></div></div>
+  <div class="row"><div class="t"><span>Usage outside top ten apps</span><span class="v">+14.58%</span></div><div class="bar"><i style="width:14.6%"></i><b style="left:20%"></b></div><div class="k"><span>bar +20%</span><span class="no">✕ fail</span></div></div>
+  <div class="run"><span>$</span> npm run rebuild<br><span>→</span> rebuilds this page from committed data</div>
+  <p class="note">General research opinion, not personal advice.</p>
+</div></div></div>
+</div></body></html>
