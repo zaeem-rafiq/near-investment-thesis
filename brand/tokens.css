@@ -1,0 +1,17 @@
+:root {
+  --bf-paper: #F5F0E6;
+  --bf-surface: #FFFDF8;
+  --bf-rule: #D9D1C1;
+  --bf-ink: #1E1B2E;
+  --bf-body: #3A3546;
+  --bf-muted: #5E5868;
+  --bf-violet: #3B2F73;
+  --bf-violet-strong: #2B2257;
+  --bf-violet-tint: #E7E3F3;
+  --bf-code-bg: #EFE9DC;
+  --bf-pass: #1F6B3A;
+  --bf-fail: #A3271F;
+  --bf-violet-chart: #7566C2;
+  --bf-serif: Newsreader, Georgia, "Times New Roman", serif;
+  --bf-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+}
