@@ -527,8 +527,8 @@ test('first screen uses plain labels and keeps technical results below it', asyn
   assert.match(css, /\.status \{[^}]*font-size: 14px; font-weight: 600;/);
   assert.match(css, /\.status-unavailable \{ border-color: var\(--secondary\)/);
   assert.doesNotMatch(css, /\border:/, 'source order, not CSS order, sets reading order');
-  assert.match(css, /\.hypotheses \.table-wrap \{ max-height: none; \}/, 'result tables must not clip behind an inner scrollbar');
-  assert.match(css, /^\.table-wrap \{[^}]*max-height: 400px/m, 'long values tables keep their height limit');
+  assert.match(css, /^\.table-wrap \{ overflow: auto; \}/m, 'result and thesis tables must not clip behind an inner scrollbar');
+  assert.match(css, /^details \.table-wrap \{ max-height: 400px; \}/m, 'long values tables keep their height limit');
   assert.doesNotMatch(css, /\.first-screen \{[^}]*min-height/, 'first screen must not force empty height');
   assert.match(css, /nav a\[href="#signers"\], nav a\[href="#swaps"\], nav a\[href="#burn"\] \{ display: none; \}/,
     'mobile navigation keeps only the primary destinations visible');

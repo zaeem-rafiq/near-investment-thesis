@@ -93,8 +93,8 @@ details { border-bottom: 1px solid var(--border); }
 summary { padding: 12px 0; cursor: pointer; color: var(--accent); }
 pre { max-width: 100%; padding: 16px; overflow: auto; background: var(--code-bg); font-size: 13px; line-height: 1.6; }
 code { font-family: ui-monospace, SFMono-Regular, monospace; overflow-wrap: anywhere; }
-.table-wrap { overflow: auto; max-height: 400px; }
-.hypotheses .table-wrap { max-height: none; }
+.table-wrap { overflow: auto; }
+details .table-wrap { max-height: 400px; }
 table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; text-align: left; }
 caption { text-align: left; color: var(--secondary); font-size: 13px; padding-bottom: 12px; }
 th { font-size: 13px; font-weight: 600; color: var(--secondary); }
