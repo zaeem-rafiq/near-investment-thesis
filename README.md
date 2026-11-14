@@ -24,7 +24,7 @@ Open [`dashboard/model.html`](dashboard/model.html) from a local HTTP server; fo
 - Runtime, build and tests use only the Node.js 22 standard library. `package.json` declares no dependencies, and `package-lock.json` lists no packages beyond this project.
 - The dashboard ships two open-licensed fonts in `web/fonts/`, Newsreader and IBM Plex Sans, under the SIL Open Font License; the license texts sit beside them. The Beforehand name, mark and colors were made for this project; see `brand/BRAND.md`.
 - Timestamp proofs use the OpenTimestamps client, run on demand with `uvx --from opentimestamps-client`. It is a verification tool, not part of the build or tests.
-- Code, tests and text in this repository were written with AI coding agents (Factory Droid) under the owner's direction and review. Every commit records the agent as co-author.
+- Code, tests and text in this repository were written with AI coding agents (Factory Droid and Claude Code) under the owner's direction and review. Every commit records the agent as co-author.
 
 ## Verify evidence and rule chronology
 
