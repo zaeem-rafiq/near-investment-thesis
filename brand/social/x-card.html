@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Beforehand X card</title>
+<!-- Source for x-card.png, 1600 x 900. Numbers come from dashboard/index.html, public data through November 1, 2026.
+     Render: Chrome --headless=new --window-size=1600,900 --screenshot=x-card.png file://.../brand/social/x-card.html -->
+<style>
+@font-face { font-family: "Newsreader"; src: url("../../web/fonts/newsreader-roman.woff2") format("woff2"); font-weight: 200 800; font-style: normal; }
+@font-face { font-family: "Newsreader"; src: url("../../web/fonts/newsreader-italic.woff2") format("woff2"); font-weight: 500; font-style: italic; }
+@font-face { font-family: "IBM Plex Sans"; src: url("../../web/fonts/ibm-plex-sans.woff2") format("woff2"); font-weight: 100 700; font-style: normal; }
+:root {
+  --paper: #F5F0E6; --surface: #FFFDF8; --rule: #D9D1C1; --ink: #1E1B2E; --body: #3A3546;
+  --muted: #5E5868; --violet: #3B2F73; --pass: #1F6B3A; --fail: #A3271F;
+  --serif: Newsreader, Georgia, serif; --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1600px; height: 900px; overflow: hidden; }
+body { background: var(--paper); color: var(--body); font-family: var(--sans); padding: 64px 80px 56px; display: flex; flex-direction: column; }
+.top { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 14px; font: 600 40px/1 var(--serif); color: var(--ink); }
+.brand img { width: 52px; height: 52px; }
+.date { font-size: 26px; color: var(--muted); }
+h1 { margin-top: 44px; font: 600 50px/1.15 var(--serif); color: var(--ink); letter-spacing: -.015em; }
+.call { margin-top: 6px; font: italic 500 132px/1.05 var(--serif); color: var(--violet); letter-spacing: -.02em; }
+.rating { margin-top: 10px; font-size: 38px; color: var(--ink); }
+.rating strong { font-weight: 600; }
+.checks { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.check { background: var(--surface); border: 2px solid var(--rule); border-radius: 14px; padding: 24px 26px; }
+.check .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.check h2 { font: 600 27px/1.25 var(--serif); color: var(--ink); }
+.badge { flex: none; padding: 4px 14px; border-radius: 999px; font-size: 22px; font-weight: 600; color: var(--surface); }
+.pass { background: var(--pass); } .fail { background: var(--fail); }
+.value { margin-top: 14px; font-size: 54px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.05; }
+.bar { position: relative; height: 14px; margin-top: 16px; background: var(--rule); }
+.bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--violet); }
+.bar b { position: absolute; top: -5px; bottom: -5px; width: 3px; left: 20%; background: var(--muted); }
+.note { margin-top: 12px; font-size: 22px; color: var(--muted); }
+.note strong { color: var(--ink); }
+.foot { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; font-size: 22px; color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand"><img src="../../web/mark.svg" alt="">Beforehand</div>
+    <div class="date">NEAR investment thesis · public data through November 1, 2026</div>
+  </div>
+  <h1>Does public data support holding NEAR through 2031?</h1>
+  <div class="call">Not yet.</div>
+  <p class="rating"><strong>Rating:</strong> hold, do not buy, through 2031.</p>
+  <div class="checks">
+    <div class="check">
+      <div class="head"><h2>Do 1Click swap buyers cover new NEAR?</h2><span class="badge pass">✓ Pass</span></div>
+      <div class="value">77.75%</div>
+      <div class="bar"><i style="width: 77.75%"></i><b></b></div>
+      <p class="note">20% pass bar<br>Without three accounts: <strong>2.66%</strong></p>
+    </div>
+    <div class="check">
+      <div class="head"><h2>Do burn and buybacks cover new NEAR?</h2><span class="badge fail">✕ Fail</span></div>
+      <div class="value">15.08%</div>
+      <div class="bar"><i style="width: 15.08%"></i><b></b></div>
+      <p class="note">20% pass bar</p>
+    </div>
+    <div class="check">
+      <div class="head"><h2>Is usage growing beyond the top ten apps?</h2><span class="badge fail">✕ Fail</span></div>
+      <div class="value">+14.58%</div>
+      <div class="bar"><i style="width: 14.58%"></i><b></b></div>
+      <p class="note">+20% pass bar</p>
+    </div>
+  </div>
+  <div class="foot">
+    <span>Pass bars written before the checks were computed. Every number reruns offline.</span>
+    <span>General research opinion, not personal advice.</span>
+  </div>
+</body>
+</html>

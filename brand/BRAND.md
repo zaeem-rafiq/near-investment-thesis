@@ -75,3 +75,4 @@ Flat shapes, paper and violet, with no outlines and no gradients. Show the produ
 - `BRIEF.md`: the brief, the category study and the name checks.
 - `directions/`: the three directions the owner chose from on 2026-11-14, kept as the record of the decision.
 - `SOURCES.md`: fonts and their licenses.
+- `social/x-card.png`: the 1600 x 900 image for the X demo post, rendered from `social/x-card.html`. Its numbers come from the dashboard's first screen; render it again if the data changes.
