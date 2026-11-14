@@ -689,16 +689,16 @@ export async function render(manifest, sources, write, root = ROOT) {
       ${id === 'position.check1.coverage' ? `<p class="check-note">Without three accounts: <strong data-metric="position.concentration.withoutTopNetBuyers.3.coverage">${escape(values['position.concentration.withoutTopNetBuyers.3.coverage'] || 'Unavailable')}</strong></p>` : ''}</article>`;
   };
   const checkCards = position ? `<div class="check-cards">
-      ${checkCard({ id: 'position.check1.coverage', title: "Net buying on 1Click, the NEAR Intents swap API", value: values['position.check1.coverage'],
+      ${checkCard({ id: 'position.check1.coverage', title: 'Do 1Click swap buyers cover new NEAR?', value: values['position.check1.coverage'],
         description: 'of the value of new NEAR', result: position.results.check1, valueNow: position.results.check1.final.shareOfIssuanceValue * 100,
         max: 100, threshold: '20%', passLine: true })}
-      ${checkCard({ id: 'position.check2.coveragePercent', title: 'Burn plus buybacks', value: values['position.check2.coveragePercent'],
+      ${checkCard({ id: 'position.check2.coveragePercent', title: 'Do burn and buybacks cover new NEAR?', value: values['position.check2.coveragePercent'],
         description: 'of new NEAR', result: position.results.check2, valueNow: position.results.check2.coverage * 100,
         max: 100, threshold: '20%', passLine: true })}
-      ${checkCard({ id: 'position.check3.signedGrowth', title: 'Usage outside the ten biggest apps', value: values['position.check3.signedGrowth'],
+      ${checkCard({ id: 'position.check3.signedGrowth', title: 'Is usage growing beyond the top ten apps?', value: values['position.check3.signedGrowth'],
         description: 'in a year', result: position.results.check3, valueNow: Math.max(0, position.results.check3.growth * 100),
         max: 100, threshold: '+20%' })}</div>` : '<p class="unavailable-note">Position evidence unavailable. No position verdict or check results are shown.</p>';
-  const concentrationChart = position ? `<section id="concentration" class="concentration-chart" aria-labelledby="concentration-title"><h2 id="concentration-title">How much net buying remains?</h2>
+  const concentrationChart = position ? `<section id="concentration" class="concentration-chart" aria-labelledby="concentration-title"><h2 id="concentration-title">How much net buying is left without the biggest buyers?</h2>
       <p>Share of issuance value covered by observed net buying. The <span data-metric="position.rules.passBar">${escape(values['position.rules.passBar'])}</span> line is the locked pass bar. Removing accounts is a descriptive cut, not a revised test.</p>
       <div class="concentration-list">
         <div class="concentration-row"><span>All accounts</span><div><div class="measurebar measurebar--pass"><meter min="0" max="100" value="${position.results.check1.final.shareOfIssuanceValue * 100}" aria-label="All accounts net-buying coverage"></meter><span class="threshold" aria-hidden="true"></span></div><strong data-metric="position.check1.coverage">${escape(values['position.check1.coverage'])}</strong></div></div>
@@ -721,17 +721,17 @@ export async function render(manifest, sources, write, root = ROOT) {
     <h1>Does public data support holding NEAR through <span data-metric="position.holdHorizon">${escape(values['position.holdHorizon'] || '2031')}</span>?</h1>
     ${position ? `<p class="answer">Not yet.</p><p class="rating-line"><strong>${escape(RATING_LINE.slice(0, RATING_LINE.indexOf('.') + 1))}</strong>${escape(RATING_LINE.slice(RATING_LINE.indexOf('.') + 1))}</p><p class="summary-line"><span data-metric="position.call.passingWords">${escape(values['position.call.passingWords'])}</span> of <span data-metric="position.call.totalWords">${escape(values['position.call.totalWords'])}</span> locked tests passed, and <span data-metric="position.topBuyerCountWords">${escape(values['position.topBuyerCountWords'])}</span> accounts made up <span data-metric="position.top3Share">${escape(values['position.top3Share'])}</span> of that pass.</p>
     <p class="supply-line">New supply: <span data-metric="position.issuance.issuedNearMillions">${escape(values['position.issuance.issuedNearMillions'])}</span> million NEAR issued in the 52 weeks to November 1, 2026, worth $<span data-metric="position.issuance.valueUsdMillions">${escape(values['position.issuance.valueUsdMillions'])}</span> million at weekly prices.</p>` : ''}
-    <div class="first-actions"><a class="evidence-button" href="model.html">Test the issuance cut</a><a href="thesis.html">Read the thesis</a><a href="VERIFY.md">How to verify</a></div>
+    <div class="first-actions"><a class="evidence-button" href="model.html">Try your own 2031 supply scenario</a><a href="thesis.html">Read the thesis</a><a href="VERIFY.md">How to verify</a></div>
     ${checkCards}
     ${position ? '<p id="live-line" class="live-line" aria-live="polite" hidden></p><script src="live.js" defer></script>' : ''}
     <p class="advice-note">General research opinion, not personal advice.</p>
     </header><!-- first-screen:end -->
     ${concentrationChart}
-    <section class="plain-claims"><h2>The original three claims, separate from the call above</h2><p>These are the T1 to T3 tests. 1Click is the NEAR Intents swap service; this sample is not all Intents activity.</p>
+    <section class="plain-claims"><h2>None of the three original claims passed</h2><p>These are the T1 to T3 tests. 1Click is the NEAR Intents swap service; this sample is not all Intents activity.</p>
     <ul><li><span>More accounts are using NEAR, across more apps.</span><strong>${escape(a.t1.verdict)}</strong></li>
     <li><span>1Click swap volume leads account activity better than NEAR’s price does.</span><strong>${escape(a.t2.verdict)}</strong></li>
     <li><span>Fees destroy enough NEAR to meaningfully offset new supply.</span><strong>${escape(a.t3.verdict)}</strong></li></ul></section>
-    <section class="hypotheses"><h2>Rules and detailed results</h2><p>The T1–T3 pass/fail rules were fixed before their metrics were computed. Checks 1–3 were written later, as disclosed in the thesis. A later fee-burn reconciliation rule is also disclosed there. Each original test can pass, fail or end as “can’t tell”.</p>
+    <section class="hypotheses"><h2>When each rule was written, and the full results</h2><p>The T1–T3 pass/fail rules were fixed before their metrics were computed. Checks 1–3 were written later, as disclosed in the thesis. A later fee-burn reconciliation rule is also disclosed there. Each original test can pass, fail or end as “can’t tell”.</p>
     <p class="window">Snapshot ${escape(manifest.id)}${manifest.fetchedAt ? ` · fetched ${escape(manifest.fetchedAt)}` : ' · no data fetched'}</p>
     <dl>${verdictRow('T1', 'Usage is broadening', a.t1)}${verdictRow('T2', '1Click volume leads usage better than NEAR price', a.t2)}${verdictRow('T3', 'Usage reaches holders through burn', a.t3)}</dl>${lagTable}${sensTable}</section>
     <section id="status"><h2>Source status</h2><div class="table-wrap" tabindex="0"><table><thead><tr><th>Source</th><th>Status</th></tr></thead><tbody>${statusRows}</tbody></table></div>${a.duplicates.length ? `<p>Duplicate block rows: ${escape(a.duplicates.map(d => `${d.date} (${d.duplicates})`).join(', '))}.</p>` : ''}</section>
